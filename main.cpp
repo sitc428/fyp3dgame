@@ -34,6 +34,16 @@ int main(int argc, char* argv[])
 
 	guienv->addStaticText(L"Game Name", rect<s32>(10,10,260,22), true);
 
+	IAnimatedMesh* mesh = smgr->getMesh("sydney.md2");
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode( mesh );
+
+	if (node)
+	{
+		node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMD2Animation ( scene::EMAT_STAND );
+		node->setMaterialTexture( 0, driver->getTexture("sydney.bmp") );
+	}
+
 	while(device->run())
 	{
 		driver->beginScene(true, true, SColor(255,100,101,140));
