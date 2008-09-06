@@ -7,9 +7,9 @@ Target := GameName
 # List of source files, separated by spaces
 Sources := main.cpp
 # Path to Irrlicht directory, should contain include/ and lib/
-IrrlichtHome := irrlicht/1.4.1
+IrrlichtHome := irrlicht/1.4.1/
 # Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
-BinPath = .
+BinPath = /tmp
 
 # general compiler settings (might need to be set when compiling the lib, too)
 # preprocessor flags, e.g. defines and include paths
@@ -32,7 +32,7 @@ LDFLAGS = $(USERLDFLAGS)
 all: all_linux
 
 # target specific settings
-all_linux all_win32 static_win32: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) 
+all_linux all_win32 static_win32: LDFLAGS += -L$(IrrlichtHome)/lib/$(SYSTEM) -lIrrlicht
 all_linux: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11
 all_linux clean_linux: SYSTEM=Linux
 all_win32 clean_win32 static_win32: SYSTEM=Win32-gcc
