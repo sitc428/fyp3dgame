@@ -141,16 +141,16 @@ int main(int argc, char* argv[])
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_E))
 		{
-			core::vector3df v1 = cam->getRotation();
-			v1.X += .5f;
-			cam->setRotation(v1);
+			core::vector3df v1 = cam->getPosition();
+			v1.rotateXZBy(1, cam->getTarget());
+			cam->setPosition(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_Q))
 		{
-			core::vector3df v1 = cam->getRotation();
-			v1.X -= .5f;
-			cam->setRotation(v1);
+			core::vector3df v1 = cam->getPosition();
+			v1.rotateXZBy(-1, cam->getTarget());
+			cam->setPosition(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else
