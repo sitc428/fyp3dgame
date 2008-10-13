@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 #ifdef _IRR_OSX_PLATFORM_
 		createDevice(video::EDT_OPENGL, dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
 #else
-	createDevice(video::EDT_SOFTWARE, dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
+	createDevice(video::EDT_OPENGL, dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
 #endif
 
 	if(device == 0)
@@ -74,11 +74,13 @@ int main(int argc, char* argv[])
 	guienv->addStaticText(L"Hello World! This is the Irrlicht Software renderer!",
 			rect<s32>(10,10,260,22), true);
 
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.x"), 0, 0, core::vector3df(5,0,3),core::vector3df(3,0,4));
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.md2"));
+
+	smgr->addCubeSceneNode(5);
 
 	if(node)
 	{
-		node->setMaterialFlag(EMF_LIGHTING, true);
+		node->setMaterialFlag(EMF_LIGHTING, false);
 		//node->setMD2Animation (scene::EMAT_STAND);
 		//node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
 		//node->setJointMode(EJUOR_CONTROL);
@@ -89,9 +91,9 @@ int main(int argc, char* argv[])
 	}
 
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
-	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 0, -40), vector3df(0, 5, 0));
 
-	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0,40,-40));
+	//ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0,40,-40));
 
 	int lastFPS = 0;
 	// start the main device loop;
@@ -101,8 +103,8 @@ int main(int argc, char* argv[])
 		{
 			core::vector3df v1 = cam->getPosition();
 			core::vector3df v2 = cam->getTarget();
-			v1.Z += 2.0f;
-			v2.Z += 2.0f;
+			v1.Z += .5f;
+			v2.Z += .5f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
 			//node->setMD2Animation (scene::EMAT_RUN);
@@ -111,8 +113,8 @@ int main(int argc, char* argv[])
 		{
 			core::vector3df v1 = cam->getPosition();
 			core::vector3df v2 = cam->getTarget();
-			v1.Z -= 2.0f;
-			v2.Z -= 2.0f;
+			v1.Z -= .5f;
+			v2.Z -= .5f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
 			//node->setMD2Animation (scene::EMAT_RUN);
@@ -121,8 +123,8 @@ int main(int argc, char* argv[])
 		{
 			core::vector3df v1 = cam->getPosition();
 			core::vector3df v2 = cam->getTarget();
-			v1.X -= 2.0f;
-			v2.X -= 2.0f;
+			v1.X -= .5f;
+			v2.X -= .5f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
 			//node->setMD2Animation (scene::EMAT_RUN);
@@ -131,10 +133,24 @@ int main(int argc, char* argv[])
 		{
 			core::vector3df v1 = cam->getPosition();
 			core::vector3df v2 = cam->getTarget();
-			v1.X += 2.0f;
-			v2.X += 2.0f;
+			v1.X += .5f;
+			v2.X += .5f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_E))
+		{
+			core::vector3df v1 = cam->getRotation();
+			v1.X += .5f;
+			cam->setRotation(v1);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_Q))
+		{
+			core::vector3df v1 = cam->getRotation();
+			v1.X -= .5f;
+			cam->setRotation(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else
