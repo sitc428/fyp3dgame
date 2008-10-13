@@ -11,7 +11,7 @@ using namespace gui;
 
 #ifdef _IRR_WINDOWS_
 #pragma comment(lib, "Irrlicht.lib")
-#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+//#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
 class KeyboardEventReceiver : public IEventReceiver
@@ -56,8 +56,6 @@ class MyShaderCallBack : public video::IShaderConstantSetCallBack
 
 			core::vector3df camPos = device->getSceneManager()->getActiveCamera()->getAbsolutePosition();
 			services->setVertexShaderConstant("view_position", reinterpret_cast<f32*>(&camPos), 3);
-
-			//core::vector3df lightPos = device->getSceneManager()->getActiveLight()->getAbsolutePosition();
 			services->setVertexShaderConstant("LightPosition", reinterpret_cast<f32*>(lightPos), 3);
 		}
 	private:
@@ -79,7 +77,7 @@ int main(int argc, char* argv[])
 	if(device == 0)
 		return 1;
 
-	device->setWindowCaption(L"FYP - v0.1 r14");
+	device->setWindowCaption(L"FYP - v0.1 r23");
 
 	// get the device driver;
 	IVideoDriver *driver = device->getVideoDriver();
@@ -93,7 +91,7 @@ int main(int argc, char* argv[])
 	c8* vsFileName = "model/trial.vert"; // filename for the vertex shader
 	c8* psFileName = "model/trial.frag"; // filename for the pixel shader
 
-	/*if (!driver->queryFeature(video::EVDF_PIXEL_SHADER_1_1) &&
+	if (!driver->queryFeature(video::EVDF_PIXEL_SHADER_1_1) &&
 			!driver->queryFeature(video::EVDF_ARB_FRAGMENT_PROGRAM_1))
 	{
 		device->getLogger()->log("WARNING: Pixel shaders disabled "\
@@ -107,7 +105,7 @@ int main(int argc, char* argv[])
 		device->getLogger()->log("WARNING: Vertex shaders disabled "\
 				"because of missing driver/hardware support.");
 		vsFileName = 0;
-	}*/
+	}
 
 	video::IGPUProgrammingServices* gpu = driver->getGPUProgrammingServices();
 
@@ -117,7 +115,7 @@ int main(int argc, char* argv[])
 
 	if(gpu)
 	{
-		MyShaderCallBack* mc = new MyShaderCallBack(device, &light->getAbsolutePosition());
+		MyShaderCallBack* mc = new MyShaderCallBack(device, &(light->getAbsolutePosition()));
 
 		if(1)
 		{
@@ -135,7 +133,8 @@ int main(int argc, char* argv[])
 		mc->drop();
 	}
 
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
+	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
+	ISceneNode* node = smgr->addMeshSceneNode(smgr->getMesh("model/trial.obj"));
 
 	if(node)
 	{
