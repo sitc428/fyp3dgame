@@ -74,17 +74,24 @@ int main(int argc, char* argv[])
 	guienv->addStaticText(L"Hello World! This is the Irrlicht Software renderer!",
 			rect<s32>(10,10,260,22), true);
 
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/sydney.md2"));
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.x"), 0, 0, core::vector3df(5,0,3),core::vector3df(3,0,4));
 
 	if(node)
 	{
-		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMD2Animation (scene::EMAT_STAND);
-		node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
+		node->setMaterialFlag(EMF_LIGHTING, true);
+		//node->setMD2Animation (scene::EMAT_STAND);
+		//node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
+		//node->setJointMode(EJUOR_CONTROL);
+		//IBoneSceneNode* right_arm = node->getJointNode("Arm_R");
+		//node->setAnimationSpeed(15);
+		//node->setFrameLoop(1, 10);
+		//node->animateJoints(true);
 	}
 
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
+
+	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0,40,-40));
 
 	int lastFPS = 0;
 	// start the main device loop;
@@ -98,7 +105,7 @@ int main(int argc, char* argv[])
 			v2.Z += 2.0f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
-			node->setMD2Animation (scene::EMAT_RUN);
+			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_S))
 		{
@@ -108,7 +115,7 @@ int main(int argc, char* argv[])
 			v2.Z -= 2.0f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
-			node->setMD2Animation (scene::EMAT_RUN);
+			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_A))
 		{
@@ -118,7 +125,7 @@ int main(int argc, char* argv[])
 			v2.X -= 2.0f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
-			node->setMD2Animation (scene::EMAT_RUN);
+			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_D))
 		{
@@ -128,7 +135,7 @@ int main(int argc, char* argv[])
 			v2.X += 2.0f;
 			cam->setPosition(v1);
 			cam->setTarget(v2);
-			node->setMD2Animation (scene::EMAT_RUN);
+			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else
 		{
@@ -137,7 +144,7 @@ int main(int argc, char* argv[])
 		
 		// begin scene;
 		// things should be drawn after this call;
-		driver->beginScene(true, true, SColor(255,128,255,196));
+		driver->beginScene(true, true, SColor(255,128,128,128));
 
 		// draw the things;
 		smgr->drawAll();
