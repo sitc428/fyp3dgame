@@ -11,7 +11,7 @@ using namespace gui;
 
 #ifdef _IRR_WINDOWS_
 #pragma comment(lib, "Irrlicht.lib")
-//#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
 class KeyboardEventReceiver : public IEventReceiver
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
 	{
 		MyShaderCallBack* mc = new MyShaderCallBack(device, &(light->getAbsolutePosition()));
 
-		if(1)
+		if(0)
 		{
 			newMaterialType = gpu->addHighLevelShaderMaterialFromFiles(
 					vsFileName, "vertexMain", video::EVST_VS_1_1,
@@ -195,6 +195,26 @@ int main(int argc, char* argv[])
 			cam->setTarget(v2);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_Z))
+		{
+			core::vector3df v1 = cam->getPosition();
+			core::vector3df v2 = cam->getTarget();
+			v1.Y += .5f;
+			v2.Y += .5f;
+			cam->setPosition(v1);
+			cam->setTarget(v2);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_X))
+		{
+			core::vector3df v1 = cam->getPosition();
+			core::vector3df v2 = cam->getTarget();
+			v1.Y -= .5f;
+			v2.Y -= .5f;
+			cam->setPosition(v1);
+			cam->setTarget(v2);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_E))
 		{
 			core::vector3df v1 = cam->getPosition();
@@ -206,6 +226,34 @@ int main(int argc, char* argv[])
 		{
 			core::vector3df v1 = cam->getPosition();
 			v1.rotateXZBy(-1, cam->getTarget());
+			cam->setPosition(v1);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_UP))
+		{
+			core::vector3df v1 = cam->getPosition();
+			v1.rotateYZBy(-1, cam->getTarget());
+			cam->setPosition(v1);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_DOWN))
+		{
+			core::vector3df v1 = cam->getPosition();
+			v1.rotateYZBy(1, cam->getTarget());
+			cam->setPosition(v1);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_LEFT))
+		{
+			core::vector3df v1 = cam->getPosition();
+			v1.rotateXYBy(-1, cam->getTarget());
+			cam->setPosition(v1);
+			//node->setMD2Animation (scene::EMAT_RUN);
+		}
+		else if(keyboardReceiver.IsKeyDown(irr::KEY_RIGHT))
+		{
+			core::vector3df v1 = cam->getPosition();
+			v1.rotateXYBy(1, cam->getTarget());
 			cam->setPosition(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
