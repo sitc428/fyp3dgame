@@ -111,13 +111,13 @@ int main(int argc, char* argv[])
 
 	s32 newMaterialType = 0;
 
-	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0,40,-40));
+	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0, 10, 4));
 
 	if(gpu)
 	{
 		MyShaderCallBack* mc = new MyShaderCallBack(device, &(light->getAbsolutePosition()));
 
-		if(0)
+		if(1)
 		{
 			newMaterialType = gpu->addHighLevelShaderMaterialFromFiles(
 					vsFileName, "vertexMain", video::EVST_VS_1_1,
@@ -127,18 +127,18 @@ int main(int argc, char* argv[])
 		else
 		{
 			// create material from low level shaders (asm or arb_asm)
-			newMaterialType = gpu->addShaderMaterialFromFiles(vsFileName, psFileName, mc, video::EMT_SOLID);
+			newMaterialType = gpu->addShaderMaterialFromFiles(vsFileName, psFileName, mc, video::EMT_TRANSPARENT_ADD_COLOR);
 		}
 
 		mc->drop();
 	}
 
 	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
-	ISceneNode* node = smgr->addMeshSceneNode(smgr->getMesh("model/trial.obj"));
+	ISceneNode* node = smgr->addMeshSceneNode(smgr->getMesh("model/dwarf.x"));
 
 	if(node)
 	{
-		node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
+		//node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
 	}

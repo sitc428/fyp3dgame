@@ -1,4 +1,4 @@
-uniform vec3  LightPosition;  // (0.0, 10.0, 4.0) 
+uniform vec3 LightPosition;  // (0.0, 10.0, 4.0) 
 uniform vec3 view_position;
 
 varying float NdotL;
