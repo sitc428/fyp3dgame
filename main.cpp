@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
 
 	video::IGPUProgrammingServices* gpu = driver->getGPUProgrammingServices();
 
-	smgr->loadScene("sc.irr");
+	//smgr->loadScene("sc.irr");
 
 	s32 newMaterialType = 0;
 
@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
 	}
 
 	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/EXAMPLE_1/women.x"));
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/dwarf.x"));
 
 	if(node)
 	{
@@ -140,18 +140,16 @@ int main(int argc, char* argv[])
 		node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
 	}
 
-	IBoneSceneNode* hand = node->getJointNode("manoR");
-	
-	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(10.0f,0,0));
-	
-	hand->addAnimator(anim);
+	node->setJointMode(EJUOR_CONTROL);
 
-	hand->setAnimationMode(EBAM_ANIMATED);
+	//IBoneSceneNode* hand = node->getJointNode("manoL");
+	
+	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(10.0f,10.0f,10.0f));
 
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 0, -40), vector3df(0, 5, 0));
 	
-	//node->addAnimator(anim);
+	node->addAnimator(anim);
 	anim->drop();
 
 	int lastFPS = 0;
@@ -159,7 +157,6 @@ int main(int argc, char* argv[])
 	// start the main device loop;
 	while(device->run())
 	{
-		node->animateJoints();
 		if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_W))
 		{
 			core::vector3df v1 = cam->getPosition();
@@ -272,6 +269,7 @@ int main(int argc, char* argv[])
 		driver->beginScene(true, true, SColor(255,128,128,128));
 
 		// draw the things;
+
 		smgr->drawAll();
 		guienv->drawAll();
 
