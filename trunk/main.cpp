@@ -66,13 +66,8 @@ class MyShaderCallBack : public video::IShaderConstantSetCallBack
 int main(int argc, char* argv[])
 {
 	KeyboardEventReceiver keyboardReceiver;
-
-	IrrlichtDevice* device =
-#ifdef _IRR_OSX_PLATFORM_
-		createDevice(video::EDT_OPENGL, dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
-#else
-	createDevice(video::EDT_OPENGL, dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
-#endif
+	video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
+	IrrlichtDevice* device = createDevice(driverType, core::dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
 
 	if(device == 0)
 		return 1;
