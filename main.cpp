@@ -1,5 +1,5 @@
 #include <irrlicht.h>
-
+#include <iostream>
 // The irrlicht namespace
 using namespace irr;
 
@@ -11,7 +11,7 @@ using namespace gui;
 
 #ifdef _IRR_WINDOWS_
 #pragma comment(lib, "Irrlicht.lib")
-#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+//#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
 class KeyboardEventReceiver : public IEventReceiver
@@ -47,8 +47,8 @@ class MyShaderCallBack : public video::IShaderConstantSetCallBack
 {
 	public:
 		MyShaderCallBack(IrrlichtDevice* _device, core::vector3df* _lightPos) : device(_device), lightPos(_lightPos)
-	{
-	}
+		{
+		}
 
 		virtual void OnSetConstants(video::IMaterialRendererServices* services, s32 userData)
 		{
@@ -104,9 +104,11 @@ int main(int argc, char* argv[])
 
 	video::IGPUProgrammingServices* gpu = driver->getGPUProgrammingServices();
 
+	smgr->loadScene("sc.irr");
+
 	s32 newMaterialType = 0;
 
-	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0, 10, 4));
+	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0, 10, 4), video::SColorf(), 0);
 
 	if(gpu)
 	{
@@ -129,7 +131,7 @@ int main(int argc, char* argv[])
 	}
 
 	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
-	ISceneNode* node = smgr->addMeshSceneNode(smgr->getMesh("model/dwarf.x"));
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/EXAMPLE_1/women.x"));
 
 	if(node)
 	{
@@ -138,11 +140,18 @@ int main(int argc, char* argv[])
 		node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
 	}
 
+	IBoneSceneNode* hand = node->getJointNode("manoR");
+	
+	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(10.0f,0,0));
+	
+	hand->addAnimator(anim);
+
+	hand->setAnimationMode(EBAM_ANIMATED);
+
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 0, -40), vector3df(0, 5, 0));
-
-	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(0,0.3f,0));
-	node->addAnimator(anim);
+	
+	//node->addAnimator(anim);
 	anim->drop();
 
 	int lastFPS = 0;
@@ -150,6 +159,7 @@ int main(int argc, char* argv[])
 	// start the main device loop;
 	while(device->run())
 	{
+		node->animateJoints();
 		if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_W))
 		{
 			core::vector3df v1 = cam->getPosition();
