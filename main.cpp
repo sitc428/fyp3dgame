@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
 	{
 		MyShaderCallBack* mc = new MyShaderCallBack(device, &(light->getAbsolutePosition()));
 
-		if(1)
+		if(5)
 		{
 			newMaterialType = gpu->addHighLevelShaderMaterialFromFiles(
 					vsFileName, "vertexMain", video::EVST_VS_1_1,
@@ -131,25 +131,39 @@ int main(int argc, char* argv[])
 	}
 
 	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/dwarf.x"));
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.x"));
 
 	if(node)
 	{
 		//node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
+		node->setPosition(core::vector3df(0,5,0));
 		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
+		//node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
 	}
+
+	ISceneNode* floor = smgr->addCubeSceneNode(1000);
+
+	if(floor)
+	{
+		floor->setScale(core::vector3df(1.0,0.1,1.0));
+		floor->setPosition(core::vector3df(0,-50,0));
+		floor->setMaterialFlag(EMF_LIGHTING, false);
+		floor->setMaterialTexture(0, driver->getTexture("img/grass.jpg"));
+	}
+	
+	smgr->addSkyBoxSceneNode(driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"));
+	//sb->setPosition(core::vector3df(0,-5,0));
 
 	node->setJointMode(EJUOR_CONTROL);
 
 	//IBoneSceneNode* hand = node->getJointNode("manoL");
 	
-	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(10.0f,10.0f,10.0f));
+	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(0,1.0f, 0));
 
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
-	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 0, -40), vector3df(0, 5, 0));
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(node, vector3df(0, 5, -10));
 	
-	node->addAnimator(anim);
+	//node->addAnimator(anim);
 	anim->drop();
 
 	int lastFPS = 0;
@@ -159,104 +173,94 @@ int main(int argc, char* argv[])
 	{
 		if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_W))
 		{
-			core::vector3df v1 = cam->getPosition();
-			core::vector3df v2 = cam->getTarget();
-			v1.Z += .5f;
-			v2.Z += .5f;
-			cam->setPosition(v1);
-			cam->setTarget(v2);
+			core::vector3df v1 = node->getPosition();
+			v1.Z += .05f;
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_S))
 		{
-			core::vector3df v1 = cam->getPosition();
-			core::vector3df v2 = cam->getTarget();
-			v1.Z -= .5f;
-			v2.Z -= .5f;
-			cam->setPosition(v1);
-			cam->setTarget(v2);
+			core::vector3df v1 = node->getPosition();
+			v1.Z -= .05f;
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_A))
 		{
-			core::vector3df v1 = cam->getPosition();
-			core::vector3df v2 = cam->getTarget();
-			v1.X -= .5f;
-			v2.X -= .5f;
-			cam->setPosition(v1);
-			cam->setTarget(v2);
+			core::vector3df v1 = node->getPosition();
+			v1.X -= .05f;
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_D))
 		{
-			core::vector3df v1 = cam->getPosition();
-			core::vector3df v2 = cam->getTarget();
-			v1.X += .5f;
-			v2.X += .5f;
-			cam->setPosition(v1);
-			cam->setTarget(v2);
+			core::vector3df v1 = node->getPosition();
+			v1.X += .05f;
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_Z))
 		{
-			core::vector3df v1 = cam->getPosition();
-			core::vector3df v2 = cam->getTarget();
-			v1.Y += .5f;
-			v2.Y += .5f;
-			cam->setPosition(v1);
-			cam->setTarget(v2);
+			core::vector3df v1 = node->getPosition();
+			v1.Y += .05f;
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_X))
 		{
-			core::vector3df v1 = cam->getPosition();
-			core::vector3df v2 = cam->getTarget();
-			v1.Y -= .5f;
-			v2.Y -= .5f;
-			cam->setPosition(v1);
-			cam->setTarget(v2);
+			core::vector3df v1 = node->getPosition();
+			v1.Y -= .05f;
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_E))
 		{
-			core::vector3df v1 = cam->getPosition();
-			v1.rotateXZBy(1, cam->getTarget());
-			cam->setPosition(v1);
-			//node->setMD2Animation (scene::EMAT_RUN);
+			core::vector3df rot = node->getRotation();
+			rot.Y += 1;
+			node->setRotation(rot);
+			cam->setTarget(node->getPosition());
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_Q))
 		{
-			core::vector3df v1 = cam->getPosition();
-			v1.rotateXZBy(-1, cam->getTarget());
-			cam->setPosition(v1);
-			//node->setMD2Animation (scene::EMAT_RUN);
+			core::vector3df rot = node->getRotation();
+			rot.Y -= 1;
+			node->setRotation(rot);
+			cam->setTarget(node->getPosition());
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_UP))
 		{
-			core::vector3df v1 = cam->getPosition();
-			v1.rotateYZBy(-1, cam->getTarget());
-			cam->setPosition(v1);
-			//node->setMD2Animation (scene::EMAT_RUN);
+			core::vector3df rot = node->getRotation();
+			rot.Z += 1;
+			node->setRotation(rot);
+			cam->setTarget(node->getPosition());
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_DOWN))
 		{
-			core::vector3df v1 = cam->getPosition();
-			v1.rotateYZBy(1, cam->getTarget());
-			cam->setPosition(v1);
-			//node->setMD2Animation (scene::EMAT_RUN);
+			core::vector3df rot = node->getRotation();
+			rot.Z -= 1;
+			node->setRotation(rot);
+			cam->setTarget(node->getPosition());
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_LEFT))
 		{
-			core::vector3df v1 = cam->getPosition();
-			v1.rotateXYBy(-1, cam->getTarget());
-			cam->setPosition(v1);
+			core::vector3df v1 = node->getPosition();
+			v1.rotateXYBy(-5, node->getPosition());
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_RIGHT))
 		{
-			core::vector3df v1 = cam->getPosition();
-			v1.rotateXYBy(1, cam->getTarget());
-			cam->setPosition(v1);
+			core::vector3df v1 = node->getPosition();
+			v1.rotateXYBy(5, node->getPosition());
+			node->setPosition(v1);
+			cam->setTarget(v1);
 			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else
