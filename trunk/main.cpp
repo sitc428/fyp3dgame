@@ -1,5 +1,7 @@
 #include <irrlicht.h>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 // The irrlicht namespace
 using namespace irr;
 
@@ -139,9 +141,7 @@ int main(int argc, char* argv[])
 
 	if(node)
 	{
-		node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
-		//node->setScale(core::vector3df(0.05,0.05,0.05));
-		//node->setRotation(core::vector3df(0,90,0));
+		//node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
 		node->setPosition(core::vector3df(0.0,10.0,0.0));
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		//node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
@@ -156,8 +156,28 @@ int main(int argc, char* argv[])
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 		floor->setMaterialTexture(0, driver->getTexture("img/grass.jpg"));
 	}
-	
-	smgr->addSkyBoxSceneNode(driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"))->setScale(core::vector3df(10.0,10.0,10.0));
+
+	srand(time(0));
+
+	for(int i = 0; i < 50; ++i)
+	{
+		ISceneNode* tree = smgr->addCubeSceneNode(1);
+
+		if(tree)
+		{
+			tree->setScale(core::vector3df(1, 10, 1));
+			tree->setPosition(core::vector3df(rand() % 400 - 200, 5.0, rand() % 400 - 200));
+			tree->setMaterialFlag(EMF_LIGHTING, false);
+			tree->setMaterialTexture(0, driver->getTexture("img/wood.png"));
+		}
+	}
+
+	smgr->addSkyBoxSceneNode(driver->getTexture("img/sky.jpg"),
+		driver->getTexture("img/sky.jpg"),
+		driver->getTexture("img/sky.jpg"),
+		driver->getTexture("img/sky.jpg"),
+		driver->getTexture("img/sky.jpg"),
+		driver->getTexture("img/sky.jpg"));
 	//sb->setPosition(core::vector3df(0,-5,0));
 
 	node->setJointMode(EJUOR_CONTROL);
@@ -167,12 +187,14 @@ int main(int argc, char* argv[])
 	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(0,1.0f, 0));
 
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
-	ICameraSceneNode* cam = smgr->addCameraSceneNode(node, vector3df(10, 10, 10), node->getPosition());
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(node, vector3df(0, 3, -10), node->getPosition());
 	
 	//node->addAnimator(anim);
 	anim->drop();
 
 	int lastFPS = 0;
+
+	int degree = 0;
 
 	// start the main device loop;
 	while(device->run())
@@ -227,47 +249,39 @@ int main(int argc, char* argv[])
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_E))
 		{
-			core::vector3df rot = node->getRotation();
-			rot.Y += 1;
-			node->setRotation(rot);
+			degree += 1;
+			node->setRotation(core::vector3df(0, degree, 0));
 			cam->setTarget(node->getPosition());
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_Q))
 		{
-			core::vector3df rot = node->getRotation();
-			rot.Y -= 1;
-			node->setRotation(rot);
+			degree -= 1;
+			node->setRotation(core::vector3df(0, degree, 0));
 			cam->setTarget(node->getPosition());
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_UP))
 		{
+			/*
 			core::vector3df rot = node->getRotation();
 			rot.Z += 1;
 			node->setRotation(rot);
 			cam->setTarget(node->getPosition());
+			*/
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_DOWN))
 		{
+			/*
 			core::vector3df rot = node->getRotation();
 			rot.Z -= 1;
 			node->setRotation(rot);
 			cam->setTarget(node->getPosition());
+			*/
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_LEFT))
 		{
-			core::vector3df v1 = node->getPosition();
-			v1.rotateXYBy(-5, node->getPosition());
-			node->setPosition(v1);
-			cam->setTarget(v1);
-			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_RIGHT))
 		{
-			core::vector3df v1 = node->getPosition();
-			v1.rotateXYBy(5, node->getPosition());
-			node->setPosition(v1);
-			cam->setTarget(v1);
-			//node->setMD2Animation (scene::EMAT_RUN);
 		}
 		else
 		{
