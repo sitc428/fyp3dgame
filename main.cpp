@@ -67,7 +67,11 @@ int main(int argc, char* argv[])
 {
 	KeyboardEventReceiver keyboardReceiver;
 	video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
+	
 	IrrlichtDevice* device = createDevice(driverType, core::dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
+
+	if(!device)
+		device = createDevice( video::EDT_BURNINGSVIDEO, core::dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
 
 	if(device == 0)
 		return 1;
@@ -135,23 +139,25 @@ int main(int argc, char* argv[])
 
 	if(node)
 	{
-		//node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
-		node->setPosition(core::vector3df(0,5,0));
+		node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
+		//node->setScale(core::vector3df(0.05,0.05,0.05));
+		//node->setRotation(core::vector3df(0,90,0));
+		node->setPosition(core::vector3df(0.0,10.0,0.0));
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		//node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
 	}
 
-	ISceneNode* floor = smgr->addCubeSceneNode(1000);
+	ISceneNode* floor = smgr->addCubeSceneNode(1000.0);
 
 	if(floor)
 	{
-		floor->setScale(core::vector3df(1.0,0.1,1.0));
+		floor->setScale(core::vector3df(1.01,0.1,1.01));
 		floor->setPosition(core::vector3df(0,-50,0));
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 		floor->setMaterialTexture(0, driver->getTexture("img/grass.jpg"));
 	}
 	
-	smgr->addSkyBoxSceneNode(driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"));
+	smgr->addSkyBoxSceneNode(driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"),driver->getTexture("img/sky.jpg"))->setScale(core::vector3df(10.0,10.0,10.0));
 	//sb->setPosition(core::vector3df(0,-5,0));
 
 	node->setJointMode(EJUOR_CONTROL);
@@ -161,7 +167,7 @@ int main(int argc, char* argv[])
 	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(0,1.0f, 0));
 
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
-	ICameraSceneNode* cam = smgr->addCameraSceneNode(node, vector3df(0, 5, -10));
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(node, vector3df(10, 10, 10), node->getPosition());
 	
 	//node->addAnimator(anim);
 	anim->drop();
