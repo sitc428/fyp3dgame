@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 // The irrlicht namespace
 using namespace irr;
 
@@ -89,6 +90,8 @@ int main(int argc, char* argv[])
 	// get the handler of the gui enviroment;
 	IGUIEnvironment *guienv = device->getGUIEnvironment();
 
+	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0, 10, 4), video::SColorf(), 0);
+
 	c8* vsFileName = "model/trial.vert"; // filename for the vertex shader
 	c8* psFileName = "model/trial.frag"; // filename for the pixel shader
 
@@ -110,11 +113,7 @@ int main(int argc, char* argv[])
 
 	video::IGPUProgrammingServices* gpu = driver->getGPUProgrammingServices();
 
-	//smgr->loadScene("sc.irr");
-
 	s32 newMaterialType = 0;
-
-	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0, 10, 4), video::SColorf(), 0);
 
 	if(gpu)
 	{
@@ -137,13 +136,16 @@ int main(int argc, char* argv[])
 	}
 
 	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.x"));
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial_a.x"));
 
 	if(node)
 	{
 		//node->setMaterialTexture(0, driver->getTexture("img/sydney.bmp"));
-		node->setPosition(core::vector3df(0.0,10.0,0.0));
+		node->setPosition(core::vector3df(0.0,-1.0,0.0));
+		node->setScale(core::vector3df(0.05,0.05,0.05));
 		node->setMaterialFlag(EMF_LIGHTING, false);
+		//node->setLoopMode(true);
+		//node->setAnimationSpeed(25);
 		//node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
 	}
 
@@ -159,17 +161,22 @@ int main(int argc, char* argv[])
 
 	srand(time(0));
 
+	std::vector<ISceneNode*> monster(50);
+
 	for(int i = 0; i < 50; ++i)
 	{
-		ISceneNode* tree = smgr->addCubeSceneNode(1);
+		ISceneNode* enmy = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/20.x"));
 
-		if(tree)
+		if(enmy)
 		{
-			tree->setScale(core::vector3df(1, 10, 1));
-			tree->setPosition(core::vector3df(rand() % 400 - 200, 5.0, rand() % 400 - 200));
-			tree->setMaterialFlag(EMF_LIGHTING, false);
-			tree->setMaterialTexture(0, driver->getTexture("img/wood.png"));
+			enmy->setScale(core::vector3df(0.05, 0.05, 0.05));
+			enmy->setPosition(core::vector3df(rand() % 400 - 200, rand() % 10 - 5, rand() % 400 - 200));
+			enmy->setMaterialFlag(EMF_LIGHTING, false);
+			node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType);
+			//enmy->setMaterialTexture(0, driver->getTexture("img/wood.png"));
 		}
+
+		monster[i] = enmy;
 	}
 
 	smgr->addSkyBoxSceneNode(driver->getTexture("img/sky.jpg"),
@@ -178,19 +185,9 @@ int main(int argc, char* argv[])
 		driver->getTexture("img/sky.jpg"),
 		driver->getTexture("img/sky.jpg"),
 		driver->getTexture("img/sky.jpg"));
-	//sb->setPosition(core::vector3df(0,-5,0));
-
-	node->setJointMode(EJUOR_CONTROL);
-
-	//IBoneSceneNode* hand = node->getJointNode("manoL");
-	
-	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(core::vector3df(0,1.0f, 0));
 
 	// add a camera at (0, 30, -40) looking at (0, 5, 0);
-	ICameraSceneNode* cam = smgr->addCameraSceneNode(node, vector3df(0, 3, -10), node->getPosition());
-	
-	//node->addAnimator(anim);
-	anim->drop();
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(node, vector3df(0, 0, -30), node->getPosition());
 
 	int lastFPS = 0;
 
@@ -288,6 +285,11 @@ int main(int argc, char* argv[])
 			//node->setMD2Animation (scene::EMAT_STAND);
 		}
 
+		for(std::vector<ISceneNode*>::iterator i = monster.begin(); i != monster.end(); ++i)
+		{
+			(*i)->setPosition((*i)->getPosition() + (node->getPosition() - (*i)->getPosition()).normalize() * 0.04);
+		}
+
 		// begin scene;
 		// things should be drawn after this call;
 		driver->beginScene(true, true, SColor(255,128,128,128));
@@ -301,7 +303,7 @@ int main(int argc, char* argv[])
 
 		if(lastFPS != fps)
 		{
-			core::stringw str = L"FYP - v0.1 r14 [FPS:";
+			core::stringw str = L"FYP - v0.1 r54 [FPS:";
 			str += fps;
 			str += "]";
 
