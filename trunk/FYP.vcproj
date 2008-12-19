@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\irrlicht\1.4.2\include"
+				AdditionalIncludeDirectories=".\irrlicht\include"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="&quot;.\irrlicht\1.4.2\lib\Win32-visualstudio&quot;"
+				AdditionalLibraryDirectories="&quot;.\irrlicht\lib\Win32-visualstudio&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -112,7 +112,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\irrlicht\1.4.2\include"
+				AdditionalIncludeDirectories=".\irrlicht\include"
 				RuntimeLibrary="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="&quot;.\irrlicht\1.4.2\lib\Win32-visualstudio&quot;"
+				AdditionalLibraryDirectories="&quot;.\irrlicht\lib\Win32-visualstudio&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
