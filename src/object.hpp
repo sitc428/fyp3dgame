@@ -1,6 +1,8 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 
+#include <map>
+
 namespace FYP
 {
 
@@ -10,7 +12,6 @@ public:
 	Object();
 	~Object();
 private:
-
 };
 
 }
