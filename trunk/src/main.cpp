@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include "InputEventHandler.hpp"
+
 // The irrlicht namespace
 using namespace irr;
 
@@ -16,35 +18,6 @@ using namespace gui;
 #pragma comment(lib, "Irrlicht.lib")
 //#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
-
-class KeyboardEventReceiver : public IEventReceiver
-{
-	public:
-		// This is the one method that we have to implement
-		virtual bool OnEvent(const SEvent& event)
-		{
-			// Remember whether each key is down or up
-			if (event.EventType == irr::EET_KEY_INPUT_EVENT)
-				KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
-			return false;
-		}
-
-		// This is used to check whether a key is being held down
-		virtual bool IsKeyDown(EKEY_CODE keyCode) const
-		{
-			return KeyIsDown[keyCode];
-		}
-
-		KeyboardEventReceiver()
-		{
-			for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
-				KeyIsDown[i] = false;
-		}
-
-	private:
-		// We use this array to store the current state of each key
-		bool KeyIsDown[KEY_KEY_CODES_COUNT];
-};
 
 class MyShaderCallBack : public video::IShaderConstantSetCallBack
 {
@@ -68,18 +41,18 @@ class MyShaderCallBack : public video::IShaderConstantSetCallBack
 
 int main(int argc, char* argv[])
 {
-	KeyboardEventReceiver keyboardReceiver;
+	InputEventHandler inputEvent;
 	video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
 	
-	IrrlichtDevice* device = createDevice(driverType, core::dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
+	IrrlichtDevice* device = createDevice(driverType, core::dimension2d<s32>(640, 480), 16, false, false, false, &inputEvent);
 
 	if(!device)
-		device = createDevice( video::EDT_BURNINGSVIDEO, core::dimension2d<s32>(640, 480), 16, false, false, false, &keyboardReceiver);
+		device = createDevice( video::EDT_BURNINGSVIDEO, core::dimension2d<s32>(640, 480), 16, false, false, false, &inputEvent);
 
 	if(device == 0)
 		return 1;
 
-	device->setWindowCaption(L"FYP - v0.1 r23");
+	//device->setWindowCaption(L"FYP - v0.1 r23");
 
 	// get the device driver;
 	IVideoDriver *driver = device->getVideoDriver();
@@ -92,8 +65,8 @@ int main(int argc, char* argv[])
 
 	ILightSceneNode* light = smgr->addLightSceneNode(0, vector3df(0, 10, 4), video::SColorf(), 0);
 
-	c8* vsFileName = "model/trial.vert"; // filename for the vertex shader
-	c8* psFileName = "model/trial.frag"; // filename for the pixel shader
+	c8* vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
+	c8* psFileName = "model/shader/trial.frag"; // filename for the pixel shader
 
 	if (!driver->queryFeature(video::EVDF_PIXEL_SHADER_1_1) &&
 			!driver->queryFeature(video::EVDF_ARB_FRAGMENT_PROGRAM_1))
@@ -136,7 +109,7 @@ int main(int argc, char* argv[])
 	}
 
 	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial.obj"));
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/trial_a.x"));
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/x/trial_a.x"));
 
 	if(node)
 	{
@@ -165,7 +138,7 @@ int main(int argc, char* argv[])
 
 	for(int i = 0; i < 50; ++i)
 	{
-		ISceneNode* enmy = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/20.x"));
+		ISceneNode* enmy = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/x/20.x"));
 
 		if(enmy)
 		{
@@ -196,7 +169,9 @@ int main(int argc, char* argv[])
 	// start the main device loop;
 	while(device->run())
 	{
-		if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_W))
+		inputEvent.disable();
+
+		/*if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_W))
 		{
 			core::vector3df v1 = node->getPosition();
 			v1.Z += .05f;
@@ -258,21 +233,9 @@ int main(int argc, char* argv[])
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_UP))
 		{
-			/*
-			core::vector3df rot = node->getRotation();
-			rot.Z += 1;
-			node->setRotation(rot);
-			cam->setTarget(node->getPosition());
-			*/
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_DOWN))
 		{
-			/*
-			core::vector3df rot = node->getRotation();
-			rot.Z -= 1;
-			node->setRotation(rot);
-			cam->setTarget(node->getPosition());
-			*/
 		}
 		else if(keyboardReceiver.IsKeyDown(irr::KEY_LEFT))
 		{
@@ -283,7 +246,7 @@ int main(int argc, char* argv[])
 		else
 		{
 			//node->setMD2Animation (scene::EMAT_STAND);
-		}
+		}*/
 
 		for(std::vector<ISceneNode*>::iterator i = monster.begin(); i != monster.end(); ++i)
 		{
@@ -314,6 +277,8 @@ int main(int argc, char* argv[])
 		// nothings should be drawn after this call;
 		// screen is presented after this call;
 		driver->endScene();
+
+		inputEvent.enable();
 	}
 
 	// call drop() for those object created by create* function;

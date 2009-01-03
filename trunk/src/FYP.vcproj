@@ -42,8 +42,8 @@
 				AdditionalIncludeDirectories="..\include"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				WarningLevel="3"
+				RuntimeLibrary="1"
+				WarningLevel="0"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
@@ -112,9 +112,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\include\"
-				RuntimeLibrary="2"
-				WarningLevel="3"
+				AdditionalIncludeDirectories="..\include\;&quot;C:\Program Files\Microsoft Platform SDK\Include&quot;"
+				RuntimeLibrary="0"
+				WarningLevel="0"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
@@ -130,7 +130,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\$(ProjectName).exe"
-				AdditionalLibraryDirectories="&quot;..\lib\irrlicht\Win32-visualstudio&quot;"
+				AdditionalLibraryDirectories="&quot;..\lib\irrlicht\Win32-visualstudio&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -171,6 +171,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\InputEventHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -180,6 +184,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\InputEventHandler.hpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
