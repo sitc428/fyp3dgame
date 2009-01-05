@@ -8,20 +8,14 @@
 #include "GameObjectCollection.hpp"
 #include "RenderingHandler.hpp"
 
-// The irrlicht namespace
-using namespace irr;
-
-using namespace core;
-using namespace scene;
-using namespace video;
-using namespace io;
-using namespace gui;
-
 #ifdef _IRR_WINDOWS_
 #pragma comment(lib, "Irrlicht.lib")
 //#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
+boost::mutex gl_mutex;
+
+/*
 class MyShaderCallBack : public video::IShaderConstantSetCallBack
 {
 	public:
@@ -41,6 +35,7 @@ class MyShaderCallBack : public video::IShaderConstantSetCallBack
 		IrrlichtDevice* device;
 		core::vector3df* lightPos;
 };
+*/
 
 int main(int argc, char* argv[])
 {
@@ -168,11 +163,15 @@ int main(int argc, char* argv[])
 
 	int degree = 0;*/
 
-	GameObjectCollection *goc = new GameObjectCollection(800, 600);
+	InputEventHandler *inputEvent = new InputEventHandler;
+
+	GameObjectCollection *goc = new GameObjectCollection(800, 600, inputEvent);
 
 	RenderingHandler a(goc);
-	boost::thread rendering(a);
-	rendering.join();
+	boost::thread renderingThread(a);
+	renderingThread.join();
+
+	//rendering.join();
 
 	// start the main device loop;
 	/*while(device->run())

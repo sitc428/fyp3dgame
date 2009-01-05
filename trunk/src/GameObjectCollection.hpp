@@ -14,7 +14,7 @@ private:
 	GameObjectCollection() {} // no default constructor!
 
 public:
-	GameObjectCollection(int width, int height);
+	GameObjectCollection(int width, int height, InputEventHandler* inputEvent);
 	~GameObjectCollection();
 
 	bool deviceRunning() const;
@@ -23,8 +23,7 @@ public:
 	irr::video::IVideoDriver* VideoDriver();
 
 private:
-	InputEventHandler inputEvent;
-	irr::IrrlichtDevice* device;
+	irr::IrrlichtDevice *device;
 	irr::video::IVideoDriver *videoDriver;
 	irr::scene::ISceneManager *smgr;
 	irr::gui::IGUIEnvironment *guienv;

@@ -5,9 +5,12 @@
 #include "GameObjectCollection.hpp"
 //#include <iostream>
 
+extern boost::mutex gl_mutex;
+
 class RenderingHandler
 {
 public:
+
 	RenderingHandler(GameObjectCollection* goc)
 	{
 		_goc = goc;
@@ -16,30 +19,8 @@ public:
 
 	~RenderingHandler() {};
 
-	void operator()()
-	{
-		while(_goc->deviceRunning())
-		{
-			boost::thread::scope_lock scope_lock(boost::mutex m);
-			_goc->VideoDriver()->beginScene(true, true, irr::video::SColor(255,128,128,128));
-			//_goc->SceneManager()->drawAll();
-			_goc->VideoDriver()->endScene();
+	void operator()();
 
-			/*int fps = _goc->VideoDriver()->getFPS();
-
-			if(lastFPS != fps)
-			{
-				irr::core::stringw str = L"FYP - v0.1 r54 [FPS:";
-				str += fps;
-				str += "]";
-
-				_goc->Device()->setWindowCaption(str.c_str());
-				lastFPS = fps;
-			}
-
-			//boost::this_thread::sleep(boost::posix_time::milliseconds(1000));*/
-		}
-	};
 private:
 	GameObjectCollection* _goc;
 	int lastFPS;
