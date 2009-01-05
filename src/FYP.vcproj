@@ -116,7 +116,8 @@
 				RuntimeLibrary="0"
 				WarningLevel="0"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
+				CallingConvention="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -182,6 +183,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\RenderingHandler.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -194,6 +199,10 @@
 			</File>
 			<File
 				RelativePath=".\InputEventHandler.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\RenderingHandler.hpp"
 				>
 			</File>
 		</Filter>
