@@ -168,8 +168,10 @@ int main(int argc, char* argv[])
 	GameObjectCollection *goc = new GameObjectCollection(800, 600, inputEvent);
 
 	RenderingHandler a(goc);
-	boost::thread renderingThread(a);
-	renderingThread.join();
+	//boost::thread renderingThread(a);
+	//renderingThread.join();
+	
+	a();
 
 	//rendering.join();
 
