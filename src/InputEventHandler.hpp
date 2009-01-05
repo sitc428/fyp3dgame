@@ -6,7 +6,9 @@
 class InputEventHandler : public irr::IEventReceiver 
 {
 public:
-	enum mouseButton {LEFT = 0, MIDDLE = 1, RIGHT = 2};
+	enum mouseButtons {LEFT = 0, MIDDLE = 1, RIGHT = 2};
+
+	typedef irr::EKEY_CODE keys;
 
 	InputEventHandler();
 	~InputEventHandler();
@@ -16,14 +18,14 @@ public:
 	float wheel() const;
 	int x() const;
 	int y() const;
-	bool mouseReleased(mouseButton mbType) const;
-	bool mouseUp(mouseButton mbType) const;
-	bool mousePressed(mouseButton mbType) const;
-	bool mouseDown(mouseButton mbType) const;
-	bool keyPressed(char keycode) const;
-	bool keyDown(char keycode) const;
-	bool keyUp(char keycode) const;
-	bool keyReleased(char keycode) const;
+	bool mouseReleased(mouseButtons mbType) const;
+	bool mouseUp(mouseButtons mbType) const;
+	bool mousePressed(mouseButtons mbType) const;
+	bool mouseDown(mouseButtons mbType) const;
+	bool keyPressed(keys keycode) const;
+	bool keyDown(keys keycode) const;
+	bool keyUp(keys keycode) const;
+	bool keyReleased(keys keycode) const;
 	void disable();
 	void enable();
 

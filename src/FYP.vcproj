@@ -130,7 +130,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\$(ProjectName).exe"
-				AdditionalLibraryDirectories="&quot;..\lib\irrlicht\Win32-visualstudio&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
+				AdditionalLibraryDirectories="&quot;..\lib\irrlicht\Win32-visualstudio&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;;..\lib"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -171,6 +171,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\GameObjectCollection.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\InputEventHandler.cpp"
 				>
 			</File>
@@ -184,6 +188,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\GameObjectCollection.hpp"
+				>
+			</File>
 			<File
 				RelativePath=".\InputEventHandler.hpp"
 				>

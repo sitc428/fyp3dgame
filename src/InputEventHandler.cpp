@@ -114,42 +114,42 @@ int InputEventHandler::y() const
 	return mouse._y;
 }
 
-bool InputEventHandler::mouseReleased(mouseButton mbType) const
+bool InputEventHandler::mouseReleased(mouseButtons mbType) const
 {
 	return mouse.mouseButtonState[mbType] == RELEASED;
 }
 
-bool InputEventHandler::mouseUp(mouseButton mbType) const
+bool InputEventHandler::mouseUp(mouseButtons mbType) const
 {
 	return mouse.mouseButtonState[mbType] == RELEASED || mouse.mouseButtonState[mbType] == UP;
 }
 
-bool InputEventHandler::mousePressed(mouseButton mbType) const
+bool InputEventHandler::mousePressed(mouseButtons mbType) const
 {
 	return mouse.mouseButtonState[mbType] == PRESSED;
 }
 
-bool InputEventHandler::mouseDown(mouseButton mbType) const
+bool InputEventHandler::mouseDown(mouseButtons mbType) const
 {
 	return  mouse.mouseButtonState[mbType] == PRESSED || mouse.mouseButtonState[mbType] == DOWN;
 }
 
-bool InputEventHandler::keyPressed(char keycode) const
+bool InputEventHandler::keyPressed(keys keycode) const
 {
 	return keyState[keycode] == PRESSED;
 }
 
-bool InputEventHandler::keyDown(char keycode) const
+bool InputEventHandler::keyDown(keys keycode) const
 {
 	return keyState[keycode] == DOWN || keyState[keycode] == PRESSED;
 }
 
-bool InputEventHandler::keyUp(char keycode) const
+bool InputEventHandler::keyUp(keys keycode) const
 {
 	return keyState[keycode] == UP || keyState[keycode] == RELEASED;
 }
 
-bool InputEventHandler::keyReleased(char keycode) const
+bool InputEventHandler::keyReleased(keys keycode) const
 {
 	return keyState[keycode] == RELEASED;
 }
