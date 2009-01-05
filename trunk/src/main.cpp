@@ -1,9 +1,12 @@
 #include <irrlicht/irrlicht.h>
+#include <boost/thread.hpp>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <vector>
 #include "InputEventHandler.hpp"
+#include "GameObjectCollection.hpp"
+#include "RenderingHandler.hpp"
 
 // The irrlicht namespace
 using namespace irr;
@@ -41,7 +44,7 @@ class MyShaderCallBack : public video::IShaderConstantSetCallBack
 
 int main(int argc, char* argv[])
 {
-	InputEventHandler inputEvent;
+	/*InputEventHandler inputEvent;
 	video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
 	
 	IrrlichtDevice* device = createDevice(driverType, core::dimension2d<s32>(640, 480), 16, false, false, false, &inputEvent);
@@ -67,7 +70,6 @@ int main(int argc, char* argv[])
 
 	c8* vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
 	c8* psFileName = "model/shader/trial.frag"; // filename for the pixel shader
-
 	if (!driver->queryFeature(video::EVDF_PIXEL_SHADER_1_1) &&
 			!driver->queryFeature(video::EVDF_ARB_FRAGMENT_PROGRAM_1))
 	{
@@ -164,12 +166,24 @@ int main(int argc, char* argv[])
 
 	int lastFPS = 0;
 
-	int degree = 0;
+	int degree = 0;*/
+
+	GameObjectCollection *goc = new GameObjectCollection(800, 600);
+
+	RenderingHandler a(goc);
+	boost::thread rendering(a);
+	rendering.join();
 
 	// start the main device loop;
-	while(device->run())
+	/*while(device->run())
 	{
 		inputEvent.disable();
+
+		if(inputEvent.keyPressed(irr::KEY_KEY_W))
+		{std::cout<<"W"<<std::endl;}
+
+		if(inputEvent.mouseDown(InputEventHandler::LEFT))
+		{std::cout<<"Left mouse down"<<std::endl;}
 
 		/*if(keyboardReceiver.IsKeyDown(irr::KEY_KEY_W))
 		{
@@ -246,7 +260,7 @@ int main(int argc, char* argv[])
 		else
 		{
 			//node->setMD2Animation (scene::EMAT_STAND);
-		}*/
+		}
 
 		for(std::vector<ISceneNode*>::iterator i = monster.begin(); i != monster.end(); ++i)
 		{
@@ -282,7 +296,7 @@ int main(int argc, char* argv[])
 	}
 
 	// call drop() for those object created by create* function;
-	device->drop();
+	device->drop();*/
 
 	return 0;
 }
