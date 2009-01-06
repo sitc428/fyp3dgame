@@ -1,0 +1,172 @@
+// !$*UTF8*$!
+{
+	9868EF450F1303F5004AE96C /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 9868F1080F1305AD004AE96C /* FYP */;
+		activeTarget = 9868F1050F1305AD004AE96C /* FYP */;
+		addToTargets = (
+			9868F1050F1305AD004AE96C /* FYP */,
+		);
+		codeSenseManager = 9868EF4A0F1303F5004AE96C /* Code sense */;
+		executables = (
+			9868F1080F1305AD004AE96C /* FYP */,
+		);
+		ignoreBreakpointsInProjectsDict = {
+		};
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					301,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 252904836;
+			PBXWorkspaceStateSaveDate = 252904836;
+		};
+		perUserProjectItems = {
+			9868F1380F130A07004AE96C /* PBXTextBookmark */ = 9868F1380F130A07004AE96C /* PBXTextBookmark */;
+			9868F1390F130A07004AE96C /* PBXTextBookmark */ = 9868F1390F130A07004AE96C /* PBXTextBookmark */;
+			9868F13D0F130A25004AE96C /* PlistBookmark */ = 9868F13D0F130A25004AE96C /* PlistBookmark */;
+			9868F13E0F130A25004AE96C /* PlistBookmark */ = 9868F13E0F130A25004AE96C /* PlistBookmark */;
+			9868F13F0F130A25004AE96C /* PBXTextBookmark */ = 9868F13F0F130A25004AE96C /* PBXTextBookmark */;
+		};
+		sourceControlManager = 9868EF490F1303F5004AE96C /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	9868EF490F1303F5004AE96C /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+	};
+	9868EF4A0F1303F5004AE96C /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	9868F1050F1305AD004AE96C /* FYP */ = {
+		activeExec = 0;
+		executables = (
+			9868F1080F1305AD004AE96C /* FYP */,
+		);
+	};
+	9868F1080F1305AD004AE96C /* FYP */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = FYP;
+		sourceDirectories = (
+		);
+	};
+	9868F1300F1309CF004AE96C /* main.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {708, 4296}}";
+			sepNavSelRange = "{32, 29}";
+			sepNavVisRange = "{0, 410}";
+		};
+	};
+	9868F1380F130A07004AE96C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: boost/thread.hpp: No such file or directory";
+		fRef = 9868F1300F1309CF004AE96C /* main.cpp */;
+		rLen = 1;
+		rLoc = 1;
+		rType = 1;
+	};
+	9868F1390F130A07004AE96C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9868F1300F1309CF004AE96C /* main.cpp */;
+		name = "main.cpp: 8";
+		rLen = 0;
+		rLoc = 192;
+		rType = 0;
+		vrLen = 305;
+		vrLoc = 0;
+	};
+	9868F13D0F130A25004AE96C /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 9868F1090F1305AD004AE96C /* FYP-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/kiron/Desktop/FYP Project/Source/src/FYP/FYP-Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	9868F13E0F130A25004AE96C /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 9868F1090F1305AD004AE96C /* FYP-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/kiron/Desktop/FYP Project/Source/src/FYP/FYP-Info.plist";
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	9868F13F0F130A25004AE96C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9868F1300F1309CF004AE96C /* main.cpp */;
+		name = "main.cpp: 2";
+		rLen = 29;
+		rLoc = 32;
+		rType = 0;
+		vrLen = 410;
+		vrLoc = 0;
+	};
+}

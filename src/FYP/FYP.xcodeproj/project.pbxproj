@@ -1,0 +1,245 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9868F1210F1306E5004AE96C /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF5B0F130481004AE96C /* libIrrlicht.a */; };
+		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
+		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
+		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
+		9868F1330F1309CF004AE96C /* GameObjectCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */; };
+		9868F1340F1309CF004AE96C /* InputEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */; };
+		9868F1350F1309CF004AE96C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F1300F1309CF004AE96C /* main.cpp */; };
+		9868F1360F1309CF004AE96C /* RenderingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F1310F1309CF004AE96C /* RenderingHandler.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9868EF510F130414004AE96C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		9868EF520F130414004AE96C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		9868EF530F130414004AE96C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		9868EF5B0F130481004AE96C /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrlicht.a; sourceTree = "<group>"; };
+		9868F1060F1305AD004AE96C /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9868F1090F1305AD004AE96C /* FYP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FYP-Info.plist"; sourceTree = "<group>"; };
+		9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObjectCollection.cpp; path = ../GameObjectCollection.cpp; sourceTree = SOURCE_ROOT; };
+		9868F12D0F1309CF004AE96C /* GameObjectCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameObjectCollection.hpp; path = ../GameObjectCollection.hpp; sourceTree = SOURCE_ROOT; };
+		9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputEventHandler.cpp; path = ../InputEventHandler.cpp; sourceTree = SOURCE_ROOT; };
+		9868F12F0F1309CF004AE96C /* InputEventHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputEventHandler.hpp; path = ../InputEventHandler.hpp; sourceTree = SOURCE_ROOT; };
+		9868F1300F1309CF004AE96C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
+		9868F1310F1309CF004AE96C /* RenderingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderingHandler.cpp; path = ../RenderingHandler.cpp; sourceTree = SOURCE_ROOT; };
+		9868F1320F1309CF004AE96C /* RenderingHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderingHandler.hpp; path = ../RenderingHandler.hpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9868F1040F1305AD004AE96C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9868F1210F1306E5004AE96C /* libIrrlicht.a in Frameworks */,
+				9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */,
+				9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */,
+				9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9868EF430F1303F4004AE96C = {
+			isa = PBXGroup;
+			children = (
+				9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */,
+				9868F12D0F1309CF004AE96C /* GameObjectCollection.hpp */,
+				9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */,
+				9868F12F0F1309CF004AE96C /* InputEventHandler.hpp */,
+				9868F1300F1309CF004AE96C /* main.cpp */,
+				9868F1310F1309CF004AE96C /* RenderingHandler.cpp */,
+				9868F1320F1309CF004AE96C /* RenderingHandler.hpp */,
+				9868F12B0F1308BC004AE96C /* Library */,
+				9868F1070F1305AD004AE96C /* Products */,
+				9868F1090F1305AD004AE96C /* FYP-Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		9868F1070F1305AD004AE96C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9868F1060F1305AD004AE96C /* FYP.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9868F12B0F1308BC004AE96C /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				9868EF5B0F130481004AE96C /* libIrrlicht.a */,
+				9868EF510F130414004AE96C /* Carbon.framework */,
+				9868EF520F130414004AE96C /* Cocoa.framework */,
+				9868EF530F130414004AE96C /* OpenGL.framework */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9868F1050F1305AD004AE96C /* FYP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9868F10C0F1305AD004AE96C /* Build configuration list for PBXNativeTarget "FYP" */;
+			buildPhases = (
+				9868F1020F1305AD004AE96C /* Resources */,
+				9868F1030F1305AD004AE96C /* Sources */,
+				9868F1040F1305AD004AE96C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FYP;
+			productName = FYP;
+			productReference = 9868F1060F1305AD004AE96C /* FYP.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9868EF450F1303F5004AE96C /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 9868EF480F1303F5004AE96C /* Build configuration list for PBXProject "FYP" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = 9868EF430F1303F4004AE96C;
+			productRefGroup = 9868F1070F1305AD004AE96C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9868F1050F1305AD004AE96C /* FYP */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9868F1020F1305AD004AE96C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9868F1030F1305AD004AE96C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9868F1330F1309CF004AE96C /* GameObjectCollection.cpp in Sources */,
+				9868F1340F1309CF004AE96C /* InputEventHandler.cpp in Sources */,
+				9868F1350F1309CF004AE96C /* main.cpp in Sources */,
+				9868F1360F1309CF004AE96C /* RenderingHandler.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9868EF460F1303F5004AE96C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		9868EF470F1303F5004AE96C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = ../../;
+				COPY_PHASE_STRIP = YES;
+				HEADER_SEARCH_PATHS = ../../include;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+		9868F10A0F1305AD004AE96C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = "FYP-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = FYP;
+			};
+			name = Debug;
+		};
+		9868F10B0F1305AD004AE96C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = "FYP-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = FYP;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9868EF480F1303F5004AE96C /* Build configuration list for PBXProject "FYP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9868EF460F1303F5004AE96C /* Debug */,
+				9868EF470F1303F5004AE96C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9868F10C0F1305AD004AE96C /* Build configuration list for PBXNativeTarget "FYP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9868F10A0F1305AD004AE96C /* Debug */,
+				9868F10B0F1305AD004AE96C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9868EF450F1303F5004AE96C /* Project object */;
+}
