@@ -15,6 +15,10 @@
 		9868F1340F1309CF004AE96C /* InputEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */; };
 		9868F1350F1309CF004AE96C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F1300F1309CF004AE96C /* main.cpp */; };
 		9868F1360F1309CF004AE96C /* RenderingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F1310F1309CF004AE96C /* RenderingHandler.cpp */; };
+		9868F1640F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */; };
+		9868F1650F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */; };
+		9868F1660F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */; };
+		9868F1670F13146B004AE96C /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +35,10 @@
 		9868F1300F1309CF004AE96C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
 		9868F1310F1309CF004AE96C /* RenderingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderingHandler.cpp; path = ../RenderingHandler.cpp; sourceTree = SOURCE_ROOT; };
 		9868F1320F1309CF004AE96C /* RenderingHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderingHandler.hpp; path = ../RenderingHandler.hpp; sourceTree = SOURCE_ROOT; };
+		9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_date_time-gcc40-mt-s-1_37.a"; sourceTree = "<group>"; };
+		9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_date_time-gcc40-mt-s.a"; sourceTree = "<group>"; };
+		9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = "<group>"; };
+		9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,10 +46,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9868F1640F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */,
 				9868F1210F1306E5004AE96C /* libIrrlicht.a in Frameworks */,
+				9868F1660F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */,
 				9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */,
 				9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */,
 				9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */,
+				9868F1650F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a in Frameworks */,
+				9868F1670F13146B004AE96C /* libboost_thread-gcc40-mt-s.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,13 +63,7 @@
 		9868EF430F1303F4004AE96C = {
 			isa = PBXGroup;
 			children = (
-				9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */,
-				9868F12D0F1309CF004AE96C /* GameObjectCollection.hpp */,
-				9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */,
-				9868F12F0F1309CF004AE96C /* InputEventHandler.hpp */,
-				9868F1300F1309CF004AE96C /* main.cpp */,
-				9868F1310F1309CF004AE96C /* RenderingHandler.cpp */,
-				9868F1320F1309CF004AE96C /* RenderingHandler.hpp */,
+				9868F2D80F134CD3004AE96C /* Source */,
 				9868F12B0F1308BC004AE96C /* Library */,
 				9868F1070F1305AD004AE96C /* Products */,
 				9868F1090F1305AD004AE96C /* FYP-Info.plist */,
@@ -75,12 +81,30 @@
 		9868F12B0F1308BC004AE96C /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */,
+				9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */,
+				9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */,
+				9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */,
 				9868EF5B0F130481004AE96C /* libIrrlicht.a */,
 				9868EF510F130414004AE96C /* Carbon.framework */,
 				9868EF520F130414004AE96C /* Cocoa.framework */,
 				9868EF530F130414004AE96C /* OpenGL.framework */,
 			);
 			name = Library;
+			sourceTree = "<group>";
+		};
+		9868F2D80F134CD3004AE96C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */,
+				9868F12F0F1309CF004AE96C /* InputEventHandler.hpp */,
+				9868F1300F1309CF004AE96C /* main.cpp */,
+				9868F1310F1309CF004AE96C /* RenderingHandler.cpp */,
+				9868F1320F1309CF004AE96C /* RenderingHandler.hpp */,
+				9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */,
+				9868F12D0F1309CF004AE96C /* GameObjectCollection.hpp */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +174,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include\"";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Debug;
@@ -160,6 +185,8 @@
 				CONFIGURATION_BUILD_DIR = ../../;
 				COPY_PHASE_STRIP = YES;
 				HEADER_SEARCH_PATHS = ../../include;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
