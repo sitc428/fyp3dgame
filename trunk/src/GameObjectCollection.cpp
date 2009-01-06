@@ -3,10 +3,10 @@
 
 GameObjectCollection::GameObjectCollection(int width, int height, InputEventHandler* inputEvent)
 {
-	device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
+	device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, (irr::IEventReceiver*)inputEvent);
 	
 	if(!device)
-		device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
+		device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, (irr::IEventReceiver*)inputEvent);
 	
 	if(!device)
 		return;
