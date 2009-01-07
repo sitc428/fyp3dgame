@@ -104,6 +104,11 @@ void GameObjectCollection::idle()
 		_device->yield();
 }
 
+void move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos)
+{
+	irr::core::vector3df currentPos = obj->getPosition();
+}
+
 void GameObjectCollection::moveForward()
 {
 	irr::core::vector3df v1 = _player->getPosition();
@@ -111,3 +116,5 @@ void GameObjectCollection::moveForward()
 	_player->setPosition(v1);
 	_viewPoint->setTarget(_player->getAbsolutePosition());
 }
+
+

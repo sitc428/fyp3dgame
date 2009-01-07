@@ -27,6 +27,8 @@ public:
 	bool isActive() const;
 	void idle();
 
+	void move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos);
+	
 	void moveForward();
 
 private:

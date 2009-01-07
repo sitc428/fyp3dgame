@@ -33,7 +33,6 @@ void InputEventHandler::operator()()
 {
 	if(keyDown(irr::KEY_KEY_W))
 	{
-		std::cout<<"input!"<<std::endl;
 		_goc->moveForward();
 	}
 }
