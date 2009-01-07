@@ -22,6 +22,13 @@ InputEventHandler::~InputEventHandler()
 {
 }
 
+void InputEventHandler::operator()()
+{
+	while(1)
+	{
+	}
+}
+
 bool InputEventHandler::OnEvent(const irr::SEvent& event)
 {
 	bool eventprocessed = false;

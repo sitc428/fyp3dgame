@@ -21,12 +21,15 @@ public:
 	irr::IrrlichtDevice* Device();
 	irr::scene::ISceneManager* SceneManager();
 	irr::video::IVideoDriver* VideoDriver();
+	InputEventHandler* InputEvent();
 
 private:
 	irr::IrrlichtDevice *device;
 	irr::video::IVideoDriver *videoDriver;
 	irr::scene::ISceneManager *smgr;
 	irr::gui::IGUIEnvironment *guienv;
+	InputEventHandler* _inputEvent;
+	irr::scene::IAnimatedMeshSceneNode* _player;
 	//std::map<std::string, SceneData*> scenes;
 	std::map<std::string, irr::scene::ILightSceneNode*> lights;
 };

@@ -166,6 +166,8 @@ int main(int argc, char* argv[])
 	InputEventHandler *inputEvent = new InputEventHandler;
 
 	GameObjectCollection *goc = new GameObjectCollection(800, 600, inputEvent);
+	
+	//boost::thread inputThread(*inputEvent);
 
 	RenderingHandler a(goc);
 	//boost::thread renderingThread(a);

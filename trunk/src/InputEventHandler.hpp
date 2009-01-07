@@ -2,6 +2,7 @@
 #define __INPUT_EVENT_HANDLER_HPP__
 
 #include <irrlicht/irrlicht.h>
+#include <boost/thread.hpp>
 
 class InputEventHandler : public irr::IEventReceiver 
 {
@@ -12,6 +13,8 @@ public:
 
 	InputEventHandler();
 	~InputEventHandler();
+	
+	void operator()();
 
 	bool OnEvent(const irr::SEvent& event);
 
