@@ -4,85 +4,110 @@
 GameObjectCollection::GameObjectCollection(int width, int height, InputEventHandler* inputEvent)
 {
 	_inputEvent = inputEvent;
-	device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
+	_device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
 	
-	if(!device)
-		device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
+	if(!_device)
+		_device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
 
-	if(!device)
+	if(!_device)
 		return;
 
-	device->setWindowCaption(L"FYP - v0.1 r23");
+	_device->setWindowCaption(L"FYP - v0.1 r23");
 
 	// get the device driver;
-	videoDriver = device->getVideoDriver();
+	_videoDriver = _device->getVideoDriver();
 
 	// get the handler of the scene manager;
-	smgr = device->getSceneManager();
+	_smgr = _device->getSceneManager();
 	
 	// get the handler of the gui enviroment;
-	guienv = device->getGUIEnvironment();
+	_guienv = _device->getGUIEnvironment();
 
 	/////irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(0, irr:vector3df(0, 0, -30), node->getPosition());
-	irr::scene::ILightSceneNode* light = smgr->addLightSceneNode(0, irr::core::vector3df(0, 10, 4), irr::video::SColorf(), 0);
+	irr::scene::ILightSceneNode* _light = _smgr->addLightSceneNode(0, irr::core::vector3df(0, 10, 4), irr::video::SColorf(), 0);
 	
-	_player = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/x/trial_a.x"));
+	_player = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/trial_a.x"));
 	
 	if(_player)
 	{
-		_player->setPosition(irr::core::vector3df(0.0,-1.0,0.0));
+		_player->setPosition(irr::core::vector3df(0.0,1.0,0.0));
 		_player->setScale(irr::core::vector3df(0.05,0.05,0.05));
 		_player->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	}
 
-	irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(_player, irr::core::vector3df(0, 10, 30), _player->getAbsolutePosition());
+	_viewPoint = _smgr->addCameraSceneNode(_player, irr::core::vector3df(0, 10, 30), _player->getAbsolutePosition());
 	
-	irr::scene::ISceneNode* floor = smgr->addCubeSceneNode(1000.0);
+	irr::scene::ISceneNode* _floor = _smgr->addCubeSceneNode(1000.0);
 
-	if(floor)
+	if(_floor)
 	{
-		floor->setScale(irr::core::vector3df(1.01,0.1,1.01));
-		floor->setPosition(irr::core::vector3df(0,-50,0));
-		floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-		floor->setMaterialTexture(0, videoDriver->getTexture("img/grass.jpg"));
+		_floor->setScale(irr::core::vector3df(1.01,0.1,1.01));
+		_floor->setPosition(irr::core::vector3df(0,-50,0));
+		_floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		_floor->setMaterialTexture(0, _videoDriver->getTexture("img/grass.jpg"));
 	}
 	
-	irr::video::ITexture* texture = videoDriver->getTexture("img/sky.jpg");
+	irr::video::ITexture* texture = _videoDriver->getTexture("img/sky.jpg");
 
-	irr::scene::ISceneNode* sky = smgr->addSkyBoxSceneNode(texture,texture,texture,texture,texture,texture);
+	irr::scene::ISceneNode* sky = _smgr->addSkyBoxSceneNode(texture,texture,texture,texture,texture,texture);
 }
 
 GameObjectCollection::~GameObjectCollection()
 {
-	device->drop();
+	_device->drop();
 }
 
-bool GameObjectCollection::deviceRunning() const
+irr::IrrlichtDevice* GameObjectCollection::device()
 {
-	if(device)
-		return device->run();
-	else
-		return false;
+	return _device;
 }
 
-irr::IrrlichtDevice* GameObjectCollection::Device()
+irr::scene::ISceneManager* GameObjectCollection::sceneManager()
 {
-	return device;
+	return _smgr;
 }
 
-irr::scene::ISceneManager* GameObjectCollection::SceneManager()
+irr::video::IVideoDriver* GameObjectCollection::videoDriver()
 {
-	return smgr;
+	return _videoDriver;
 }
 
-irr::video::IVideoDriver* GameObjectCollection::VideoDriver()
-{
-	return videoDriver;
-}
-
-InputEventHandler* GameObjectCollection::InputEvent()
+InputEventHandler* GameObjectCollection::inputEvent()
 {
 	return _inputEvent;
 }
 
-irr::scene::IScene
+irr::scene::IAnimatedMeshSceneNode* GameObjectCollection::currentPlayer()
+{
+	return _player;
+}
+
+bool GameObjectCollection::deviceRunning() const
+{
+	if(_device)
+		return _device->run();
+	else
+		return false;
+}
+
+bool GameObjectCollection::isActive() const
+{
+	if(_device)
+		return _device->isWindowActive();
+	else
+		return false;
+}
+
+void GameObjectCollection::idle()
+{
+	if(_device)
+		_device->yield();
+}
+
+void GameObjectCollection::moveForward()
+{
+	irr::core::vector3df v1 = _player->getPosition();
+	v1.Z += .05f;
+	_player->setPosition(v1);
+	_viewPoint->setTarget(_player->getAbsolutePosition());
+}

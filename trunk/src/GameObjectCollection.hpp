@@ -17,21 +17,30 @@ public:
 	GameObjectCollection(int width, int height, InputEventHandler* inputEvent);
 	~GameObjectCollection();
 
+	irr::IrrlichtDevice* device();
+	irr::scene::ISceneManager* sceneManager();
+	irr::video::IVideoDriver* videoDriver();
+	InputEventHandler* inputEvent();
+	irr::scene::IAnimatedMeshSceneNode* currentPlayer();
+
 	bool deviceRunning() const;
-	irr::IrrlichtDevice* Device();
-	irr::scene::ISceneManager* SceneManager();
-	irr::video::IVideoDriver* VideoDriver();
-	InputEventHandler* InputEvent();
+	bool isActive() const;
+	void idle();
+
+	void moveForward();
 
 private:
-	irr::IrrlichtDevice *device;
-	irr::video::IVideoDriver *videoDriver;
-	irr::scene::ISceneManager *smgr;
-	irr::gui::IGUIEnvironment *guienv;
+	irr::IrrlichtDevice *_device;
+	irr::video::IVideoDriver *_videoDriver;
+	irr::scene::ISceneManager *_smgr;
+	irr::gui::IGUIEnvironment *_guienv;
 	InputEventHandler* _inputEvent;
+	
+	irr::scene::ICameraSceneNode* _viewPoint;
+	
 	irr::scene::IAnimatedMeshSceneNode* _player;
 	//std::map<std::string, SceneData*> scenes;
-	std::map<std::string, irr::scene::ILightSceneNode*> lights;
+	std::map<std::string, irr::scene::ILightSceneNode*> _lights;
 };
 
 #endif //! __GAME_OBJECT_COLLECTION_HPP__

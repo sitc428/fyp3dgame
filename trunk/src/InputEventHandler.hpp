@@ -4,6 +4,8 @@
 #include <irrlicht/irrlicht.h>
 #include <boost/thread.hpp>
 
+extern class GameObjectCollection;
+
 class InputEventHandler : public irr::IEventReceiver 
 {
 public:
@@ -13,6 +15,8 @@ public:
 
 	InputEventHandler();
 	~InputEventHandler();
+	
+	void setGameObject(GameObjectCollection *goc);
 	
 	void operator()();
 
@@ -54,6 +58,8 @@ private:
 	keyStates keyState[irr::KEY_KEY_CODES_COUNT];
 
 	handlerStates handlerState;
+	
+	GameObjectCollection *_goc;
 };
 
 #endif //! __INPUT_EVENT_HANDLER_HPP__

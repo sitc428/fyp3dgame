@@ -2,16 +2,23 @@
 
 void RenderingHandler::operator()()
 {
+	boost::thread handleInput(*(_goc->inputEvent()));
 	while(_goc->deviceRunning())
 	{
+		if(!_goc->isActive())
+		{
+			_goc->idle();
+			continue;
+		}
+
 		boost::mutex::scoped_lock lock(gl_mutex);
 		
-		_goc->InputEvent()->disable();
+		_goc->inputEvent()->disable();
 
-		_goc->VideoDriver()->beginScene(true, true, irr::video::SColor(255,128,128,128));
-		_goc->SceneManager()->drawAll();
-		_goc->VideoDriver()->endScene();
-		
+		_goc->videoDriver()->beginScene(true, true, irr::video::SColor(255,128,128,128));
+		_goc->sceneManager()->drawAll();
+		_goc->videoDriver()->endScene();
+
 		/*
 		if(_goc->InputEvent()->keyPressed(irr::KEY_KEY_W))
 		{
@@ -29,6 +36,6 @@ void RenderingHandler::operator()()
 		}
 		*/
 
-		_goc->InputEvent()->enable();
+		_goc->inputEvent()->enable();
 	}
 }
