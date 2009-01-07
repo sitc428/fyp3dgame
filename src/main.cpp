@@ -167,15 +167,15 @@ int main(int argc, char* argv[])
 
 	GameObjectCollection *goc = new GameObjectCollection(800, 600, inputEvent);
 	
-	//boost::thread inputThread(*inputEvent);
+	inputEvent->setGameObject(goc);
 
-	RenderingHandler a(goc);
-	//boost::thread renderingThread(a);
-	//renderingThread.join();
-	
-	a();
+	RenderingHandler *rendering = new RenderingHandler(goc);
 
-	//rendering.join();
+	(*rendering)();
+
+	delete inputEvent;
+	delete rendering;
+	delete goc;
 
 	// start the main device loop;
 	/*while(device->run())
