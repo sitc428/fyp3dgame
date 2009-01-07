@@ -31,13 +31,10 @@ void InputEventHandler::setGameObject(GameObjectCollection *goc)
 
 void InputEventHandler::operator()()
 {
-	while(1)
-	{
 	if(keyDown(irr::KEY_KEY_W))
 	{
 		std::cout<<"input!"<<std::endl;
 		_goc->moveForward();
-	}
 	}
 }
 
