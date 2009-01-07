@@ -3,12 +3,11 @@
 
 GameObjectCollection::GameObjectCollection(int width, int height, InputEventHandler* inputEvent)
 {
-
-	device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, (irr::IEventReceiver*)inputEvent);
-
+	_inputEvent = inputEvent;
+	device = irr::createDevice(irr::video::EDT_OPENGL, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
 	
 	if(!device)
-		device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, (irr::IEventReceiver*)inputEvent);
+		device = irr::createDevice(irr::video::EDT_BURNINGSVIDEO, irr::core::dimension2d<irr::s32>(width, height), 16, false, false, false, inputEvent);
 
 	if(!device)
 		return;
@@ -27,19 +26,16 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	/////irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(0, irr:vector3df(0, 0, -30), node->getPosition());
 	irr::scene::ILightSceneNode* light = smgr->addLightSceneNode(0, irr::core::vector3df(0, 10, 4), irr::video::SColorf(), 0);
 	
-	irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(0, irr::core::vector3df(0, 0, -30), irr::core::vector3df(0, 0, 0));
-
-	//irr::scene::ISceneNode* node = smgr->addCubeSceneNode(10);
+	_player = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/x/trial_a.x"));
 	
-	
-	irr::scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("model/x/trial_a.x"));
-
-	if(node)
+	if(_player)
 	{
-		node->setPosition(irr::core::vector3df(0.0,-1.0,0.0));
-		node->setScale(irr::core::vector3df(0.05,0.05,0.05));
-		node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		_player->setPosition(irr::core::vector3df(0.0,-1.0,0.0));
+		_player->setScale(irr::core::vector3df(0.05,0.05,0.05));
+		_player->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	}
+
+	irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(_player, irr::core::vector3df(0, 10, 30), _player->getAbsolutePosition());
 	
 	irr::scene::ISceneNode* floor = smgr->addCubeSceneNode(1000.0);
 
@@ -50,6 +46,10 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		floor->setMaterialTexture(0, videoDriver->getTexture("img/grass.jpg"));
 	}
+	
+	irr::video::ITexture* texture = videoDriver->getTexture("img/sky.jpg");
+
+	irr::scene::ISceneNode* sky = smgr->addSkyBoxSceneNode(texture,texture,texture,texture,texture,texture);
 }
 
 GameObjectCollection::~GameObjectCollection()
@@ -79,3 +79,10 @@ irr::video::IVideoDriver* GameObjectCollection::VideoDriver()
 {
 	return videoDriver;
 }
+
+InputEventHandler* GameObjectCollection::InputEvent()
+{
+	return _inputEvent;
+}
+
+irr::scene::IScene
