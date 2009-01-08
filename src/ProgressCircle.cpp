@@ -37,16 +37,14 @@ ProgressCircle::~ProgressCircle()
 
 void ProgressCircle::OnRegisterSceneNode()
 {
-	std::cerr<<"ProgressCircle::OnRegisterSceneNode()"<<std::endl;
 	if (_isVisible)
-		SceneManager->registerNodeForRendering(this, irr::scene::ESNRP_SHADOW);
+		SceneManager->registerNodeForRendering(this, irr::scene::ESNRP_SOLID);
 
-	ISceneNode::OnRegisterSceneNode();
+	irr::scene::ISceneNode::OnRegisterSceneNode();
 }
 
 void ProgressCircle::render()
 {
-	std::cerr<<"ProgressCircle::render()"<<std::endl;
 	if(!_coll)
 		return;
 

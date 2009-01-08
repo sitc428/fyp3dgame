@@ -4,7 +4,7 @@
 #include <irrlicht/irrlicht.h>
 #include <boost/thread.hpp>
 
-extern class GameObjectCollection;
+class GameObjectCollection;
 
 class InputEventHandler : public irr::IEventReceiver 
 {
