@@ -1,8 +1,6 @@
 #include <irrlicht/irrlicht.h>
 #include "ProgressCircle.hpp"
 
-#include <iostream>
-
 ProgressCircle::ProgressCircle(
 	irr::scene::ISceneNode *parent,
 	irr::scene::ISceneManager *smgr,
@@ -28,7 +26,7 @@ ProgressCircle::ProgressCircle(
 	_isVisible(true),
 	_percentage(100)
 {
-	setAutomaticCulling(irr::scene::E_CULLING_TYPE::EAC_OFF);
+	setAutomaticCulling(irr::scene::EAC_OFF);
 }
 
 ProgressCircle::~ProgressCircle()
