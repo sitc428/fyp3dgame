@@ -27,11 +27,10 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	/////irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(0, irr:vector3df(0, 0, -30), node->getPosition());
 	irr::scene::ILightSceneNode* _light = _smgr->addLightSceneNode(0, irr::core::vector3df(0, 10, 4), irr::video::SColorf(), 0);
 
-	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/trial_a.x")), irr::core::vector3df(0.0,1.0,0.0), irr::core::vector3df(0.05,0.05,0.05), 0.05f);
+	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/trial_a.x"), _smgr->getRootSceneNode()), irr::core::vector3df(0.0,1.0,0.0), irr::core::vector3df(0.05,0.05,0.05), 0.05f);
 
+	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
 	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
-
-	ProgressCircle* pc = new ProgressCircle(0, _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10);
 	
 	irr::scene::ISceneNode* _floor = _smgr->addCubeSceneNode(1000.0);
 
