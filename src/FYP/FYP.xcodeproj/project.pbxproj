@@ -19,6 +19,8 @@
 		9868F1650F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */; };
 		9868F1660F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */; };
 		9868F1670F13146B004AE96C /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */; };
+		9868F44F0F168B26004AE96C /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F44C0F168B26004AE96C /* Player.cpp */; };
+		9868F4500F168B26004AE96C /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F44E0F168B26004AE96C /* ProgressCircle.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,10 @@
 		9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_date_time-gcc40-mt-s.a"; sourceTree = "<group>"; };
 		9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = "<group>"; };
 		9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s.a"; sourceTree = "<group>"; };
+		9868F44B0F168B26004AE96C /* ProgressCircle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ProgressCircle.hpp; path = ../ProgressCircle.hpp; sourceTree = SOURCE_ROOT; };
+		9868F44C0F168B26004AE96C /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../Player.cpp; sourceTree = SOURCE_ROOT; };
+		9868F44D0F168B26004AE96C /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Player.hpp; path = ../Player.hpp; sourceTree = SOURCE_ROOT; };
+		9868F44E0F168B26004AE96C /* ProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressCircle.cpp; path = ../ProgressCircle.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,10 @@
 		9868F2D80F134CD3004AE96C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				9868F44B0F168B26004AE96C /* ProgressCircle.hpp */,
+				9868F44C0F168B26004AE96C /* Player.cpp */,
+				9868F44D0F168B26004AE96C /* Player.hpp */,
+				9868F44E0F168B26004AE96C /* ProgressCircle.cpp */,
 				9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */,
 				9868F12F0F1309CF004AE96C /* InputEventHandler.hpp */,
 				9868F1300F1309CF004AE96C /* main.cpp */,
@@ -164,6 +174,8 @@
 				9868F1340F1309CF004AE96C /* InputEventHandler.cpp in Sources */,
 				9868F1350F1309CF004AE96C /* main.cpp in Sources */,
 				9868F1360F1309CF004AE96C /* RenderingHandler.cpp in Sources */,
+				9868F44F0F168B26004AE96C /* Player.cpp in Sources */,
+				9868F4500F168B26004AE96C /* ProgressCircle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
