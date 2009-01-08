@@ -1,4 +1,5 @@
 #include "GameObjectCollection.hpp"
+#include "ProgressCircle.hpp"
 #include <iostream>
 
 GameObjectCollection::GameObjectCollection(int width, int height, InputEventHandler* inputEvent)
@@ -25,17 +26,13 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	/////irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(0, irr:vector3df(0, 0, -30), node->getPosition());
 	irr::scene::ILightSceneNode* _light = _smgr->addLightSceneNode(0, irr::core::vector3df(0, 10, 4), irr::video::SColorf(), 0);
-	
-	_player = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/trial_a.x"));
-	
-	if(_player)
-	{
-		_player->setPosition(irr::core::vector3df(0.0,1.0,0.0));
-		_player->setScale(irr::core::vector3df(0.05,0.05,0.05));
-		_player->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}
 
-	_viewPoint = _smgr->addCameraSceneNode(_player, irr::core::vector3df(0, 10, 30), _player->getAbsolutePosition());
+	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/trial_a.x")), irr::core::vector3df(0.0,1.0,0.0), irr::core::vector3df(0.05,0.05,0.05), 0.05f);
+	
+	//ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager());
+	ProgressCircle(_smgr->getRootSceneNode(), _smgr, 100, _smgr->getSceneCollisionManager());
+
+	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
 	
 	irr::scene::ISceneNode* _floor = _smgr->addCubeSceneNode(1000.0);
 
@@ -54,6 +51,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 GameObjectCollection::~GameObjectCollection()
 {
+	delete _player;
 	_device->drop();
 }
 
@@ -79,7 +77,7 @@ InputEventHandler* GameObjectCollection::inputEvent()
 
 irr::scene::IAnimatedMeshSceneNode* GameObjectCollection::currentPlayer()
 {
-	return _player;
+	return (irr::scene::IAnimatedMeshSceneNode*)_player;
 }
 
 bool GameObjectCollection::deviceRunning() const
@@ -104,17 +102,33 @@ void GameObjectCollection::idle()
 		_device->yield();
 }
 
-void move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos)
+void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos)
 {
 	irr::core::vector3df currentPos = obj->getPosition();
+	currentPos += targetPos;
+	obj->setPosition(currentPos);
 }
 
 void GameObjectCollection::moveForward()
 {
-	irr::core::vector3df v1 = _player->getPosition();
-	v1.Z += .05f;
-	_player->setPosition(v1);
-	_viewPoint->setTarget(_player->getAbsolutePosition());
+	move(_player->getNode(), irr::core::vector3df(0, 0, -0.05f));
+	_viewPoint->setTarget(_player->getPosition());
 }
 
+void GameObjectCollection::moveBackward()
+{
+	move(_player->getNode(), irr::core::vector3df(0, 0, 0.05f));
+	_viewPoint->setTarget(_player->getPosition());
+}
 
+void GameObjectCollection::moveLeft()
+{
+	move(_player->getNode(), irr::core::vector3df(0.05f, 0, 0));
+	_viewPoint->setTarget(_player->getPosition());
+}
+
+void GameObjectCollection::moveRight()
+{
+	move(_player->getNode(), irr::core::vector3df(-0.05f, 0, 0));
+	_viewPoint->setTarget(_player->getPosition());
+}

@@ -7,6 +7,7 @@
 #include "InputEventHandler.hpp"
 #include "GameObjectCollection.hpp"
 #include "RenderingHandler.hpp"
+#include "ConcurrentQueue.hpp"
 
 #ifdef _IRR_WINDOWS_
 #pragma comment(lib, "Irrlicht.lib")
@@ -172,6 +173,9 @@ int main(int argc, char* argv[])
 	RenderingHandler *rendering = new RenderingHandler(goc);
 
 	(*rendering)();
+	//boost::thread renderingThread(boost::ref(*rendering));
+	
+	//renderingThread.join();
 
 	delete inputEvent;
 	delete rendering;
