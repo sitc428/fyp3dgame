@@ -36,7 +36,7 @@ ProgressCircle::~ProgressCircle()
 void ProgressCircle::OnRegisterSceneNode()
 {
 	if (_isVisible)
-		SceneManager->registerNodeForRendering(this, irr::scene::ESNRP_SOLID);
+		SceneManager->registerNodeForRendering(this, irr::scene::ESNRP_SHADOW);
 
 	irr::scene::ISceneNode::OnRegisterSceneNode();
 }
