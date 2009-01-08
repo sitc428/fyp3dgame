@@ -172,6 +172,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ConcurrentQueue.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GameObjectCollection.cpp"
 				>
 			</File>
@@ -181,6 +185,14 @@
 			</File>
 			<File
 				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Player.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ProgressCircle.cpp"
 				>
 			</File>
 			<File
@@ -194,11 +206,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\ConcurrentQueue.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GameObjectCollection.hpp"
 				>
 			</File>
 			<File
 				RelativePath=".\InputEventHandler.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Player.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ProgressCircle.hpp"
 				>
 			</File>
 			<File

@@ -3,6 +3,7 @@
 
 #include <irrlicht/irrlicht.h>
 #include "InputEventHandler.hpp"
+#include "Player.hpp"
 
 #include <vector>
 #include <string>
@@ -30,6 +31,9 @@ public:
 	void move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos);
 	
 	void moveForward();
+	void moveBackward();
+	void moveLeft();
+	void moveRight();
 
 private:
 	irr::IrrlichtDevice *_device;
@@ -40,7 +44,8 @@ private:
 	
 	irr::scene::ICameraSceneNode* _viewPoint;
 	
-	irr::scene::IAnimatedMeshSceneNode* _player;
+	//irr::scene::IAnimatedMeshSceneNode* _player;
+	Player* _player;
 	//std::map<std::string, SceneData*> scenes;
 	std::map<std::string, irr::scene::ILightSceneNode*> _lights;
 };

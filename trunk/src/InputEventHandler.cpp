@@ -35,6 +35,19 @@ void InputEventHandler::operator()()
 	{
 		_goc->moveForward();
 	}
+	
+	if(keyDown(irr::KEY_KEY_S))
+	{
+		_goc->moveBackward();
+	}
+	if(keyDown(irr::KEY_KEY_A))
+	{
+		_goc->moveLeft();
+	}
+	if(keyDown(irr::KEY_KEY_D))
+	{
+		_goc->moveRight();
+	}
 }
 
 bool InputEventHandler::OnEvent(const irr::SEvent& event)
