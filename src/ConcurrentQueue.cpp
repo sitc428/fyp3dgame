@@ -36,7 +36,7 @@ void ConcurrentQueue<Data>::wait_and_pop(Data& popped_value)
 	boost::mutex::scoped_lock _lock(_mutex);
 	while(_queue.empty())
 	{
-		_conditionVariable.wait(lock);
+		_conditionVariable.wait(_lock);
 	}
 
 	popped_value=_queue.front();
