@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\include"
+				AdditionalIncludeDirectories="..\include\;&quot;C:\Program Files\Microsoft Platform SDK\Include&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -58,8 +58,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="&quot;..\lib\irrlicht\Win32-visualstudio&quot;"
+				OutputFile="..\$(ProjectName).exe"
+				AdditionalLibraryDirectories="&quot;..\lib\irrlicht\Win32-visualstudio&quot;;..\lib"
 				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -132,7 +135,7 @@
 				Name="VCLinkerTool"
 				OutputFile="..\$(ProjectName).exe"
 				AdditionalLibraryDirectories="&quot;..\lib\irrlicht\Win32-visualstudio&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;;..\lib"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
@@ -172,6 +175,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\CGUITTFont.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ConcurrentQueue.cpp"
 				>
 			</File>
@@ -205,6 +212,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\CGUITTFont.h"
+				>
+			</File>
 			<File
 				RelativePath=".\ConcurrentQueue.hpp"
 				>
