@@ -45,12 +45,23 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::video::ITexture* texture = _videoDriver->getTexture("img/sky.jpg");
 
 	irr::scene::ISceneNode* sky = _smgr->addSkyBoxSceneNode(texture,texture,texture,texture,texture,texture);
+	
+	_face = new irr::gui::CGUITTFace;
+
+	_face->load("font/kochi-gothic-subst.ttf");
+	
+	_font = new irr::gui::CGUITTFont(_videoDriver);
+	
+	_font->attach(_face, 24);
+	
+	//_guienv->getSkin()->setFont(_font);
 }
 
 GameObjectCollection::~GameObjectCollection()
 {
 	delete _player;
 	_device->drop();
+	_font->drop();
 }
 
 irr::IrrlichtDevice* GameObjectCollection::device()
@@ -66,6 +77,11 @@ irr::scene::ISceneManager* GameObjectCollection::sceneManager()
 irr::video::IVideoDriver* GameObjectCollection::videoDriver()
 {
 	return _videoDriver;
+}
+
+irr::gui::IGUIEnvironment* GameObjectCollection::guiEnv()
+{
+	return _guienv;
 }
 
 InputEventHandler* GameObjectCollection::inputEvent()
@@ -98,6 +114,11 @@ void GameObjectCollection::idle()
 {
 	if(_device)
 		_device->yield();
+}
+
+void GameObjectCollection::drawText()
+{
+	_font->draw(L"Hello TrueType", irr::core::rect<irr::s32>(0,240,640,240), irr::video::SColor(255,255,64,64), true);
 }
 
 void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos)

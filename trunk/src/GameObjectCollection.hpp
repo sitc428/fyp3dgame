@@ -3,6 +3,7 @@
 
 #include <irrlicht/irrlicht.h>
 #include "InputEventHandler.hpp"
+#include "CGUITTFont.h"
 #include "Player.hpp"
 
 #include <vector>
@@ -21,12 +22,15 @@ public:
 	irr::IrrlichtDevice* device();
 	irr::scene::ISceneManager* sceneManager();
 	irr::video::IVideoDriver* videoDriver();
+	irr::gui::IGUIEnvironment* guiEnv();
 	InputEventHandler* inputEvent();
 	irr::scene::IAnimatedMeshSceneNode* currentPlayer();
 
 	bool deviceRunning() const;
 	bool isActive() const;
 	void idle();
+	
+	void drawText();
 
 	void move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos);
 	
@@ -48,6 +52,9 @@ private:
 	Player* _player;
 	//std::map<std::string, SceneData*> scenes;
 	std::map<std::string, irr::scene::ILightSceneNode*> _lights;
+	
+	irr::gui::CGUITTFace* _face;
+	irr::gui::CGUITTFont* _font;
 };
 
 #endif //! __GAME_OBJECT_COLLECTION_HPP__
