@@ -11,17 +11,19 @@
 		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
 		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
 		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
-		9868F1330F1309CF004AE96C /* GameObjectCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */; };
-		9868F1340F1309CF004AE96C /* InputEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */; };
-		9868F1350F1309CF004AE96C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F1300F1309CF004AE96C /* main.cpp */; };
-		9868F1360F1309CF004AE96C /* RenderingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F1310F1309CF004AE96C /* RenderingHandler.cpp */; };
 		9868F1640F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */; };
 		9868F1650F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */; };
 		9868F1660F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */; };
 		9868F1670F13146B004AE96C /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */; };
-		9868F44F0F168B26004AE96C /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F44C0F168B26004AE96C /* Player.cpp */; };
-		9868F4500F168B26004AE96C /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F44E0F168B26004AE96C /* ProgressCircle.cpp */; };
-		9868F4640F168EBB004AE96C /* ConcurrentQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4620F168EBB004AE96C /* ConcurrentQueue.cpp */; };
+		9868F5020F17C38F004AE96C /* CGUITTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */; };
+		9868F5030F17C38F004AE96C /* ConcurrentQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */; };
+		9868F5040F17C38F004AE96C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F70F17C38F004AE96C /* main.cpp */; };
+		9868F5050F17C38F004AE96C /* InputEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F90F17C38F004AE96C /* InputEventHandler.cpp */; };
+		9868F5060F17C38F004AE96C /* GameObjectCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FB0F17C38F004AE96C /* GameObjectCollection.cpp */; };
+		9868F5070F17C38F004AE96C /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FC0F17C38F004AE96C /* Player.cpp */; };
+		9868F5080F17C38F004AE96C /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FE0F17C38F004AE96C /* ProgressCircle.cpp */; };
+		9868F5090F17C38F004AE96C /* RenderingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F5000F17C38F004AE96C /* RenderingHandler.cpp */; };
+		9868F54D0F188CF9004AE96C /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F54C0F188CF9004AE96C /* libfreetype.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,23 +33,26 @@
 		9868EF5B0F130481004AE96C /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrlicht.a; sourceTree = "<group>"; };
 		9868F1060F1305AD004AE96C /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9868F1090F1305AD004AE96C /* FYP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FYP-Info.plist"; sourceTree = "<group>"; };
-		9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObjectCollection.cpp; path = ../GameObjectCollection.cpp; sourceTree = SOURCE_ROOT; };
-		9868F12D0F1309CF004AE96C /* GameObjectCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameObjectCollection.hpp; path = ../GameObjectCollection.hpp; sourceTree = SOURCE_ROOT; };
-		9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputEventHandler.cpp; path = ../InputEventHandler.cpp; sourceTree = SOURCE_ROOT; };
-		9868F12F0F1309CF004AE96C /* InputEventHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputEventHandler.hpp; path = ../InputEventHandler.hpp; sourceTree = SOURCE_ROOT; };
-		9868F1300F1309CF004AE96C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
-		9868F1310F1309CF004AE96C /* RenderingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderingHandler.cpp; path = ../RenderingHandler.cpp; sourceTree = SOURCE_ROOT; };
-		9868F1320F1309CF004AE96C /* RenderingHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderingHandler.hpp; path = ../RenderingHandler.hpp; sourceTree = SOURCE_ROOT; };
 		9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_date_time-gcc40-mt-s-1_37.a"; sourceTree = "<group>"; };
 		9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_date_time-gcc40-mt-s.a"; sourceTree = "<group>"; };
 		9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = "<group>"; };
 		9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s.a"; sourceTree = "<group>"; };
-		9868F44B0F168B26004AE96C /* ProgressCircle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ProgressCircle.hpp; path = ../ProgressCircle.hpp; sourceTree = SOURCE_ROOT; };
-		9868F44C0F168B26004AE96C /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../Player.cpp; sourceTree = SOURCE_ROOT; };
-		9868F44D0F168B26004AE96C /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Player.hpp; path = ../Player.hpp; sourceTree = SOURCE_ROOT; };
-		9868F44E0F168B26004AE96C /* ProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressCircle.cpp; path = ../ProgressCircle.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4620F168EBB004AE96C /* ConcurrentQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConcurrentQueue.cpp; path = ../ConcurrentQueue.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4630F168EBB004AE96C /* ConcurrentQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConcurrentQueue.hpp; path = ../ConcurrentQueue.hpp; sourceTree = SOURCE_ROOT; };
+		9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CGUITTFont.cpp; path = ../CGUITTFont.cpp; sourceTree = SOURCE_ROOT; };
+		9868F4F40F17C38F004AE96C /* CGUITTFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CGUITTFont.h; path = ../CGUITTFont.h; sourceTree = SOURCE_ROOT; };
+		9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConcurrentQueue.cpp; path = ../ConcurrentQueue.cpp; sourceTree = SOURCE_ROOT; };
+		9868F4F60F17C38F004AE96C /* ConcurrentQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConcurrentQueue.hpp; path = ../ConcurrentQueue.hpp; sourceTree = SOURCE_ROOT; };
+		9868F4F70F17C38F004AE96C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
+		9868F4F80F17C38F004AE96C /* InputEventHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputEventHandler.hpp; path = ../InputEventHandler.hpp; sourceTree = SOURCE_ROOT; };
+		9868F4F90F17C38F004AE96C /* InputEventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputEventHandler.cpp; path = ../InputEventHandler.cpp; sourceTree = SOURCE_ROOT; };
+		9868F4FA0F17C38F004AE96C /* GameObjectCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameObjectCollection.hpp; path = ../GameObjectCollection.hpp; sourceTree = SOURCE_ROOT; };
+		9868F4FB0F17C38F004AE96C /* GameObjectCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObjectCollection.cpp; path = ../GameObjectCollection.cpp; sourceTree = SOURCE_ROOT; };
+		9868F4FC0F17C38F004AE96C /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../Player.cpp; sourceTree = SOURCE_ROOT; };
+		9868F4FD0F17C38F004AE96C /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Player.hpp; path = ../Player.hpp; sourceTree = SOURCE_ROOT; };
+		9868F4FE0F17C38F004AE96C /* ProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressCircle.cpp; path = ../ProgressCircle.cpp; sourceTree = SOURCE_ROOT; };
+		9868F4FF0F17C38F004AE96C /* ProgressCircle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ProgressCircle.hpp; path = ../ProgressCircle.hpp; sourceTree = SOURCE_ROOT; };
+		9868F5000F17C38F004AE96C /* RenderingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderingHandler.cpp; path = ../RenderingHandler.cpp; sourceTree = SOURCE_ROOT; };
+		9868F5010F17C38F004AE96C /* RenderingHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderingHandler.hpp; path = ../RenderingHandler.hpp; sourceTree = SOURCE_ROOT; };
+		9868F54C0F188CF9004AE96C /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,7 @@
 				9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */,
 				9868F1650F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a in Frameworks */,
 				9868F1670F13146B004AE96C /* libboost_thread-gcc40-mt-s.a in Frameworks */,
+				9868F54D0F188CF9004AE96C /* libfreetype.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +96,7 @@
 		9868F12B0F1308BC004AE96C /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9868F54C0F188CF9004AE96C /* libfreetype.a */,
 				9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */,
 				9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */,
 				9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */,
@@ -105,19 +112,21 @@
 		9868F2D80F134CD3004AE96C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				9868F4620F168EBB004AE96C /* ConcurrentQueue.cpp */,
-				9868F4630F168EBB004AE96C /* ConcurrentQueue.hpp */,
-				9868F44B0F168B26004AE96C /* ProgressCircle.hpp */,
-				9868F44C0F168B26004AE96C /* Player.cpp */,
-				9868F44D0F168B26004AE96C /* Player.hpp */,
-				9868F44E0F168B26004AE96C /* ProgressCircle.cpp */,
-				9868F12E0F1309CF004AE96C /* InputEventHandler.cpp */,
-				9868F12F0F1309CF004AE96C /* InputEventHandler.hpp */,
-				9868F1300F1309CF004AE96C /* main.cpp */,
-				9868F1310F1309CF004AE96C /* RenderingHandler.cpp */,
-				9868F1320F1309CF004AE96C /* RenderingHandler.hpp */,
-				9868F12C0F1309CF004AE96C /* GameObjectCollection.cpp */,
-				9868F12D0F1309CF004AE96C /* GameObjectCollection.hpp */,
+				9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */,
+				9868F4F40F17C38F004AE96C /* CGUITTFont.h */,
+				9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */,
+				9868F4F60F17C38F004AE96C /* ConcurrentQueue.hpp */,
+				9868F4F70F17C38F004AE96C /* main.cpp */,
+				9868F4F80F17C38F004AE96C /* InputEventHandler.hpp */,
+				9868F4F90F17C38F004AE96C /* InputEventHandler.cpp */,
+				9868F4FA0F17C38F004AE96C /* GameObjectCollection.hpp */,
+				9868F4FB0F17C38F004AE96C /* GameObjectCollection.cpp */,
+				9868F4FC0F17C38F004AE96C /* Player.cpp */,
+				9868F4FD0F17C38F004AE96C /* Player.hpp */,
+				9868F4FE0F17C38F004AE96C /* ProgressCircle.cpp */,
+				9868F4FF0F17C38F004AE96C /* ProgressCircle.hpp */,
+				9868F5000F17C38F004AE96C /* RenderingHandler.cpp */,
+				9868F5010F17C38F004AE96C /* RenderingHandler.hpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -175,13 +184,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9868F1330F1309CF004AE96C /* GameObjectCollection.cpp in Sources */,
-				9868F1340F1309CF004AE96C /* InputEventHandler.cpp in Sources */,
-				9868F1350F1309CF004AE96C /* main.cpp in Sources */,
-				9868F1360F1309CF004AE96C /* RenderingHandler.cpp in Sources */,
-				9868F44F0F168B26004AE96C /* Player.cpp in Sources */,
-				9868F4500F168B26004AE96C /* ProgressCircle.cpp in Sources */,
-				9868F4640F168EBB004AE96C /* ConcurrentQueue.cpp in Sources */,
+				9868F5020F17C38F004AE96C /* CGUITTFont.cpp in Sources */,
+				9868F5030F17C38F004AE96C /* ConcurrentQueue.cpp in Sources */,
+				9868F5040F17C38F004AE96C /* main.cpp in Sources */,
+				9868F5050F17C38F004AE96C /* InputEventHandler.cpp in Sources */,
+				9868F5060F17C38F004AE96C /* GameObjectCollection.cpp in Sources */,
+				9868F5070F17C38F004AE96C /* Player.cpp in Sources */,
+				9868F5080F17C38F004AE96C /* ProgressCircle.cpp in Sources */,
+				9868F5090F17C38F004AE96C /* RenderingHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,8 +235,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -251,8 +263,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
