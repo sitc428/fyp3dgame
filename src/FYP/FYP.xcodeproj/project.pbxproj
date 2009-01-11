@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9868F1210F1306E5004AE96C /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF5B0F130481004AE96C /* libIrrlicht.a */; };
+		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
+		98563E770F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */; };
+		98563E780F1A46370050410E /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */; };
+		98563E790F1A46380050410E /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E740F1A46370050410E /* libboost_date_time-gcc40-mt-s-1_37.a */; };
+		98563E7A0F1A46380050410E /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E750F1A46370050410E /* libfreetype.a */; };
+		98563E7C0F1A46480050410E /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E7B0F1A46480050410E /* libIrrlicht.a */; };
 		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
 		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
 		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
-		9868F1640F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */; };
-		9868F1650F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */; };
-		9868F1660F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */; };
-		9868F1670F13146B004AE96C /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */; };
 		9868F5020F17C38F004AE96C /* CGUITTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */; };
 		9868F5030F17C38F004AE96C /* ConcurrentQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */; };
 		9868F5040F17C38F004AE96C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F70F17C38F004AE96C /* main.cpp */; };
@@ -23,20 +24,20 @@
 		9868F5070F17C38F004AE96C /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FC0F17C38F004AE96C /* Player.cpp */; };
 		9868F5080F17C38F004AE96C /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FE0F17C38F004AE96C /* ProgressCircle.cpp */; };
 		9868F5090F17C38F004AE96C /* RenderingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F5000F17C38F004AE96C /* RenderingHandler.cpp */; };
-		9868F54D0F188CF9004AE96C /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868F54C0F188CF9004AE96C /* libfreetype.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
+		98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
+		98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s.a"; path = "../../lib/libboost_date_time-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
+		98563E740F1A46370050410E /* libboost_date_time-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_date_time-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
+		98563E750F1A46370050410E /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../lib/libfreetype.a; sourceTree = SOURCE_ROOT; };
+		98563E7B0F1A46480050410E /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrlicht.a; path = ../../lib/libIrrlicht.a; sourceTree = SOURCE_ROOT; };
 		9868EF510F130414004AE96C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		9868EF520F130414004AE96C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		9868EF530F130414004AE96C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		9868EF5B0F130481004AE96C /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrlicht.a; sourceTree = "<group>"; };
 		9868F1060F1305AD004AE96C /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9868F1090F1305AD004AE96C /* FYP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FYP-Info.plist"; sourceTree = "<group>"; };
-		9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_date_time-gcc40-mt-s-1_37.a"; sourceTree = "<group>"; };
-		9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_date_time-gcc40-mt-s.a"; sourceTree = "<group>"; };
-		9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = "<group>"; };
-		9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libboost_thread-gcc40-mt-s.a"; sourceTree = "<group>"; };
 		9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CGUITTFont.cpp; path = ../CGUITTFont.cpp; sourceTree = SOURCE_ROOT; };
 		9868F4F40F17C38F004AE96C /* CGUITTFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CGUITTFont.h; path = ../CGUITTFont.h; sourceTree = SOURCE_ROOT; };
 		9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConcurrentQueue.cpp; path = ../ConcurrentQueue.cpp; sourceTree = SOURCE_ROOT; };
@@ -52,7 +53,6 @@
 		9868F4FF0F17C38F004AE96C /* ProgressCircle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ProgressCircle.hpp; path = ../ProgressCircle.hpp; sourceTree = SOURCE_ROOT; };
 		9868F5000F17C38F004AE96C /* RenderingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderingHandler.cpp; path = ../RenderingHandler.cpp; sourceTree = SOURCE_ROOT; };
 		9868F5010F17C38F004AE96C /* RenderingHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderingHandler.hpp; path = ../RenderingHandler.hpp; sourceTree = SOURCE_ROOT; };
-		9868F54C0F188CF9004AE96C /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,15 +60,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9868F1640F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */,
-				9868F1210F1306E5004AE96C /* libIrrlicht.a in Frameworks */,
-				9868F1660F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */,
 				9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */,
 				9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */,
 				9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */,
-				9868F1650F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a in Frameworks */,
-				9868F1670F13146B004AE96C /* libboost_thread-gcc40-mt-s.a in Frameworks */,
-				9868F54D0F188CF9004AE96C /* libfreetype.a in Frameworks */,
+				98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */,
+				98563E770F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */,
+				98563E780F1A46370050410E /* libboost_date_time-gcc40-mt-s.a in Frameworks */,
+				98563E790F1A46380050410E /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */,
+				98563E7A0F1A46380050410E /* libfreetype.a in Frameworks */,
+				98563E7C0F1A46480050410E /* libIrrlicht.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,12 +96,12 @@
 		9868F12B0F1308BC004AE96C /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				9868F54C0F188CF9004AE96C /* libfreetype.a */,
-				9868F1600F13146B004AE96C /* libboost_date_time-gcc40-mt-s-1_37.a */,
-				9868F1610F13146B004AE96C /* libboost_date_time-gcc40-mt-s.a */,
-				9868F1620F13146B004AE96C /* libboost_thread-gcc40-mt-s-1_37.a */,
-				9868F1630F13146B004AE96C /* libboost_thread-gcc40-mt-s.a */,
-				9868EF5B0F130481004AE96C /* libIrrlicht.a */,
+				98563E7B0F1A46480050410E /* libIrrlicht.a */,
+				98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */,
+				98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */,
+				98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */,
+				98563E740F1A46370050410E /* libboost_date_time-gcc40-mt-s-1_37.a */,
+				98563E750F1A46370050410E /* libfreetype.a */,
 				9868EF510F130414004AE96C /* Carbon.framework */,
 				9868EF520F130414004AE96C /* Cocoa.framework */,
 				9868EF530F130414004AE96C /* OpenGL.framework */,
@@ -236,9 +236,11 @@
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../lib\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -264,9 +266,11 @@
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../lib\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
