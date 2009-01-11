@@ -120,7 +120,7 @@ namespace irr
 							texp += imgw;
 						}
 						c8 name[128];
-						sprintf_s(name,"TTFontGlyph%d",idx_);
+						sprintf(name,"TTFontGlyph%d",idx_);
 						video::IImage *img = driver_->createImageFromData(video::ECF_A8R8G8B8,core::dimension2d<s32>(imgw,imgh),texd);
 						bool flg16 = driver_->getTextureCreationFlag(video::ETCF_ALWAYS_16_BIT);
 						bool flg32 = driver_->getTextureCreationFlag(video::ETCF_ALWAYS_32_BIT);
@@ -195,7 +195,7 @@ namespace irr
 					texp16 += imgw16;
 				}
 				c8 name[128];
-				sprintf_s(name,"TTFontGlyph%d_16",idx_);
+				sprintf(name,"TTFontGlyph%d_16",idx_);
 				video::IImage *img = driver_->createImageFromData(video::ECF_A1R5G5B5,core::dimension2d<s32>(imgw16,imgh16),texd16);
 				tex16 = driver_->addTexture(name,img);
 				img->drop();
