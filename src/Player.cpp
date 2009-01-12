@@ -5,7 +5,7 @@ Player::Player(irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df 
 {
 	_player->setPosition(position);
 	_player->setScale(scale);
-	_player->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	_player->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 }
 
 Player::~Player()
