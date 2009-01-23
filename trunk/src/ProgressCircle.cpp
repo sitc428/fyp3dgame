@@ -24,7 +24,7 @@ ProgressCircle::ProgressCircle(
 	_dimension(width, height),
 	_drawBorder(true),
 	_isVisible(true),
-	_percentage(100)
+	_percentage(70)
 {
 	setAutomaticCulling(irr::scene::EAC_OFF);
 }
@@ -64,30 +64,21 @@ void ProgressCircle::render()
 
 	irr::core::rect<irr::s32> barRect = absoluteRect;
 
-	if( _drawBorder )
+	/*if( _drawBorder )
 	{
 		driver->draw2DRectangle(_borderColor, absoluteRect, &absoluteRect);
 		barRect.UpperLeftCorner.X += 1;
 		barRect.UpperLeftCorner.Y += 1;
 		barRect.LowerRightCorner.X -= 1;
 		barRect.LowerRightCorner.Y -= 1;
-	}
+	}*/
 	
 	// draw inactive part
 	driver->draw2DRectangle(_inactiveColor, barRect, &barRect );
 
-	/*MaxNum = (BarRect.LowerRightCorner.X - BarRect.UpperLeftCorner.X)- 1;
-	s32 PercentNum = (s32)((m_s32Percent * MaxNum)/ 100);*/
-
-	// draw progress part 
-	//core::rect<s32> LoadRect = BarRect;
+	// draw active part
 	barRect.LowerRightCorner.X = barRect.UpperLeftCorner.X + ((barRect.LowerRightCorner.X - barRect.UpperLeftCorner.X) * _percentage) / 100;
-	//driver->draw2DRectangle(_activeColor, barRect, &barRect);
-
-	/*// draw empty part
-	LoadRect.UpperLeftCorner.X = BarRect.UpperLeftCorner.X + PercentNum;
-	LoadRect.LowerRightCorner.X = BarRect.LowerRightCorner.X;
-	driver->draw2DRectangle( BkgColor,LoadRect,&LoadRect );*/
+	driver->draw2DRectangle(_activeColor, barRect, &barRect);
 }
 
 const irr::core::aabbox3d<irr::f32> & ProgressCircle::getBoundingBox() const 

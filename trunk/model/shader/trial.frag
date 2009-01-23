@@ -9,7 +9,7 @@ varying vec3  ReflectVec;
 varying vec3  ViewVec;
 varying vec3  normal;
 
-void main (void)
+void main(void)
 {
 
 vec3  SurfaceColor =  vec3(0.75, 0.75, 0.75);

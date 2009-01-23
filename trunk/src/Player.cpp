@@ -1,11 +1,14 @@
 #include "Player.hpp"
 
-Player::Player(irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
-	: _player(source), _speed(speed)
+Player::Player(irr::scene::IAnimatedMeshSceneNode* source, irr::video::ITexture* texture, irr::core::vector3df position, irr::core::vector3df scale, float speed)
+	: _player(source), _speed(speed), _movingForward(true)
 {
+	_player->setLoopMode(false);
 	_player->setPosition(position);
 	_player->setScale(scale);
-	_player->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+	/*_player->setMaterialTexture(0, texture);
+	_player->setMaterialType(irr::video::EMT_SOLID);
+	_player->setMaterialFlag(irr::video::EMF_LIGHTING, true);*/
 }
 
 Player::~Player()
@@ -27,12 +30,31 @@ irr::core::vector3df Player::getPosition()
 	return _player->getPosition();
 }
 
+void Player::stopMove()
+{
+	_player->setLoopMode(false);
+}
+
 void Player::moveForward()
 {
+	if(!_movingForward)
+	{
+		_player->setRotation(irr::core::vector3df(0, 0, 0));
+		_movingForward = true;
+	}
+	
+	_player->setLoopMode(true);
 }
 
 void Player::moveBackward()
 {
+	if(_movingForward)
+	{
+		//_player->setRotation(irr::core::vector3df(0, 180, 0));
+		_movingForward = false;
+	}
+
+	_player->setLoopMode(true);
 }
 
 void Player::moveLeft()
