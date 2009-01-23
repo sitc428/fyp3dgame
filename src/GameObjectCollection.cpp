@@ -13,10 +13,18 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	if(!_device)
 		return;
 
-	_device->setWindowCaption(L"FYP - v0.1 r23");
+	_device->setWindowCaption(L"FYP - v0.1 r270");
 
 	// get the device driver;
 	_videoDriver = _device->getVideoDriver();
+
+	if(!_videoDriver)
+	{
+		_device->drop();
+		return;
+	}
+	
+	_videoDriver->setTextureCreationFlag(irr::video::ETCF_ALWAYS_32_BIT, true);
 
 	// get the handler of the scene manager;
 	_smgr = _device->getSceneManager();
@@ -24,14 +32,83 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	// get the handler of the gui enviroment;
 	_guienv = _device->getGUIEnvironment();
 
-	/////irr::scene::ICameraSceneNode* cam = smgr->addCameraSceneNode(0, irr:vector3df(0, 0, -30), node->getPosition());
+	// get the handler of the GPU Programming Services;
+	_gpu = _videoDriver->getGPUProgrammingServices();
+
 	irr::scene::ILightSceneNode* _light = _smgr->addLightSceneNode(0, irr::core::vector3df(0, 10, 4), irr::video::SColorf(), 0);
 
-	//_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/trial_a.x"), _smgr->getRootSceneNode()), irr::core::vector3df(0.0,1.0,0.0), irr::core::vector3df(0.05,0.05,0.05), 0.05f);
-	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/walk.x"), _smgr->getRootSceneNode()), irr::core::vector3df(0.0,1.0,0.0), irr::core::vector3df(0.05,0.05,0.05), 0.05f);
+	irr::c8* vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
+	irr::c8* psFileName = "model/shader/trial.frag"; // filename for the pixel shader
 
+	irr::s32 newMaterialType = 0;
+
+	if(_gpu)
+	{
+		MyShaderCallBack *mc = new MyShaderCallBack(_device, &(_light->getAbsolutePosition()));
+
+		newMaterialType = _gpu->addHighLevelShaderMaterialFromFiles(
+			vsFileName, "main", irr::video::EVST_VS_1_1,
+			psFileName, "main", irr::video::EPST_PS_1_1,
+			mc, irr::video::EMT_SOLID);
+
+		mc->drop();
+	}
+
+	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/walk.x"), _smgr->getRootSceneNode()), _videoDriver->getTexture("model/x/fullbodywithSkeleton_polySurfaceShape16.png"), irr::core::vector3df(0.0,1.0,0.0), irr::core::vector3df(0.05,0.05,0.05), 0.05f);
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
+
+	// add the view point
 	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
+	
+	// start adding trees.
+	srand(time(0));
+
+	std::vector<irr::scene::ISceneNode*> trees(100);
+	irr::scene::IAnimatedMesh* treeMesh = _smgr->getMesh("model/x/tree22.x");
+
+	for(int i = 0; i < 100; ++i)
+	{
+		irr::scene::ISceneNode* tree = _smgr->addAnimatedMeshSceneNode(treeMesh);
+
+		if(tree)
+		{
+			tree->setPosition(irr::core::vector3df(rand() % 400 - 200, 0, rand() % 400 - 200));
+			tree->setRotation(irr::core::vector3df(0, rand() % 360, 0));
+			tree->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		}
+
+		trees[i] = tree;
+	}
+	// End adding trees.
+
+	// monster?
+	irr::scene::IAnimatedMesh* monsterMesh = _smgr->getMesh("model/x/dwarf.x");
+
+	_monsters.resize(100);
+
+	for(int i = 0; i < 100; ++i)
+	{
+		irr::scene::IAnimatedMeshSceneNode* monster = _smgr->addAnimatedMeshSceneNode(monsterMesh);
+
+		if(monster)
+		{
+			monster->setLoopMode(false);
+			monster->setScale(irr::core::vector3df(0.1, 0.1, 0.1));
+			monster->setPosition(irr::core::vector3df(rand() % 400 - 200, 0, rand() % 400 - 200));
+			monster->setRotation(irr::core::vector3df(0, rand() % 360, 0));
+			monster->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		}
+
+		_monsters[i] = monster;
+	}
+	// End adding.
+
+	irr::scene::ISceneNode* _house = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/house.x"));
+	_house->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+
+	irr::scene::ISceneNode* _forest = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/forest_2e.x"));
+	_forest->setPosition(irr::core::vector3df(-20, 10, -20));
+	_forest->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	
 	irr::scene::ISceneNode* _floor = _smgr->addCubeSceneNode(1000.0);
 
@@ -42,6 +119,16 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		_floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		_floor->setMaterialTexture(0, _videoDriver->getTexture("img/grass.jpg"));
 	}
+
+	irr::scene::ISceneNodeAnimator * anim = _smgr->createCollisionResponseAnimator(
+		_floor->getTriangleSelector(), _player->getNode(), irr::core::vector3df(10,30,10),
+		irr::core::vector3df(-1,-1,-1), irr::core::vector3df(0,0.05,0));
+
+	_player->getNode()->addAnimator(anim);
+
+	_player->getNode()->addShadowVolumeSceneNode();
+
+	anim->drop();
 	
 	irr::video::ITexture* texture = _videoDriver->getTexture("img/sky.jpg");
 
@@ -54,6 +141,9 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	_font = new irr::gui::CGUITTFont(_videoDriver);
 	
 	_font->attach(_face, 24);
+
+	if(_videoDriver->queryFeature(irr::video::EVDF_MULTITEXTURE))
+		std::cout<<"we have it!"<<std::endl;
 	
 	//_guienv->getSkin()->setFont(_font);
 }
@@ -117,9 +207,9 @@ void GameObjectCollection::idle()
 		_device->yield();
 }
 
-void GameObjectCollection::drawText()
+void GameObjectCollection::drawText(irr::core::stringw text)
 {
-	_font->draw(L"Hello TrueType", irr::core::rect<irr::s32>(0,240,640,240), irr::video::SColor(255,255,64,64), true);
+	_font->draw(text.c_str(), irr::core::rect<irr::s32>(0,0,100, 40), irr::video::SColor(255,255,64,64), true);
 }
 
 void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos)
@@ -129,26 +219,43 @@ void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3d
 	obj->setPosition(currentPos);
 }
 
+void GameObjectCollection::Update()
+{
+	for(int i = 0; i < 100; ++i)
+	{
+		move(_monsters[i], irr::core::vector3df(0.1, 0, 0.1));
+	}
+}
+
+void GameObjectCollection::stopMove()
+{
+	_player->stopMove();
+}
+
 void GameObjectCollection::moveForward()
 {
+	_player->moveForward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, -0.05f));
 	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveBackward()
 {
+	_player->moveBackward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, 0.05f));
 	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveLeft()
 {
+	_player->moveLeft();
 	move(_player->getNode(), irr::core::vector3df(0.05f, 0, 0));
 	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveRight()
 {
+	_player->moveRight();
 	move(_player->getNode(), irr::core::vector3df(-0.05f, 0, 0));
 	_viewPoint->setTarget(_player->getPosition());
 }
