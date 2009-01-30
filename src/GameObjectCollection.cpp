@@ -49,12 +49,12 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		newMaterialType = _gpu->addHighLevelShaderMaterialFromFiles(
 			vsFileName, "main", irr::video::EVST_VS_1_1,
 			psFileName, "main", irr::video::EPST_PS_1_1,
-			mc, irr::video::EMT_SOLID);
+			mc, irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 
 		mc->drop();
 	}
 
-	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/walk.x"), _smgr->getRootSceneNode()),
+	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbodywithSkeletonTexture.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbodywithSkeleton_polySurfaceShape16.png"),
 		irr::core::vector3df(0.0, 10.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
@@ -81,7 +81,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 			tree->setPosition(irr::core::vector3df(rand() % 400 - 200, 0, rand() % 400 - 200));
 			tree->setRotation(irr::core::vector3df(0, 15 * (rand() % 24), 0));
 			tree->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-			tree->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+			//tree->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+			tree->setMaterialType(static_cast<irr::video::E_MATERIAL_TYPE>(newMaterialType));
 		}
 
 		trees[i] = tree;
