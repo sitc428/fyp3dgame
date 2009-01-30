@@ -4,6 +4,8 @@ Player::Player(irr::scene::IAnimatedMeshSceneNode* source, irr::video::ITexture*
 	: _player(source), _speed(speed), _movingForward(true)
 {
 	_player->setLoopMode(false);
+	_player->setMaterialTexture(0, texture);
+	_player->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	_player->setPosition(position);
 	_player->setScale(scale);
 	/*_player->setMaterialTexture(0, texture);
