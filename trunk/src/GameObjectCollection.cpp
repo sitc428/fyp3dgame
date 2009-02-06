@@ -232,7 +232,7 @@ void GameObjectCollection::drawText(irr::core::stringw text)
 	_font->draw(text.c_str(), irr::core::rect<irr::s32>(0,0,100, 40), irr::video::SColor(255,255,64,64), true);
 }
 
-void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df& targetPos)
+void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df targetPos)
 {
 	irr::core::vector3df currentPos = obj->getPosition();
 	currentPos += targetPos;
