@@ -32,7 +32,7 @@ public:
 	
 	void drawText(irr::core::stringw text);
 
-	void move(irr::scene::ISceneNode* obj, irr::core::vector3df& targetPos);
+	void move(irr::scene::ISceneNode* obj, irr::core::vector3df targetPos);
 	
 	void Update();
 
