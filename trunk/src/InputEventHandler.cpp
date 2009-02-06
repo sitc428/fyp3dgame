@@ -47,12 +47,14 @@ void InputEventHandler::operator()()
 
 	if(keyDown(irr::KEY_KEY_A))
 	{
-		_goc->moveLeft();
+		//_goc->moveLeft();
+		_goc->rotateLeft();
 	}
 
 	if(keyDown(irr::KEY_KEY_D))
 	{
-		_goc->moveRight();
+		//_goc->moveRight();
+		_goc->rotateRight();
 	}
 }
 

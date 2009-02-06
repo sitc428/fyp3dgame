@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 Player::Player(irr::scene::IAnimatedMeshSceneNode* source, irr::video::ITexture* texture, irr::core::vector3df position, irr::core::vector3df scale, float speed)
-	: _player(source), _speed(speed), _movingForward(true)
+	: _player(source), _speed(speed), _movingForward(true), _rotation(0)
 {
 	_player->setLoopMode(false);
 	_player->setMaterialTexture(0, texture);
@@ -22,6 +22,11 @@ float Player::speed() const
 	return _speed;
 }
 
+irr::s8 Player::getRotation()
+{
+	return _rotation;
+}
+
 irr::scene::IAnimatedMeshSceneNode* Player::getNode()
 {
 	return _player;
@@ -39,23 +44,11 @@ void Player::stopMove()
 
 void Player::moveForward()
 {
-	if(!_movingForward)
-	{
-		_player->setRotation(irr::core::vector3df(0, 0, 0));
-		_movingForward = true;
-	}
-	
 	_player->setLoopMode(true);
 }
 
 void Player::moveBackward()
 {
-	if(_movingForward)
-	{
-		//_player->setRotation(irr::core::vector3df(0, 180, 0));
-		_movingForward = false;
-	}
-
 	_player->setLoopMode(true);
 }
 
@@ -65,4 +58,14 @@ void Player::moveLeft()
 
 void Player::moveRight()
 {
+}
+
+void Player::rotateLeft()
+{
+	_player->setRotation(irr::core::vector3df(0, --_rotation, 0));
+}
+
+void Player::rotateRight()
+{
+	_player->setRotation(irr::core::vector3df(0, ++_rotation, 0));
 }

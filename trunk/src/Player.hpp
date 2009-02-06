@@ -16,12 +16,16 @@ public:
 	float speed() const;
 	
 	irr::core::vector3df getPosition();
+
+	irr::s8 getRotation();
 	
 	void stopMove();
 	void moveForward();
 	void moveBackward();
 	void moveLeft();
 	void moveRight();
+	void rotateLeft();
+	void rotateRight();
 
 private:
 	Player() {};
@@ -30,6 +34,7 @@ private:
 	ProgressCircle *_progressCircle;
 	float _speed;
 	bool _movingForward;
+	irr::s8 _rotation;
 };
 
 #endif //! __PLAYER_HPP__
