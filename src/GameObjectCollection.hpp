@@ -32,7 +32,7 @@ public:
 	
 	void drawText(irr::core::stringw text);
 
-	void move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos);
+	void move(irr::scene::ISceneNode* obj, irr::core::vector3df& targetPos);
 	
 	void Update();
 
@@ -41,6 +41,8 @@ public:
 	void moveBackward();
 	void moveLeft();
 	void moveRight();
+	void rotateLeft();
+	void rotateRight();
 
 private:
 	class MyShaderCallBack : public irr::video::IShaderConstantSetCallBack

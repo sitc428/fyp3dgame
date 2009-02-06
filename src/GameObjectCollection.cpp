@@ -56,7 +56,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbodywithSkeletonTexture.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbodywithSkeleton_polySurfaceShape16.png"),
-		irr::core::vector3df(0.0, 10.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
+		irr::core::vector3df(0.0, 1.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
 
@@ -81,8 +81,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 			tree->setPosition(irr::core::vector3df(rand() % 400 - 200, 0, rand() % 400 - 200));
 			tree->setRotation(irr::core::vector3df(0, 15 * (rand() % 24), 0));
 			tree->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-			//tree->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-			tree->setMaterialType(static_cast<irr::video::E_MATERIAL_TYPE>(newMaterialType));
+			tree->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+			//tree->setMaterialType(static_cast<irr::video::E_MATERIAL_TYPE>(newMaterialType));
 		}
 
 		trees[i] = tree;
@@ -232,7 +232,7 @@ void GameObjectCollection::drawText(irr::core::stringw text)
 	_font->draw(text.c_str(), irr::core::rect<irr::s32>(0,0,100, 40), irr::video::SColor(255,255,64,64), true);
 }
 
-void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df const & targetPos)
+void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df& targetPos)
 {
 	irr::core::vector3df currentPos = obj->getPosition();
 	currentPos += targetPos;
@@ -255,6 +255,9 @@ void GameObjectCollection::stopMove()
 void GameObjectCollection::moveForward()
 {
 	_player->moveForward();
+	/*irr::core::vector3df temp = irr::core::vector3df(0, 0, -0.05f);
+	temp.rotateXZBy(_player->getRotation(), temp);
+	move(_player->getNode(), temp);*/
 	move(_player->getNode(), irr::core::vector3df(0, 0, -0.05f));
 	_viewPoint->setTarget(_player->getPosition());
 }
@@ -278,4 +281,14 @@ void GameObjectCollection::moveRight()
 	_player->moveRight();
 	move(_player->getNode(), irr::core::vector3df(-0.05f, 0, 0));
 	_viewPoint->setTarget(_player->getPosition());
+}
+
+void GameObjectCollection::rotateLeft()
+{
+	_player->rotateLeft();
+}
+
+void GameObjectCollection::rotateRight()
+{
+	_player->rotateRight();
 }
