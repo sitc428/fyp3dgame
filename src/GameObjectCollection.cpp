@@ -61,7 +61,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
 
 	// add the view point
-	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
+	//_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
+	_viewPoint = _smgr->addCameraSceneNode(0, _player->getPosition() + irr::core::vector3df(2, 10, 3), _player->getPosition());
 
 	// the floor !
 
@@ -108,13 +109,6 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 			tree->setRotation(irr::core::vector3df(0, 15 * (rand() % 24), 0));
 			tree->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 			tree->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-
-			/*anim = _smgr->createCollisionResponseAnimator(
-				metaSelector, tree, tree->getBoundingBox().MaxEdge,
-				irr::core::vector3df(0,-1, 0), irr::core::vector3df(0, 0, 0));
-
-			tree->addAnimator(anim);
-			anim->drop();*/
 		}
 
 		trees[i] = tree;
@@ -134,7 +128,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		{
 			monster->setLoopMode(false);
 			monster->setScale(irr::core::vector3df(0.1, 0.1, 0.1));
-			monster->setPosition(irr::core::vector3df(rand() % 400 - 200, 50, rand() % 400 - 200));
+			monster->setPosition(irr::core::vector3df(rand() % 400 - 200, 5, rand() % 400 - 200));
 			monster->setRotation(irr::core::vector3df(0, rand() % 360, 0));
 			monster->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		}
@@ -258,6 +252,11 @@ void GameObjectCollection::Update()
 {
 	for(std::vector<irr::scene::IAnimatedMeshSceneNode*>::iterator i = _monsters.begin(); i != _monsters.end(); ++i)
 		move(*i, irr::core::vector3df(0.1, 0, 0.1));
+	if(_viewPoint->getPosition().getDistanceFrom(_player->getPosition()) > 5)
+	{
+		_viewPoint->setPosition(_player->getPosition() + irr::core::vector3df(2, 1, 3));
+		_viewPoint->setTarget(_player->getPosition());
+	}
 }
 
 void GameObjectCollection::stopMove()
@@ -269,14 +268,12 @@ void GameObjectCollection::moveForward()
 {
 	_player->moveForward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, -0.05f));
-	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveBackward()
 {
 	_player->moveBackward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, 0.05f));
-	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveLeft()
