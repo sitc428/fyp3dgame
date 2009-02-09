@@ -56,13 +56,13 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbodywithSkeletonTexture.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbodywithSkeleton_polySurfaceShape16.png"),
-		irr::core::vector3df(0.0, 100.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
+		irr::core::vector3df(0.0, 15.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
 
 	// add the view point
-	//_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
-	_viewPoint = _smgr->addCameraSceneNode(0, _player->getPosition() + irr::core::vector3df(2, 10, 3), _player->getPosition());
+	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
+	//_viewPoint = _smgr->addCameraSceneNode(0, _player->getPosition() + irr::core::vector3df(2, 10, 3), _player->getPosition());
 
 	// the floor !
 
@@ -79,8 +79,17 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		_floor->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x"), _floor));
 	}
 
+	irr::scene::ISceneNode* b = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/building.x"));
+	if(b)
+	{
+		b->setPosition(irr::core::vector3df(-1000, 0, -1000));
+		b->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		b->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/building.x"), b));
+	}
+
 	irr::scene::IMetaTriangleSelector* metaSelector = _smgr->createMetaTriangleSelector();
 	metaSelector->addTriangleSelector(_floor->getTriangleSelector());
+	//metaSelector->addTriangleSelector(b->getTriangleSelector());
 
 	irr::scene::ISceneNodeAnimator * anim = _smgr->createCollisionResponseAnimator(
 		metaSelector, _player->getNode(), _player->getNode()->getBoundingBox().MaxEdge,
@@ -170,11 +179,6 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	_font = new irr::gui::CGUITTFont(_videoDriver);
 	
 	_font->attach(_face, 24);
-
-	if(_videoDriver->queryFeature(irr::video::EVDF_MULTITEXTURE))
-		std::cout<<"we have it!"<<std::endl;
-	
-	//_guienv->getSkin()->setFont(_font);
 }
 
 GameObjectCollection::~GameObjectCollection()
@@ -252,11 +256,12 @@ void GameObjectCollection::Update()
 {
 	for(std::vector<irr::scene::IAnimatedMeshSceneNode*>::iterator i = _monsters.begin(); i != _monsters.end(); ++i)
 		move(*i, irr::core::vector3df(0.1, 0, 0.1));
-	if(_viewPoint->getPosition().getDistanceFrom(_player->getPosition()) > 5)
+	/*if(_viewPoint->getPosition().getDistanceFrom(_player->getPosition()) > 5)
 	{
 		_viewPoint->setPosition(_player->getPosition() + irr::core::vector3df(2, 1, 3));
 		_viewPoint->setTarget(_player->getPosition());
-	}
+	}*/
+	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::stopMove()
