@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		980ABB280F443B040071D558 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 980ABB270F443B040071D558 /* Monster.cpp */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
 		98563E770F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */; };
 		98563E780F1A46370050410E /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		980ABB260F443B040071D558 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = ../Monster.h; sourceTree = "<group>"; };
+		980ABB270F443B040071D558 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Monster.cpp; path = ../Monster.cpp; sourceTree = "<group>"; };
 		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
 		98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
 		98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s.a"; path = "../../lib/libboost_date_time-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
@@ -113,6 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */,
+				980ABB260F443B040071D558 /* Monster.h */,
+				980ABB270F443B040071D558 /* Monster.cpp */,
 				9868F4F40F17C38F004AE96C /* CGUITTFont.h */,
 				9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */,
 				9868F4F60F17C38F004AE96C /* ConcurrentQueue.hpp */,
@@ -192,6 +197,7 @@
 				9868F5070F17C38F004AE96C /* Player.cpp in Sources */,
 				9868F5080F17C38F004AE96C /* ProgressCircle.cpp in Sources */,
 				9868F5090F17C38F004AE96C /* RenderingHandler.cpp in Sources */,
+				980ABB280F443B040071D558 /* Monster.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
