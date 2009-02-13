@@ -59,6 +59,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		irr::core::vector3df(0.0, 15.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
+	ProgressCircle* pc2 = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 1, 0),
+		irr::video::SColor(255,255,255,0),irr::video::SColor(128,255,255,0),irr::video::SColor(200,64,64,0));
 
 	// add the view point
 	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
@@ -247,9 +249,16 @@ void GameObjectCollection::drawText(irr::core::stringw text)
 
 void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df targetPos)
 {
-	irr::core::vector3df currentPos = obj->getPosition();
+	irr::core::matrix4 m;
+
+	m.setRotationDegrees(obj->getRotation());
+	m.transformVect(targetPos);
+
+	/*irr::core::vector3df currentPos = obj->getPosition();
 	currentPos += targetPos;
-	obj->setPosition(currentPos);
+	obj->setPosition(currentPos);*/
+	obj->setPosition(obj->getPosition() + targetPos);
+	obj->updateAbsolutePosition();
 }
 
 void GameObjectCollection::Update()
@@ -261,7 +270,6 @@ void GameObjectCollection::Update()
 		_viewPoint->setPosition(_player->getPosition() + irr::core::vector3df(2, 1, 3));
 		_viewPoint->setTarget(_player->getPosition());
 	}*/
-	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::stopMove()
@@ -273,12 +281,14 @@ void GameObjectCollection::moveForward()
 {
 	_player->moveForward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, -0.05f));
+	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveBackward()
 {
 	_player->moveBackward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, 0.05f));
+	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveLeft()

@@ -32,6 +32,9 @@ private:
 	
 	irr::scene::IAnimatedMeshSceneNode *_player;
 	ProgressCircle *_progressCircle;
+
+	int _health;
+	int _mp;
 	float _speed;
 	bool _movingForward;
 	irr::s8 _rotation;
