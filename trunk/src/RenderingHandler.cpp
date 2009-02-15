@@ -17,12 +17,22 @@ void RenderingHandler::operator()()
 		_goc->inputEvent()->disable();
 
 		_goc->videoDriver()->beginScene(true, true, irr::video::SColor(255,128,128,128));
+
 		_goc->sceneManager()->drawAll();
-		_goc->drawText(fpsString);
+		_goc->drawText(fpsString, irr::core::rect<irr::s32>(0, 0, 100, 40), _goc->getFont("font/kochi-gothic-subst.ttf", 16), irr::video::SColor(255, 255, 0, 0));
 		_goc->guiEnv()->drawAll();
+
+		if(_goc->isPaused())
+		{
+			_goc->videoDriver()->draw2DRectangle(irr::video::SColor(128, 64, 64, 64), irr::core::rect<irr::s32>(0, 0, 800, 600));
+		}
+
 		_goc->videoDriver()->endScene();
 
-		_goc->Update();
+		if(!_goc->isPaused())
+		{
+			_goc->Update();
+		}
 
 		int fps = _goc->videoDriver()->getFPS();
 
@@ -30,6 +40,8 @@ void RenderingHandler::operator()()
 		{
 			fpsString = L"FPS: ";
 			fpsString += fps;
+			fpsString += L" Tri:";
+			fpsString += _goc->videoDriver()->getPrimitiveCountDrawn();
 			lastFPS = fps;
 		}
 

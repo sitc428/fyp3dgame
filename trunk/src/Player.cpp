@@ -62,10 +62,10 @@ void Player::moveRight()
 
 void Player::rotateLeft()
 {
-	_player->setRotation(irr::core::vector3df(0, --_rotation, 0));
+	_player->setRotation(irr::core::vector3df(0, (--_rotation < 0) ? 359 : _rotation, 0));
 }
 
 void Player::rotateRight()
 {
-	_player->setRotation(irr::core::vector3df(0, ++_rotation, 0));
+	_player->setRotation(irr::core::vector3df(0, (++_rotation > 359) ? 0 : _rotation, 0));
 }

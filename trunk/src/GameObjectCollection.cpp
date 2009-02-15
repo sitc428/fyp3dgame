@@ -35,6 +35,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	// get the handler of the GPU Programming Services;
 	_gpu = _videoDriver->getGPUProgrammingServices();
 
+	_paused = false;
+
 	irr::scene::ILightSceneNode* _light = _smgr->addLightSceneNode(0, irr::core::vector3df(0, 10, 4), irr::video::SColorf(), 0);
 
 	irr::c8* vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
@@ -147,47 +149,29 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		_monsters[i] = monster;
 	}
 	// End adding.
-
-	/*irr::scene::ITerrainSceneNode* terrain = _smgr->addTerrainSceneNode("model/terrain-heightmap.bmp", 0, -1,
-		irr::core::vector3df(0.f, 1.0f, 0.f), irr::core::vector3df(0.f, 0.f, 0.f),
-		irr::core::vector3df(40.f, 4.4f, 40.f),	irr::video::SColor( 255, 255, 255, 255 ),
-		5, irr::scene::ETPS_17, 4, true);
-
-	terrain->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	terrain->setMaterialTexture(0, _videoDriver->getTexture("model/texture/terrain-texture.jpg"));
-	terrain->setMaterialTexture(1, _videoDriver->getTexture("model/texture/detailmap3.jpg"));
-	terrain->setMaterialType(irr::video::EMT_DETAIL_MAP);
-	terrain->scaleTexture(1.0f, 20.0f);
-
-	irr::scene::ITriangleSelector* selector	= _smgr->createTerrainTriangleSelector(terrain, 5);
-	terrain->setTriangleSelector(selector);
-
-	irr::scene::ISceneNodeAnimator* anim = _smgr->createCollisionResponseAnimator(
-		selector, _viewPoint, irr::core::vector3df(60,100,60),
-		irr::core::vector3df(0,0,0),
-		irr::core::vector3df(0,50,0));
-	selector->drop();
-	_viewPoint->addAnimator(anim);
-	anim->drop();*/
 	
 	irr::video::ITexture* texture = _videoDriver->getTexture("img/sky.jpg");
 
 	irr::scene::ISceneNode* sky = _smgr->addSkyBoxSceneNode(texture,texture,texture,texture,texture,texture);
 	
-	_face = new irr::gui::CGUITTFace;
+	_faces["font/kochi-gothic-subst.ttf"] = new irr::gui::CGUITTFace;
+	_faces["font/kochi-gothic-subst.ttf"]->load("font/kochi-gothic-subst.ttf");
+	
+	irr::gui::CGUITTFont* _font = new irr::gui::CGUITTFont(_videoDriver);
+	_font->attach(_faces["font/kochi-gothic-subst.ttf"], 24);
+	_font->AntiAlias = true;
 
-	_face->load("font/kochi-gothic-subst.ttf");
-	
-	_font = new irr::gui::CGUITTFont(_videoDriver);
-	
-	_font->attach(_face, 24);
+	_fonts[std::pair<std::string, int>("font/kochi-gothic-subst.ttf", 24)] = _font;
 }
 
 GameObjectCollection::~GameObjectCollection()
 {
 	delete _player;
 	_device->drop();
-	_font->drop();
+	
+	for(std::map<std::pair<std::string, int>, irr::gui::CGUITTFont*>::iterator i = _fonts.begin(); i != _fonts.end(); ++i)
+		(*i).second->drop();
+		//_font->drop();
 }
 
 irr::IrrlichtDevice* GameObjectCollection::device()
@@ -242,9 +226,45 @@ void GameObjectCollection::idle()
 		_device->yield();
 }
 
-void GameObjectCollection::drawText(irr::core::stringw text)
+void GameObjectCollection::togglePause()
 {
+	_paused = !_paused;
+}
+
+bool GameObjectCollection::isPaused() const
+{
+	return _paused;
+}
+
+irr::gui::CGUITTFont* GameObjectCollection::getFont(std::string fontName, int size)
+{
+	irr::gui::CGUITTFont * tempFont = _fonts[std::pair<std::string, int>(fontName, size)];
+
+	if(!tempFont)
+	{
+		tempFont = new irr::gui::CGUITTFont(_videoDriver);
+
+		if(!_faces[fontName])
+		{
+			_faces[fontName] = new irr::gui::CGUITTFace;
+			_faces[fontName]->load(fontName.c_str());
+		}
+
+		tempFont->attach(_faces[fontName], size);
+		tempFont->AntiAlias = true;
+
+		_fonts[std::pair<std::string, int>(fontName, size)] = tempFont;
+	}
+
+	return tempFont;
+}
+
+void GameObjectCollection::drawText(irr::core::stringw text, irr::core::rect<irr::s32> rect, irr::gui::CGUITTFont* font, irr::video::SColor color)
+{
+	/*
 	_font->draw(text.c_str(), irr::core::rect<irr::s32>(0,0,100, 40), irr::video::SColor(255,255,64,64), true);
+	*/
+	font->draw(text.c_str(), rect, color, true);
 }
 
 void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df targetPos)
@@ -254,9 +274,6 @@ void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3d
 	m.setRotationDegrees(obj->getRotation());
 	m.transformVect(targetPos);
 
-	/*irr::core::vector3df currentPos = obj->getPosition();
-	currentPos += targetPos;
-	obj->setPosition(currentPos);*/
 	obj->setPosition(obj->getPosition() + targetPos);
 	obj->updateAbsolutePosition();
 }
