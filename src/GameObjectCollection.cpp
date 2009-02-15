@@ -65,7 +65,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		irr::video::SColor(255,255,255,0),irr::video::SColor(128,255,255,0),irr::video::SColor(200,64,64,0));
 
 	// add the view point
-	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
+	//_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
+	_viewPoint = _smgr->addCameraSceneNode(0, _player->getNode()->getAbsolutePosition() + irr::core::vector3df(15, 15, 30), _player->getPosition());
 	_viewPoint->setFarValue(250.0);
 	//_viewPoint = _smgr->addCameraSceneNode(0, _player->getPosition() + irr::core::vector3df(2, 10, 3), _player->getPosition());
 
@@ -353,6 +354,7 @@ void GameObjectCollection::moveForward()
 {
 	_player->moveForward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, -0.05f));
+	_viewPoint->setPosition(_player->getNode()->getAbsolutePosition() + irr::core::vector3df(1, 1, 3));
 	_viewPoint->setTarget(_player->getPosition());
 }
 
@@ -360,6 +362,7 @@ void GameObjectCollection::moveBackward()
 {
 	_player->moveBackward();
 	move(_player->getNode(), irr::core::vector3df(0, 0, 0.05f));
+	_viewPoint->setPosition(_player->getNode()->getAbsolutePosition() + irr::core::vector3df(1, 1, 3));
 	_viewPoint->setTarget(_player->getPosition());
 }
 
