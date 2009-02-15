@@ -56,8 +56,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		mc->drop();
 	}
 
-	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbodywithSkeletonTexture.x"), _smgr->getRootSceneNode()),
-		_videoDriver->getTexture("model/x/fullbodywithSkeleton_polySurfaceShape16.png"),
+	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbody_real.x"), _smgr->getRootSceneNode()),
+		_videoDriver->getTexture("model/x/fullbody_real.png"),
 		irr::core::vector3df(0.0, 15.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
@@ -81,7 +81,9 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		_floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		//_floor->setMaterialTexture(0, _videoDriver->getTexture("img/grass.jpg"));
 
-		_floor->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x"), _floor));
+		//_floor->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x"), _floor));
+
+		_floor->setTriangleSelector(_smgr->createOctTreeTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x")->getMesh(0), _floor));
 	}
 
 	irr::scene::ISceneNode* b = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/building.x"));
@@ -316,6 +318,9 @@ void GameObjectCollection::drawText(irr::core::stringw text, irr::core::rect<irr
 
 void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3df targetPos)
 {
+	if(_paused)
+		return;
+
 	irr::core::matrix4 m;
 
 	m.setRotationDegrees(obj->getRotation());
@@ -327,6 +332,9 @@ void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3d
 
 void GameObjectCollection::Update()
 {
+	if(_paused)
+		return;
+
 	for(std::vector<irr::scene::IAnimatedMeshSceneNode*>::const_iterator i = _monsters.begin(); i != _monsters.end(); ++i)
 		move(*i, irr::core::vector3df(0.1, 0, 0.1));
 	/*if(_viewPoint->getPosition().getDistanceFrom(_player->getPosition()) > 5)
@@ -371,10 +379,12 @@ void GameObjectCollection::moveRight()
 
 void GameObjectCollection::rotateLeft()
 {
-	_player->rotateLeft();
+	if(!_paused)
+		_player->rotateLeft();
 }
 
 void GameObjectCollection::rotateRight()
 {
-	_player->rotateRight();
+	if(!_paused)
+		_player->rotateRight();
 }
