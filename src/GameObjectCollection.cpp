@@ -66,6 +66,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	// add the view point
 	_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
+	_viewPoint->setFarValue(250.0);
 	//_viewPoint = _smgr->addCameraSceneNode(0, _player->getPosition() + irr::core::vector3df(2, 10, 3), _player->getPosition());
 
 	// the floor !
@@ -91,6 +92,33 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		b->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/building.x"), b));
 	}
 
+	//add another building
+	irr::scene::ISceneNode* b2 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/house11.x"));
+	if(b2)
+	{
+		b2->setPosition(irr::core::vector3df(-300, 0, -300));
+		b2->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		b2->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/house11.x"), b2));
+	}
+
+	//add the castle
+	irr::scene::ISceneNode* b3 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/castle_1.x"));
+	if(b3)
+	{
+		b3->setPosition(irr::core::vector3df(500, 0, -500));
+		b3->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		b3->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/castle_1.x"), b3));
+	}
+
+	//add another building
+	irr::scene::ISceneNode* b4 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/house.x"));
+	if(b4)
+	{
+		b4->setPosition(irr::core::vector3df(400, 0, -400));
+		b4->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+		b4->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/house.x"), b4));
+	}
+
 	irr::scene::IMetaTriangleSelector* metaSelector = _smgr->createMetaTriangleSelector();
 	metaSelector->addTriangleSelector(_floor->getTriangleSelector());
 	//metaSelector->addTriangleSelector(b->getTriangleSelector());
@@ -105,12 +133,17 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	// start adding trees.
 	srand(time(0));
 
-	std::vector<irr::scene::ISceneNode*> trees(100);
+	std::vector<irr::scene::ISceneNode*> trees(80);
 	irr::scene::IAnimatedMesh* treeMesh = _smgr->getMesh("model/x/tree_new.x");
 	_videoDriver->setTextureCreationFlag(irr::video::ETCF_ALWAYS_32_BIT, true);
 	irr::video::ITexture* treeTexture = _videoDriver->getTexture("model/x/MetalLeaf_transparent.png");
 
-	for(int i = 0; i < 100; ++i)
+	//add another type of tree
+	std::vector<irr::scene::ISceneNode*> trees2(80);
+	irr::scene::IAnimatedMesh* tree2Mesh = _smgr->getMesh("model/x/tree22.x");
+	irr::video::ITexture* tree2Texture = _videoDriver->getTexture("model/x/leaf tex.png");
+
+	for(int i = 0; i < 80; ++i)
 	{
 		irr::scene::ISceneNode* tree = _smgr->addAnimatedMeshSceneNode(treeMesh);
 		tree->setMaterialTexture(1, treeTexture);
@@ -125,15 +158,29 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		}
 
 		trees[i] = tree;
+		
+		irr::scene::ISceneNode* tree2 = _smgr->addAnimatedMeshSceneNode(tree2Mesh);
+		tree2->setMaterialTexture(1, tree2Texture);
+
+		if(tree2)
+		{
+			tree2->setPosition(irr::core::vector3df(rand() % 400 - 200, 0.5, rand() % 400 - 200));
+			tree2->setScale(irr::core::vector3df(5,5,5));
+			tree2->setRotation(irr::core::vector3df(0, 15 * (rand() % 24), 0));
+			tree2->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+			tree2->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+		}
+
+		trees2[i] = tree2;
 	}
 	// End adding trees.
 
 	// monster?
 	irr::scene::IAnimatedMesh* monsterMesh = _smgr->getMesh("model/x/dwarf.x");
 
-	_monsters.resize(100);
+	_monsters.resize(10);
 
-	for(int i = 0; i < 100; ++i)
+	for(int i = 0; i < 10; ++i)
 	{
 		irr::scene::IAnimatedMeshSceneNode* monster = _smgr->addAnimatedMeshSceneNode(monsterMesh, _smgr->getRootSceneNode());
 
@@ -280,7 +327,7 @@ void GameObjectCollection::move(irr::scene::ISceneNode* obj, irr::core::vector3d
 
 void GameObjectCollection::Update()
 {
-	for(std::vector<irr::scene::IAnimatedMeshSceneNode*>::iterator i = _monsters.begin(); i != _monsters.end(); ++i)
+	for(std::vector<irr::scene::IAnimatedMeshSceneNode*>::const_iterator i = _monsters.begin(); i != _monsters.end(); ++i)
 		move(*i, irr::core::vector3df(0.1, 0, 0.1));
 	/*if(_viewPoint->getPosition().getDistanceFrom(_player->getPosition()) > 5)
 	{
