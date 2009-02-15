@@ -90,7 +90,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::ISceneNode* b = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/building.x"));
 	if(b)
 	{
-		b->setPosition(irr::core::vector3df(-1000, 0, -1000));
+		b->setPosition(irr::core::vector3df(500, 0, -400));
 		b->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		b->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/building.x"), b));
 	}
@@ -108,7 +108,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::ISceneNode* b3 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/castle_1.x"));
 	if(b3)
 	{
-		b3->setPosition(irr::core::vector3df(500, 0, -500));
+		b3->setPosition(irr::core::vector3df(0, -5, -320));
 		b3->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		b3->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/castle_1.x"), b3));
 	}
@@ -117,7 +117,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::ISceneNode* b4 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/house.x"));
 	if(b4)
 	{
-		b4->setPosition(irr::core::vector3df(400, 0, -400));
+		b4->setPosition(irr::core::vector3df(100, 0, -400));
 		b4->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		b4->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/house.x"), b4));
 	}
