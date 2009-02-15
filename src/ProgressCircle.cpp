@@ -27,6 +27,7 @@ ProgressCircle::ProgressCircle(
 	_percentage(70)
 {
 	setAutomaticCulling(irr::scene::EAC_OFF);
+	setMaterialFlag(irr::video::EMF_ZBUFFER, false);
 }
 
 ProgressCircle::~ProgressCircle()
