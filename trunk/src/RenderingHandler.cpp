@@ -19,7 +19,7 @@ void RenderingHandler::operator()()
 		_goc->videoDriver()->beginScene(true, true, irr::video::SColor(255,128,128,128));
 
 		_goc->sceneManager()->drawAll();
-		_goc->drawText(fpsString, irr::core::rect<irr::s32>(0, 0, 100, 40), _goc->getFont("font/kochi-gothic-subst.ttf", 16), irr::video::SColor(255, 255, 0, 0));
+		_goc->drawText(fpsString, irr::core::rect<irr::s32>(0, 0, 200, 40), _goc->getFont("font/kochi-gothic-subst.ttf", 16), irr::video::SColor(255, 255, 0, 0));
 		_goc->guiEnv()->drawAll();
 
 		if(_goc->isPaused())
