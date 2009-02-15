@@ -37,7 +37,7 @@ private:
 	int _mp;
 	float _speed;
 	bool _movingForward;
-	irr::s8 _rotation;
+	irr::s16 _rotation;
 };
 
 #endif //! __PLAYER_HPP__
