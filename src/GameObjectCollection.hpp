@@ -29,8 +29,13 @@ public:
 	bool deviceRunning() const;
 	bool isActive() const;
 	void idle();
+
+	void togglePause();
+	bool isPaused() const;
 	
-	void drawText(irr::core::stringw text);
+	irr::gui::CGUITTFont* getFont(std::string fontName, int size);
+
+	void drawText(irr::core::stringw text, irr::core::rect<irr::s32> rect, irr::gui::CGUITTFont* font, irr::video::SColor color = irr::video::SColor(0, 0, 0, 0));
 
 	void move(irr::scene::ISceneNode* obj, irr::core::vector3df targetPos);
 	
@@ -70,6 +75,8 @@ private:
 	irr::gui::IGUIEnvironment *_guienv;
 	InputEventHandler* _inputEvent;
 	irr::video::IGPUProgrammingServices *_gpu;
+
+	bool _paused;
 	
 	irr::scene::ICameraSceneNode* _viewPoint;
 	
@@ -80,8 +87,8 @@ private:
 
 	std::vector<irr::scene::IAnimatedMeshSceneNode*> _monsters;
 	
-	irr::gui::CGUITTFace* _face;
-	irr::gui::CGUITTFont* _font;
+	std::map<std::string, irr::gui::CGUITTFace*> _faces;
+	std::map< std::pair<std::string, int>, irr::gui::CGUITTFont* > _fonts;
 };
 
 #endif //! __GAME_OBJECT_COLLECTION_HPP__

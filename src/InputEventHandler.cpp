@@ -56,6 +56,11 @@ void InputEventHandler::operator()()
 		//_goc->moveRight();
 		_goc->rotateRight();
 	}
+
+	if(keyPressed(irr::KEY_SPACE))
+	{
+		_goc->togglePause();
+	}
 }
 
 bool InputEventHandler::OnEvent(const irr::SEvent& event)
