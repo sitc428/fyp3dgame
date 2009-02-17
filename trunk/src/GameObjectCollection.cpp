@@ -199,6 +199,12 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 		_monsters[i] = monster;
 	}
+
+	// JJ's monster is here!!!
+
+	irr::scene::IAnimatedMeshSceneNode* k = _smgr->addAnimatedMeshSceneNode(monsterMesh, _smgr->getRootSceneNode());
+	Monster* jj = new Monster(k, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0.1, 0.1, 0.1), 0.05f);
+
 	// End adding.
 	
 	irr::video::ITexture* texture = _videoDriver->getTexture("img/sky.jpg");
