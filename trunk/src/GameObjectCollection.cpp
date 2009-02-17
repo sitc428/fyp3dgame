@@ -58,7 +58,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbody_real.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbody_real.png"),
-		irr::core::vector3df(0.0, 15.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
+		irr::core::vector3df(0.0, 100.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
 	ProgressCircle* pc2 = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 1, 0),
@@ -72,19 +72,20 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	// the floor !
 
-	irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor1.x"));
+	//irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor1.x"));
+	irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor_just_a_plane.x"));
 
 	if(_floor)
 	{
 		//_floor->setScale(irr::core::vector3df(1.01,0.1,1.01));
-		_floor->setScale(irr::core::vector3df(10.0, 1.0, 10.0));
+		//_floor->setScale(irr::core::vector3df(10.0, 1.0, 10.0));
 		_floor->setPosition(irr::core::vector3df(0,0,0));
 		_floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		//_floor->setMaterialTexture(0, _videoDriver->getTexture("img/grass.jpg"));
 
 		//_floor->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x"), _floor));
 
-		_floor->setTriangleSelector(_smgr->createOctTreeTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x")->getMesh(0), _floor));
+		_floor->setTriangleSelector(_smgr->createOctTreeTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor_just_a_plane.x")->getMesh(0), _floor));
 	}
 
 	irr::scene::ISceneNode* b = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/building.x"));
