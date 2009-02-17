@@ -5,6 +5,7 @@
 #include "InputEventHandler.hpp"
 #include "CGUITTFont.h"
 #include "Player.hpp"
+#include "Monster.h"
 
 #include <vector>
 #include <string>

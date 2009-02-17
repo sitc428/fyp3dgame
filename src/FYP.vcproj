@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Monster.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Player.cpp"
 				>
 			</File>
@@ -226,6 +230,10 @@
 			</File>
 			<File
 				RelativePath=".\InputEventHandler.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Monster.h"
 				>
 			</File>
 			<File
