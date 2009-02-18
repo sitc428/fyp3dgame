@@ -178,6 +178,16 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		trees2[i] = tree2;
 	}
 	// End adding trees.
+	
+	
+	//----------------snowfall
+	irr::scene::IParticleSystemSceneNode *_snow_node= _smgr->addParticleSystemSceneNode(false,0,-1) ;
+	
+	irr::scene::IParticleEmitter *_snow_emitter= _snow_node->createSphereEmitter(irr::core::vector3df(0,40,0), 100.0f, irr::core::vector3df(0.0f,-0.003f,0.0f),80,160,
+	irr:: video::SColor(255,0,0,0),irr:: video::SColor(255,0,0,0), 4000, 6000);
+	_snow_node->setEmitter(_snow_emitter);
+	
+	//-----------------snowfall
 
 	// monster?
 	irr::scene::IAnimatedMesh* monsterMesh = _smgr->getMesh("model/x/dwarf.x");
