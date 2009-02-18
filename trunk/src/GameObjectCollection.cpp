@@ -73,7 +73,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	// the floor !
 
 	//irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor1.x"));
-	irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor_just_a_plane.x"));
+	irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor_just_a_plane_triangulated.obj"));
 
 	if(_floor)
 	{
@@ -85,7 +85,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 		//_floor->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x"), _floor));
 
-		_floor->setTriangleSelector(_smgr->createOctTreeTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor_just_a_plane.x")->getMesh(0), _floor));
+		_floor->setTriangleSelector(_smgr->createOctTreeTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor_just_a_plane_triangulated.obj")->getMesh(0), _floor));
 	}
 
 	irr::scene::ISceneNode* b = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/building.x"));
@@ -184,7 +184,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::IParticleSystemSceneNode *_snow_node= _smgr->addParticleSystemSceneNode(false,0,-1) ;
 	
 	irr::scene::IParticleEmitter *_snow_emitter= _snow_node->createSphereEmitter(irr::core::vector3df(0,40,0), 100.0f, irr::core::vector3df(0.0f,-0.003f,0.0f),80,160,
-	irr:: video::SColor(255,0,0,0),irr:: video::SColor(255,0,0,0), 4000, 6000);
+	irr:: video::SColor(255,0,0,0), irr:: video::SColor(255,0,0,0), 4000, 6000);
 	_snow_node->setEmitter(_snow_emitter);
 	
 	//-----------------snowfall
