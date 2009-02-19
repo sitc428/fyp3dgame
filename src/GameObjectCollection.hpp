@@ -49,6 +49,7 @@ public:
 	void moveRight();
 	void rotateLeft();
 	void rotateRight();
+	void controlMonster();
 
 private:
 	class MyShaderCallBack : public irr::video::IShaderConstantSetCallBack
@@ -76,13 +77,15 @@ private:
 	irr::gui::IGUIEnvironment *_guienv;
 	InputEventHandler* _inputEvent;
 	irr::video::IGPUProgrammingServices *_gpu;
-
+	
+	
 	bool _paused;
 	
 	irr::scene::ICameraSceneNode* _viewPoint;
 	
 	//irr::scene::IAnimatedMeshSceneNode* _player;
 	Player* _player;
+	Monster* jj;
 	//std::map<std::string, SceneData*> scenes;
 	std::map<std::string, irr::scene::ILightSceneNode*> _lights;
 

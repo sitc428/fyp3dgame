@@ -16,6 +16,7 @@
 #include <boost/statechart/in_state_reaction.hpp>
 #include <iostream>
 #include <irrlicht/irrlicht.h>
+#include "Player.hpp"
 
 namespace sc = boost::statechart;
 namespace mpl = boost::mpl;
@@ -38,8 +39,9 @@ struct EvDie : sc::event< EvDie > { virtual ~EvDie () {};};
 
 struct Name_test
 {
-  virtual std::string GetName(int&) const = 0;
-  virtual void test(int, int, int) const =0;
+	virtual std::string GetName() const = 0;
+	virtual void test(int, int, int) const =0;
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player* ) const = 0;
 };
 
 /*struct State
@@ -65,42 +67,50 @@ struct FiniteStateMachine : sc::state_machine<FiniteStateMachine, NotDeath >{
 		{
 			return state_cast<const State&>();
 		}
-*/	std::string GetName(int& a) const
+*/	std::string GetName() const
 	{
-		return state_cast< const Name_test & >().GetName(a);
+		return state_cast< const Name_test & >().GetName();
 	}
 	void test(int a, int s, int q) const
 	{
 		state_cast<const Name_test & >().test(a,s,q);
 	}
-	
+	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player ){
+		state_cast< const Name_test & >().reaction(_mon,_player);
+	}
 };
 
 struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
 	Death(){ std::cout<<"Death\n";};
 	//virtual const std::string name () const { return "Death"; };
-	virtual std::string GetName(int& a ) const
+	virtual std::string GetName() const
     {
-      return "State : Death\n";
+      return "Death";
     }
 	virtual void test(int a,int s,int q) const
     {
       std::cout<<-a+s+q<<"\n";
     }
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player) const{
+		_mon->setLoopMode(true);
+	}
 	virtual ~Death() {};
 };
 
 struct NotDeath :Name_test, sc::simple_state<NotDeath, FiniteStateMachine, Idle >{
 	NotDeath(){};
 	virtual ~ NotDeath() {};
-	virtual std::string GetName(int& a) const
+	virtual std::string GetName() const
     {
-      return "State : Not Death\n";
+      return "Not Death";
     }
 	virtual void test(int a,int s,int q) const
     {
       std::cout<<"a-s-q"<<"\n";
     }
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+	
+	}
 	// virtual const std::string name () const { return "NotDeath"; };
 	typedef sc::transition< EvDie, Death>reactions;
 };
@@ -116,14 +126,17 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 		for(i=0; i<100; i++)
 			std::cout<<i<<"\n";
 	};
-	virtual std::string GetName(int& a) const
+	virtual std::string GetName() const
     {
-      return "State : Attacking\n";
+      return "Attacking";
     }
 	virtual void test(int a,int s,int q) const
     {
       std::cout<<a-s+q<<"\n";
     }
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+	
+	}
 	virtual ~Attacking() {};
 	//virtual const std::string name () const { return "Attacking"; };
 	typedef sc::transition< EvOutOfAttackRange, Idle >reactions;
@@ -135,16 +148,17 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 	
 	
 	//virtual const std::string name () const { return "Idle"; };
-	virtual std::string GetName(int& a) const
+	virtual std::string GetName() const
     {
-		a++;
-		std::cout<<a<<"\n";
-		return "State : Idle\n";
+		return "Idle";
     }
 	virtual void test(int a,int s,int q) const
     {
       std::cout<<a+s-q<<"\n";
     }
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+		_mon->setLoopMode(false);
+	}
 	typedef mpl::list< 
 		sc::transition< EvIdleTooLong, Idle>,
 		sc::transition< EvPlayerWithinRange, Tracing>, 
@@ -155,13 +169,25 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 		Tracing(){ std::cout<<"Tracing\n";};
 		virtual ~Tracing() {};
 	//	virtual const std::string name () const { return "Tracing"; };
-		virtual std::string GetName(int& a) const
+		virtual std::string GetName() const
 		{
-			return " State : Tracing \n";
+			return "Tracing";
 		}
 		virtual void test(int a,int s,int q) const
 		{
 			std::cout<<a+s+q<<"\n";
+		}
+		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+			_mon->setLoopMode(true);
+			irr::core::matrix4 m;
+			 irr::core::vector3df targetPos = _player->getPosition();
+			m.setRotationDegrees(_mon->getRotation());
+			m.transformVect(targetPos);
+			targetPos = _mon->getPosition()+((_player->getPosition() - _mon->getPosition())/42.5f); 
+			//std::cout<<targetPos<<"\n";
+			_mon->setPosition(targetPos);
+			_mon->updateAbsolutePosition();
+			
 		}
 		typedef mpl::list< 
 			sc::transition< EvPlayerWithinRange, Idle >,
@@ -174,12 +200,18 @@ class Monster{
 	
 		Monster(irr::scene::IAnimatedMeshSceneNode*, irr::core::vector3df , irr::core::vector3df , float);
 		~Monster(){};
-		void change(char);
-	
+		void change(char, Player*);
+		void update(Player*);
+		void Hit(int);
+		int GetHealth();
+			
 	private:
 		FiniteStateMachine FSM;
-		irr::scene::IAnimatedMeshSceneNode                   *_monster;
+		irr::scene::IAnimatedMeshSceneNode *_monster;
 		float _speed; 
+		int Health;
+		irr::core::vector3df original;
+		irr::core::vector3df pos;
 	
 };
 
