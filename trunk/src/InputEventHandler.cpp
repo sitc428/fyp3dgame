@@ -56,6 +56,11 @@ void InputEventHandler::operator()()
 		//_goc->moveRight();
 		_goc->rotateRight();
 	}
+	if(keyDown(irr::KEY_KEY_P))
+	{
+		//_goc->moveRight();
+		_goc->controlMonster();
+	}
 
 	if(keyPressed(irr::KEY_SPACE))
 	{

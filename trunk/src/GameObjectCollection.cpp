@@ -58,7 +58,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbody_real.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbody_real.png"),
-		irr::core::vector3df(0.0, 100.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
+		irr::core::vector3df(0.0, 15.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
 	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
 	ProgressCircle* pc2 = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 1, 0),
@@ -72,20 +72,19 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	// the floor !
 
-	//irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor1.x"));
-	irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor_just_a_plane_triangulated.obj"));
+	irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor1.x"));
 
 	if(_floor)
 	{
 		//_floor->setScale(irr::core::vector3df(1.01,0.1,1.01));
-		//_floor->setScale(irr::core::vector3df(10.0, 1.0, 10.0));
+		_floor->setScale(irr::core::vector3df(10.0, 1.0, 10.0));
 		_floor->setPosition(irr::core::vector3df(0,0,0));
 		_floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		//_floor->setMaterialTexture(0, _videoDriver->getTexture("img/grass.jpg"));
 
 		//_floor->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x"), _floor));
 
-		_floor->setTriangleSelector(_smgr->createOctTreeTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor_just_a_plane_triangulated.obj")->getMesh(0), _floor));
+		_floor->setTriangleSelector(_smgr->createOctTreeTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/floor1.x")->getMesh(0), _floor));
 	}
 
 	irr::scene::ISceneNode* b = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/building.x"));
@@ -178,16 +177,23 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		trees2[i] = tree2;
 	}
 	// End adding trees.
+	//-------------
 	
 	
-	//----------------snowfall
 	irr::scene::IParticleSystemSceneNode *_snow_node= _smgr->addParticleSystemSceneNode(false,0,-1) ;
 	
 	irr::scene::IParticleEmitter *_snow_emitter= _snow_node->createSphereEmitter(irr::core::vector3df(0,40,0), 100.0f, irr::core::vector3df(0.0f,-0.003f,0.0f),80,160,
-	irr:: video::SColor(255,0,0,0), irr:: video::SColor(255,0,0,0), 4000, 6000);
+	irr:: video::SColor(255,0,0,0),irr:: video::SColor(255,0,0,0), 4000, 6000);
+	//_snow_emitter->setMaxStartColor(irr:: video::SColor(255,255,255,255));
+	//_snow_emitter->setMinStartColor(irr:: video::SColor(255,255,255,255));
+	//_snow_emitter->setMaxStartSize(irr::core::dimension2df<irr::core::dimension2df>(1.0f,1.0f));
 	_snow_node->setEmitter(_snow_emitter);
 	
-	//-----------------snowfall
+	
+	//_snow_node->setParticlesAreGlobal(false);
+	//irr::scene::IParticleCylinderEmitter *_snow_emitter = _snow_node->createCylinderEmitter(irr::core::vector3df(10,10,10),10.0f,irr::core::vector3df(0,0,0), 10.0f);
+	//_snow_node->setEmitter(_snow_emitter);
+	
 
 	// monster?
 	irr::scene::IAnimatedMesh* monsterMesh = _smgr->getMesh("model/x/dwarf.x");
@@ -209,12 +215,13 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 		_monsters[i] = monster;
 	}
+	
+	//-----
+		irr::scene::IAnimatedMeshSceneNode* k = _smgr->addAnimatedMeshSceneNode(monsterMesh, _smgr->getRootSceneNode());
+	jj = new Monster(k, irr::core::vector3df(0, 5,-8), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 
-	// JJ's monster is here!!!
-
-	irr::scene::IAnimatedMeshSceneNode* k = _smgr->addAnimatedMeshSceneNode(monsterMesh, _smgr->getRootSceneNode());
-	Monster* jj = new Monster(k, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0.1, 0.1, 0.1), 0.05f);
-
+	
+	
 	// End adding.
 	
 	irr::video::ITexture* texture = _videoDriver->getTexture("img/sky.jpg");
@@ -303,6 +310,13 @@ bool GameObjectCollection::isPaused() const
 	return _paused;
 }
 
+
+void GameObjectCollection::controlMonster(){
+
+		jj->Hit(10);
+}
+
+
 irr::gui::CGUITTFont* GameObjectCollection::getFont(std::string fontName, int size)
 {
 	irr::gui::CGUITTFont * tempFont = _fonts[std::pair<std::string, int>(fontName, size)];
@@ -355,11 +369,14 @@ void GameObjectCollection::Update()
 
 	for(std::vector<irr::scene::IAnimatedMeshSceneNode*>::const_iterator i = _monsters.begin(); i != _monsters.end(); ++i)
 		move(*i, irr::core::vector3df(0.1, 0, 0.1));
+	jj->update(_player);
 	/*if(_viewPoint->getPosition().getDistanceFrom(_player->getPosition()) > 5)
 	{
 		_viewPoint->setPosition(_player->getPosition() + irr::core::vector3df(2, 1, 3));
 		_viewPoint->setTarget(_player->getPosition());
 	}*/
+
+	
 }
 
 void GameObjectCollection::stopMove()
