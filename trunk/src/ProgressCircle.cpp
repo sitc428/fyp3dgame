@@ -8,11 +8,12 @@ ProgressCircle::ProgressCircle(
 	irr::scene::ISceneCollisionManager* coll,
 	irr::s32 width,
 	irr::s32 height,
-	const irr::core::vector3df & posistion,
+	irr::s32 percentage,
+	const irr::core::vector3df & position,
 	irr::video::SColor activeColor,
 	irr::video::SColor inactiveColor,
 	irr::video::SColor borderColor
-) : irr::scene::ISceneNode(parent, smgr, id, posistion),
+) : irr::scene::ISceneNode(parent, smgr, id, position),
 	_box(
 		irr::core::vector3d<irr::f32>(-width / 2.0, -height / 2.0, -1.0),
 		irr::core::vector3d<irr::f32>(width / 2.0, height / 2.0, 1.0)
@@ -24,7 +25,7 @@ ProgressCircle::ProgressCircle(
 	_dimension(width, height),
 	_drawBorder(true),
 	_isVisible(true),
-	_percentage(70)
+	_percentage(percentage)
 {
 	setAutomaticCulling(irr::scene::EAC_OFF);
 	setMaterialFlag(irr::video::EMF_ZBUFFER, false);

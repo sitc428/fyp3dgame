@@ -13,7 +13,8 @@ public:
 		irr::scene::ISceneCollisionManager* coll,
 		irr::s32 width = 100,
 		irr::s32 height = 10,
-		const irr::core::vector3df & posistion = irr::core::vector3df(0, 0, 0),
+		irr::s32 precentage = 100,
+		const irr::core::vector3df & position = irr::core::vector3df(0, 0, 0),
 		irr::video::SColor activeColor = irr::video::SColor(255, 200, 0, 0),
 		irr::video::SColor inactiveColor = irr::video::SColor(128, 200, 64, 64),
 		irr::video::SColor boarderColor = irr::video::SColor(200, 64, 64, 64)
