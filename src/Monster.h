@@ -2,7 +2,7 @@
  *  FiniteStateMachine.h
  *  FYP
  *
- *  Created by Mr.JJ on 09年1月13日.
+ *  Created by Mr.JJ on 09�???3??
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
@@ -15,6 +15,7 @@
 #include <boost/statechart/custom_reaction.hpp>
 #include <boost/statechart/in_state_reaction.hpp>
 #include <iostream>
+#include <string>
 #include <irrlicht/irrlicht.h>
 #include "Player.hpp"
 
