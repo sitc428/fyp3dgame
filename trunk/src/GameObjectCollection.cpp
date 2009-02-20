@@ -60,8 +60,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 		_videoDriver->getTexture("model/x/fullbody_real.png"),
 		irr::core::vector3df(0.0, 15.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 	
-	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 0, 0));
-	ProgressCircle* pc2 = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, irr::core::vector3df(0, 1, 0),
+	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 0, 0));
+	ProgressCircle* pc2 = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 1, 0),
 		irr::video::SColor(255,255,255,0),irr::video::SColor(128,255,255,0),irr::video::SColor(200,64,64,0));
 
 	// add the view point
