@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		980ABB280F443B040071D558 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 980ABB270F443B040071D558 /* Monster.cpp */; };
+		9807F27A0F4E5F2E008E3E5B /* CGUITTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F24F0F4E5F2E008E3E5B /* CGUITTFont.cpp */; };
+		9807F27B0F4E5F2E008E3E5B /* ConcurrentQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F2510F4E5F2E008E3E5B /* ConcurrentQueue.cpp */; };
+		9807F28B0F4E5F2E008E3E5B /* GameObjectCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F26C0F4E5F2E008E3E5B /* GameObjectCollection.cpp */; };
+		9807F28C0F4E5F2E008E3E5B /* InputEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F26E0F4E5F2E008E3E5B /* InputEventHandler.cpp */; };
+		9807F28D0F4E5F2E008E3E5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F2700F4E5F2E008E3E5B /* main.cpp */; };
+		9807F28F0F4E5F2E008E3E5B /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F2720F4E5F2E008E3E5B /* Monster.cpp */; };
+		9807F2900F4E5F2E008E3E5B /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F2740F4E5F2E008E3E5B /* Player.cpp */; };
+		9807F2910F4E5F2E008E3E5B /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F2760F4E5F2E008E3E5B /* ProgressCircle.cpp */; };
+		9807F2920F4E5F2E008E3E5B /* RenderingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F2780F4E5F2E008E3E5B /* RenderingHandler.cpp */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
 		98563E770F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */; };
 		98563E780F1A46370050410E /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */; };
@@ -17,19 +25,27 @@
 		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
 		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
 		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
-		9868F5020F17C38F004AE96C /* CGUITTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */; };
-		9868F5030F17C38F004AE96C /* ConcurrentQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */; };
-		9868F5040F17C38F004AE96C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F70F17C38F004AE96C /* main.cpp */; };
-		9868F5050F17C38F004AE96C /* InputEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4F90F17C38F004AE96C /* InputEventHandler.cpp */; };
-		9868F5060F17C38F004AE96C /* GameObjectCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FB0F17C38F004AE96C /* GameObjectCollection.cpp */; };
-		9868F5070F17C38F004AE96C /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FC0F17C38F004AE96C /* Player.cpp */; };
-		9868F5080F17C38F004AE96C /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F4FE0F17C38F004AE96C /* ProgressCircle.cpp */; };
-		9868F5090F17C38F004AE96C /* RenderingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9868F5000F17C38F004AE96C /* RenderingHandler.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		980ABB260F443B040071D558 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monster.h; path = ../Monster.h; sourceTree = "<group>"; };
-		980ABB270F443B040071D558 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Monster.cpp; path = ../Monster.cpp; sourceTree = "<group>"; };
+		9807F24F0F4E5F2E008E3E5B /* CGUITTFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGUITTFont.cpp; sourceTree = "<group>"; };
+		9807F2500F4E5F2E008E3E5B /* CGUITTFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGUITTFont.h; sourceTree = "<group>"; };
+		9807F2510F4E5F2E008E3E5B /* ConcurrentQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConcurrentQueue.cpp; sourceTree = "<group>"; };
+		9807F2520F4E5F2E008E3E5B /* ConcurrentQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConcurrentQueue.hpp; sourceTree = "<group>"; };
+		9807F2530F4E5F2E008E3E5B /* FSM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSM.h; sourceTree = "<group>"; };
+		9807F26C0F4E5F2E008E3E5B /* GameObjectCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameObjectCollection.cpp; sourceTree = "<group>"; };
+		9807F26D0F4E5F2E008E3E5B /* GameObjectCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameObjectCollection.hpp; sourceTree = "<group>"; };
+		9807F26E0F4E5F2E008E3E5B /* InputEventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputEventHandler.cpp; sourceTree = "<group>"; };
+		9807F26F0F4E5F2E008E3E5B /* InputEventHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputEventHandler.hpp; sourceTree = "<group>"; };
+		9807F2700F4E5F2E008E3E5B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9807F2720F4E5F2E008E3E5B /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
+		9807F2730F4E5F2E008E3E5B /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
+		9807F2740F4E5F2E008E3E5B /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		9807F2750F4E5F2E008E3E5B /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
+		9807F2760F4E5F2E008E3E5B /* ProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressCircle.cpp; sourceTree = "<group>"; };
+		9807F2770F4E5F2E008E3E5B /* ProgressCircle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProgressCircle.hpp; sourceTree = "<group>"; };
+		9807F2780F4E5F2E008E3E5B /* RenderingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderingHandler.cpp; sourceTree = "<group>"; };
+		9807F2790F4E5F2E008E3E5B /* RenderingHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderingHandler.hpp; sourceTree = "<group>"; };
 		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
 		98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
 		98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s.a"; path = "../../lib/libboost_date_time-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
@@ -41,21 +57,6 @@
 		9868EF530F130414004AE96C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		9868F1060F1305AD004AE96C /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9868F1090F1305AD004AE96C /* FYP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FYP-Info.plist"; sourceTree = "<group>"; };
-		9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CGUITTFont.cpp; path = ../CGUITTFont.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4F40F17C38F004AE96C /* CGUITTFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CGUITTFont.h; path = ../CGUITTFont.h; sourceTree = SOURCE_ROOT; };
-		9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConcurrentQueue.cpp; path = ../ConcurrentQueue.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4F60F17C38F004AE96C /* ConcurrentQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConcurrentQueue.hpp; path = ../ConcurrentQueue.hpp; sourceTree = SOURCE_ROOT; };
-		9868F4F70F17C38F004AE96C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4F80F17C38F004AE96C /* InputEventHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputEventHandler.hpp; path = ../InputEventHandler.hpp; sourceTree = SOURCE_ROOT; };
-		9868F4F90F17C38F004AE96C /* InputEventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputEventHandler.cpp; path = ../InputEventHandler.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4FA0F17C38F004AE96C /* GameObjectCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameObjectCollection.hpp; path = ../GameObjectCollection.hpp; sourceTree = SOURCE_ROOT; };
-		9868F4FB0F17C38F004AE96C /* GameObjectCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObjectCollection.cpp; path = ../GameObjectCollection.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4FC0F17C38F004AE96C /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../Player.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4FD0F17C38F004AE96C /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Player.hpp; path = ../Player.hpp; sourceTree = SOURCE_ROOT; };
-		9868F4FE0F17C38F004AE96C /* ProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressCircle.cpp; path = ../ProgressCircle.cpp; sourceTree = SOURCE_ROOT; };
-		9868F4FF0F17C38F004AE96C /* ProgressCircle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ProgressCircle.hpp; path = ../ProgressCircle.hpp; sourceTree = SOURCE_ROOT; };
-		9868F5000F17C38F004AE96C /* RenderingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderingHandler.cpp; path = ../RenderingHandler.cpp; sourceTree = SOURCE_ROOT; };
-		9868F5010F17C38F004AE96C /* RenderingHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderingHandler.hpp; path = ../RenderingHandler.hpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,10 +79,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9807F24E0F4E5F2E008E3E5B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9807F24F0F4E5F2E008E3E5B /* CGUITTFont.cpp */,
+				9807F2500F4E5F2E008E3E5B /* CGUITTFont.h */,
+				9807F2510F4E5F2E008E3E5B /* ConcurrentQueue.cpp */,
+				9807F2520F4E5F2E008E3E5B /* ConcurrentQueue.hpp */,
+				9807F2530F4E5F2E008E3E5B /* FSM.h */,
+				9807F26C0F4E5F2E008E3E5B /* GameObjectCollection.cpp */,
+				9807F26D0F4E5F2E008E3E5B /* GameObjectCollection.hpp */,
+				9807F26E0F4E5F2E008E3E5B /* InputEventHandler.cpp */,
+				9807F26F0F4E5F2E008E3E5B /* InputEventHandler.hpp */,
+				9807F2700F4E5F2E008E3E5B /* main.cpp */,
+				9807F2720F4E5F2E008E3E5B /* Monster.cpp */,
+				9807F2730F4E5F2E008E3E5B /* Monster.h */,
+				9807F2740F4E5F2E008E3E5B /* Player.cpp */,
+				9807F2750F4E5F2E008E3E5B /* Player.hpp */,
+				9807F2760F4E5F2E008E3E5B /* ProgressCircle.cpp */,
+				9807F2770F4E5F2E008E3E5B /* ProgressCircle.hpp */,
+				9807F2780F4E5F2E008E3E5B /* RenderingHandler.cpp */,
+				9807F2790F4E5F2E008E3E5B /* RenderingHandler.hpp */,
+			);
+			name = src;
+			path = ..;
+			sourceTree = SOURCE_ROOT;
+		};
 		9868EF430F1303F4004AE96C = {
 			isa = PBXGroup;
 			children = (
-				9868F2D80F134CD3004AE96C /* Source */,
+				9807F24E0F4E5F2E008E3E5B /* src */,
 				9868F12B0F1308BC004AE96C /* Library */,
 				9868F1070F1305AD004AE96C /* Products */,
 				9868F1090F1305AD004AE96C /* FYP-Info.plist */,
@@ -110,30 +137,6 @@
 				9868EF530F130414004AE96C /* OpenGL.framework */,
 			);
 			name = Library;
-			sourceTree = "<group>";
-		};
-		9868F2D80F134CD3004AE96C /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				9868F4F30F17C38F004AE96C /* CGUITTFont.cpp */,
-				980ABB260F443B040071D558 /* Monster.h */,
-				980ABB270F443B040071D558 /* Monster.cpp */,
-				9868F4F40F17C38F004AE96C /* CGUITTFont.h */,
-				9868F4F50F17C38F004AE96C /* ConcurrentQueue.cpp */,
-				9868F4F60F17C38F004AE96C /* ConcurrentQueue.hpp */,
-				9868F4F70F17C38F004AE96C /* main.cpp */,
-				9868F4F80F17C38F004AE96C /* InputEventHandler.hpp */,
-				9868F4F90F17C38F004AE96C /* InputEventHandler.cpp */,
-				9868F4FA0F17C38F004AE96C /* GameObjectCollection.hpp */,
-				9868F4FB0F17C38F004AE96C /* GameObjectCollection.cpp */,
-				9868F4FC0F17C38F004AE96C /* Player.cpp */,
-				9868F4FD0F17C38F004AE96C /* Player.hpp */,
-				9868F4FE0F17C38F004AE96C /* ProgressCircle.cpp */,
-				9868F4FF0F17C38F004AE96C /* ProgressCircle.hpp */,
-				9868F5000F17C38F004AE96C /* RenderingHandler.cpp */,
-				9868F5010F17C38F004AE96C /* RenderingHandler.hpp */,
-			);
-			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,15 +192,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9868F5020F17C38F004AE96C /* CGUITTFont.cpp in Sources */,
-				9868F5030F17C38F004AE96C /* ConcurrentQueue.cpp in Sources */,
-				9868F5040F17C38F004AE96C /* main.cpp in Sources */,
-				9868F5050F17C38F004AE96C /* InputEventHandler.cpp in Sources */,
-				9868F5060F17C38F004AE96C /* GameObjectCollection.cpp in Sources */,
-				9868F5070F17C38F004AE96C /* Player.cpp in Sources */,
-				9868F5080F17C38F004AE96C /* ProgressCircle.cpp in Sources */,
-				9868F5090F17C38F004AE96C /* RenderingHandler.cpp in Sources */,
-				980ABB280F443B040071D558 /* Monster.cpp in Sources */,
+				9807F27A0F4E5F2E008E3E5B /* CGUITTFont.cpp in Sources */,
+				9807F27B0F4E5F2E008E3E5B /* ConcurrentQueue.cpp in Sources */,
+				9807F28B0F4E5F2E008E3E5B /* GameObjectCollection.cpp in Sources */,
+				9807F28C0F4E5F2E008E3E5B /* InputEventHandler.cpp in Sources */,
+				9807F28D0F4E5F2E008E3E5B /* main.cpp in Sources */,
+				9807F28F0F4E5F2E008E3E5B /* Monster.cpp in Sources */,
+				9807F2900F4E5F2E008E3E5B /* Player.cpp in Sources */,
+				9807F2910F4E5F2E008E3E5B /* ProgressCircle.cpp in Sources */,
+				9807F2920F4E5F2E008E3E5B /* RenderingHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
