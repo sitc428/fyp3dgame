@@ -1,0 +1,214 @@
+#include "FrontEnd.h"
+#include "GameEngine.h"
+#include "InputEventReceiver.h"
+#include "irrlicht/KeyCodes.h"
+
+extern GameEngine* GEngine;
+
+static const c8*		FRONTEND_BACKGROUND_TEXTURE = "../art/StartupScreen/800x600GameSplash.png";
+static const c8*		FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
+static const c8*		FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
+static const SColor		SELECTED_ITEM_OVERRIDE_COLOR = SColor(255,255,0,0);
+
+// dimensions of the text elements in the frontend
+static const s32		TEXT_ELEMENT_WIDTH = 200;
+static const s32		TEXT_ELEMENT_HEIGHT = 20;
+static const s32		FIRST_TEXT_ELEMENT_Y_OFFSET = 200;
+static const s32		SECOND_TEXT_ELEMENT_Y_OFFSET = 230;
+
+// constructor
+FrontEnd::FrontEnd()
+: FrontEndBackground(NULL)
+, BackgroundImage(NULL)
+, StartGameText(NULL)
+, ExitGameText(NULL)
+, currSelectedItem(FE_MENU_ITEM_STARTGAME)
+{	
+	// load all the frontend resources
+	if( GEngine->GetScreenSize() == dimension2d<s32>(800,600) )
+	{
+		FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
+	}
+	else if( GEngine->GetScreenSize() == dimension2d<s32>(1280,720) )
+	{
+		FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE_1280x720 );
+	}
+	else
+	{
+		// default to the 800x600 texture
+		FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
+	}
+	
+	check(FrontEndBackground);
+}
+
+// destructor
+FrontEnd::~FrontEnd()
+{
+	// clear all the frontend resoruces
+	GEngine->GetDriver().removeTexture( FrontEndBackground );
+	FrontEndBackground = NULL;
+}
+
+void FrontEnd::Init()
+{
+	// init the ammo display
+	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+	check(env);
+	dimension2d<s32> scrSize = GEngine->GetScreenSize();
+
+	position2d<s32> backgroundPos = position2d<s32>(0,0);
+
+	BackgroundImage = env->addImage( rect<s32>(backgroundPos, scrSize) );
+	BackgroundImage->setImage( FrontEndBackground );
+
+	IGUIFont* font = env->getFont( FRONTEND_FONT_FILE );
+	if (font)
+	{
+		env->getSkin()->setFont(font);
+	}
+
+	// add the text elements
+	StartGameText = env->addStaticText(
+		L"Start   Game",
+		core::rect<s32>(
+			scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
+			scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET,
+			scrSize.Width/2 + TEXT_ELEMENT_WIDTH/2,
+			scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET),
+		false, false, 0, -1, false);
+	check(StartGameText);
+	StartGameText->setTextAlignment( EGUIA_CENTER, EGUIA_CENTER );
+
+	ExitGameText = env->addStaticText(
+		L"Exit",
+		core::rect<s32>(
+			scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
+			scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET,
+			scrSize.Width/2 + TEXT_ELEMENT_WIDTH/2,
+			scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET),
+		false, false, 0, -1, false);
+
+	check(ExitGameText);
+	ExitGameText->setTextAlignment( EGUIA_CENTER, EGUIA_CENTER );
+
+	GetCurrentlySelectedItem()->setOverrideColor( SELECTED_ITEM_OVERRIDE_COLOR );
+}
+
+// called every frame with the frame's elapsed time
+void FrontEnd::Tick( f32 delta )
+{
+	// perform an tick of the input system
+	DoInput();
+}
+
+void FrontEnd::Exit()
+{
+	// delete all the gui elements
+	check( BackgroundImage );
+	BackgroundImage->remove();
+	BackgroundImage = NULL;
+
+	check( StartGameText );
+	StartGameText->remove();
+	StartGameText = NULL;
+
+	check( ExitGameText );
+	ExitGameText->remove();
+	ExitGameText = NULL;
+}
+
+// returns the static text item corresponding to the curr selected menu item
+IGUIStaticText* FrontEnd::GetCurrentlySelectedItem()
+{
+	switch(currSelectedItem)
+	{
+		case FE_MENU_ITEM_STARTGAME:
+		{
+			return StartGameText;
+		}
+		case FE_MENU_ITEM_EXIT:
+		{
+			return ExitGameText;
+		}
+		default:
+		{
+			// shouldn't be here
+			check( false );
+			return NULL;
+		}
+	}
+}
+
+// changes which item is currently highligted
+void FrontEnd::SetCurrentlyEnabledItem( EMenuItem item )
+{
+	// changing selected item to the same item doesn't make sense
+	check(item != currSelectedItem);
+
+	// disable highlight color on the previously selected item
+	IGUIStaticText* currItem = GetCurrentlySelectedItem();
+	currItem->enableOverrideColor(false);
+
+	// change the currently selected item and set the override color on it
+	currSelectedItem = item;
+	IGUIStaticText* nextSelectedItem = GetCurrentlySelectedItem();
+	nextSelectedItem->setOverrideColor(SELECTED_ITEM_OVERRIDE_COLOR);
+}
+
+// perform an tick of the input system
+void FrontEnd::DoInput()
+{
+	InputEventReceiver& receiver = GEngine->GetReceiver();
+
+	// perform requested menu item action if the enter key is pressed
+	if(receiver.IsKeyDown(irr::KEY_RETURN))
+	{
+		switch(currSelectedItem)
+		{
+			case FE_MENU_ITEM_STARTGAME:
+			{
+				GEngine->RequestStateChange(state_GAME);
+				break;
+			}
+			case FE_MENU_ITEM_EXIT:
+			{
+				GEngine->RequestStateChange(state_EXIT);
+				break;
+			}
+			default:
+			{
+				// shouldn't be here
+				check( false );
+			}
+		}
+	}
+	else if(receiver.IsKeyDown(irr::KEY_UP) || receiver.IsKeyDown(irr::KEY_KEY_W))
+	{
+		// find what the next selected item should be, don't allow for list iteration wraparound
+		EMenuItem nextItem = currSelectedItem;
+		if( currSelectedItem == FE_MENU_ITEM_EXIT )
+		{
+			nextItem = FE_MENU_ITEM_STARTGAME;
+		}
+
+		if( nextItem != currSelectedItem )
+		{
+			SetCurrentlyEnabledItem(nextItem);
+		}
+	}
+	else if(receiver.IsKeyDown(irr::KEY_DOWN) || receiver.IsKeyDown(irr::KEY_KEY_S))
+	{
+		// find what the next selected item should be, don't allow for list iteration wraparound
+		EMenuItem nextItem = currSelectedItem;
+		if( currSelectedItem == FE_MENU_ITEM_STARTGAME )
+		{
+			nextItem = FE_MENU_ITEM_EXIT;
+		}
+
+		if( nextItem != currSelectedItem )
+		{
+			SetCurrentlyEnabledItem(nextItem);
+		}
+	}
+}
