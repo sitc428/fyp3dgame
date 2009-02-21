@@ -1,7 +1,7 @@
 #include "SnowballProjectile.h"
 #include "Check.h"
 #include "GameEngine.h"
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include "ExplosionEffect.h"
 #include "GameWorld.h"  // for collision info
 #include "CollisionHelper.h"

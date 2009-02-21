@@ -5,7 +5,7 @@
 #define GameWorld_h
 
 #include <irrlicht/irrlicht.h>
-//#include <irrklang.h>
+//#include <irrklang/irrKlang.h>
 
 // forward declares
 class Actor;

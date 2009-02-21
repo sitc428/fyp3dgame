@@ -1,7 +1,7 @@
 /**
 	This is the main launch file of the SnowballGame
 */
-#include "GameEngine.h"
+#include "Engine/GameEngine.h"
 
 // global instance of the game engine
 GameEngine* GEngine = NULL;
