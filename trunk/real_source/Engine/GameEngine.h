@@ -2,7 +2,7 @@
 #define GameEngine_h
 
 #include <irrlicht/irrlicht.h>
-//#include <irrKlang.h>
+#include <irrklang/irrKlang.h>
 #include "Check.h"
 #include "irrlicht/IEventReceiver.h"
 
@@ -10,7 +10,7 @@ using namespace irr;
 using namespace irr::video;
 using namespace irr::scene;
 using namespace irr::core;
-//using namespace irrklang;
+using namespace irrklang;
 
 class InputEventReceiver;
 class StartupScreen;
@@ -60,7 +60,7 @@ public:
 	IVideoDriver& GetDriver() const { check(driver); return *driver; }
 	ISceneManager& GetSceneManager() const { check(smgr); return *smgr; }
 	InputEventReceiver& GetReceiver() const { check(receiver); return *receiver; }
-	//ISoundEngine& GetSoundEngine() const { check(soundEngine); return *soundEngine; }
+	ISoundEngine& GetSoundEngine() const { check(soundEngine); return *soundEngine; }
 	ParticleManager& GetParticleManager() { return *particleManager; }
 	const dimension2d<s32>& GetScreenSize() const { return screenSize; }
 
@@ -114,7 +114,7 @@ private:
 	IVideoDriver*			driver;
 	ISceneManager*			smgr;
 	InputEventReceiver*		receiver;
-//	ISoundEngine*			soundEngine;
+	ISoundEngine*			soundEngine;
 	ParticleManager*		particleManager; // particle manager for easy creation of particle effects	
 
 	dimension2d<s32>		screenSize;
@@ -131,7 +131,7 @@ private:
 	FrontEnd*				frontEnd;
 	GameWorld*				world;
 
-//	irrklang::ISound*			gameMusic;
+	irrklang::ISound*			gameMusic;
 // HACK
 public:
 	IParticleSystemSceneNode* GlobalWeatherEffect;  // global weather effect

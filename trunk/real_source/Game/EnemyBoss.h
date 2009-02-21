@@ -1,8 +1,8 @@
 #ifndef EnemyBoss_h
 #define EnemyBoss_h
 
-#include <irrlicht.h>
-#include <irrKlang.h>
+#include <irrlicht/irrlicht.h>
+#include <irrklang/irrKlang.h>
 #include "Actor.h"
 #include "Check.h"
 
