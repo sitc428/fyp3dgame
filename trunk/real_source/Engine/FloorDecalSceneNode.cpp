@@ -3,8 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "FloorDecalSceneNode.h"
-#include "irrlicht/ISceneManager.h"
-#include "irrlicht/irrlicht.h"
+#include <irrlicht/irrlicht.h>
 
 using namespace irr;
 using namespace irr::core;
