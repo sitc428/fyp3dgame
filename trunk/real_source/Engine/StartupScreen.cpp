@@ -65,6 +65,7 @@ void StartupScreen::Tick( irr::f32 delta )
 	DoInput();
 
 	elapsedTime += delta;
+	//std::cout<<elapsedTime<<" "<<delta<<std::endl;
 	if( elapsedTime > STARTUP_SCREEN_TIME_MAX )
 	{
 		GEngine->RequestStateChange(state_FRONTEND);

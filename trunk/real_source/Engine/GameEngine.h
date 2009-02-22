@@ -64,7 +64,7 @@ class GameEngine
 
 		const irr::core::dimension2d<irr::s32>& GetScreenSize() const { return screenSize; }
 
-		irr::u32 GetRealTime() const { return GetDevice().getTimer()->getRealTime(); }
+		irr::u32 GetRealTime() const { return GetDevice().getTimer()->getTime(); }
 
 		// unbuffered mouse input 
 		void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );

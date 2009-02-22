@@ -363,7 +363,7 @@ irr::f32 GameEngine::CalcElapsedTime()
 	irr::u32 time = GetRealTime();
 	irr::s32 dTime = time - lastTime;
 	lastTime = time;
-
+	
 	return dTime / 1000.0f;
 #endif
 }
