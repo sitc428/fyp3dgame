@@ -5,7 +5,7 @@ InputEventReceiver::InputEventReceiver(GameEngine& engine)
  : _engine(engine)
 {
 	// init keyboard states. 
-	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i)
+	for (int i = 0; i < irr::EKEY_CODE::KEY_KEY_CODES_COUNT; ++i)
 		keyState[i] = UP;
 
 	// init mouse states.
@@ -206,7 +206,7 @@ void InputEventReceiver::enable()
 	handlerState = ENABLED;
 
 	// update keyboard state
-	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i)
+	for (int i = 0; i < irr::EKEY_CODE::KEY_KEY_CODES_COUNT; ++i)
 	{
 		if (keyState[i] == RELEASED)
 			keyState[i] = UP;
