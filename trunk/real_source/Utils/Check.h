@@ -3,7 +3,7 @@
   the application will halt execution signaling an error.  If the debugger is present the check will trigger 
   a breakpoint halt in the place where the check failed.  Checks are only defined in the debug build, in retail they 
   will automatically compile out.
-*/
+  */
 
 #ifndef __CHECK_HPP__
 #define __CHECK_HPP__
@@ -18,19 +18,19 @@
 
 #define ERROR_DISP(msg)                                                       \
 {                                                                             \
-	  printf("ERROR: %s (file:%s line:%d)\n", #msg, __FILE__, __LINE__);      \
-	  if( IsDebuggerPresent() )                                               \
-		__debugbreak();                                                       \
-	  else                                                                    \
-		abort();                                                              \
+	printf("ERROR: %s (file:%s line:%d)\n", #msg, __FILE__, __LINE__);      \
+	if( IsDebuggerPresent() )                                               \
+	__debugbreak();                                                       \
+	else                                                                    \
+	abort();                                                              \
 }
 
 #define check(cond)                       \
 {                                         \
-      if ((cond) == false)                \
-      {                                   \
-            ERROR_DISP(cond)              \
-      }                                   \
+	if ((cond) == false)                \
+	{                                   \
+		ERROR_DISP(cond)              \
+	}                                   \
 }
 
 #else

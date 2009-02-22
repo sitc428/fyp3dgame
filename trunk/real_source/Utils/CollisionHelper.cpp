@@ -8,12 +8,12 @@ bool CollisionHelper::CheckCollision( const irr::scene::ITriangleSelector& selec
 	irr::core::triangle3df intersectingTriangles[1];
 	intersectingTriangles[0] = irr::core::triangle3d<irr::f32>();
 	irr::s32 temp;
-    selector.getTriangles( intersectingTriangles, 1, temp, box );
+	selector.getTriangles( intersectingTriangles, 1, temp, box );
 
 	if (intersectingTriangles[0] != irr::core::triangle3d<irr::f32>())
-    {
-        return true;
-    } 
+	{
+		return true;
+	} 
 
 	return false;
 }
