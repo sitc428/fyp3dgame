@@ -6,12 +6,15 @@
 #include "FrontEnd.h"
 #include "FloorDecalSceneNode.h"
 #include "ParticleManager.h"
-#ifdef WIN32
+
+#ifdef _IRR_WINDOWS_
 #include <windows.h>
-#endif
 
 #pragma comment(lib, "Irrlicht.lib")
 #pragma comment(lib, "irrKlang.lib")
+#pragma comment(lib, "freetype.lib")
+
+#endif
 
 using namespace irr;
 using namespace irr::core;
