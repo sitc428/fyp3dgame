@@ -2,12 +2,13 @@
  *  Monster.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09年2月9日.
+ *  Created by Mr.JJ on 09�?????
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
 
 #include "Monster.h"
+#include <string>
 
 Monster::Monster(irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
 :_monster(source),_speed(speed){
