@@ -1,5 +1,5 @@
-#ifndef CollisionHelper_h
-#define CollisionHelper_h
+#ifndef __COLLISION_HELPER_HPP__
+#define __COLLISION_HELPER_HPP__
 
 #include <irrlicht/irrlicht.h>
 
@@ -22,4 +22,4 @@ static bool CheckCollision( const core::aabbox3d<f32>& box1, const core::aabbox3
 static bool CheckProximity( const vector3df& pos1, const vector3df& pos2, f32 tolerance );
 };
 
-#endif //CollisionHelper_h
+#endif //__COLLISION_HELPER_HPP__

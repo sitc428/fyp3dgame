@@ -5,8 +5,8 @@
   will automatically compile out.
 */
 
-#ifndef Check_h
-#define Check_h
+#ifndef __CHECK_HPP__
+#define __CHECK_HPP__
 
 #ifdef _DEBUG
 #define CHECKS_ON
@@ -41,4 +41,4 @@
 
 #endif //CHECKS_ON
 
-#endif //Check_h
+#endif //__CHECK_HPP__
