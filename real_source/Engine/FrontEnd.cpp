@@ -5,8 +5,8 @@
 
 extern GameEngine* GEngine;
 
-static const c8*		FRONTEND_BACKGROUND_TEXTURE = "../art/StartupScreen/800x600GameSplash.png";
-static const c8*		FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
+static const c8*		FRONTEND_BACKGROUND_TEXTURE = "img/startup.jpg";
+//static const c8*		FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
 static const c8*		FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
 static const SColor		SELECTED_ITEM_OVERRIDE_COLOR = SColor(255,255,0,0);
 
@@ -24,22 +24,6 @@ FrontEnd::FrontEnd()
 , ExitGameText(NULL)
 , currSelectedItem(FE_MENU_ITEM_STARTGAME)
 {	
-	// load all the frontend resources
-	if( GEngine->GetScreenSize() == dimension2d<s32>(800,600) )
-	{
-		FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
-	}
-	else if( GEngine->GetScreenSize() == dimension2d<s32>(1280,720) )
-	{
-		FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE_1280x720 );
-	}
-	else
-	{
-		// default to the 800x600 texture
-		FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
-	}
-	
-	check(FrontEndBackground);
 }
 
 // destructor
@@ -52,6 +36,10 @@ FrontEnd::~FrontEnd()
 
 void FrontEnd::Init()
 {
+	// load the background image
+	FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
+	check(FrontEndBackground);
+
 	// init the ammo display
 	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
