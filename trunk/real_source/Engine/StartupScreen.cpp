@@ -1,6 +1,6 @@
 #include "StartupScreen.h"
 #include "GameEngine.h"
-#include "InputEventReceiver.h"
+#include "InputEventReceiver.hpp"
 
 static const irr::c8* STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "model/StartupScreen/psan2logo.png";
 static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "model/StartupScreen/irrLogo.png";
@@ -114,7 +114,6 @@ void StartupScreen::Exit()
 // perform an tick of the input system
 void StartupScreen::DoInput()
 {
-	/*
 	// allow for skippking over the startup screen if user presses space or enter
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
@@ -122,5 +121,4 @@ void StartupScreen::DoInput()
 	{
 		GEngine->RequestStateChange(state_FRONTEND);
 	}
-	 */
 }
