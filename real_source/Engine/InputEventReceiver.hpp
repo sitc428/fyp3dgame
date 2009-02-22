@@ -53,7 +53,7 @@ private:
 	} mouse;
 
 	// keyboard key states.
-	keyStates keyState[irr::KEY_KEY_CODES_COUNT];
+	keyStates keyState[irr::EKEY_CODE::KEY_KEY_CODES_COUNT];
 
 	handlerStates handlerState;
 	
