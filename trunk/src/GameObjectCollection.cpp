@@ -62,9 +62,11 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player->getNode()->setTriangleSelector(_smgr->createTriangleSelectorFromBoundingBox(_player->getNode()));
 	
-	ProgressCircle* pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 0, 0));
-	ProgressCircle* pc2 = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 1, 0),
+	pc = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 0, 0));
+	pc2 = new ProgressCircle(_player->getNode(), _smgr, -1, _smgr->getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 1, 0),
 		irr::video::SColor(255,255,255,0),irr::video::SColor(128,255,255,0),irr::video::SColor(200,64,64,0));
+
+	_player->setHealthBar(pc);
 
 	// add the view point
 	//_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());

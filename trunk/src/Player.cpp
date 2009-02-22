@@ -1,7 +1,8 @@
 #include "Player.hpp"
+#include "ProgressCircle.hpp"
 
 Player::Player(irr::scene::IAnimatedMeshSceneNode* source, irr::video::ITexture* texture, irr::core::vector3df position, irr::core::vector3df scale, float speed)
-	: _player(source), _speed(speed), _movingForward(true), _rotation(0)
+	: _player(source), _health(100), _speed(speed), _movingForward(true), _rotation(0), _progressCircle(0)
 {
 	_player->setLoopMode(false);
 	_player->setMaterialTexture(0, texture);
@@ -62,12 +63,36 @@ void Player::moveRight()
 
 void Player::rotateLeft()
 {
-	//_player->setRotation(irr::core::vector3df(0, (--_rotation < 0) ? 359 : _rotation, 0));
 	_player->setRotation(irr::core::vector3df(0, --_rotation, 0));
 }
 
 void Player::rotateRight()
 {
-	//_player->setRotation(irr::core::vector3df(0, (++_rotation > 359) ? 0 : _rotation, 0));
 	_player->setRotation(irr::core::vector3df(0, ++_rotation, 0));
+}
+
+void Player::setHealthBar(ProgressCircle *pc)
+{
+	if(!pc)
+		return;
+
+	if(_progressCircle)
+	{
+		delete _progressCircle;
+	}
+
+	_progressCircle = pc;
+}
+
+void Player::reduceHealth(int amount)
+{
+	if(amount <= 0)
+		return;
+
+	_health -= amount;
+
+	if(_health < 0)
+		_health = 0;
+
+	_progressCircle->setProgress(_health);
 }

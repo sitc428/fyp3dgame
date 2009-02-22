@@ -86,6 +86,9 @@ private:
 	//irr::scene::IAnimatedMeshSceneNode* _player;
 	Player* _player;
 	Monster* jj;
+
+	ProgressCircle *pc;
+	ProgressCircle *pc2;
 	//std::map<std::string, SceneData*> scenes;
 	std::map<std::string, irr::scene::ILightSceneNode*> _lights;
 
