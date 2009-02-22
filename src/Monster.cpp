@@ -18,7 +18,13 @@ Monster::Monster(irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3d
 	FSM.initiate();
 	original = position; 
 	pos = position;
+	target=pos;
+	moved = false;
 	Health = 100;
+	timeout = 5.0;
+	mon_timer = new boost::timer();
+	mon_timer->restart();
+	//mon_timer->stop();
 	//FSM.test() = "TEST";
 }
 
@@ -68,15 +74,69 @@ void Monster::update(Player* _player){
 	if(Health <= 0){//Death
 		FSM.process_event( EvDie());
 		FSM.reaction(_monster, _player);
-	}else if( _player->getPosition().getDistanceFrom(pos)< 4.0f ){
+	}else if(_player->getPosition().getDistanceFrom(pos)< 2.5f){
+		FSM.process_event( EvWithinAttackRange());
+		FSM.reaction(_monster, _player);
+	
+	
+	}else if( _player->getPosition().getDistanceFrom(original)< 7.0f || _player->getPosition().getDistanceFrom(pos)< 4.0f ){
+		mon_timer->restart();
+		irr::core::vector3df targetPos =_monster->getPosition()+((_player->getPosition() - _monster->getPosition())/42.5f);
+
+		if(targetPos.getDistanceFrom(original) < 7.0f){
 		//Tracing mode
-		FSM.process_event( EvPlayerWithinRange());
-		FSM.reaction(_monster, _player);
-		pos = _monster->getPosition();
+			FSM.process_event( EvPlayerWithinRange());
+			FSM.reaction(_monster, _player);
+			pos = _monster->getPosition();
+			target = pos;
+		}else{
+			FSM.process_event( EvFiniteStateMachineOutOfRange());
+			FSM.reaction(_monster, _player);
 		
+			
+		}
 	}else{//Idle	
-		FSM.process_event( EvFiniteStateMachineOutOfRange());
-		FSM.reaction(_monster, _player);
+			std::cout<<mon_timer->elapsed()<<"\n";
+			//irr::u32 current = mon_timer->getTime();
+		if(FSM.GetName() != "Idle"){
+			mon_timer->restart();
+			FSM.process_event( EvFiniteStateMachineOutOfRange());
+			FSM.reaction(_monster, _player);
+			
+		}else{
+			if(mon_timer->elapsed() > timeout){
+				if((target-pos)< irr::core::vector3df(0.15, 0.15, 0.15)|| target ==pos ){
+				
+					if(!moved){
+					
+						srand ( time(NULL) );
+						float x = ((float)(rand() % 10 + 1)/10)-0.5;
+						float z = ((float)(rand() % 10 + 1)/10)-0.5;
+						float y = _monster->getPosition().Y;
+						target.X = original.X+x;
+						target.Y = original.Y;
+						target.Z = original.Z+z;
+						irr::core::vector3df direction = pos-target;
+						_monster->setRotation(direction.getHorizontalAngle());
+						FSM.IdleTooLong(_monster,_player, target);
+						pos = _monster->getPosition();
+					}else{
+						moved = false;
+						mon_timer->restart();
+						
+					}
+					
+				}else{
+					//FSM.process_event( EvFiniteStateMachineOutOfRange());
+					FSM.IdleTooLong(_monster,_player, target);
+					pos = _monster->getPosition(); 
+					moved = true;
+				
+				
+				}
+			
+						}
+		}
 	}
 	
 
