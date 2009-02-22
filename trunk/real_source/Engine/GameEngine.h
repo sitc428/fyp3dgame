@@ -47,6 +47,7 @@ class GameEngine
 		void InitGameplay();
 		void ExitGameplay();
 		void LockCursor( bool lock = true );
+	
 		irr::core::position2d<irr::s32> GetMouseDelta();
 
 		irr::IrrlichtDevice& GetDevice() const { return *device; }
@@ -81,6 +82,7 @@ class GameEngine
 		  \param shade_down: vertex color down
 		  \return Returns pointer to the billboard if successful, otherwise NULL.
 		  This pointer should not be dropped. See IReferenceCounted::drop() for more information. */
+	
 		irr::scene::CFloorDecalSceneNode* addFloorDecalSceneNode(irr::scene::ISceneNode* parent = 0,
 				const irr::core::dimension2d<irr::f32>& size = irr::core::dimension2d<irr::f32>(10.0f, 10.0f),
 				const irr::core::vector3df& position = irr::core::vector3df(0,0,0), irr::s32 id=-1,

@@ -38,7 +38,7 @@ class InputEventReceiver : public irr::IEventReceiver
 		InputEventReceiver( GameEngine& engine )
 			: gameEngine( engine ) 
 		{
-			for (irr::u32 i = 0; i < irr::EKEY_CODE::KEY_KEY_CODES_COUNT; ++i)
+			for (irr::u32 i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i)
 				KeyIsDown[i] = false;
 		}
 
@@ -46,7 +46,7 @@ class InputEventReceiver : public irr::IEventReceiver
 		// instance of the engine which own this input receiver
 		GameEngine& gameEngine;
 		// We use this irr::core::array to store the current state of each key
-		bool KeyIsDown[irr::EKEY_CODE::KEY_KEY_CODES_COUNT];
+		bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
 };
 
 #endif //InputEventReceiver_h

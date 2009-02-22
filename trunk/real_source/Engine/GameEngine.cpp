@@ -96,7 +96,7 @@ void GameEngine::InitGlobalWeatherEffect()
 	check(GlobalWeatherEffect == NULL);
 	GlobalWeatherEffect = smgr->addParticleSystemSceneNode( false );
 	check(GlobalWeatherEffect);
-	particleManager->CreateFallingSnowEmitter(*GlobalWeatherEffect);
+	//particleManager->CreateFallingSnowEmitter(*GlobalWeatherEffect);
 }
 
 /**

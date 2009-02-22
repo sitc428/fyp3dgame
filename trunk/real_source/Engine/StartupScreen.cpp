@@ -2,8 +2,8 @@
 #include "GameEngine.h"
 #include "InputEventReceiver.h"
 
-static const irr::c8* STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "../art/StartupScreen/LISLogo.png";
-static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "../art/StartupScreen/irrLogo.png";
+static const irr::c8* STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "model/StartupScreen/psan2logo.png";
+static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "model/StartupScreen/irrLogo.png";
 static const irr::f32 STARTUP_SCREEN_TIME_MAX = 8.5f;  // end of irr logo duration
 static const irr::f32 STARTUP_LIS_LOGO_START_TIME = 0.5f;
 static const irr::f32 STARTUP_LIS_LOGO_FADE_DURATION = 2.5f;
@@ -114,6 +114,7 @@ void StartupScreen::Exit()
 // perform an tick of the input system
 void StartupScreen::DoInput()
 {
+	/*
 	// allow for skippking over the startup screen if user presses space or enter
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
@@ -121,4 +122,5 @@ void StartupScreen::DoInput()
 	{
 		GEngine->RequestStateChange(state_FRONTEND);
 	}
+	 */
 }
