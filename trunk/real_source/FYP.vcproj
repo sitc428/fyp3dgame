@@ -232,7 +232,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Engine\InputEventHandler.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\engine\InputEventReceiver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Engine\InputEventReceiver.hpp"
 				>
 			</File>
 			<File
@@ -297,6 +305,14 @@
 			</File>
 			<File
 				RelativePath=".\game\GameWorld.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Engine\InputEventHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Engine\InputEventReceiver.cpp"
 				>
 			</File>
 			<File

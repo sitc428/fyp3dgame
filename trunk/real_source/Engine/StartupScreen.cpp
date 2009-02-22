@@ -119,7 +119,7 @@ void StartupScreen::DoInput()
 	// allow for skippking over the startup screen if user presses space or enter
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
-	if(receiver.IsKeyDown(irr::KEY_RETURN) || receiver.IsKeyDown(irr::KEY_SPACE))
+	if(receiver.keyDown(irr::KEY_RETURN) || receiver.keyDown(irr::KEY_SPACE))
 	{
 		GEngine->RequestStateChange(state_FRONTEND);
 	}
