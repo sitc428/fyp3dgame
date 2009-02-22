@@ -27,6 +27,10 @@ public:
 	void rotateLeft();
 	void rotateRight();
 
+	void setHealthBar(ProgressCircle*);
+
+	void reduceHealth(int);
+
 private:
 	Player() {};
 	
