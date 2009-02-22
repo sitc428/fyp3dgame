@@ -21,34 +21,34 @@ using namespace irr::core;
 using namespace irr::scene;
 
 /**
-	Constructor
-*/
+  Constructor
+  */
 GameEngine::GameEngine():
-device(NULL),
-driver(NULL),
-smgr(NULL),
-//soundEngine(NULL),
-receiver(NULL),
-screenSize(0,0),
-cursorLock(true),
-lastCursorPosition(0,0),
-scrMid(0,0),
-state(state_EXIT), // defaulting to exit state, to be able to shutdown cleanly if the engine initialization failed
-requestedNextState(state_EXIT),
-startupScreen(NULL),
-frontEnd(NULL),
-world(NULL),
-particleManager(NULL),
-GlobalWeatherEffect(NULL)
-//gameMusic(NULL)
+	device(NULL),
+	driver(NULL),
+	smgr(NULL),
+	//soundEngine(NULL),
+	receiver(NULL),
+	screenSize(0,0),
+	cursorLock(true),
+	lastCursorPosition(0,0),
+	scrMid(0,0),
+	state(state_EXIT), // defaulting to exit state, to be able to shutdown cleanly if the engine initialization failed
+	requestedNextState(state_EXIT),
+	startupScreen(NULL),
+	frontEnd(NULL),
+	world(NULL),
+	particleManager(NULL),
+	GlobalWeatherEffect(NULL)
+	//gameMusic(NULL)
 {
 }
 
 
 /**
-	Initializes the engine, creates the device, sets up the driver and the scene manager.
-	If the function returns false, the program should exit.
-*/
+  Initializes the engine, creates the device, sets up the driver and the scene manager.
+  If the function returns false, the program should exit.
+  */
 bool GameEngine::Init()
 {
 	// let user select driver type
@@ -77,7 +77,7 @@ bool GameEngine::Init()
 
 	// create the device
 	device = createDevice( driverType, screenSize,
-		16, isFullScreen, false, false, receiver);
+			16, isFullScreen, false, false, receiver);
 
 	if( !device )
 	{
@@ -95,9 +95,9 @@ bool GameEngine::Init()
 	// create sound engine
 	//soundEngine = createIrrKlangDevice();
 	/*if( !soundEngine )
-		return 0; // error starting up the sound engine
-	*/
-	 
+	  return 0; // error starting up the sound engine
+	  */
+
 	// randomize randomize :)
 	srand( GetRealTime() );
 
@@ -120,8 +120,8 @@ void GameEngine::InitGlobalWeatherEffect()
 }
 
 /**
-	Shuts down the game engine, properly cleans up the device.
-*/
+  Shuts down the game engine, properly cleans up the device.
+  */
 void GameEngine::Exit()
 {
 	// make sure that the only way to exit the game is through the exit state
@@ -132,11 +132,11 @@ void GameEngine::Exit()
 	check( world == NULL );
 
 	/*if(soundEngine)
-	{
-		soundEngine->drop();
-		soundEngine = NULL;
-	}
-	 */
+	  {
+	  soundEngine->drop();
+	  soundEngine = NULL;
+	  }
+	  */
 
 	// clean up the global weather effect
 	if(GlobalWeatherEffect)
@@ -151,8 +151,8 @@ void GameEngine::Exit()
 	particleManager = NULL;
 
 	/*
-	In the end, delete the Irrlicht device.
-	*/
+	   In the end, delete the Irrlicht device.
+	   */
 	if( device )
 	{
 		device->drop();
@@ -201,8 +201,8 @@ void GameEngine::ExitFrontEnd()
 }
 
 /**
-	Sets up the initial gameplay state
-*/
+  Sets up the initial gameplay state
+  */
 void GameEngine::InitGameplay()
 {
 	lastTime = GetRealTime();
@@ -210,14 +210,14 @@ void GameEngine::InitGameplay()
 	// create a new game world
 	world = new GameWorld( *this );
 	world->Init();
-	
+
 	// turn off the mouse cursor for gameplay
 	device->getCursorControl()->setVisible(false);
 }
 
 /**
-	Shuts down gameplay
-*/
+  Shuts down gameplay
+  */
 void GameEngine::ExitGameplay()
 {
 	// delete the gameplay world
@@ -228,16 +228,16 @@ void GameEngine::ExitGameplay()
 }
 
 /**
-	This is where the main loop is executed
-*/
+  This is where the main loop is executed
+  */
 void GameEngine::Run()
 {
 	// start by going to the startupscreen state
 	GoToStartupScreen();
 
 	/*
-	Game Loop
-	*/
+	   Game Loop
+	   */
 	while( device->run() && state != state_EXIT )
 	{
 		// calculate elapsed time per frame
@@ -264,7 +264,7 @@ void GameEngine::Run()
 
 		// perform a state transition if one was requested
 		HandleRequestedStateChange();
-	
+
 #if _DEBUG
 		// display current FPS of the game
 		DisplayFPS();
@@ -284,42 +284,42 @@ void GameEngine::TickCurrentState( f32 delta )
 	switch( state )
 	{
 		case state_STARTUP:
-		{
-			check( startupScreen );
-			startupScreen->Tick( delta );
-			break;
-		}
+			{
+				check( startupScreen );
+				startupScreen->Tick( delta );
+				break;
+			}
 		case state_FRONTEND:
-		{
-			check( frontEnd );
-			frontEnd->Tick( delta );
-			break;
-		}
+			{
+				check( frontEnd );
+				frontEnd->Tick( delta );
+				break;
+			}
 		case state_GAME:
-		{
-			check( world );
-			world->Tick( delta );
-			break;
-		}
+			{
+				check( world );
+				world->Tick( delta );
+				break;
+			}
 		default:
-		{
-		  // shouldn't be here
-		  check( false );
-		}
+			{
+				// shouldn't be here
+				check( false );
+			}
 	}
 }
 
 /**
-	Displays a message to the console prompting the user to select a display driver type, and reads in the input.
-	Function returns true if valid driver has been specified, and stores the result in the outDriverType.
-	Returns false if an invalid choice has been specified.	
-*/
+  Displays a message to the console prompting the user to select a display driver type, and reads in the input.
+  Function returns true if valid driver has been specified, and stores the result in the outDriverType.
+  Returns false if an invalid choice has been specified.	
+  */
 bool GameEngine::PromptForDriverType( video::E_DRIVER_TYPE& outDriverType )
 {
 	printf("Please select the driver you want for this example:\n"\
-		" (a) Direct3D 9.0c\n (b) Direct3D 8.1\n (c) OpenGL 1.5\n"\
-		" (d) Software Renderer\n (e) Burning's Software Renderer\n"\
-		" (f) NullDevice\n (otherKey) exit\n\n");
+			" (a) Direct3D 9.0c\n (b) Direct3D 8.1\n (c) OpenGL 1.5\n"\
+			" (d) Software Renderer\n (e) Burning's Software Renderer\n"\
+			" (f) NullDevice\n (otherKey) exit\n\n");
 
 	char i;
 	std::cin >> i;
@@ -339,12 +339,12 @@ bool GameEngine::PromptForDriverType( video::E_DRIVER_TYPE& outDriverType )
 }
 
 /**
-	Displays a message to the console prompting the user to select a display size
-*/
+  Displays a message to the console prompting the user to select a display size
+  */
 bool GameEngine::PromptForScreenSize( dimension2d<s32>& outScreensize, bool& outIsFullscreen )
 {
 	printf("\n\nPlease select the display size:\n"\
-		" (a) 800x600 windowed\n (b) 1280x720 fullscreen\n (c) 800x600 fullscreen\n (d) 1280x720 windowed\n (otherKey) exit\n\n");
+			" (a) 800x600 windowed\n (b) 1280x720 fullscreen\n (c) 800x600 fullscreen\n (d) 1280x720 windowed\n (otherKey) exit\n\n");
 
 	char i;
 	std::cin >> i;
@@ -362,15 +362,15 @@ bool GameEngine::PromptForScreenSize( dimension2d<s32>& outScreensize, bool& out
 }
 
 /**
-	Calculates elapsed time for each frame iteration
-*/
+  Calculates elapsed time for each frame iteration
+  */
 f32 GameEngine::CalcElapsedTime()
 {
 #ifdef WIN32
-    static __int64 gTime, gLastTime;
-    __int64 freq;
-    QueryPerformanceCounter((LARGE_INTEGER *)&gTime);
-    QueryPerformanceFrequency((LARGE_INTEGER *)&freq);
+	static __int64 gTime, gLastTime;
+	__int64 freq;
+	QueryPerformanceCounter((LARGE_INTEGER *)&gTime);
+	QueryPerformanceFrequency((LARGE_INTEGER *)&freq);
 	f32 elapsedTime = ( ( f32 )( gTime - gLastTime )/( f32 )freq );
 	gLastTime = gTime;
 	if( elapsedTime > 1.0f )	// watch for crazy numbers
@@ -389,12 +389,12 @@ f32 GameEngine::CalcElapsedTime()
 }
 
 /**
-	Displays current frames per second
-*/
+  Displays current frames per second
+  */
 void GameEngine::DisplayFPS()
 {
 	static s32 lastFPS = -1;
-	
+
 	s32 fps = driver->getFPS();
 	if (lastFPS != fps)
 	{
@@ -409,8 +409,8 @@ void GameEngine::DisplayFPS()
 }
 
 /**
-	Locks cursor to the middle of the screen when using camera view, or unlocks it when you need to move the cursor around
-*/
+  Locks cursor to the middle of the screen when using camera view, or unlocks it when you need to move the cursor around
+  */
 void GameEngine::LockCursor( bool lock )
 {
 	gui::ICursorControl* cursor = device->getCursorControl();
@@ -432,8 +432,8 @@ void GameEngine::LockCursor( bool lock )
 }
 
 /**
-	Calculates mouse movement using cursor displacement
-*/
+  Calculates mouse movement using cursor displacement
+  */
 position2d<s32> GameEngine::GetMouseDelta()
 {
 	gui::ICursorControl* cursor = device->getCursorControl();
@@ -457,7 +457,7 @@ position2d<s32> GameEngine::GetMouseDelta()
 
 	cursor->drop();
 
-	
+
 	return mouseOffset;
 }
 
@@ -483,30 +483,30 @@ void GameEngine::CleanupCurrentState()
 	switch( state )
 	{
 		case state_STARTUP:
-		{
-			ExitStartupScreen();
-			break;
-		}
+			{
+				ExitStartupScreen();
+				break;
+			}
 		case state_FRONTEND:
-		{
-			ExitFrontEnd();
-			break;
-		}
+			{
+				ExitFrontEnd();
+				break;
+			}
 		case state_GAME:
-		{
-			ExitGameplay();
-			break;
-		}
+			{
+				ExitGameplay();
+				break;
+			}
 		case state_EXIT:
-		{
-			// no cleanup required for this state
-			break;
-		}
+			{
+				// no cleanup required for this state
+				break;
+			}
 		default:
-		{
-			// shouldn't be here
-			check( false );
-		}
+			{
+				// shouldn't be here
+				check( false );
+			}
 	}
 }
 
@@ -523,12 +523,12 @@ void GameEngine::GoToStartupScreen()
 	state = state_STARTUP;
 	requestedNextState = state_STARTUP;
 }		  
-		  
+
 void GameEngine::GoToFrontEnd()
 {
 	// we're only allowing transition to frontend from the startup or gameplay
 	check( state == state_GAME || state == state_STARTUP )
-	CleanupCurrentState();
+		CleanupCurrentState();
 
 	InitFrontEnd();
 	state = state_FRONTEND;
@@ -537,7 +537,7 @@ void GameEngine::GoToGameplay()
 {
 	// we're only allowing transition to gameplay from the frontend state
 	check( state == state_FRONTEND )
-	CleanupCurrentState();
+		CleanupCurrentState();
 
 	InitGameplay();
 	state = state_GAME;
@@ -556,29 +556,29 @@ void GameEngine::HandleRequestedStateChange()
 		switch( requestedNextState )
 		{
 			case state_STARTUP:
-			{
-				check(false);  // transition back to the startup state doesnt make sense?
-				break;
-			}
+				{
+					check(false);  // transition back to the startup state doesnt make sense?
+					break;
+				}
 			case state_FRONTEND:
-			{
-				GoToFrontEnd();
-				break;
-			}
+				{
+					GoToFrontEnd();
+					break;
+				}
 			case state_GAME:
-			{
-				GoToGameplay();
-				break;
-			}
+				{
+					GoToGameplay();
+					break;
+				}
 			case state_EXIT:
-			{
-				GoToExit();
-				break;
-			}
+				{
+					GoToExit();
+					break;
+				}
 			default:
-			{
-				check(false);  // should not be here
-			}
+				{
+					check(false);  // should not be here
+				}
 		}
 
 		// make sure the state has been properly updated
@@ -588,42 +588,42 @@ void GameEngine::HandleRequestedStateChange()
 
 //! Adds a floor decal billboard scene node to the scene. This scene node has a texture which always faces up
 CFloorDecalSceneNode* GameEngine::addFloorDecalSceneNode(ISceneNode* parent,
-	const core::dimension2d<f32>& size, const core::vector3df& position, s32 id,
-	video::SColor shade_top, video::SColor shade_down )
+		const core::dimension2d<f32>& size, const core::vector3df& position, s32 id,
+		video::SColor shade_top, video::SColor shade_down )
 {
 	if (!parent)
 		parent = smgr->getRootSceneNode();
 
 	CFloorDecalSceneNode* node = new CFloorDecalSceneNode(parent, smgr, id, position, size,
-		shade_top, shade_down);
+			shade_top, shade_down);
 	node->drop();
 
 	return node;
 }
 /*
 
-void GameEngine::ChangeMusic( const c8* name )
-{
-	if( gameMusic )
-	{
-		gameMusic->stop();
-		gameMusic->drop();
-		gameMusic = NULL;
-	}
+   void GameEngine::ChangeMusic( const c8* name )
+   {
+   if( gameMusic )
+   {
+   gameMusic->stop();
+   gameMusic->drop();
+   gameMusic = NULL;
+   }
 
-	if( name == NULL )
-	{
-		// load and play music
-		gameMusic = GetSoundEngine().play2D("../audio/music/track1.mp3", true, false, true);
-		check(gameMusic);
-		gameMusic->setVolume( 0.15f );
-	}
-	else
-	{
-		// load and play music
-		gameMusic = GetSoundEngine().play2D(name, true, false, true);
-		check(gameMusic);
-		gameMusic->setVolume( 0.65f );
-	}
+   if( name == NULL )
+   {
+// load and play music
+gameMusic = GetSoundEngine().play2D("../audio/music/track1.mp3", true, false, true);
+check(gameMusic);
+gameMusic->setVolume( 0.15f );
+}
+else
+{
+// load and play music
+gameMusic = GetSoundEngine().play2D(name, true, false, true);
+check(gameMusic);
+gameMusic->setVolume( 0.65f );
+}
 
 }*/
