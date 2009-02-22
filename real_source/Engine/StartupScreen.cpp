@@ -16,12 +16,12 @@ static const irr::f32 STARTUP_IRR_LOGO_DURATION = 4.f;
 extern GameEngine* GEngine;
 
 // constructor
-	StartupScreen::StartupScreen()
-	: LethalIndustryLogoTexture(NULL) 
-	, LethalIndustryLogoImage(NULL) 
-	, EngineLogoTexture(NULL)
-	, EngineLogoImage(NULL) 
-	  , elapsedTime(0.f)
+StartupScreen::StartupScreen()
+	:LethalIndustryLogoTexture(NULL),
+	LethalIndustryLogoImage(NULL),
+	EngineLogoTexture(NULL),
+	EngineLogoImage(NULL),
+	elapsedTime(0.f)
 {
 	// load all the startup screen resources
 	LethalIndustryLogoTexture = GEngine->GetDriver().getTexture( STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE );
@@ -55,7 +55,7 @@ void StartupScreen::Init()
 	irr::core::position2d<irr::s32> pos2 = irr::core::position2d<irr::s32>( scrSize.Width/2 - EngineLogoTexture->getOriginalSize().Width/2,
 			scrSize.Height/2 - EngineLogoTexture->getOriginalSize().Height/2 );
 	EngineLogoImage = env->addImage( EngineLogoTexture, pos2 );
-	// set the alpha of the image to 255
+	// set the alpha of the image to 0
 	EngineLogoImage->setColor(irr::video::SColor(0,255,255,255));
 }
 
@@ -78,8 +78,7 @@ void StartupScreen::Tick( irr::f32 delta )
 			irr::u32 alpha = irr::u32( 255 * elapsedLISLogo / STARTUP_LIS_LOGO_FADE_DURATION );
 			LethalIndustryLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
 		}
-
-		if( elapsedLISLogo > STARTUP_LIS_LOGO_DURATION )
+		else
 		{
 			LethalIndustryLogoImage->setVisible(false);
 		}
@@ -93,8 +92,7 @@ void StartupScreen::Tick( irr::f32 delta )
 			irr::u32 alpha = irr::u32( 255 * elapsedIRRLogo / STARTUP_IRR_LOGO_FADE_DURATION );
 			EngineLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
 		}
-
-		if( elapsedIRRLogo > STARTUP_IRR_LOGO_DURATION )
+		else
 		{
 			EngineLogoImage->setVisible(false);
 		}
