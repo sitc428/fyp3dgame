@@ -58,7 +58,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbody_real.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbody_real.png"),
-		irr::core::vector3df(0.0, 5.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
+		irr::core::vector3df(0.0, 20.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 
 	_player->getNode()->setTriangleSelector(_smgr->createTriangleSelectorFromBoundingBox(_player->getNode()));
 	
@@ -97,6 +97,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::ISceneNode* b = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/building.x"));
 	if(b)
 	{
+		b->setVisible(false);
 		b->setPosition(irr::core::vector3df(500, 0, -400));
 		b->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		b->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/building.x"), b));
@@ -106,6 +107,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::ISceneNode* b2 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/house11.x"));
 	if(b2)
 	{
+		b2->setVisible(false);
 		b2->setPosition(irr::core::vector3df(-300, 0, -300));
 		b2->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		b2->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/house11.x"), b2));
@@ -115,6 +117,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::ISceneNode* b3 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/castle_1.x"));
 	if(b3)
 	{
+		b3->setVisible(false);
 		b3->setPosition(irr::core::vector3df(0, -5, -320));
 		b3->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		b3->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/castle_1.x"), b3));
@@ -124,6 +127,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 	irr::scene::ISceneNode* b4 = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/house.x"));
 	if(b4)
 	{
+		b4->setVisible(false);
 		b4->setPosition(irr::core::vector3df(100, 0, -400));
 		b4->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		b4->setTriangleSelector(_smgr->createTriangleSelector(_smgr->getMeshCache()->getMeshByFilename("model/x/house.x"), b4));
@@ -167,6 +171,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 			tree->setRotation(irr::core::vector3df(0, 15 * (rand() % 24), 0));
 			tree->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 			tree->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+			tree->setVisible(false);
 		}
 
 		trees[i] = tree;
@@ -181,6 +186,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 			tree2->setRotation(irr::core::vector3df(0, 15 * (rand() % 24), 0));
 			tree2->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 			tree2->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+			tree2->setVisible(false);
 		}
 
 		trees2[i] = tree2;
