@@ -117,13 +117,12 @@ void GameWorld::InitLevel()
 	}
 	outNodes.clear();
 
-	std::cout<<"!!!" <<std::endl;
-
 	smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
 	irr::u32 TreePoseCounter = 1;
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
-		irr::scene::IAnimatedMeshSceneNode* meshNode = dynamic_cast<irr::scene::IAnimatedMeshSceneNode*>(outNodes[i]);
+		//irr::scene::IAnimatedMeshSceneNode* meshNode = dynamic_cast<irr::scene::IAnimatedMeshSceneNode*>(outNodes[i]);
+		irr::scene::IAnimatedMeshSceneNode* meshNode = (irr::scene::IAnimatedMeshSceneNode*)(outNodes[i]);
 		check(meshNode);
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )

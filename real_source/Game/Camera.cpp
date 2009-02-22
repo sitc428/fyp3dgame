@@ -21,7 +21,8 @@ Camera::Camera( GameWorld& gameWorld,
 	target(&player),
 	lastSelectedSceneNode(NULL)
 {
-	node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
+	//node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
+	node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, irr::core::vector3df(0, 0, 0));
 	check( node ); 
 
 	node->setPosition( defaultPosition );

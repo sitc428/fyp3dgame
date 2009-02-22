@@ -70,7 +70,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	// add the view point
 	//_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
-	_viewPoint = _smgr->addCameraSceneNode(0, _player->getNode()->getAbsolutePosition() + irr::core::vector3df(30, 30, 60), _player->getPosition());
+	_viewPoint = _smgr->addCameraSceneNode(0, _player->getNode()->getAbsolutePosition() + irr::core::vector3df(10, 10, 30), _player->getPosition());
 	_viewPoint->setFarValue(1250.0);
 	//_viewPoint = _smgr->addCameraSceneNode(0, _player->getPosition() + irr::core::vector3df(2, 10, 3), _player->getPosition());
 
