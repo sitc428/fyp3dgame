@@ -2,7 +2,7 @@
  *  FiniteStateMachine.h
  *  FYP
  *
- *  Created by Mr.JJ on 09�???3??
+ *  Created by Mr.JJ on 09年1月13日.
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
@@ -15,8 +15,9 @@
 #include <boost/statechart/custom_reaction.hpp>
 #include <boost/statechart/in_state_reaction.hpp>
 #include <iostream>
-#include <string>
+#include <time.h>
 #include <irrlicht/irrlicht.h>
+#include <boost/timer.hpp>
 #include "Player.hpp"
 
 namespace sc = boost::statechart;
@@ -43,6 +44,7 @@ struct Name_test
 	virtual std::string GetName() const = 0;
 	virtual void test(int, int, int) const =0;
 	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player* ) const = 0;
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode*,Player*,irr::core::vector3df) const = 0;
 };
 
 /*struct State
@@ -79,6 +81,10 @@ struct FiniteStateMachine : sc::state_machine<FiniteStateMachine, NotDeath >{
 	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player ){
 		state_cast< const Name_test & >().reaction(_mon,_player);
 	}
+	void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player,irr::core::vector3df pos){
+		state_cast< const Name_test & >().IdleTooLong(_mon,_player, pos);
+	}
+	
 };
 
 struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
@@ -94,6 +100,8 @@ struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
     }
 	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player) const{
 		_mon->setLoopMode(true);
+	}
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player,irr::core::vector3df pos) const{
 	}
 	virtual ~Death() {};
 };
@@ -112,8 +120,10 @@ struct NotDeath :Name_test, sc::simple_state<NotDeath, FiniteStateMachine, Idle 
 	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
 	
 	}
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
+	}
 	// virtual const std::string name () const { return "NotDeath"; };
-	typedef sc::transition< EvDie, Death>reactions;
+	typedef sc::transition< EvDie, Death>reactions ;
 };
 
 struct Idle;
@@ -136,11 +146,13 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
       std::cout<<a-s+q<<"\n";
     }
 	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
-	
+		_player->reduceHealth(1);
+	}
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
 	}
 	virtual ~Attacking() {};
 	//virtual const std::string name () const { return "Attacking"; };
-	typedef sc::transition< EvOutOfAttackRange, Idle >reactions;
+	typedef sc::transition< EvPlayerWithinRange, Idle >reactions;
 };
 
 struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
@@ -160,8 +172,26 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
 		_mon->setLoopMode(false);
 	}
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
+		std::cout<<"Move\n";
+		_mon->setLoopMode(true);
+		irr::core::matrix4 m;
+		irr::core::vector3df targetPos = _player->getPosition();
+		m.setRotationDegrees(_mon->getRotation());
+		m.transformVect(targetPos);
+		targetPos=pos;
+		//std::cout<<targetPos<<"\n";
+		
+		irr::core::vector3df direction = _mon->getPosition()-targetPos;
+		_mon->setRotation(direction.getHorizontalAngle());
+		_mon->setPosition(_mon->getPosition()+(targetPos-_mon->getPosition())/5.0f);
+		_mon->updateAbsolutePosition();
+		_mon->setLoopMode(false);
+
+	}
 	typedef mpl::list< 
 		sc::transition< EvIdleTooLong, Idle>,
+		sc::transition< EvFiniteStateMachineOutOfRange, Idle >,
 		sc::transition< EvPlayerWithinRange, Tracing>, 
 		sc::transition< EvWithinAttackRange, Attacking > >reactions;
 	
@@ -179,16 +209,23 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 			std::cout<<a+s+q<<"\n";
 		}
 		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
-			_mon->setLoopMode(true);
+			//_mon->setLoopMode(true);
 			irr::core::matrix4 m;
-			 irr::core::vector3df targetPos = _player->getPosition();
+			irr::core::vector3df targetPos = _player->getPosition();
 			m.setRotationDegrees(_mon->getRotation());
 			m.transformVect(targetPos);
+			float y = _mon->getPosition().Y;
 			targetPos = _mon->getPosition()+((_player->getPosition() - _mon->getPosition())/42.5f); 
+			targetPos.Y = y;
+			
+			irr::core::vector3df direction = _mon->getPosition()-targetPos;
+			_mon->setRotation(direction.getHorizontalAngle());
 			//std::cout<<targetPos<<"\n";
 			_mon->setPosition(targetPos);
 			_mon->updateAbsolutePosition();
 			
+		}
+		virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
 		}
 		typedef mpl::list< 
 			sc::transition< EvPlayerWithinRange, Idle >,
@@ -211,6 +248,10 @@ class Monster{
 		irr::scene::IAnimatedMeshSceneNode *_monster;
 		float _speed; 
 		int Health;
+		boost::timer* mon_timer;
+		double timeout;
+		bool moved;
+		irr::core::vector3df target;
 		irr::core::vector3df original;
 		irr::core::vector3df pos;
 	
