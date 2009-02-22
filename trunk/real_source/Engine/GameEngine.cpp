@@ -219,6 +219,8 @@ void GameEngine::Run()
 	   */
 	while( device->run() && state != state_EXIT )
 	{
+		receiver->disable();
+
 		// calculate elapsed time per frame
 		irr::f32 frameDelta = CalcElapsedTime();
 
@@ -234,6 +236,8 @@ void GameEngine::Run()
 		device->getGUIEnvironment()->drawAll();
 
 		driver->endScene();
+
+		receiver->enable();
 
 		// if ESCAPE was pressed, request a game exit
 		if( receiver->keyDown(irr::KEY_ESCAPE) )
