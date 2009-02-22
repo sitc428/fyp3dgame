@@ -58,7 +58,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbody_real.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbody_real.png"),
-		irr::core::vector3df(0.0, 105.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
+		irr::core::vector3df(0.0, 5.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
 
 	_player->getNode()->setTriangleSelector(_smgr->createTriangleSelectorFromBoundingBox(_player->getNode()));
 	
@@ -76,10 +76,13 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	// the floor !
 
+	_smgr->loadScene("model/x/scene1.irr");
+
 	irr::scene::ISceneNode* _floor = _smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/floor1.x"));
 
 	if(_floor)
 	{
+		_floor->setVisible(false);
 		//_floor->setScale(irr::core::vector3df(1.01,0.1,1.01));
 		_floor->setScale(irr::core::vector3df(10.0, 1.0, 10.0));
 		_floor->setPosition(irr::core::vector3df(0,0,0));
@@ -132,12 +135,12 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	irr::core::vector3df radius = _player->getNode()->getBoundingBox().MaxEdge - _player->getNode()->getBoundingBox().getCenter();
 
-	irr::scene::ISceneNodeAnimator * anim = _smgr->createCollisionResponseAnimator(
+	/*irr::scene::ISceneNodeAnimator * anim = _smgr->createCollisionResponseAnimator(
 		metaSelector, _player->getNode(), radius,
 		irr::core::vector3df(0,-1, 0), irr::core::vector3df(0, -radius.Y, 0));
 
 	_player->getNode()->addAnimator(anim);
-	anim->drop();
+	anim->drop();*/
 	
 	// start adding trees.
 	srand(time(0));
