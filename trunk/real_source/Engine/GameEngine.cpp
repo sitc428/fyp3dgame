@@ -1,6 +1,5 @@
 #include "GameEngine.h"
 #include <iostream>
-//#include "InputEventReceiver.h"
 #include "InputEventReceiver.hpp"
 #include "GameWorld.h"
 #include "StartupScreen.h"
@@ -20,15 +19,15 @@
 /**
   Constructor
   */
-GameEngine::GameEngine():
-	device(NULL),
+GameEngine::GameEngine()
+	:device(NULL),
 	driver(NULL),
 	smgr(NULL),
 	soundEngine(NULL),
 	receiver(NULL),
-	screenSize(800,600),
+	screenSize(800, 600),
 	cursorLock(true),
-	lastCursorPosition(0,0),
+	lastCursorPosition(0, 0),
 	scrMid(0,0),
 	state(state_EXIT), // defaulting to exit state, to be able to shutdown cleanly if the engine initialization failed
 	requestedNextState(state_EXIT),
@@ -50,20 +49,6 @@ bool GameEngine::Init()
 {
 	// let user select driver type
 	irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
-
-	// prompt the user to select a driver type, if an invalid choice has been specified we should exit the program
-	/*bool result = PromptForDriverType( driverType ); 
-	  if( !result )
-	  {
-	  return false;
-	  }
-
-	  bool isFullScreen;
-	  result = PromptForScreenSize( screenSize, isFullScreen );
-	  if( !result )
-	  {
-	  return false;
-	  }*/
 
 	// create an event receiver
 	receiver = new InputEventReceiver( *this );
@@ -259,10 +244,7 @@ void GameEngine::Run()
 		// perform a state transition if one was requested
 		HandleRequestedStateChange();
 
-#if _DEBUG
-		// display current FPS of the game
 		DisplayFPS();
-#endif
 	}
 
 	// if the game wasn't shut down by pressing ESCAPE, then we still need to do some cleanup
@@ -608,9 +590,10 @@ void GameEngine::ChangeMusic( const irr::c8* name )
 	if( name == NULL )
 	{
 		// load and play music
-		gameMusic = GetSoundEngine().play2D("../audio/music/track1.mp3", true, false, true);
-		check(gameMusic);
-		gameMusic->setVolume( 0.15f );
+		//gameMusic = GetSoundEngine().play2D("../audio/music/track1.mp3", true, false, true);
+		//check(gameMusic);
+		//gameMusic->setVolume( 0.15f );
+		return;
 	}
 	else
 	{

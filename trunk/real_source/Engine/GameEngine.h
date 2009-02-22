@@ -49,13 +49,18 @@ class GameEngine
 		void LockCursor( bool lock = true );
 		irr::core::position2d<irr::s32> GetMouseDelta();
 
-		// accessors to the private engine members, access to null members is invalid
-		irr::IrrlichtDevice& GetDevice() const { check(device); return *device; }
-		irr::video::IVideoDriver& GetDriver() const { check(driver); return *driver; }
-		irr::scene::ISceneManager& GetSceneManager() const { check(smgr); return *smgr; }
-		InputEventReceiver& GetReceiver() const { check(receiver); return *receiver; }
-		irrklang::ISoundEngine& GetSoundEngine() const { check(soundEngine); return *soundEngine; }
+		irr::IrrlichtDevice& GetDevice() const { return *device; }
+
+		irr::video::IVideoDriver& GetDriver() const { return *driver; }
+
+		irr::scene::ISceneManager& GetSceneManager() const { return *smgr; }
+
+		InputEventReceiver& GetReceiver() const { return *receiver; }
+
+		irrklang::ISoundEngine& GetSoundEngine() const { return *soundEngine; }
+
 		ParticleManager& GetParticleManager() { return *particleManager; }
+
 		const irr::core::dimension2d<irr::s32>& GetScreenSize() const { return screenSize; }
 
 		irr::u32 GetRealTime() const { return GetDevice().getTimer()->getRealTime(); }
@@ -84,7 +89,7 @@ class GameEngine
 		// controls for state transitions
 		void RequestStateChange( EEngineState newState );
 
-		// changes the music playing (default is level music)
+		// changes the music playing
 		void ChangeMusic( const irr::c8* name = NULL );
 
 		void InitGlobalWeatherEffect();

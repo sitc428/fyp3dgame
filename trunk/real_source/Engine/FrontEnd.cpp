@@ -17,12 +17,12 @@ static const irr::s32 FIRST_TEXT_ELEMENT_Y_OFFSET = 200;
 static const irr::s32 SECOND_TEXT_ELEMENT_Y_OFFSET = 230;
 
 // constructor
-	FrontEnd::FrontEnd()
-	: FrontEndBackground(NULL)
-	, BackgroundImage(NULL)
-	, StartGameText(NULL)
-	, ExitGameText(NULL)
-	  , currSelectedItem(FE_MENU_ITEM_STARTGAME)
+FrontEnd::FrontEnd()
+	:FrontEndBackground(NULL),
+	BackgroundImage(NULL),
+	StartGameText(NULL),
+	ExitGameText(NULL),
+	currSelectedItem(FE_MENU_ITEM_STARTGAME)
 { 
 }
 
