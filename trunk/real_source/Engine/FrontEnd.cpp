@@ -1,11 +1,10 @@
 #include "FrontEnd.h"
 #include "GameEngine.h"
-#include "InputEventReceiver.h"
-#include "irrlicht/KeyCodes.h"
+#include "InputEventReceiver.hpp"
 
 extern GameEngine* GEngine;
 
-static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "img/startup.jpg";
+static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "model/StartupScreen/800x600GameSplash.png";
 //static const irr::c8* FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
 static const irr::c8* FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
 static const irr::video::SColor SELECTED_ITEM_OVERRIDE_COLOR = irr::video::SColor(255,255,0,0);
