@@ -148,7 +148,7 @@ void GameWorld::InitLevel()
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 
 	// lock cursor
-	GEngine->LockCursor();
+	//GEngine->LockCursor();
 
 	// set game state
 	stateTimer = 0;
@@ -157,8 +157,7 @@ void GameWorld::InitLevel()
 	// make sure we have found the falling fence
 	check(FenceToFall);
 
-
-	SetNumLives( 3 );
+	//SetNumLives( 3 );
 }
 
 // restarts the current level
@@ -258,17 +257,17 @@ void GameWorld::InitMusic()
 // sets up the light in the world
 void GameWorld::InitLight()
 {
-	//// Setup the directional light information
-	//irr::video::SLight lightInfo;
-	//lightInfo.CastShadows = false;
-	//lightInfo.Type = ELT_DIRECTIONAL;
-	//lightInfo.DiffuseColor = irr::video::SColorf(0.5f,0.5f,0.5f);
+	// Setup the directional light information
+	irr::video::SLight lightInfo;
+	lightInfo.CastShadows = false;
+	lightInfo.Type = irr::video::ELT_DIRECTIONAL;
+	lightInfo.DiffuseColor = irr::video::SColorf(0.5f,0.5f,0.5f);
 
-	//// Add a single directional light in the level
-	//ILightSceneNode* light = smgr.addLightSceneNode();
-	//check(light);
-	//light->setLightData( lightInfo );
-	//light->setRotation( DIRECTIONAL_LIGHT_ROTATION );
+	// Add a single directional light in the level
+	irr::scene::ILightSceneNode* light = smgr.addLightSceneNode();
+	check(light);
+	light->setLightData( lightInfo );
+	light->setRotation( DIRECTIONAL_LIGHT_ROTATION );
 }
 
 // sets up the player model and player collisions with the world
