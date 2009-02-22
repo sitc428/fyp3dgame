@@ -16,10 +16,6 @@
 
 #endif
 
-using namespace irr;
-using namespace irr::core;
-using namespace irr::scene;
-
 /**
   Constructor
   */
@@ -27,9 +23,9 @@ GameEngine::GameEngine():
 	device(NULL),
 	driver(NULL),
 	smgr(NULL),
-	//soundEngine(NULL),
+	soundEngine(NULL),
 	receiver(NULL),
-	screenSize(0,0),
+	screenSize(800,600),
 	cursorLock(true),
 	lastCursorPosition(0,0),
 	scrMid(0,0),
@@ -39,8 +35,8 @@ GameEngine::GameEngine():
 	frontEnd(NULL),
 	world(NULL),
 	particleManager(NULL),
-	GlobalWeatherEffect(NULL)
-	//gameMusic(NULL)
+	GlobalWeatherEffect(NULL),
+	gameMusic(NULL)
 {
 }
 
@@ -52,21 +48,21 @@ GameEngine::GameEngine():
 bool GameEngine::Init()
 {
 	// let user select driver type
-	video::E_DRIVER_TYPE driverType = video::EDT_DIRECT3D9;
+	irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
 
 	// prompt the user to select a driver type, if an invalid choice has been specified we should exit the program
-	bool result = PromptForDriverType( driverType );	
-	if( !result )
-	{
-		return false;
-	}
+	/*bool result = PromptForDriverType( driverType ); 
+	  if( !result )
+	  {
+	  return false;
+	  }
 
-	bool isFullScreen;
-	result = PromptForScreenSize( screenSize, isFullScreen );
-	if( !result )
-	{
-		return false;
-	}
+	  bool isFullScreen;
+	  result = PromptForScreenSize( screenSize, isFullScreen );
+	  if( !result )
+	  {
+	  return false;
+	  }*/
 
 	// create an event receiver
 	receiver = new InputEventReceiver( *this );
@@ -76,8 +72,7 @@ bool GameEngine::Init()
 	}
 
 	// create the device
-	device = createDevice( driverType, screenSize,
-			16, isFullScreen, false, false, receiver);
+	device = createDevice( driverType, screenSize, 16, false, false, false, receiver);
 
 	if( !device )
 	{
@@ -93,10 +88,9 @@ bool GameEngine::Init()
 	scrMid.Y = screenSize.Height/2;
 
 	// create sound engine
-	//soundEngine = createIrrKlangDevice();
-	/*if( !soundEngine )
-	  return 0; // error starting up the sound engine
-	  */
+	soundEngine = irrklang::createIrrKlangDevice();
+	if( !soundEngine )
+		return 0; // error starting up the sound engine
 
 	// randomize randomize :)
 	srand( GetRealTime() );
@@ -131,12 +125,11 @@ void GameEngine::Exit()
 	check( frontEnd == NULL );
 	check( world == NULL );
 
-	/*if(soundEngine)
-	  {
-	  soundEngine->drop();
-	  soundEngine = NULL;
-	  }
-	  */
+	if(soundEngine)
+	{
+		soundEngine->drop();
+		soundEngine = NULL;
+	}
 
 	// clean up the global weather effect
 	if(GlobalWeatherEffect)
@@ -241,9 +234,9 @@ void GameEngine::Run()
 	while( device->run() && state != state_EXIT )
 	{
 		// calculate elapsed time per frame
-		f32 frameDelta = CalcElapsedTime();
+		irr::f32 frameDelta = CalcElapsedTime();
 
-		driver->beginScene(true, true, video::SColor(255,0,0,0));
+		driver->beginScene(true, true, irr::video::SColor(255,0,0,0));
 
 		// perform the main tick update for the current state
 		TickCurrentState( frameDelta );
@@ -279,7 +272,7 @@ void GameEngine::Run()
 }
 
 // perform the main tick update for the current state
-void GameEngine::TickCurrentState( f32 delta )
+void GameEngine::TickCurrentState( irr::f32 delta )
 {
 	switch( state )
 	{
@@ -312,9 +305,9 @@ void GameEngine::TickCurrentState( f32 delta )
 /**
   Displays a message to the console prompting the user to select a display driver type, and reads in the input.
   Function returns true if valid driver has been specified, and stores the result in the outDriverType.
-  Returns false if an invalid choice has been specified.	
+  Returns false if an invalid choice has been specified. 
   */
-bool GameEngine::PromptForDriverType( video::E_DRIVER_TYPE& outDriverType )
+bool GameEngine::PromptForDriverType( irr::video::E_DRIVER_TYPE& outDriverType )
 {
 	printf("Please select the driver you want for this example:\n"\
 			" (a) Direct3D 9.0c\n (b) Direct3D 8.1\n (c) OpenGL 1.5\n"\
@@ -326,14 +319,14 @@ bool GameEngine::PromptForDriverType( video::E_DRIVER_TYPE& outDriverType )
 
 	switch(i)
 	{
-		case 'a': outDriverType = video::EDT_DIRECT3D9;break;
-		case 'b': outDriverType = video::EDT_DIRECT3D8;break;
-		case 'c': outDriverType = video::EDT_OPENGL;   break;
-		case 'd': outDriverType = video::EDT_SOFTWARE; break;
-		case 'e': outDriverType = video::EDT_BURNINGSVIDEO;break;
-		case 'f': outDriverType = video::EDT_NULL;     break;
+		case 'a': outDriverType = irr::video::EDT_DIRECT3D9;break;
+		case 'b': outDriverType = irr::video::EDT_DIRECT3D8;break;
+		case 'c': outDriverType = irr::video::EDT_OPENGL;   break;
+		case 'd': outDriverType = irr::video::EDT_SOFTWARE; break;
+		case 'e': outDriverType = irr::video::EDT_BURNINGSVIDEO;break;
+		case 'f': outDriverType = irr::video::EDT_NULL;     break;
 		default: return false;
-	}	
+	} 
 
 	return true;
 }
@@ -341,7 +334,7 @@ bool GameEngine::PromptForDriverType( video::E_DRIVER_TYPE& outDriverType )
 /**
   Displays a message to the console prompting the user to select a display size
   */
-bool GameEngine::PromptForScreenSize( dimension2d<s32>& outScreensize, bool& outIsFullscreen )
+bool GameEngine::PromptForScreenSize( irr::core::dimension2d<irr::s32>& outScreensize, bool& outIsFullscreen )
 {
 	printf("\n\nPlease select the display size:\n"\
 			" (a) 800x600 windowed\n (b) 1280x720 fullscreen\n (c) 800x600 fullscreen\n (d) 1280x720 windowed\n (otherKey) exit\n\n");
@@ -351,12 +344,12 @@ bool GameEngine::PromptForScreenSize( dimension2d<s32>& outScreensize, bool& out
 
 	switch(i)
 	{
-		case 'a': outScreensize = dimension2d<s32>(800,600); outIsFullscreen = false; break;
-		case 'b': outScreensize = dimension2d<s32>(1280,720); outIsFullscreen = true; break;
-		case 'c': outScreensize = dimension2d<s32>(800,600); outIsFullscreen = true; break;
-		case 'd': outScreensize = dimension2d<s32>(1280,720); outIsFullscreen = false; break;
+		case 'a': outScreensize = irr::core::dimension2d<irr::s32>(800,600); outIsFullscreen = false; break;
+		case 'b': outScreensize = irr::core::dimension2d<irr::s32>(1280,720); outIsFullscreen = true; break;
+		case 'c': outScreensize = irr::core::dimension2d<irr::s32>(800,600); outIsFullscreen = true; break;
+		case 'd': outScreensize = irr::core::dimension2d<irr::s32>(1280,720); outIsFullscreen = false; break;
 		default: return false;
-	}	
+	} 
 
 	return true;
 }
@@ -364,24 +357,24 @@ bool GameEngine::PromptForScreenSize( dimension2d<s32>& outScreensize, bool& out
 /**
   Calculates elapsed time for each frame iteration
   */
-f32 GameEngine::CalcElapsedTime()
+irr::f32 GameEngine::CalcElapsedTime()
 {
 #ifdef WIN32
 	static __int64 gTime, gLastTime;
 	__int64 freq;
 	QueryPerformanceCounter((LARGE_INTEGER *)&gTime);
 	QueryPerformanceFrequency((LARGE_INTEGER *)&freq);
-	f32 elapsedTime = ( ( f32 )( gTime - gLastTime )/( f32 )freq );
+	irr::f32 elapsedTime = ( ( irr::f32 )( gTime - gLastTime )/( irr::f32 )freq );
 	gLastTime = gTime;
-	if( elapsedTime > 1.0f )	// watch for crazy numbers
+	if( elapsedTime > 1.0f ) // watch for crazy numbers
 		elapsedTime = 0;
 	return elapsedTime;
 
 #else
 
 	// get elapsed time per frame (dTime)
-	u32 time = GetRealTime();
-	s32 dTime = time - lastTime;
+	irr::u32 time = GetRealTime();
+	irr::s32 dTime = time - lastTime;
 	lastTime = time;
 
 	return dTime / 1000.0f;
@@ -393,12 +386,12 @@ f32 GameEngine::CalcElapsedTime()
   */
 void GameEngine::DisplayFPS()
 {
-	static s32 lastFPS = -1;
+	static irr::s32 lastFPS = -1;
 
-	s32 fps = driver->getFPS();
+	irr::s32 fps = driver->getFPS();
 	if (lastFPS != fps)
 	{
-		core::stringw str = L"SnowballGame [";
+		irr::core::stringw str = L"SnowballGame [";
 		str += driver->getName();
 		str += "] FPS:";
 		str += fps;
@@ -413,7 +406,7 @@ void GameEngine::DisplayFPS()
   */
 void GameEngine::LockCursor( bool lock )
 {
-	gui::ICursorControl* cursor = device->getCursorControl();
+	irr::gui::ICursorControl* cursor = device->getCursorControl();
 	cursor->grab();
 
 	if( !lock )
@@ -434,12 +427,12 @@ void GameEngine::LockCursor( bool lock )
 /**
   Calculates mouse movement using cursor displacement
   */
-position2d<s32> GameEngine::GetMouseDelta()
+irr::core::position2d<irr::s32> GameEngine::GetMouseDelta()
 {
-	gui::ICursorControl* cursor = device->getCursorControl();
+	irr::gui::ICursorControl* cursor = device->getCursorControl();
 	cursor->grab();
 
-	position2d<s32> mouseOffset;
+	irr::core::position2d<irr::s32> mouseOffset;
 
 	if( cursorLock )
 	{
@@ -462,7 +455,7 @@ position2d<s32> GameEngine::GetMouseDelta()
 }
 
 // unbuffered mouse input 
-void GameEngine::OnMouseEvent( const SEvent::SMouseInput& mouseEvent )
+void GameEngine::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
 {
 	// route the unbuffered mouse input events to the game world if it exists
 	if( world )
@@ -522,7 +515,7 @@ void GameEngine::GoToStartupScreen()
 	InitStartupScreen();
 	state = state_STARTUP;
 	requestedNextState = state_STARTUP;
-}		  
+}   
 
 void GameEngine::GoToFrontEnd()
 {
@@ -587,43 +580,43 @@ void GameEngine::HandleRequestedStateChange()
 }
 
 //! Adds a floor decal billboard scene node to the scene. This scene node has a texture which always faces up
-CFloorDecalSceneNode* GameEngine::addFloorDecalSceneNode(ISceneNode* parent,
-		const core::dimension2d<f32>& size, const core::vector3df& position, s32 id,
-		video::SColor shade_top, video::SColor shade_down )
+irr::scene::CFloorDecalSceneNode* GameEngine::addFloorDecalSceneNode(irr::scene::ISceneNode* parent,
+		const irr::core::dimension2d<irr::f32>& size, const irr::core::vector3df& position, irr::s32 id,
+		irr::video::SColor shade_top, irr::video::SColor shade_down )
 {
 	if (!parent)
 		parent = smgr->getRootSceneNode();
 
-	CFloorDecalSceneNode* node = new CFloorDecalSceneNode(parent, smgr, id, position, size,
+	irr::scene::CFloorDecalSceneNode* node = new irr::scene::CFloorDecalSceneNode(parent, smgr, id, position, size,
 			shade_top, shade_down);
 	node->drop();
 
 	return node;
 }
-/*
 
-   void GameEngine::ChangeMusic( const c8* name )
-   {
-   if( gameMusic )
-   {
-   gameMusic->stop();
-   gameMusic->drop();
-   gameMusic = NULL;
-   }
 
-   if( name == NULL )
-   {
-// load and play music
-gameMusic = GetSoundEngine().play2D("../audio/music/track1.mp3", true, false, true);
-check(gameMusic);
-gameMusic->setVolume( 0.15f );
-}
-else
+void GameEngine::ChangeMusic( const irr::c8* name )
 {
-// load and play music
-gameMusic = GetSoundEngine().play2D(name, true, false, true);
-check(gameMusic);
-gameMusic->setVolume( 0.65f );
-}
+	if( gameMusic )
+	{
+		gameMusic->stop();
+		gameMusic->drop();
+		gameMusic = NULL;
+	}
 
-}*/
+	if( name == NULL )
+	{
+		// load and play music
+		gameMusic = GetSoundEngine().play2D("../audio/music/track1.mp3", true, false, true);
+		check(gameMusic);
+		gameMusic->setVolume( 0.15f );
+	}
+	else
+	{
+		// load and play music
+		gameMusic = GetSoundEngine().play2D(name, true, false, true);
+		check(gameMusic);
+		gameMusic->setVolume( 0.65f );
+	}
+
+}

@@ -2,10 +2,10 @@
 #include "Check.h"
 
 // constructor
-Actor::Actor( GameWorld& gameWorld )
-: world(gameWorld)
-, state(state_ACTOR_ALIVE)
-, attachActorParent(NULL)
+	Actor::Actor( GameWorld& gameWorld )
+	: world(gameWorld)
+	, state(state_ACTOR_ALIVE)
+	  , attachActorParent(NULL)
 {
 }
 
@@ -31,7 +31,7 @@ void Actor::Cleanup()
 	check(attachActorParent == NULL);
 
 	// if we have any attached children, detach them
-	for( s32 i = attachActorChildren.size()-1; i >= 0; --i )
+	for( irr::s32 i = attachActorChildren.size()-1; i >= 0; --i )
 	{
 		DetachActor( *attachActorChildren[i] );
 	}
@@ -39,7 +39,7 @@ void Actor::Cleanup()
 }
 
 // interface for attaching and detaching external actors
-void Actor::AttachActor( Actor& actorToAttach, const c8* nodeName/*=NULL*/ )
+void Actor::AttachActor( Actor& actorToAttach, const irr::c8* nodeName/*=NULL*/ )
 {
 	// if the actor was already attached, detach it
 	if(actorToAttach.attachActorParent != NULL)
@@ -47,7 +47,7 @@ void Actor::AttachActor( Actor& actorToAttach, const c8* nodeName/*=NULL*/ )
 		actorToAttach.attachActorParent->DetachActor(actorToAttach);
 	}
 
-	// remember that we attached this node in the attachedNodes array
+	// remember that we attached this node in the attachedNodes irr::core::array
 	attachActorChildren.push_back( &actorToAttach );
 	actorToAttach.attachActorParent = this;
 }
@@ -57,9 +57,9 @@ void Actor::DetachActor( Actor& actorToDetach )
 	// verify that we're attached
 	check( actorToDetach.attachActorParent == this );
 
-	// find the node in the attached nodes array
-	s32 index = -1;
-	for( u32 i = 0; i < attachActorChildren.size(); ++i )
+	// find the node in the attached nodes irr::core::array
+	irr::s32 index = -1;
+	for( irr::u32 i = 0; i < attachActorChildren.size(); ++i )
 	{
 		if( attachActorChildren[i] == &actorToDetach )
 		{
@@ -70,7 +70,7 @@ void Actor::DetachActor( Actor& actorToDetach )
 	// make sure we've found the actor
 	check(index >= 0);
 	// remove the element from the list
-	attachActorChildren.erase( (u32)index, 1 );
+	attachActorChildren.erase( (irr::u32)index, 1 );
 
 	actorToDetach.attachActorParent = NULL;
 }

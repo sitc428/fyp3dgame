@@ -5,25 +5,25 @@
 
 extern GameEngine* GEngine;
 
-static const c8*		FRONTEND_BACKGROUND_TEXTURE = "img/startup.jpg";
-//static const c8*		FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
-static const c8*		FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
-static const SColor		SELECTED_ITEM_OVERRIDE_COLOR = SColor(255,255,0,0);
+static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "img/startup.jpg";
+//static const irr::c8* FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
+static const irr::c8* FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
+static const irr::video::SColor SELECTED_ITEM_OVERRIDE_COLOR = irr::video::SColor(255,255,0,0);
 
 // dimensions of the text elements in the frontend
-static const s32		TEXT_ELEMENT_WIDTH = 200;
-static const s32		TEXT_ELEMENT_HEIGHT = 20;
-static const s32		FIRST_TEXT_ELEMENT_Y_OFFSET = 200;
-static const s32		SECOND_TEXT_ELEMENT_Y_OFFSET = 230;
+static const irr::s32 TEXT_ELEMENT_WIDTH = 200;
+static const irr::s32 TEXT_ELEMENT_HEIGHT = 20;
+static const irr::s32 FIRST_TEXT_ELEMENT_Y_OFFSET = 200;
+static const irr::s32 SECOND_TEXT_ELEMENT_Y_OFFSET = 230;
 
 // constructor
-FrontEnd::FrontEnd()
-: FrontEndBackground(NULL)
-, BackgroundImage(NULL)
-, StartGameText(NULL)
-, ExitGameText(NULL)
-, currSelectedItem(FE_MENU_ITEM_STARTGAME)
-{	
+	FrontEnd::FrontEnd()
+	: FrontEndBackground(NULL)
+	, BackgroundImage(NULL)
+	, StartGameText(NULL)
+	, ExitGameText(NULL)
+	  , currSelectedItem(FE_MENU_ITEM_STARTGAME)
+{ 
 }
 
 // destructor
@@ -41,16 +41,16 @@ void FrontEnd::Init()
 	check(FrontEndBackground);
 
 	// init the ammo display
-	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+	irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
-	dimension2d<s32> scrSize = GEngine->GetScreenSize();
+	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 
-	position2d<s32> backgroundPos = position2d<s32>(0,0);
+	irr::core::position2d<irr::s32> backgroundPos = irr::core::position2d<irr::s32>(0,0);
 
-	BackgroundImage = env->addImage( rect<s32>(backgroundPos, scrSize) );
+	BackgroundImage = env->addImage( irr::core::rect<irr::s32>(backgroundPos, scrSize) );
 	BackgroundImage->setImage( FrontEndBackground );
 
-	IGUIFont* font = env->getFont( FRONTEND_FONT_FILE );
+	irr::gui::IGUIFont* font = env->getFont( FRONTEND_FONT_FILE );
 	if (font)
 	{
 		env->getSkin()->setFont(font);
@@ -58,33 +58,33 @@ void FrontEnd::Init()
 
 	// add the text elements
 	StartGameText = env->addStaticText(
-		L"Start   Game",
-		core::rect<s32>(
-			scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
-			scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET,
-			scrSize.Width/2 + TEXT_ELEMENT_WIDTH/2,
-			scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET),
-		false, false, 0, -1, false);
+			L"Start   Game",
+			irr::core::rect<irr::s32>(
+				scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
+				scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET,
+				scrSize.Width/2 + TEXT_ELEMENT_WIDTH/2,
+				scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET),
+			false, false, 0, -1, false);
 	check(StartGameText);
-	StartGameText->setTextAlignment( EGUIA_CENTER, EGUIA_CENTER );
+	StartGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
 
 	ExitGameText = env->addStaticText(
-		L"Exit",
-		core::rect<s32>(
-			scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
-			scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET,
-			scrSize.Width/2 + TEXT_ELEMENT_WIDTH/2,
-			scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET),
-		false, false, 0, -1, false);
+			L"Exit",
+			irr::core::rect<irr::s32>(
+				scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
+				scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET,
+				scrSize.Width/2 + TEXT_ELEMENT_WIDTH/2,
+				scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET),
+			false, false, 0, -1, false);
 
 	check(ExitGameText);
-	ExitGameText->setTextAlignment( EGUIA_CENTER, EGUIA_CENTER );
+	ExitGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
 
 	GetCurrentlySelectedItem()->setOverrideColor( SELECTED_ITEM_OVERRIDE_COLOR );
 }
 
 // called every frame with the frame's elapsed time
-void FrontEnd::Tick( f32 delta )
+void FrontEnd::Tick( irr::f32 delta )
 {
 	// perform an tick of the input system
 	DoInput();
@@ -107,24 +107,24 @@ void FrontEnd::Exit()
 }
 
 // returns the static text item corresponding to the curr selected menu item
-IGUIStaticText* FrontEnd::GetCurrentlySelectedItem()
+irr::gui::IGUIStaticText* FrontEnd::GetCurrentlySelectedItem()
 {
 	switch(currSelectedItem)
 	{
 		case FE_MENU_ITEM_STARTGAME:
-		{
-			return StartGameText;
-		}
+			{
+				return StartGameText;
+			}
 		case FE_MENU_ITEM_EXIT:
-		{
-			return ExitGameText;
-		}
+			{
+				return ExitGameText;
+			}
 		default:
-		{
-			// shouldn't be here
-			check( false );
-			return NULL;
-		}
+			{
+				// shouldn't be here
+				check( false );
+				return NULL;
+			}
 	}
 }
 
@@ -135,12 +135,12 @@ void FrontEnd::SetCurrentlyEnabledItem( EMenuItem item )
 	check(item != currSelectedItem);
 
 	// disable highlight color on the previously selected item
-	IGUIStaticText* currItem = GetCurrentlySelectedItem();
+	irr::gui::IGUIStaticText* currItem = GetCurrentlySelectedItem();
 	currItem->enableOverrideColor(false);
 
 	// change the currently selected item and set the override color on it
 	currSelectedItem = item;
-	IGUIStaticText* nextSelectedItem = GetCurrentlySelectedItem();
+	irr::gui::IGUIStaticText* nextSelectedItem = GetCurrentlySelectedItem();
 	nextSelectedItem->setOverrideColor(SELECTED_ITEM_OVERRIDE_COLOR);
 }
 
@@ -155,20 +155,20 @@ void FrontEnd::DoInput()
 		switch(currSelectedItem)
 		{
 			case FE_MENU_ITEM_STARTGAME:
-			{
-				GEngine->RequestStateChange(state_GAME);
-				break;
-			}
+				{
+					GEngine->RequestStateChange(state_GAME);
+					break;
+				}
 			case FE_MENU_ITEM_EXIT:
-			{
-				GEngine->RequestStateChange(state_EXIT);
-				break;
-			}
+				{
+					GEngine->RequestStateChange(state_EXIT);
+					break;
+				}
 			default:
-			{
-				// shouldn't be here
-				check( false );
-			}
+				{
+					// shouldn't be here
+					check( false );
+				}
 		}
 	}
 	else if(receiver.IsKeyDown(irr::KEY_UP) || receiver.IsKeyDown(irr::KEY_KEY_W))

@@ -2,26 +2,26 @@
 #include "GameEngine.h"
 #include "InputEventReceiver.h"
 
-static const c8*		STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "../art/StartupScreen/LISLogo.png";
-static const c8*		STARTUP_IRRLICHT_TEXTURE = "../art/StartupScreen/irrLogo.png";
-static const f32		STARTUP_SCREEN_TIME_MAX = 8.5f;  // end of irr logo duration
-static const f32		STARTUP_LIS_LOGO_START_TIME = 0.5f;
-static const f32		STARTUP_LIS_LOGO_FADE_DURATION = 2.5f;
-static const f32		STARTUP_LIS_LOGO_DURATION = 4.f;
+static const irr::c8* STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "../art/StartupScreen/LISLogo.png";
+static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "../art/StartupScreen/irrLogo.png";
+static const irr::f32 STARTUP_SCREEN_TIME_MAX = 8.5f;  // end of irr logo duration
+static const irr::f32 STARTUP_LIS_LOGO_START_TIME = 0.5f;
+static const irr::f32 STARTUP_LIS_LOGO_FADE_DURATION = 2.5f;
+static const irr::f32 STARTUP_LIS_LOGO_DURATION = 4.f;
 
-static const f32		STARTUP_IRR_LOGO_START_TIME = 4.5f;
-static const f32		STARTUP_IRR_LOGO_FADE_DURATION = 2.5f;
-static const f32		STARTUP_IRR_LOGO_DURATION = 4.f;
+static const irr::f32 STARTUP_IRR_LOGO_START_TIME = 4.5f;
+static const irr::f32 STARTUP_IRR_LOGO_FADE_DURATION = 2.5f;
+static const irr::f32 STARTUP_IRR_LOGO_DURATION = 4.f;
 
 extern GameEngine* GEngine;
 
 // constructor
-StartupScreen::StartupScreen()
-: LethalIndustryLogoTexture(NULL)				
-, LethalIndustryLogoImage(NULL)	
-, EngineLogoTexture(NULL)
-, EngineLogoImage(NULL)	
-, elapsedTime(0.f)
+	StartupScreen::StartupScreen()
+	: LethalIndustryLogoTexture(NULL) 
+	, LethalIndustryLogoImage(NULL) 
+	, EngineLogoTexture(NULL)
+	, EngineLogoImage(NULL) 
+	  , elapsedTime(0.f)
 {
 	// load all the startup screen resources
 	LethalIndustryLogoTexture = GEngine->GetDriver().getTexture( STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE );
@@ -42,25 +42,25 @@ StartupScreen::~StartupScreen()
 
 void StartupScreen::Init()
 {
-	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+	irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
-	dimension2d<s32> scrSize = GEngine->GetScreenSize();
+	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 
-	position2d<s32> pos1 = position2d<s32>( scrSize.Width/2 - LethalIndustryLogoTexture->getOriginalSize().Width/2,
-											scrSize.Height/2 - LethalIndustryLogoTexture->getOriginalSize().Height/2 );
+	irr::core::position2d<irr::s32> pos1 = irr::core::position2d<irr::s32>( scrSize.Width/2 - LethalIndustryLogoTexture->getOriginalSize().Width/2,
+			scrSize.Height/2 - LethalIndustryLogoTexture->getOriginalSize().Height/2 );
 	LethalIndustryLogoImage = env->addImage( LethalIndustryLogoTexture, pos1 );
 	// set the alpha of the image to 0
-	LethalIndustryLogoImage->setColor(SColor(0,255,255,255));
+	LethalIndustryLogoImage->setColor(irr::video::SColor(0,255,255,255));
 
-	position2d<s32> pos2 = position2d<s32>( scrSize.Width/2 - EngineLogoTexture->getOriginalSize().Width/2,
-											scrSize.Height/2 - EngineLogoTexture->getOriginalSize().Height/2 );
+	irr::core::position2d<irr::s32> pos2 = irr::core::position2d<irr::s32>( scrSize.Width/2 - EngineLogoTexture->getOriginalSize().Width/2,
+			scrSize.Height/2 - EngineLogoTexture->getOriginalSize().Height/2 );
 	EngineLogoImage = env->addImage( EngineLogoTexture, pos2 );
-		// set the alpha of the image to 255
-	EngineLogoImage->setColor(SColor(0,255,255,255));
+	// set the alpha of the image to 255
+	EngineLogoImage->setColor(irr::video::SColor(0,255,255,255));
 }
 
 // called every frame with the frame's elapsed time
-void StartupScreen::Tick( f32 delta )
+void StartupScreen::Tick( irr::f32 delta )
 {
 	DoInput();
 
@@ -72,11 +72,11 @@ void StartupScreen::Tick( f32 delta )
 
 	if( elapsedTime > STARTUP_LIS_LOGO_START_TIME )
 	{
-		f32 elapsedLISLogo = elapsedTime - STARTUP_LIS_LOGO_START_TIME;
+		irr::f32 elapsedLISLogo = elapsedTime - STARTUP_LIS_LOGO_START_TIME;
 		if( elapsedLISLogo < STARTUP_LIS_LOGO_FADE_DURATION )
 		{
-			u32 alpha = u32( 255 * elapsedLISLogo / STARTUP_LIS_LOGO_FADE_DURATION );
-			LethalIndustryLogoImage->setColor(SColor(alpha,255,255,255));
+			irr::u32 alpha = irr::u32( 255 * elapsedLISLogo / STARTUP_LIS_LOGO_FADE_DURATION );
+			LethalIndustryLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
 		}
 
 		if( elapsedLISLogo > STARTUP_LIS_LOGO_DURATION )
@@ -87,11 +87,11 @@ void StartupScreen::Tick( f32 delta )
 
 	if( elapsedTime > STARTUP_IRR_LOGO_START_TIME )
 	{
-		f32 elapsedIRRLogo = elapsedTime - STARTUP_IRR_LOGO_START_TIME;
+		irr::f32 elapsedIRRLogo = elapsedTime - STARTUP_IRR_LOGO_START_TIME;
 		if( elapsedIRRLogo < STARTUP_IRR_LOGO_FADE_DURATION )
 		{
-			u32 alpha = u32( 255 * elapsedIRRLogo / STARTUP_IRR_LOGO_FADE_DURATION );
-			EngineLogoImage->setColor(SColor(alpha,255,255,255));
+			irr::u32 alpha = irr::u32( 255 * elapsedIRRLogo / STARTUP_IRR_LOGO_FADE_DURATION );
+			EngineLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
 		}
 
 		if( elapsedIRRLogo > STARTUP_IRR_LOGO_DURATION )
@@ -118,7 +118,7 @@ void StartupScreen::DoInput()
 {
 	// allow for skippking over the startup screen if user presses space or enter
 	InputEventReceiver& receiver = GEngine->GetReceiver();
-	
+
 	if(receiver.IsKeyDown(irr::KEY_RETURN) || receiver.IsKeyDown(irr::KEY_SPACE))
 	{
 		GEngine->RequestStateChange(state_FRONTEND);
