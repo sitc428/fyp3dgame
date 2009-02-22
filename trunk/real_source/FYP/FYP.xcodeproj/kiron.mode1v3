@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>9807FB280F51C849008E3E5B</string>
+						<string>9807FB990F51D7E7008E3E5B</string>
 						<key>history</key>
 						<array>
 							<string>9807F9400F51AC7B008E3E5B</string>
@@ -319,7 +319,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>27</integer>
+									<integer>30</integer>
 									<integer>21</integer>
 									<integer>0</integer>
 								</array>
@@ -362,7 +362,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>GameEngine.cpp</string>
+								<string>StartupScreen.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -370,11 +370,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>GameEngine.cpp</string>
+										<string>StartupScreen.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>9807FB270F51C849008E3E5B</string>
+										<string>9807FB980F51D7E7008E3E5B</string>
 										<key>history</key>
 										<array>
 											<string>9868F3C80F136660004AE96C</string>
@@ -382,20 +382,15 @@
 											<string>9868F53B0F1888A0004AE96C</string>
 											<string>9807F2D90F4E8A45008E3E5B</string>
 											<string>9807F2E50F4E8A45008E3E5B</string>
-											<string>9807F3710F4EC042008E3E5B</string>
 											<string>9807F3870F4EDB23008E3E5B</string>
 											<string>9807F3D20F4FE424008E3E5B</string>
 											<string>9807F3D30F4FE424008E3E5B</string>
 											<string>9807F3D40F4FE424008E3E5B</string>
 											<string>9807F3D50F4FE424008E3E5B</string>
 											<string>9807F3D60F4FE424008E3E5B</string>
-											<string>9807F3D80F4FE424008E3E5B</string>
-											<string>9807F3D90F4FE424008E3E5B</string>
 											<string>9807F3DB0F4FE424008E3E5B</string>
 											<string>9807F3DC0F4FE424008E3E5B</string>
-											<string>9807F3DE0F4FE424008E3E5B</string>
 											<string>9807F3E00F4FE424008E3E5B</string>
-											<string>9807F4B40F4FEFF1008E3E5B</string>
 											<string>9807F4B50F4FEFF1008E3E5B</string>
 											<string>9807F63C0F50004A008E3E5B</string>
 											<string>9807F63F0F50004A008E3E5B</string>
@@ -417,18 +412,18 @@
 											<string>9807FA4B0F51B3FB008E3E5B</string>
 											<string>9807FA7A0F51B488008E3E5B</string>
 											<string>9807FA920F51B5B4008E3E5B</string>
-											<string>9807FAB90F51BF63008E3E5B</string>
 											<string>9807FABA0F51BF63008E3E5B</string>
 											<string>9807FABB0F51BF63008E3E5B</string>
 											<string>9807FABC0F51BF63008E3E5B</string>
 											<string>9807FABD0F51BF63008E3E5B</string>
 											<string>9807FABE0F51BF63008E3E5B</string>
-											<string>9807FABF0F51BF63008E3E5B</string>
-											<string>9807FAE20F51C0AA008E3E5B</string>
-											<string>9807FAF50F51C1E6008E3E5B</string>
 											<string>9807FAF60F51C1E6008E3E5B</string>
 											<string>9807FB240F51C849008E3E5B</string>
-											<string>9807FB250F51C849008E3E5B</string>
+											<string>9807FB4D0F51CAD4008E3E5B</string>
+											<string>9807FB780F51D556008E3E5B</string>
+											<string>9807FB790F51D556008E3E5B</string>
+											<string>9807FB7A0F51D556008E3E5B</string>
+											<string>9807FB7B0F51D556008E3E5B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -436,19 +431,14 @@
 											<string>9868F36F0F1360F8004AE96C</string>
 											<string>9868F3CE0F136660004AE96C</string>
 											<string>9868F3FC0F136852004AE96C</string>
-											<string>9868F3FD0F136852004AE96C</string>
 											<string>9868F4000F136852004AE96C</string>
 											<string>9868F4550F168D3B004AE96C</string>
 											<string>9868F46E0F168FE4004AE96C</string>
 											<string>9868F4B80F1692B6004AE96C</string>
-											<string>9868F4B90F1692B6004AE96C</string>
-											<string>9868F4BB0F1692B6004AE96C</string>
 											<string>9868F5150F17C8B8004AE96C</string>
 											<string>9803AFBE0F1B24790096474B</string>
 											<string>9803AFBF0F1B24790096474B</string>
 											<string>9807F2ED0F4E8A45008E3E5B</string>
-											<string>9807F3160F4E8A45008E3E5B</string>
-											<string>9807F4BF0F4FEFF1008E3E5B</string>
 											<string>9807F4C00F4FEFF1008E3E5B</string>
 											<string>9807F4C20F4FEFF1008E3E5B</string>
 											<string>9807F4C30F4FEFF1008E3E5B</string>
@@ -625,6 +615,14 @@
 											<string>9807FB1E0F51C835008E3E5B</string>
 											<string>9807FB1F0F51C835008E3E5B</string>
 											<string>9807FB260F51C849008E3E5B</string>
+											<string>9807FB4F0F51CAD4008E3E5B</string>
+											<string>9807FB500F51CAD4008E3E5B</string>
+											<string>9807FB510F51CAD4008E3E5B</string>
+											<string>9807FB5C0F51D14E008E3E5B</string>
+											<string>9807FB7C0F51D556008E3E5B</string>
+											<string>9807FB7D0F51D556008E3E5B</string>
+											<string>9807FB7E0F51D556008E3E5B</string>
+											<string>9807FB7F0F51D556008E3E5B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -820,10 +818,10 @@
 	<array>
 		<string>9807F8800F515762008E3E5B</string>
 		<string>9807F8810F515762008E3E5B</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>9868F13A0F130A07004AE96C</string>
 		<string>9807F93E0F51AC7B008E3E5B</string>
 		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/kiron/Desktop/FYP Project/Source/real_source/FYP/FYP.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -1041,7 +1039,7 @@
 			<key>WindowToolGUID</key>
 			<string>1CD10A99069EF8BA00B06720</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

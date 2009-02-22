@@ -222,7 +222,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1114, 1246}}";
 			sepNavSelRange = "{160, 0}";
-			sepNavVisRange = "{0, 1121}";
+			sepNavVisRange = "{0, 1193}";
 		};
 	};
 	9807F4810F4FED52008E3E5B /* FrontEnd.cpp */ = {
@@ -241,16 +241,16 @@
 	};
 	9807F4830F4FED52008E3E5B /* GameEngine.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1114, 8146}}";
+			sepNavIntBoundsRect = "{{0, 0}, {633, 8638}}";
 			sepNavSelRange = "{8297, 0}";
-			sepNavVisRange = "{7872, 755}";
+			sepNavVisRange = "{8191, 202}";
 		};
 	};
 	9807F4840F4FED52008E3E5B /* GameEngine.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {980, 2002}}";
 			sepNavSelRange = "{2764, 0}";
-			sepNavVisRange = "{2898, 1574}";
+			sepNavVisRange = "{3014, 1512}";
 			sepNavWindowFrame = "{{15, 44}, {1039, 829}}";
 		};
 	};
@@ -270,9 +270,9 @@
 	};
 	9807F4860F4FED52008E3E5B /* StartupScreen.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {894, 1734}}";
-			sepNavSelRange = "{4139, 0}";
-			sepNavVisRange = "{2550, 237}";
+			sepNavIntBoundsRect = "{{0, 0}, {1114, 1972}}";
+			sepNavSelRange = "{2720, 0}";
+			sepNavVisRange = "{0, 1296}";
 		};
 	};
 	9807F4870F4FED52008E3E5B /* StartupScreen.h */ = {
@@ -429,9 +429,9 @@
 	};
 	9807F4DA0F4FF003008E3E5B /* Camera.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {633, 1426}}";
-			sepNavSelRange = "{738, 0}";
-			sepNavVisRange = "{839, 458}";
+			sepNavIntBoundsRect = "{{0, 0}, {1114, 1414}}";
+			sepNavSelRange = "{2688, 0}";
+			sepNavVisRange = "{0, 1404}";
 		};
 	};
 	9807F4DB0F4FF003008E3E5B /* Camera.h */ = {
@@ -1153,9 +1153,9 @@
 	};
 	9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {633, 3248}}";
-			sepNavSelRange = "{4373, 0}";
-			sepNavVisRange = "{4254, 335}";
+			sepNavIntBoundsRect = "{{0, 0}, {1114, 3346}}";
+			sepNavSelRange = "{351, 0}";
+			sepNavVisRange = "{0, 659}";
 		};
 	};
 	9807F85A0F51551E008E3E5B /* PBXTextBookmark */ = {
@@ -1418,7 +1418,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1876;
+		rLoc = 1877;
 		rType = 0;
 		vrLen = 1260;
 		vrLoc = 0;
@@ -1428,7 +1428,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1876;
+		rLoc = 1877;
 		rType = 0;
 		vrLen = 1260;
 		vrLoc = 0;
@@ -1451,7 +1451,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1876;
+		rLoc = 1877;
 		rType = 0;
 		vrLen = 1260;
 		vrLoc = 0;
@@ -1485,7 +1485,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1876;
+		rLoc = 1877;
 		rType = 0;
 		vrLen = 1465;
 		vrLoc = 1245;
@@ -1505,7 +1505,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1876;
+		rLoc = 1877;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 1296;
@@ -1754,7 +1754,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1876;
+		rLoc = 1877;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 1296;
@@ -1784,7 +1784,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1876;
+		rLoc = 1877;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 1296;
@@ -1914,7 +1914,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 45";
 		rLen = 0;
-		rLoc = 1582;
+		rLoc = 1583;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 1201;
@@ -1934,7 +1934,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 50";
 		rLen = 0;
-		rLoc = 1865;
+		rLoc = 1866;
 		rType = 0;
 		vrLen = 1409;
 		vrLoc = 1396;
@@ -2044,7 +2044,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 45";
 		rLen = 0;
-		rLoc = 1582;
+		rLoc = 1583;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 1201;
@@ -2104,7 +2104,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 45";
 		rLen = 0;
-		rLoc = 1582;
+		rLoc = 1583;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 1201;
@@ -2134,7 +2134,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 45";
 		rLen = 0;
-		rLoc = 1582;
+		rLoc = 1583;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 1201;
@@ -2154,7 +2154,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 45";
 		rLen = 0;
-		rLoc = 1582;
+		rLoc = 1583;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 1201;
@@ -2184,7 +2184,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 45";
 		rLen = 0;
-		rLoc = 1582;
+		rLoc = 1583;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 1201;
@@ -2204,7 +2204,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 9";
 		rLen = 0;
-		rLoc = 473;
+		rLoc = 474;
 		rType = 0;
 		vrLen = 1232;
 		vrLoc = 0;
@@ -2264,7 +2264,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 19";
 		rLen = 0;
-		rLoc = 791;
+		rLoc = 792;
 		rType = 0;
 		vrLen = 1230;
 		vrLoc = 0;
@@ -2414,7 +2414,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 16";
 		rLen = 0;
-		rLoc = 741;
+		rLoc = 742;
 		rType = 0;
 		vrLen = 897;
 		vrLoc = 3122;
@@ -2464,7 +2464,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 19";
 		rLen = 0;
-		rLoc = 791;
+		rLoc = 792;
 		rType = 0;
 		vrLen = 1247;
 		vrLoc = 0;
@@ -2534,7 +2534,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 91";
 		rLen = 2;
-		rLoc = 3422;
+		rLoc = 3795;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3312;
@@ -2554,7 +2554,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 108";
 		rLen = 0;
-		rLoc = 3825;
+		rLoc = 4478;
 		rType = 0;
 		vrLen = 973;
 		vrLoc = 3240;
@@ -2884,7 +2884,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 108";
 		rLen = 0;
-		rLoc = 3825;
+		rLoc = 4478;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3312;
@@ -3004,7 +3004,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 16";
 		rLen = 0;
-		rLoc = 741;
+		rLoc = 742;
 		rType = 0;
 		vrLen = 897;
 		vrLoc = 3122;
@@ -3044,7 +3044,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 16";
 		rLen = 0;
-		rLoc = 741;
+		rLoc = 742;
 		rType = 0;
 		vrLen = 897;
 		vrLoc = 3122;
@@ -3658,7 +3658,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 118";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4781;
 		rType = 0;
 		vrLen = 898;
 		vrLoc = 3312;
@@ -3738,7 +3738,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 118";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4781;
 		rType = 0;
 		vrLen = 898;
 		vrLoc = 3312;
@@ -3768,7 +3768,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 118";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4781;
 		rType = 0;
 		vrLen = 898;
 		vrLoc = 3312;
@@ -3808,7 +3808,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 118";
 		rLen = 0;
-		rLoc = 4128;
+		rLoc = 4781;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3312;
@@ -3896,7 +3896,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 120";
 		rLen = 7;
-		rLoc = 4145;
+		rLoc = 4798;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3312;
@@ -3925,7 +3925,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 120";
 		rLen = 7;
-		rLoc = 4145;
+		rLoc = 4798;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3312;
@@ -3961,7 +3961,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 64";
 		rLen = 0;
-		rLoc = 2660;
+		rLoc = 2661;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 1524;
@@ -4001,7 +4001,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 120";
 		rLen = 7;
-		rLoc = 4145;
+		rLoc = 4798;
 		rType = 0;
 		vrLen = 901;
 		vrLoc = 3312;
@@ -4040,7 +4040,7 @@
 		isa = PBXTextBookmark;
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		rLen = 0;
-		rLoc = 121;
+		rLoc = 133;
 		rType = 1;
 	};
 	9807FA630F51B407008E3E5B /* PBXTextBookmark */ = {
@@ -4058,7 +4058,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 120";
 		rLen = 0;
-		rLoc = 4132;
+		rLoc = 4785;
 		rType = 0;
 		vrLen = 839;
 		vrLoc = 3374;
@@ -4078,7 +4078,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 120";
 		rLen = 7;
-		rLoc = 4145;
+		rLoc = 4798;
 		rType = 0;
 		vrLen = 839;
 		vrLoc = 3374;
@@ -4095,7 +4095,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 120";
 		rLen = 7;
-		rLoc = 4145;
+		rLoc = 4798;
 		rType = 0;
 		vrLen = 839;
 		vrLoc = 3374;
@@ -4163,7 +4163,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 125";
 		rLen = 0;
-		rLoc = 4267;
+		rLoc = 4920;
 		rType = 0;
 		vrLen = 845;
 		vrLoc = 3374;
@@ -4183,7 +4183,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 54";
 		rLen = 0;
-		rLoc = 2132;
+		rLoc = 2133;
 		rType = 0;
 		vrLen = 1089;
 		vrLoc = 2443;
@@ -4236,7 +4236,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 54";
 		rLen = 0;
-		rLoc = 2132;
+		rLoc = 2133;
 		rType = 0;
 		vrLen = 816;
 		vrLoc = 3127;
@@ -4272,7 +4272,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 79";
 		rLen = 0;
-		rLoc = 3082;
+		rLoc = 3121;
 		rType = 0;
 		vrLen = 848;
 		vrLoc = 3374;
@@ -4292,7 +4292,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 125";
 		rLen = 0;
-		rLoc = 4141;
+		rLoc = 4794;
 		rType = 0;
 		vrLen = 866;
 		vrLoc = 3225;
@@ -4370,7 +4370,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 125";
 		rLen = 0;
-		rLoc = 4141;
+		rLoc = 4794;
 		rType = 0;
 		vrLen = 1043;
 		vrLoc = 2452;
@@ -4390,7 +4390,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 125";
 		rLen = 0;
-		rLoc = 4141;
+		rLoc = 4794;
 		rType = 0;
 		vrLen = 1000;
 		vrLoc = 2452;
@@ -4407,7 +4407,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 125";
 		rLen = 0;
-		rLoc = 4141;
+		rLoc = 4794;
 		rType = 0;
 		vrLen = 1000;
 		vrLoc = 2452;
@@ -4557,7 +4557,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 67";
 		rLen = 11;
-		rLoc = 2564;
+		rLoc = 2565;
 		rType = 0;
 		vrLen = 1153;
 		vrLoc = 2219;
@@ -4617,7 +4617,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 67";
 		rLen = 11;
-		rLoc = 2564;
+		rLoc = 2565;
 		rType = 0;
 		vrLen = 1066;
 		vrLoc = 2219;
@@ -4637,7 +4637,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 67";
 		rLen = 11;
-		rLoc = 2564;
+		rLoc = 2565;
 		rType = 0;
 		vrLen = 1153;
 		vrLoc = 2219;
@@ -4717,7 +4717,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 85";
 		rLen = 0;
-		rLoc = 3147;
+		rLoc = 3474;
 		rType = 0;
 		vrLen = 974;
 		vrLoc = 2563;
@@ -4737,7 +4737,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 68";
 		rLen = 0;
-		rLoc = 2623;
+		rLoc = 2624;
 		rType = 0;
 		vrLen = 1035;
 		vrLoc = 2453;
@@ -4757,7 +4757,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 68";
 		rLen = 0;
-		rLoc = 2623;
+		rLoc = 2624;
 		rType = 0;
 		vrLen = 1304;
 		vrLoc = 1481;
@@ -4777,7 +4777,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 27";
 		rLen = 0;
-		rLoc = 954;
+		rLoc = 955;
 		rType = 0;
 		vrLen = 1174;
 		vrLoc = 2010;
@@ -4817,7 +4817,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 66";
 		rLen = 0;
-		rLoc = 2562;
+		rLoc = 2563;
 		rType = 0;
 		vrLen = 1218;
 		vrLoc = 0;
@@ -4827,7 +4827,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 66";
 		rLen = 0;
-		rLoc = 2562;
+		rLoc = 2563;
 		rType = 0;
 		vrLen = 1218;
 		vrLoc = 0;
@@ -4847,7 +4847,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 66";
 		rLen = 0;
-		rLoc = 2562;
+		rLoc = 2563;
 		rType = 0;
 		vrLen = 1218;
 		vrLoc = 0;
@@ -4867,7 +4867,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 67";
 		rLen = 0;
-		rLoc = 2585;
+		rLoc = 2586;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 1589;
@@ -4897,7 +4897,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 67";
 		rLen = 0;
-		rLoc = 2585;
+		rLoc = 2586;
 		rType = 0;
 		vrLen = 1493;
 		vrLoc = 1589;
@@ -4917,7 +4917,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 67";
 		rLen = 0;
-		rLoc = 2585;
+		rLoc = 2586;
 		rType = 0;
 		vrLen = 1504;
 		vrLoc = 1589;
@@ -4937,7 +4937,7 @@
 		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
 		name = "StartupScreen.cpp: 67";
 		rLen = 0;
-		rLoc = 2585;
+		rLoc = 2586;
 		rType = 0;
 		vrLen = 1504;
 		vrLoc = 1589;
@@ -5268,6 +5268,373 @@
 		rType = 0;
 		vrLen = 1574;
 		vrLoc = 2898;
+	};
+	9807FB4D0F51CAD4008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4830F4FED52008E3E5B /* GameEngine.cpp */;
+		name = "GameEngine.cpp: 357";
+		rLen = 0;
+		rLoc = 8161;
+		rType = 0;
+		vrLen = 813;
+		vrLoc = 704;
+	};
+	9807FB4E0F51CAD4008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 67";
+		rLen = 0;
+		rLoc = 2586;
+		rType = 0;
+		vrLen = 937;
+		vrLoc = 3204;
+	};
+	9807FB4F0F51CAD4008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4830F4FED52008E3E5B /* GameEngine.cpp */;
+		name = "GameEngine.cpp: 365";
+		rLen = 0;
+		rLoc = 8297;
+		rType = 0;
+		vrLen = 679;
+		vrLoc = 12785;
+	};
+	9807FB500F51CAD4008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 67";
+		rLen = 0;
+		rLoc = 2586;
+		rType = 0;
+		vrLen = 866;
+		vrLoc = 3275;
+	};
+	9807FB510F51CAD4008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4830F4FED52008E3E5B /* GameEngine.cpp */;
+		name = "GameEngine.cpp: 357";
+		rLen = 0;
+		rLoc = 8161;
+		rType = 0;
+		vrLen = 813;
+		vrLoc = 704;
+	};
+	9807FB520F51CAD4008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 11";
+		rLen = 0;
+		rLoc = 526;
+		rType = 0;
+		vrLen = 956;
+		vrLoc = 2731;
+	};
+	9807FB530F51CAD4008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB560F51D048008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 82";
+		rLen = 0;
+		rLoc = 3413;
+		rType = 0;
+		vrLen = 757;
+		vrLoc = 3089;
+	};
+	9807FB570F51D048008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB590F51D149008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F48D0F4FEDBF008E3E5B /* Check.h */;
+		name = "Check.h: 40";
+		rLen = 24;
+		rLoc = 1332;
+		rType = 0;
+		vrLen = 516;
+		vrLoc = 888;
+	};
+	9807FB5A0F51D14E008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 82";
+		rLen = 0;
+		rLoc = 3413;
+		rType = 0;
+		vrLen = 757;
+		vrLoc = 3089;
+	};
+	9807FB5B0F51D14E008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4DA0F4FF003008E3E5B /* Camera.cpp */;
+		rLen = 0;
+		rLoc = 85;
+		rType = 1;
+	};
+	9807FB5C0F51D14E008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 82";
+		rLen = 0;
+		rLoc = 3413;
+		rType = 0;
+		vrLen = 757;
+		vrLoc = 3089;
+	};
+	9807FB5D0F51D14E008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4DA0F4FF003008E3E5B /* Camera.cpp */;
+		name = "Camera.cpp: 86";
+		rLen = 0;
+		rLoc = 2688;
+		rType = 0;
+		vrLen = 1404;
+		vrLoc = 0;
+	};
+	9807FB5E0F51D14E008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB780F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4DA0F4FF003008E3E5B /* Camera.cpp */;
+		name = "Camera.cpp: 86";
+		rLen = 0;
+		rLoc = 2688;
+		rType = 0;
+		vrLen = 1404;
+		vrLoc = 0;
+	};
+	9807FB790F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4870F4FED52008E3E5B /* StartupScreen.h */;
+		name = "StartupScreen.h: 28";
+		rLen = 0;
+		rLoc = 811;
+		rType = 0;
+		vrLen = 896;
+		vrLoc = 0;
+	};
+	9807FB7A0F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */;
+		name = "InputEventReceiver.cpp: 17";
+		rLen = 0;
+		rLoc = 351;
+		rType = 0;
+		vrLen = 659;
+		vrLoc = 0;
+	};
+	9807FB7B0F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 1473;
+		vrLoc = 51;
+	};
+	9807FB7C0F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4DA0F4FF003008E3E5B /* Camera.cpp */;
+		name = "Camera.cpp: 86";
+		rLen = 0;
+		rLoc = 2688;
+		rType = 0;
+		vrLen = 1404;
+		vrLoc = 0;
+	};
+	9807FB7D0F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 22";
+		rLen = 0;
+		rLoc = 843;
+		rType = 0;
+		vrLen = 1473;
+		vrLoc = 51;
+	};
+	9807FB7E0F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4870F4FED52008E3E5B /* StartupScreen.h */;
+		name = "StartupScreen.h: 28";
+		rLen = 0;
+		rLoc = 811;
+		rType = 0;
+		vrLen = 896;
+		vrLoc = 0;
+	};
+	9807FB7F0F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */;
+		name = "InputEventReceiver.cpp: 17";
+		rLen = 0;
+		rLoc = 351;
+		rType = 0;
+		vrLen = 659;
+		vrLoc = 0;
+	};
+	9807FB800F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 103";
+		rLen = 0;
+		rLoc = 4034;
+		rType = 0;
+		vrLen = 1338;
+		vrLoc = 2785;
+	};
+	9807FB810F51D556008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB830F51D633008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 101";
+		rLen = 0;
+		rLoc = 3936;
+		rType = 0;
+		vrLen = 1346;
+		vrLoc = 2735;
+	};
+	9807FB840F51D633008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB880F51D644008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 101";
+		rLen = 0;
+		rLoc = 3936;
+		rType = 0;
+		vrLen = 1346;
+		vrLoc = 2735;
+	};
+	9807FB890F51D644008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB8D0F51D6BE008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 85";
+		rLen = 0;
+		rLoc = 3332;
+		rType = 0;
+		vrLen = 1195;
+		vrLoc = 2563;
+	};
+	9807FB8E0F51D6BE008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB910F51D6F8008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 95";
+		rLen = 0;
+		rLoc = 3574;
+		rType = 0;
+		vrLen = 1194;
+		vrLoc = 2563;
+	};
+	9807FB920F51D6F8008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB940F51D711008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 109";
+		rLen = 0;
+		rLoc = 4195;
+		rType = 0;
+		vrLen = 1016;
+		vrLoc = 3383;
+	};
+	9807FB950F51D711008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
+	};
+	9807FB980F51D7E7008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 105";
+		rLen = 0;
+		rLoc = 4094;
+		rType = 0;
+		vrLen = 1305;
+		vrLoc = 2859;
+	};
+	9807FB990F51D7E7008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4840F4FED52008E3E5B /* GameEngine.h */;
+		name = "GameEngine.h: 89";
+		rLen = 0;
+		rLoc = 2764;
+		rType = 0;
+		vrLen = 1512;
+		vrLoc = 3014;
 	};
 	9868EF450F1303F5004AE96C /* Project object */ = {
 		activeBuildConfigurationName = Release;
@@ -5846,6 +6213,43 @@
 			9807FB260F51C849008E3E5B /* PBXTextBookmark */ = 9807FB260F51C849008E3E5B /* PBXTextBookmark */;
 			9807FB270F51C849008E3E5B /* PBXTextBookmark */ = 9807FB270F51C849008E3E5B /* PBXTextBookmark */;
 			9807FB280F51C849008E3E5B /* PBXTextBookmark */ = 9807FB280F51C849008E3E5B /* PBXTextBookmark */;
+			9807FB4D0F51CAD4008E3E5B /* PBXTextBookmark */ = 9807FB4D0F51CAD4008E3E5B /* PBXTextBookmark */;
+			9807FB4E0F51CAD4008E3E5B /* PBXTextBookmark */ = 9807FB4E0F51CAD4008E3E5B /* PBXTextBookmark */;
+			9807FB4F0F51CAD4008E3E5B /* PBXTextBookmark */ = 9807FB4F0F51CAD4008E3E5B /* PBXTextBookmark */;
+			9807FB500F51CAD4008E3E5B /* PBXTextBookmark */ = 9807FB500F51CAD4008E3E5B /* PBXTextBookmark */;
+			9807FB510F51CAD4008E3E5B /* PBXTextBookmark */ = 9807FB510F51CAD4008E3E5B /* PBXTextBookmark */;
+			9807FB520F51CAD4008E3E5B /* PBXTextBookmark */ = 9807FB520F51CAD4008E3E5B /* PBXTextBookmark */;
+			9807FB530F51CAD4008E3E5B /* PBXTextBookmark */ = 9807FB530F51CAD4008E3E5B /* PBXTextBookmark */;
+			9807FB560F51D048008E3E5B /* PBXTextBookmark */ = 9807FB560F51D048008E3E5B /* PBXTextBookmark */;
+			9807FB570F51D048008E3E5B /* PBXTextBookmark */ = 9807FB570F51D048008E3E5B /* PBXTextBookmark */;
+			9807FB590F51D149008E3E5B /* PBXTextBookmark */ = 9807FB590F51D149008E3E5B /* PBXTextBookmark */;
+			9807FB5A0F51D14E008E3E5B /* PBXTextBookmark */ = 9807FB5A0F51D14E008E3E5B /* PBXTextBookmark */;
+			9807FB5B0F51D14E008E3E5B /* PBXTextBookmark */ = 9807FB5B0F51D14E008E3E5B /* PBXTextBookmark */;
+			9807FB5C0F51D14E008E3E5B /* PBXTextBookmark */ = 9807FB5C0F51D14E008E3E5B /* PBXTextBookmark */;
+			9807FB5D0F51D14E008E3E5B /* PBXTextBookmark */ = 9807FB5D0F51D14E008E3E5B /* PBXTextBookmark */;
+			9807FB5E0F51D14E008E3E5B /* PBXTextBookmark */ = 9807FB5E0F51D14E008E3E5B /* PBXTextBookmark */;
+			9807FB780F51D556008E3E5B /* PBXTextBookmark */ = 9807FB780F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB790F51D556008E3E5B /* PBXTextBookmark */ = 9807FB790F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB7A0F51D556008E3E5B /* PBXTextBookmark */ = 9807FB7A0F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB7B0F51D556008E3E5B /* PBXTextBookmark */ = 9807FB7B0F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB7C0F51D556008E3E5B /* PBXTextBookmark */ = 9807FB7C0F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB7D0F51D556008E3E5B /* PBXTextBookmark */ = 9807FB7D0F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB7E0F51D556008E3E5B /* PBXTextBookmark */ = 9807FB7E0F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB7F0F51D556008E3E5B /* PBXTextBookmark */ = 9807FB7F0F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB800F51D556008E3E5B /* PBXTextBookmark */ = 9807FB800F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB810F51D556008E3E5B /* PBXTextBookmark */ = 9807FB810F51D556008E3E5B /* PBXTextBookmark */;
+			9807FB830F51D633008E3E5B /* PBXTextBookmark */ = 9807FB830F51D633008E3E5B /* PBXTextBookmark */;
+			9807FB840F51D633008E3E5B /* PBXTextBookmark */ = 9807FB840F51D633008E3E5B /* PBXTextBookmark */;
+			9807FB880F51D644008E3E5B /* PBXTextBookmark */ = 9807FB880F51D644008E3E5B /* PBXTextBookmark */;
+			9807FB890F51D644008E3E5B /* PBXTextBookmark */ = 9807FB890F51D644008E3E5B /* PBXTextBookmark */;
+			9807FB8D0F51D6BE008E3E5B /* PBXTextBookmark */ = 9807FB8D0F51D6BE008E3E5B /* PBXTextBookmark */;
+			9807FB8E0F51D6BE008E3E5B /* PBXTextBookmark */ = 9807FB8E0F51D6BE008E3E5B /* PBXTextBookmark */;
+			9807FB910F51D6F8008E3E5B /* PBXTextBookmark */ = 9807FB910F51D6F8008E3E5B /* PBXTextBookmark */;
+			9807FB920F51D6F8008E3E5B /* PBXTextBookmark */ = 9807FB920F51D6F8008E3E5B /* PBXTextBookmark */;
+			9807FB940F51D711008E3E5B /* PBXTextBookmark */ = 9807FB940F51D711008E3E5B /* PBXTextBookmark */;
+			9807FB950F51D711008E3E5B /* PBXTextBookmark */ = 9807FB950F51D711008E3E5B /* PBXTextBookmark */;
+			9807FB980F51D7E7008E3E5B /* PBXTextBookmark */ = 9807FB980F51D7E7008E3E5B /* PBXTextBookmark */;
+			9807FB990F51D7E7008E3E5B /* PBXTextBookmark */ = 9807FB990F51D7E7008E3E5B /* PBXTextBookmark */;
 			9868F3460F135FF6004AE96C = 9868F3460F135FF6004AE96C /* PBXTextBookmark */;
 			9868F36F0F1360F8004AE96C = 9868F36F0F1360F8004AE96C /* PBXTextBookmark */;
 			9868F3C80F136660004AE96C = 9868F3C80F136660004AE96C /* PBXTextBookmark */;
