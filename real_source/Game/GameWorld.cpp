@@ -10,7 +10,7 @@
 //#include "SnowballProjectile.h"
 //#include "DynamiteProjectile.h"
 //#include "LandMine.h"
-#include "InputEventReceiver.h"
+#include "InputEventReceiver.hpp"
 //#include "DynamitePickup.h"
 //#include "SnowplowPickup.h"
 //#include "DynamiteExplosionEffect.h"
@@ -88,10 +88,11 @@ void GameWorld::InitLevel()
 	// add triangle selectors for every mesh node in the level
 	irr::core::array<irr::scene::ISceneNode*> outNodes;
 	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
 		irr::scene::IMeshSceneNode* meshNode = dynamic_cast<irr::scene::IMeshSceneNode*>(outNodes[i]);
-		check(meshNode);
+		
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
@@ -114,6 +115,8 @@ void GameWorld::InitLevel()
 		}
 	}
 	outNodes.clear();
+
+	std::cout<<"!!!" <<std::endl;
 
 	smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
 	irr::u32 TreePoseCounter = 1;
@@ -157,7 +160,7 @@ void GameWorld::InitLevel()
 	// make sure we have found the falling fence
 	check(FenceToFall);
 
-	//SetNumLives( 3 );
+	SetNumLives( 3 );
 }
 
 // restarts the current level

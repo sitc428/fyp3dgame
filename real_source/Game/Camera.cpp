@@ -15,11 +15,11 @@ Camera::Camera( GameWorld& gameWorld,
 		irr::video::IVideoDriver& driver,
 		irr::scene::ITriangleSelector& levelSelector,
 		Player& player )
-	: Actor(gameWorld)
-	,   node(NULL)
-	, levelTriangleSelector(levelSelector)
-	, target(&player)
-	  , lastSelectedSceneNode(NULL)
+	:Actor(gameWorld),
+	node(NULL),
+	levelTriangleSelector(levelSelector),
+	target(&player),
+	lastSelectedSceneNode(NULL)
 {
 	node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
 	check( node ); 
