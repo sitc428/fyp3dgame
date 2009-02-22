@@ -4,14 +4,14 @@
 
 static const irr::c8* STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "model/StartupScreen/psan2logo.png";
 static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "model/StartupScreen/irrLogo.png";
-static const irr::f32 STARTUP_SCREEN_TIME_MAX = 8.5f;  // end of irr logo duration
+static const irr::f32 STARTUP_SCREEN_TIME_MAX = 14.5f;  // end of irr logo duration
 static const irr::f32 STARTUP_LIS_LOGO_START_TIME = 0.5f;
 static const irr::f32 STARTUP_LIS_LOGO_FADE_DURATION = 2.5f;
-static const irr::f32 STARTUP_LIS_LOGO_DURATION = 4.f;
+static const irr::f32 STARTUP_LIS_LOGO_DURATION = 7.f;
 
-static const irr::f32 STARTUP_IRR_LOGO_START_TIME = 4.5f;
+static const irr::f32 STARTUP_IRR_LOGO_START_TIME = 7.5f;
 static const irr::f32 STARTUP_IRR_LOGO_FADE_DURATION = 2.5f;
-static const irr::f32 STARTUP_IRR_LOGO_DURATION = 4.f;
+static const irr::f32 STARTUP_IRR_LOGO_DURATION = 7.f;
 
 extern GameEngine* GEngine;
 
@@ -68,6 +68,7 @@ void StartupScreen::Tick( irr::f32 delta )
 	//std::cout<<elapsedTime<<" "<<delta<<std::endl;
 	if( elapsedTime > STARTUP_SCREEN_TIME_MAX )
 	{
+		EngineLogoImage->setVisible(false);
 		GEngine->RequestStateChange(state_FRONTEND);
 	}
 
@@ -79,23 +80,34 @@ void StartupScreen::Tick( irr::f32 delta )
 			irr::u32 alpha = irr::u32( 255 * elapsedLISLogo / STARTUP_LIS_LOGO_FADE_DURATION );
 			LethalIndustryLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
 		}
+		else if ( elapsedLISLogo > STARTUP_LIS_LOGO_DURATION - STARTUP_LIS_LOGO_FADE_DURATION)
+		{
+			irr::u32 alpha = irr::u32( 255 * (STARTUP_LIS_LOGO_DURATION-elapsedLISLogo) / STARTUP_LIS_LOGO_FADE_DURATION );
+			LethalIndustryLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
+		}
 		else
 		{
-			LethalIndustryLogoImage->setVisible(false);
+			LethalIndustryLogoImage->setVisible(true);
 		}
 	}
 
 	if( elapsedTime > STARTUP_IRR_LOGO_START_TIME )
 	{
+		LethalIndustryLogoImage->setVisible(false);
 		irr::f32 elapsedIRRLogo = elapsedTime - STARTUP_IRR_LOGO_START_TIME;
 		if( elapsedIRRLogo < STARTUP_IRR_LOGO_FADE_DURATION )
 		{
 			irr::u32 alpha = irr::u32( 255 * elapsedIRRLogo / STARTUP_IRR_LOGO_FADE_DURATION );
 			EngineLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
 		}
+		else if ( elapsedIRRLogo > STARTUP_IRR_LOGO_DURATION - STARTUP_IRR_LOGO_FADE_DURATION)
+		{
+			irr::u32 alpha = irr::u32( 255 * (STARTUP_IRR_LOGO_DURATION-elapsedIRRLogo) / STARTUP_IRR_LOGO_FADE_DURATION );
+			EngineLogoImage->setColor(irr::video::SColor(alpha,255,255,255));
+		}
 		else
 		{
-			EngineLogoImage->setVisible(false);
+			EngineLogoImage->setVisible(true);
 		}
 	}
 }
