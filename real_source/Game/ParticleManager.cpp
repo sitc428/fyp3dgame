@@ -2,9 +2,9 @@
 #include "GameEngine.h"
 #include "Check.h"
 
-static const irr::c8* SNOW_EXPLOSION_TEXTURE = "../art/sfx/Particles/smoke.bmp";
-static const irr::c8* DYNAMITE_EXPLOSION_TEXTURE = "../art/sfx/Particles/SparkTex.tga";
-static const irr::c8* PARTICLE_WHITE_TEXTURE = "../art/sfx/Particles/snowflake.png";
+static const irr::c8* SNOW_EXPLOSION_TEXTURE = "model/StartupScreen/irrLogo.png";
+static const irr::c8* DYNAMITE_EXPLOSION_TEXTURE = "model/StartupScreen/irrLogo.png";
+static const irr::c8* PARTICLE_WHITE_TEXTURE = "model/StartupScreen/irrLogo.png";
 
 extern GameEngine* GEngine;
 
@@ -231,7 +231,7 @@ irr::scene::IParticleEmitter* ParticleManager::CreateSnowmanDeathExplosion( irr:
 
 	return em2;
 }
-	*/
+
 irr::scene::IParticleEmitter* ParticleManager::CreateFallingSnowEmitter( irr::scene::IParticleSystemSceneNode& owningNode )
 {
 	owningNode.setPosition(irr::core::vector3df(0.f,200.f,0.f));
@@ -258,3 +258,4 @@ irr::scene::IParticleEmitter* ParticleManager::CreateFallingSnowEmitter( irr::sc
 
 	return em;
 }
+ 	*/
