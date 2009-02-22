@@ -255,18 +255,24 @@
 		};
 	};
 	9807F4850F4FED52008E3E5B /* InputEventReceiver.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = InputEventReceiver.h;
+		path = "/Users/kiron/Desktop/FYP Project/Source/real_source/Engine/InputEventReceiver.h";
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {810, 742}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1114, 742}}";
 			sepNavSelRange = "{1356, 0}";
-			sepNavVisRange = "{1086, 584}";
+			sepNavVisRange = "{661, 1009}";
 			sepNavWindowFrame = "{{15, 44}, {1039, 829}}";
 		};
 	};
 	9807F4860F4FED52008E3E5B /* StartupScreen.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1114, 1818}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1114, 1652}}";
 			sepNavSelRange = "{1876, 0}";
-			sepNavVisRange = "{0, 1260}";
+			sepNavVisRange = "{1296, 1470}";
 		};
 	};
 	9807F4870F4FED52008E3E5B /* StartupScreen.h */ = {
@@ -1147,9 +1153,9 @@
 	};
 	9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {810, 3414}}";
-			sepNavSelRange = "{216, 8}";
-			sepNavVisRange = "{0, 443}";
+			sepNavIntBoundsRect = "{{0, 0}, {810, 3276}}";
+			sepNavSelRange = "{4963, 0}";
+			sepNavVisRange = "{4740, 363}";
 		};
 	};
 	9807F85A0F51551E008E3E5B /* PBXTextBookmark */ = {
@@ -1437,6 +1443,60 @@
 		vrLen = 1260;
 		vrLoc = 0;
 	};
+	9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1114, 868}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 866}";
+		};
+	};
+	9807F88D0F515862008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */;
+		name = "InputEventReceiver.hpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 866;
+		vrLoc = 0;
+	};
+	9807F88E0F515862008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		rLen = 0;
+		rLoc = 49;
+		rType = 1;
+	};
+	9807F88F0F515862008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 50";
+		rLen = 0;
+		rLoc = 1876;
+		rType = 0;
+		vrLen = 1465;
+		vrLoc = 1245;
+	};
+	9807F8900F515862008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */;
+		name = "InputEventReceiver.hpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 866;
+		vrLoc = 0;
+	};
+	9807F8910F515862008E3E5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9807F4860F4FED52008E3E5B /* StartupScreen.cpp */;
+		name = "StartupScreen.cpp: 50";
+		rLen = 0;
+		rLoc = 1876;
+		rType = 0;
+		vrLen = 1470;
+		vrLoc = 1296;
+	};
 	9868EF450F1303F5004AE96C /* Project object */ = {
 		activeBuildConfigurationName = Release;
 		activeExecutable = 9868F1080F1305AD004AE96C /* FYP */;
@@ -1638,6 +1698,11 @@
 			9807F87F0F515762008E3E5B /* PBXTextBookmark */ = 9807F87F0F515762008E3E5B /* PBXTextBookmark */;
 			9807F8830F5157A6008E3E5B /* PBXTextBookmark */ = 9807F8830F5157A6008E3E5B /* PBXTextBookmark */;
 			9807F8880F5157EB008E3E5B /* PBXTextBookmark */ = 9807F8880F5157EB008E3E5B /* PBXTextBookmark */;
+			9807F88D0F515862008E3E5B /* PBXTextBookmark */ = 9807F88D0F515862008E3E5B /* PBXTextBookmark */;
+			9807F88E0F515862008E3E5B /* PBXTextBookmark */ = 9807F88E0F515862008E3E5B /* PBXTextBookmark */;
+			9807F88F0F515862008E3E5B /* PBXTextBookmark */ = 9807F88F0F515862008E3E5B /* PBXTextBookmark */;
+			9807F8900F515862008E3E5B /* PBXTextBookmark */ = 9807F8900F515862008E3E5B /* PBXTextBookmark */;
+			9807F8910F515862008E3E5B /* PBXTextBookmark */ = 9807F8910F515862008E3E5B /* PBXTextBookmark */;
 			9868F3460F135FF6004AE96C = 9868F3460F135FF6004AE96C /* PBXTextBookmark */;
 			9868F36F0F1360F8004AE96C = 9868F36F0F1360F8004AE96C /* PBXTextBookmark */;
 			9868F3C80F136660004AE96C = 9868F3C80F136660004AE96C /* PBXTextBookmark */;

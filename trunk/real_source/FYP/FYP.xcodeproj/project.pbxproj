@@ -42,7 +42,6 @@
 		9807F4820F4FED52008E3E5B /* FrontEnd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrontEnd.h; sourceTree = "<group>"; };
 		9807F4830F4FED52008E3E5B /* GameEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameEngine.cpp; sourceTree = "<group>"; };
 		9807F4840F4FED52008E3E5B /* GameEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameEngine.h; sourceTree = "<group>"; };
-		9807F4850F4FED52008E3E5B /* InputEventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputEventReceiver.h; sourceTree = "<group>"; };
 		9807F4860F4FED52008E3E5B /* StartupScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartupScreen.cpp; sourceTree = "<group>"; };
 		9807F4870F4FED52008E3E5B /* StartupScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartupScreen.h; sourceTree = "<group>"; };
 		9807F48D0F4FEDBF008E3E5B /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		9807F7AB0F50645B008E3E5B /* libirrKlang.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libirrKlang.a; path = ../../lib/libirrKlang.a; sourceTree = SOURCE_ROOT; };
 		9807F7BA0F506674008E3E5B /* libikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libikpMP3.dylib; path = ../../libikpMP3.dylib; sourceTree = SOURCE_ROOT; };
 		9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputEventReceiver.cpp; sourceTree = "<group>"; };
+		9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputEventReceiver.hpp; sourceTree = "<group>"; };
 		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
 		98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
 		98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s.a"; path = "../../lib/libboost_date_time-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
@@ -112,7 +112,7 @@
 				9807F4830F4FED52008E3E5B /* GameEngine.cpp */,
 				9807F4840F4FED52008E3E5B /* GameEngine.h */,
 				9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */,
-				9807F4850F4FED52008E3E5B /* InputEventReceiver.h */,
+				9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */,
 				9807F4860F4FED52008E3E5B /* StartupScreen.cpp */,
 				9807F4870F4FED52008E3E5B /* StartupScreen.h */,
 			);
