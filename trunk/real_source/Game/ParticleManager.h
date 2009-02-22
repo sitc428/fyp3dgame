@@ -1,5 +1,5 @@
-#ifndef ParticleManager_h
-#define ParticleManager_h
+#ifndef __PARTICLE_MANAGER_HPP__
+#define __PARTICLE_MANAGER_HPP__
 
 #include <irrlicht/irrlicht.h>
 
@@ -42,4 +42,4 @@ class ParticleManager
 		irr::video::ITexture* ParticleWhiteTexture; // texture used for dynamite explosion effect
 };
 
-#endif //ParticleManager_h
+#endif //__PARTICLE_MANAGER_HPP__

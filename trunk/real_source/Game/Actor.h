@@ -1,5 +1,5 @@
-#ifndef Actor_h
-#define Actor_h
+#ifndef __ACTOR_HPP__
+#define __ACTOR_HPP__
 
 #include <irrlicht/irrlicht.h>
 #include "ActorTypes.h"
@@ -66,4 +66,4 @@ class Actor
 		Actor* attachActorParent;
 };
 
-#endif //Actor_h
+#endif //__ACTOR_HPP__

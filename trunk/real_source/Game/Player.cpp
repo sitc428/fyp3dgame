@@ -5,18 +5,15 @@
 extern GameEngine* GEngine;
 
 // constructor
-	Player::Player( GameWorld& gameWorld )
-	: Actor(gameWorld)
-	, playerState( state_PLAYER_INACTIVE ) 
-	, aimVector( irr::core::vector3df(0.0f,0.0f,1.0f) )
-	, translation( irr::core::vector3df(0.0f,0.0f,0.0f) ) 
-	, rotation( irr::core::vector3df(0.0f,-90.0f,0.0f) )
-	,   ammo( 20 )
-	, score( 0 )
-	, snowplowTimeRemaining( 0.0f )
-	, velApprox(0,0,0)
-	, health( 100 )
-	  , godMode( false )
+Player::Player( GameWorld& gameWorld )
+	:Actor(gameWorld),
+	playerState( state_PLAYER_INACTIVE ),
+	aimVector( irr::core::vector3df(0.0f,0.0f,1.0f) ),
+	translation( irr::core::vector3df(0.0f,0.0f,0.0f) ),
+	rotation( irr::core::vector3df(0.0f,-90.0f,0.0f) ),
+	velApprox(0,0,0),
+	health( 100 ),
+	godMode( false )
 {
 }
 
@@ -58,10 +55,7 @@ void Player::CopyStateFrom( const Player& other )
 {
 	translation = other.translation;
 	rotation = other.rotation;
-	ammo = other.ammo;
-	score = other.score;
 	health = other.health;
-	snowplowTimeRemaining = other.snowplowTimeRemaining;
 	aimVector = other.aimVector;
 
 	SetNodeRotation(rotation);

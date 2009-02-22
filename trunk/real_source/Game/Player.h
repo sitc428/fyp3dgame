@@ -1,5 +1,5 @@
-#ifndef Player_h
-#define Player_h
+#ifndef __PLAYER_HPP__
+#define __PLAYER_HPP__
 
 #include "Actor.h"
 
@@ -30,21 +30,6 @@ class Player: public Actor
 		// interface for turning player on/off
 		virtual void SetActive( bool bValue ); 
 		bool IsActive() const { return playerState == state_PLAYER_ACTIVE; }
-
-		// accessors for player's ammo
-		void AddAmmo( irr::s32 value ) { ammo += value; }
-		void SetAmmo( irr::s32 value ) { ammo = value; }
-		irr::s32 GetAmmo() const { return ammo; }
-		// accessors for player's score
-		irr::s32 GetScore() const { return score; }
-		void SetScore( irr::s32 value ) { score = value; }
-		void AddScore( irr::s32 value ) { score += value; }
-
-		// replenishes player's snowplow time
-		void AddSnowplowTime( irr::f32 time ) { snowplowTimeRemaining += time; }
-		void SetSnowplowTime( irr::f32 time ) { snowplowTimeRemaining = time; }
-		// accessor for player's snowplow time
-		irr::f32 GetSnowplowTime() const { return snowplowTimeRemaining; }
 
 		// check if the player is dead
 		virtual bool IsDead() const = 0;
@@ -87,24 +72,20 @@ class Player: public Actor
 
 		// tracks whether this player is currently active
 		EPlayerState playerState;
+
 		// target player is aiming at
 		irr::core::vector3df aimVector;
+
 		// player translation
 		irr::core::vector3df translation;
 		// player rotation
 		irr::core::vector3df rotation;
-		// player's ammo remaining
-		irr::s32 ammo;
-		// player's current score
-		irr::s32 score;
-		// player's snowplow time remaining
-		irr::f32 snowplowTimeRemaining;
+
 		// approximation of movement velocity used by AI
 		irr::core::vector3df velApprox;
-		// player's health
 		irr::f32 health;
 		// god mode
 		bool godMode;
 };
 
-#endif //Player_h
+#endif //__PLAYER_HPP__

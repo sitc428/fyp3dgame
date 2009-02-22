@@ -1,8 +1,7 @@
-#ifndef __C_FLOORDECAL_SCENE_NODE_H_INCLUDED__
-#define __C_FLOORDECAL_SCENE_NODE_H_INCLUDED__
+#ifndef __C_FLOORDECAL_SCENE_NODE_HPP__
+#define __C_FLOORDECAL_SCENE_NODE_HPP__
 
-#include "irrlicht/IBillboardSceneNode.h"
-#include "irrlicht/S3DVertex.h"
+#include <irrlicht/irrlicht.h>
 
 namespace irr
 {
