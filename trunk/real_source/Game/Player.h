@@ -14,97 +14,97 @@ enum EPlayerState
  */
 class Player: public Actor
 {
-public:
-	// constructor
-	Player( GameWorld& gameWorld );
+	public:
+		// constructor
+		Player( GameWorld& gameWorld );
 
-	// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
-	virtual void RecreateCollisionResponseAnimator() = 0;
+		// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
+		virtual void RecreateCollisionResponseAnimator() = 0;
 
-	// called every frame to update player
-	virtual void Tick(f32 delta) = 0;
-	// returns the graph node of the actor by const reference
-	virtual ISceneNode& GetNode() const = 0;
-	// interface for identifying the type of actor
-	virtual EActorType GetActorType() const = 0;
-	// interface for turning player on/off
-	virtual void SetActive( bool bValue ); 
-	bool IsActive() const { return playerState == state_PLAYER_ACTIVE; }
+		// called every frame to update player
+		virtual void Tick(irr::f32 delta) = 0;
+		// returns the graph node of the actor by const reference
+		virtual irr::scene::ISceneNode& GetNode() const = 0;
+		// interface for identifying the type of actor
+		virtual EActorType GetActorType() const = 0;
+		// interface for turning player on/off
+		virtual void SetActive( bool bValue ); 
+		bool IsActive() const { return playerState == state_PLAYER_ACTIVE; }
 
-	// accessors for player's ammo
-	void AddAmmo( s32 value ) { ammo += value; }
-	void SetAmmo( s32 value ) { ammo = value; }
-	s32 GetAmmo() const { return ammo; }
-	// accessors for player's score
-	s32 GetScore() const { return score; }
-	void SetScore( s32 value ) { score = value; }
-	void AddScore( s32 value ) { score += value; }
+		// accessors for player's ammo
+		void AddAmmo( irr::s32 value ) { ammo += value; }
+		void SetAmmo( irr::s32 value ) { ammo = value; }
+		irr::s32 GetAmmo() const { return ammo; }
+		// accessors for player's score
+		irr::s32 GetScore() const { return score; }
+		void SetScore( irr::s32 value ) { score = value; }
+		void AddScore( irr::s32 value ) { score += value; }
 
-	// replenishes player's snowplow time
-	void AddSnowplowTime( f32 time ) { snowplowTimeRemaining += time; }
-	void SetSnowplowTime( f32 time ) { snowplowTimeRemaining = time; }
-	// accessor for player's snowplow time
-	f32 GetSnowplowTime() const { return snowplowTimeRemaining; }
+		// replenishes player's snowplow time
+		void AddSnowplowTime( irr::f32 time ) { snowplowTimeRemaining += time; }
+		void SetSnowplowTime( irr::f32 time ) { snowplowTimeRemaining = time; }
+		// accessor for player's snowplow time
+		irr::f32 GetSnowplowTime() const { return snowplowTimeRemaining; }
 
-	// check if the player is dead
-	virtual bool IsDead() const = 0;
+		// check if the player is dead
+		virtual bool IsDead() const = 0;
 
-	// accessor methods for node position and rotation
-	virtual vector3df GetNodePosition() const = 0;
-	virtual vector3df GetNodeRotation() const = 0;
-	virtual void SetNodePosition( const vector3df& vect ) = 0;
-	virtual void SetNodeRotation( const vector3df& vect ) = 0;
+		// accessor methods for node position and rotation
+		virtual irr::core::vector3df GetNodePosition() const = 0;
+		virtual irr::core::vector3df GetNodeRotation() const = 0;
+		virtual void SetNodePosition( const irr::core::vector3df& vect ) = 0;
+		virtual void SetNodeRotation( const irr::core::vector3df& vect ) = 0;
 
-	virtual void SetTranslation( const vector3df& trans );
-	virtual void SetRotation( const vector3df& rot );
-	const vector3df& GetTranslation() const { return translation; }
-	const vector3df& GetRotation() const { return rotation; }
-	const vector3df& GetAimVector() const { return aimVector; }	
+		virtual void SetTranslation( const irr::core::vector3df& trans );
+		virtual void SetRotation( const irr::core::vector3df& rot );
+		const irr::core::vector3df& GetTranslation() const { return translation; }
+		const irr::core::vector3df& GetRotation() const { return rotation; }
+		const irr::core::vector3df& GetAimVector() const { return aimVector; } 
 
-	void CopyStateFrom( const Player& other );
+		void CopyStateFrom( const Player& other );
 
-	vector3df GetVelApprox() { return velApprox; }
+		irr::core::vector3df GetVelApprox() { return velApprox; }
 
-	// unbuffered mouse input 
-	virtual void OnMouseEvent( const SEvent::SMouseInput& mouseEvent ) {};
+		// unbuffered mouse input 
+		virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent ) {};
 
-	virtual void PlayRandomCheer();
+		virtual void PlayRandomCheer();
 
-	virtual void SetHealth( f32 pHealth ) { health = pHealth; }
-	f32 GetHealth() const { return health; }
+		virtual void SetHealth( irr::f32 pHealth ) { health = pHealth; }
+		irr::f32 GetHealth() const { return health; }
 
-	// god mode
-	virtual void SetGodMode( bool enable=true ) { godMode=enable; }
-	virtual bool HasGodMode() { return godMode; }
+		// god mode
+		virtual void SetGodMode( bool enable=true ) { godMode=enable; }
+		virtual bool HasGodMode() { return godMode; }
 
-private:
-	// diallow copy constructor from being invoked
-	Player( const Player& other );
+	private:
+		// diallow copy constructor from being invoked
+		Player( const Player& other );
 
-protected:
-	// destructor, protected to force user to call Actor::DestroyActor
-	virtual ~Player();
+	protected:
+		// destructor, protected to force user to call Actor::DestroyActor
+		virtual ~Player();
 
-	// tracks whether this player is currently active
-	EPlayerState							playerState;
-	// target player is aiming at
-	vector3df								aimVector;
-	// player translation
-	vector3df								translation;
-	// player rotation
-	vector3df								rotation;
-	// player's ammo remaining
-	s32										ammo;
-	// player's current score
-	s32										score;
-	// player's snowplow time remaining
-	f32										snowplowTimeRemaining;
-	// approximation of movement velocity used by AI
-	vector3df								velApprox;
-	// player's health
-	f32										health;
-	// god mode
-	bool									godMode;
+		// tracks whether this player is currently active
+		EPlayerState playerState;
+		// target player is aiming at
+		irr::core::vector3df aimVector;
+		// player translation
+		irr::core::vector3df translation;
+		// player rotation
+		irr::core::vector3df rotation;
+		// player's ammo remaining
+		irr::s32 ammo;
+		// player's current score
+		irr::s32 score;
+		// player's snowplow time remaining
+		irr::f32 snowplowTimeRemaining;
+		// approximation of movement velocity used by AI
+		irr::core::vector3df velApprox;
+		// player's health
+		irr::f32 health;
+		// god mode
+		bool godMode;
 };
 
 #endif //Player_h

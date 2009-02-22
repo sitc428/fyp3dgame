@@ -4,7 +4,7 @@
 #include <irrlicht/irrlicht.h>
 
 /*
- *	A utility class for aiding in various collision checks
+ * A utility class for aiding in various collision checks
  */
 class CollisionHelper
 {

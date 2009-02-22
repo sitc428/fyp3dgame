@@ -6,78 +6,78 @@
 
 namespace irr
 {
-namespace scene
-{
+	namespace scene
+	{
 
-//! Scene node which is a billboard. A billboard is like a 3d sprite: A 2d element,
-//! which always looks to the camera. 
-class CFloorDecalSceneNode : public IBillboardSceneNode
-{
-public:
+		//! Scene node which is a billboard. A billboard is like a 3d sprite: A 2d element,
+		//! which always looks to the camera. 
+		class CFloorDecalSceneNode : public IBillboardSceneNode
+		{
+			public:
 
-	//! constructor
-	CFloorDecalSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id,	
-		const core::vector3df& position, const core::dimension2d<f32>& size,
-		video::SColor shade_top=video::SColor(0xFFFFFFFF),video::SColor shade_down=video::SColor(0xFFFFFFFF));
+				//! constructor
+				CFloorDecalSceneNode(irr::scene::ISceneNode* parent, irr::scene::ISceneManager* mgr, irr::s32 id, 
+						const irr::core::vector3df& position, const irr::core::dimension2d<irr::f32>& size,
+						irr::video::SColor shade_top=irr::video::SColor(0xFFFFFFFF),irr::video::SColor shade_down=irr::video::SColor(0xFFFFFFFF));
 
-	//! pre render event
-	virtual void OnRegisterSceneNode();
+				//! pre render event
+				virtual void OnRegisterSceneNode();
 
-	//! render
-	virtual void render();
+				//! render
+				virtual void render();
 
-	//! returns the axis aligned bounding box of this node
-	virtual const core::aabbox3d<f32>& getBoundingBox() const;
+				//! returns the axis aligned bounding box of this node
+				virtual const irr::core::aabbox3d<irr::f32>& getBoundingBox() const;
 
-	//! sets the size of the billboard
-	virtual void setSize(const core::dimension2d<f32>& size);
+				//! sets the size of the billboard
+				virtual void setSize(const irr::core::dimension2d<irr::f32>& size);
 
-	//! gets the size of the billboard
-	virtual const core::dimension2d<f32>& getSize() const;
+				//! gets the size of the billboard
+				virtual const irr::core::dimension2d<irr::f32>& getSize() const;
 
-	virtual video::SMaterial& getMaterial(u32 i);
-	
-	//! returns amount of materials used by this scene node.
-	virtual u32 getMaterialCount() const;
-	
-	//! Set the color of all vertices of the billboard
-	//! \param overallColor: the color to set
-	virtual void setColor(const video::SColor & overallColor);
+				virtual irr::video::SMaterial& getMaterial(irr::u32 i);
 
-	//! Set the color of the top and bottom vertices of the billboard
-	//! \param topColor: the color to set the top vertices
-	//! \param bottomColor: the color to set the bottom vertices
-	virtual void setColor(const video::SColor & topColor, const video::SColor & bottomColor);
+				//! returns amount of materials used by this scene node.
+				virtual irr::u32 getMaterialCount() const;
 
-	//! Gets the color of the top and bottom vertices of the billboard
-	//! \param[out] topColor: stores the color of the top vertices
-	//! \param[out] bottomColor: stores the color of the bottom vertices
-	virtual void getColor(video::SColor& topColor, video::SColor& bottomColor) const;
+				//! Set the color of all vertices of the billboard
+				//! \param overallColor: the color to set
+				virtual void setColor(const irr::video::SColor & overallColor);
 
-	//! Writes attributes of the scene node.
-	virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options=0) const;
+				//! Set the color of the top and bottom vertices of the billboard
+				//! \param topColor: the color to set the top vertices
+				//! \param bottomColor: the color to set the bottom vertices
+				virtual void setColor(const irr::video::SColor & topColor, const irr::video::SColor & bottomColor);
 
-	//! Reads attributes of the scene node.
-	virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options=0);
+				//! Gets the color of the top and bottom vertices of the billboard
+				//! \param[out] topColor: stores the color of the top vertices
+				//! \param[out] bottomColor: stores the color of the bottom vertices
+				virtual void getColor(irr::video::SColor& topColor, irr::video::SColor& bottomColor) const;
 
-	//! Returns type of the scene node
-	virtual ESCENE_NODE_TYPE getType() const { return ESNT_BILLBOARD; }
+				//! Writes attributes of the scene node.
+				virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options=0) const;
 
-	//! Creates a clone of this scene node and its children.
-	virtual ISceneNode* clone(ISceneNode* newParent=0, ISceneManager* newManager=0);
-	
-private:
+				//! Reads attributes of the scene node.
+				virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options=0);
 
-	core::dimension2d<f32> Size;
-	core::aabbox3d<f32> BBox;
-	video::SMaterial Material;
+				//! Returns type of the scene node
+				virtual ESCENE_NODE_TYPE getType() const { return ESNT_BILLBOARD; }
 
-	video::S3DVertex vertices[4];
-	u16 indices[6];
-};
+				//! Creates a clone of this scene node and its children.
+				virtual irr::scene::ISceneNode* clone(irr::scene::ISceneNode* newParent=0, irr::scene::ISceneManager* newManager=0);
+
+			private:
+
+				irr::core::dimension2d<irr::f32> Size;
+				irr::core::aabbox3d<irr::f32> BBox;
+				irr::video::SMaterial Material;
+
+				irr::video::S3DVertex vertices[4];
+				u16 indices[6];
+		};
 
 
-} // end namespace scene
+	} // end namespace scene
 } // end namespace irr
 
 #endif

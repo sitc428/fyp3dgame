@@ -1,5 +1,5 @@
-#ifndef GameEngine_h
-#define GameEngine_h
+#ifndef __GAME_ENGINE_HPP__
+#define __GAME_ENGINE_HPP__
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
@@ -21,10 +21,10 @@ namespace irr
 
 enum EEngineState
 {
-	state_STARTUP,		// game intro sequence
-	state_FRONTEND,		// game is in the main menu front end
-	state_GAME,			// game is actively playing
-	state_EXIT			// game is exiting
+	state_STARTUP, // game intro sequence
+	state_FRONTEND, // game is in the main menu front end
+	state_GAME, // game is actively playing
+	state_EXIT // game is exiting
 };
 
 /**
@@ -40,28 +40,28 @@ class GameEngine
 		void Exit();
 		void Run();
 
-		void				InitStartupScreen();
-		void				ExitStartupScreen();
-		void				InitFrontEnd();
-		void				ExitFrontEnd();
-		void				InitGameplay();
-		void				ExitGameplay();
-		void				LockCursor( bool lock = true );
-		position2d<s32>		GetMouseDelta();
+		void InitStartupScreen();
+		void ExitStartupScreen();
+		void InitFrontEnd();
+		void ExitFrontEnd();
+		void InitGameplay();
+		void ExitGameplay();
+		void LockCursor( bool lock = true );
+		irr::core::position2d<irr::s32> GetMouseDelta();
 
 		// accessors to the private engine members, access to null members is invalid
-		IrrlichtDevice& GetDevice() const { check(device); return *device; }
-		IVideoDriver& GetDriver() const { check(driver); return *driver; }
-		ISceneManager& GetSceneManager() const { check(smgr); return *smgr; }
+		irr::IrrlichtDevice& GetDevice() const { check(device); return *device; }
+		irr::video::IVideoDriver& GetDriver() const { check(driver); return *driver; }
+		irr::scene::ISceneManager& GetSceneManager() const { check(smgr); return *smgr; }
 		InputEventReceiver& GetReceiver() const { check(receiver); return *receiver; }
-		ISoundEngine& GetSoundEngine() const { check(soundEngine); return *soundEngine; }
+		irrklang::ISoundEngine& GetSoundEngine() const { check(soundEngine); return *soundEngine; }
 		ParticleManager& GetParticleManager() { return *particleManager; }
-		const dimension2d<s32>& GetScreenSize() const { return screenSize; }
+		const irr::core::dimension2d<irr::s32>& GetScreenSize() const { return screenSize; }
 
-		u32 GetRealTime() const { return GetDevice().getTimer()->getRealTime(); }
+		irr::u32 GetRealTime() const { return GetDevice().getTimer()->getRealTime(); }
 
 		// unbuffered mouse input 
-		void OnMouseEvent( const SEvent::SMouseInput& mouseEvent );
+		void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
 
 		//! Adds a floor decal billboard scene node to the scene. This scene node has a texture which always faces up
 		/** 
@@ -76,22 +76,22 @@ class GameEngine
 		  \param shade_down: vertex color down
 		  \return Returns pointer to the billboard if successful, otherwise NULL.
 		  This pointer should not be dropped. See IReferenceCounted::drop() for more information. */
-		irr::scene::CFloorDecalSceneNode* addFloorDecalSceneNode(ISceneNode* parent = 0,
-				const core::dimension2d<f32>& size = core::dimension2d<f32>(10.0f, 10.0f),
-				const core::vector3df& position = core::vector3df(0,0,0), s32 id=-1,
-				video::SColor shade_top = 0xFFFFFFFF, video::SColor shade_down = 0xFFFFFFFF);
+		irr::scene::CFloorDecalSceneNode* addFloorDecalSceneNode(irr::scene::ISceneNode* parent = 0,
+				const irr::core::dimension2d<irr::f32>& size = irr::core::dimension2d<irr::f32>(10.0f, 10.0f),
+				const irr::core::vector3df& position = irr::core::vector3df(0,0,0), irr::s32 id=-1,
+				irr::video::SColor shade_top = 0xFFFFFFFF, irr::video::SColor shade_down = 0xFFFFFFFF);
 
 		// controls for state transitions
 		void RequestStateChange( EEngineState newState );
 
 		// changes the music playing (default is level music)
-		void ChangeMusic( const c8* name = NULL );
+		void ChangeMusic( const irr::c8* name = NULL );
 
 		void InitGlobalWeatherEffect();
 
 	private:
 		// perform the main tick update for the current state
-		void TickCurrentState( f32 delta );
+		void TickCurrentState( irr::f32 delta );
 
 		// private helpers used in state transitions
 		void CleanupCurrentState();
@@ -104,38 +104,37 @@ class GameEngine
 		// perform a state transition if one was requested
 		void HandleRequestedStateChange();
 
-		IrrlichtDevice*			device;
-		IVideoDriver*			driver;
-		ISceneManager*			smgr;
-		InputEventReceiver*		receiver;
-		ISoundEngine*			soundEngine;
-		ParticleManager*		particleManager; // particle manager for easy creation of particle effects	
+		irr::IrrlichtDevice* device;
+		irr::video::IVideoDriver* driver;
+		irr::scene::ISceneManager* smgr;
+		InputEventReceiver* receiver;
+		irrklang::ISoundEngine* soundEngine;
+		ParticleManager* particleManager; // particle manager for easy creation of particle effects 
 
-		dimension2d<s32>		screenSize;
+		irr::core::dimension2d<irr::s32> screenSize;
 
-		bool					cursorLock;
-		position2d<s32>			lastCursorPosition;
-		position2d<s32>			scrMid;			// coordinates for middle of screen
-		u32						lastTime;		// used to get elapsed time
+		bool cursorLock;
+		irr::core::position2d<irr::s32> lastCursorPosition;
+		irr::core::position2d<irr::s32> scrMid; // coordinates for middle of screen
+		irr::u32 lastTime; // used to get elapsed time
 
-		EEngineState			state;			// the state the engine is in
-		EEngineState			requestedNextState; // requested next state we want to transition to 
+		EEngineState state; // the state the engine is in
+		EEngineState requestedNextState; // requested next state we want to transition to 
 
-		StartupScreen*			startupScreen;
-		FrontEnd*				frontEnd;
-		GameWorld*				world;
+		StartupScreen* startupScreen;
+		FrontEnd* frontEnd;
+		GameWorld* world;
 
-		irrklang::ISound*			gameMusic;
+		irrklang::ISound* gameMusic;
 		// HACK
 	public:
-		IParticleSystemSceneNode* GlobalWeatherEffect;  // global weather effect
+		irr::scene::IParticleSystemSceneNode* GlobalWeatherEffect;  // global weather effect
 	private:
 
-		bool PromptForDriverType( video::E_DRIVER_TYPE& outDriverType );
-		bool PromptForScreenSize( dimension2d<s32>& outScreensize, bool& outIsFullscreen );
-		f32  CalcElapsedTime();
+		bool PromptForDriverType( irr::video::E_DRIVER_TYPE& outDriverType );
+		bool PromptForScreenSize( irr::core::dimension2d<irr::s32>& outScreensize, bool& outIsFullscreen );
+		irr::f32  CalcElapsedTime();
 		void DisplayFPS();
 };
 
-#endif //GameEngine_h
-
+#endif //__GAME_ENGINE_HPP__
