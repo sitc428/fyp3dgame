@@ -19,6 +19,10 @@
 		9807F50D0F4FF003008E3E5B /* GameWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F4EF0F4FF003008E3E5B /* GameWorld.cpp */; };
 		9807F50F0F4FF003008E3E5B /* ParticleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F4F40F4FF003008E3E5B /* ParticleManager.cpp */; };
 		9807F5100F4FF003008E3E5B /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F4F60F4FF003008E3E5B /* Player.cpp */; };
+		9807F7360F505DE3008E3E5B /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7340F505DE3008E3E5B /* libirrklang.dylib */; };
+		9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7AB0F50645B008E3E5B /* libirrKlang.a */; };
+		9807F7BB0F506674008E3E5B /* libikpMP3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7BA0F506674008E3E5B /* libikpMP3.dylib */; };
+		9807F8570F51550E008E3E5B /* InputEventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
 		98563E770F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */; };
 		98563E780F1A46370050410E /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */; };
@@ -58,6 +62,10 @@
 		9807F4F50F4FF003008E3E5B /* ParticleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleManager.h; sourceTree = "<group>"; };
 		9807F4F60F4FF003008E3E5B /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		9807F4F70F4FF003008E3E5B /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		9807F7340F505DE3008E3E5B /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = ../../libirrklang.dylib; sourceTree = SOURCE_ROOT; };
+		9807F7AB0F50645B008E3E5B /* libirrKlang.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libirrKlang.a; path = ../../lib/libirrKlang.a; sourceTree = SOURCE_ROOT; };
+		9807F7BA0F506674008E3E5B /* libikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libikpMP3.dylib; path = ../../libikpMP3.dylib; sourceTree = SOURCE_ROOT; };
+		9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputEventReceiver.cpp; sourceTree = "<group>"; };
 		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
 		98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
 		98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s.a"; path = "../../lib/libboost_date_time-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
@@ -85,6 +93,9 @@
 				98563E790F1A46380050410E /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */,
 				98563E7A0F1A46380050410E /* libfreetype.a in Frameworks */,
 				98563E7C0F1A46480050410E /* libIrrlicht.a in Frameworks */,
+				9807F7360F505DE3008E3E5B /* libirrklang.dylib in Frameworks */,
+				9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */,
+				9807F7BB0F506674008E3E5B /* libikpMP3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +111,7 @@
 				9807F4820F4FED52008E3E5B /* FrontEnd.h */,
 				9807F4830F4FED52008E3E5B /* GameEngine.cpp */,
 				9807F4840F4FED52008E3E5B /* GameEngine.h */,
+				9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */,
 				9807F4850F4FED52008E3E5B /* InputEventReceiver.h */,
 				9807F4860F4FED52008E3E5B /* StartupScreen.cpp */,
 				9807F4870F4FED52008E3E5B /* StartupScreen.h */,
@@ -165,6 +177,9 @@
 		9868F12B0F1308BC004AE96C /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9807F7BA0F506674008E3E5B /* libikpMP3.dylib */,
+				9807F7AB0F50645B008E3E5B /* libirrKlang.a */,
+				9807F7340F505DE3008E3E5B /* libirrklang.dylib */,
 				98563E7B0F1A46480050410E /* libIrrlicht.a */,
 				98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */,
 				98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */,
@@ -243,6 +258,7 @@
 				9807F50D0F4FF003008E3E5B /* GameWorld.cpp in Sources */,
 				9807F50F0F4FF003008E3E5B /* ParticleManager.cpp in Sources */,
 				9807F5100F4FF003008E3E5B /* Player.cpp in Sources */,
+				9807F8570F51550E008E3E5B /* InputEventReceiver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +280,7 @@
 				CONFIGURATION_BUILD_DIR = ../../;
 				COPY_PHASE_STRIP = YES;
 				HEADER_SEARCH_PATHS = ../../include;
+				MACH_O_TYPE = mh_execute;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
@@ -288,10 +305,14 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../..\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -318,10 +339,14 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../..\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
