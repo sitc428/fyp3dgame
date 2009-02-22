@@ -58,7 +58,7 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	_player = new Player(_smgr->addAnimatedMeshSceneNode(_smgr->getMesh("model/x/fullbody_real.x"), _smgr->getRootSceneNode()),
 		_videoDriver->getTexture("model/x/fullbody_real.png"),
-		irr::core::vector3df(0.0, 20.0, 0.0), irr::core::vector3df(0.05, 0.05, 0.05), 0.05f);
+		irr::core::vector3df(0.0, 30.0, 0.0), irr::core::vector3df(0.5, 0.5, 0.5), 0.3f);
 
 	_player->getNode()->setTriangleSelector(_smgr->createTriangleSelectorFromBoundingBox(_player->getNode()));
 	
@@ -70,8 +70,8 @@ GameObjectCollection::GameObjectCollection(int width, int height, InputEventHand
 
 	// add the view point
 	//_viewPoint = _smgr->addCameraSceneNode(_player->getNode(), irr::core::vector3df(15, 15, 30), _player->getPosition());
-	_viewPoint = _smgr->addCameraSceneNode(0, _player->getNode()->getAbsolutePosition() + irr::core::vector3df(15, 15, 30), _player->getPosition());
-	_viewPoint->setFarValue(250.0);
+	_viewPoint = _smgr->addCameraSceneNode(0, _player->getNode()->getAbsolutePosition() + irr::core::vector3df(30, 30, 60), _player->getPosition());
+	_viewPoint->setFarValue(1250.0);
 	//_viewPoint = _smgr->addCameraSceneNode(0, _player->getPosition() + irr::core::vector3df(2, 10, 3), _player->getPosition());
 
 	// the floor !
@@ -402,16 +402,16 @@ void GameObjectCollection::stopMove()
 void GameObjectCollection::moveForward()
 {
 	_player->moveForward();
-	move(_player->getNode(), irr::core::vector3df(0, 0, -0.05f));
-	_viewPoint->setPosition(_player->getNode()->getAbsolutePosition() + irr::core::vector3df(1, 1, 3));
+	move(_player->getNode(), irr::core::vector3df(0, 0, -0.3f));
+	_viewPoint->setPosition(_player->getNode()->getAbsolutePosition() + irr::core::vector3df(10, 10, 30));
 	_viewPoint->setTarget(_player->getPosition());
 }
 
 void GameObjectCollection::moveBackward()
 {
 	_player->moveBackward();
-	move(_player->getNode(), irr::core::vector3df(0, 0, 0.05f));
-	_viewPoint->setPosition(_player->getNode()->getAbsolutePosition() + irr::core::vector3df(1, 1, 3));
+	move(_player->getNode(), irr::core::vector3df(0, 0, 0.3f));
+	_viewPoint->setPosition(_player->getNode()->getAbsolutePosition() + irr::core::vector3df(10, 10, 30));
 	_viewPoint->setTarget(_player->getPosition());
 }
 
