@@ -30,7 +30,7 @@ class InputEventReceiver : public irr::IEventReceiver
 		}
 
 		// This is used to check whether a key is being held down
-		virtual bool IsKeyDown(irr::EKEY_CODE keyCode) const
+		virtual bool keyDown(irr::EKEY_CODE keyCode) const
 		{
 			return KeyIsDown[keyCode];
 		}

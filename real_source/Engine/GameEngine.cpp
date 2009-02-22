@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include <iostream>
-#include "InputEventReceiver.h"
+//#include "InputEventReceiver.h"
+#include "InputEventReceiver.hpp"
 #include "GameWorld.h"
 #include "StartupScreen.h"
 #include "FrontEnd.h"
@@ -250,7 +251,7 @@ void GameEngine::Run()
 		driver->endScene();
 
 		// if ESCAPE was pressed, request a game exit
-		if( receiver->IsKeyDown(irr::KEY_ESCAPE) )
+		if( receiver->keyDown(irr::KEY_ESCAPE) )
 		{
 			RequestStateChange(state_EXIT);
 		}

@@ -150,7 +150,7 @@ void FrontEnd::DoInput()
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
 	// perform requested menu item action if the enter key is pressed
-	if(receiver.IsKeyDown(irr::KEY_RETURN))
+	if(receiver.keyDown(irr::KEY_RETURN))
 	{
 		switch(currSelectedItem)
 		{
@@ -171,7 +171,7 @@ void FrontEnd::DoInput()
 				}
 		}
 	}
-	else if(receiver.IsKeyDown(irr::KEY_UP) || receiver.IsKeyDown(irr::KEY_KEY_W))
+	else if(receiver.keyDown(irr::KEY_UP) || receiver.keyDown(irr::KEY_KEY_W))
 	{
 		// find what the next selected item should be, don't allow for list iteration wraparound
 		EMenuItem nextItem = currSelectedItem;
@@ -185,7 +185,7 @@ void FrontEnd::DoInput()
 			SetCurrentlyEnabledItem(nextItem);
 		}
 	}
-	else if(receiver.IsKeyDown(irr::KEY_DOWN) || receiver.IsKeyDown(irr::KEY_KEY_S))
+	else if(receiver.keyDown(irr::KEY_DOWN) || receiver.keyDown(irr::KEY_KEY_S))
 	{
 		// find what the next selected item should be, don't allow for list iteration wraparound
 		EMenuItem nextItem = currSelectedItem;

@@ -824,38 +824,38 @@ void GameWorld::DoInput()
 	// handle user input for player
 
 	InputEventReceiver& receiver = GEngine->GetReceiver();
-	if(receiver.IsKeyDown(irr::KEY_KEY_W))
+	if(receiver.keyDown(irr::KEY_KEY_W))
 	{ 
 		playerTranslation.Z = 20;
 	}
-	else if(receiver.IsKeyDown(irr::KEY_KEY_S))
+	else if(receiver.keyDown(irr::KEY_KEY_S))
 	{
 		playerTranslation.Z = -20;
 	}
-	if(receiver.IsKeyDown(irr::KEY_KEY_A))
+	if(receiver.keyDown(irr::KEY_KEY_A))
 	{
 		playerTranslation.X = 20;
 	}
-	else if(receiver.IsKeyDown(irr::KEY_KEY_D))
+	else if(receiver.keyDown(irr::KEY_KEY_D))
 	{
 		playerTranslation.X = -20;
 	}
 
 	static bool GKeyIsDown = false;
-	if( receiver.IsKeyDown(irr::KEY_KEY_G) && !GKeyIsDown )
+	if( receiver.keyDown(irr::KEY_KEY_G) && !GKeyIsDown )
 	{
 		GKeyIsDown = true;
 		GetCurrentPlayer().SetGodMode( !GetCurrentPlayer().HasGodMode() );
 	}
-	if( !receiver.IsKeyDown(irr::KEY_KEY_G) )
+	if( !receiver.keyDown(irr::KEY_KEY_G) )
 		GKeyIsDown = false;
 
-	if(receiver.IsKeyDown(irr::KEY_KEY_B))
+	if(receiver.keyDown(irr::KEY_KEY_B))
 	{
 		BringDownDividerFence();
 	}
 
-	if(receiver.IsKeyDown(irr::KEY_KEY_K))
+	if(receiver.keyDown(irr::KEY_KEY_K))
 	{
 		KillAllEnemies();
 	}
