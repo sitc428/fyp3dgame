@@ -231,6 +231,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -278,7 +280,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>29</integer>
 									<integer>21</integer>
 									<integer>0</integer>
 								</array>
@@ -314,8 +315,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -333,7 +332,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>9807F8880F5157EB008E3E5B</string>
+										<string>9807F8910F515862008E3E5B</string>
 										<key>history</key>
 										<array>
 											<string>9868F3C80F136660004AE96C</string>
@@ -383,8 +382,8 @@
 											<string>9807F8680F5155BF008E3E5B</string>
 											<string>9807F8690F5155BF008E3E5B</string>
 											<string>9807F86E0F515629008E3E5B</string>
-											<string>9807F87C0F515762008E3E5B</string>
-											<string>9807F87D0F515762008E3E5B</string>
+											<string>9807F88D0F515862008E3E5B</string>
+											<string>9807F88E0F515862008E3E5B</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -411,7 +410,6 @@
 											<string>9807F4C40F4FEFF1008E3E5B</string>
 											<string>9807F4C50F4FEFF1008E3E5B</string>
 											<string>9807F4C70F4FEFF1008E3E5B</string>
-											<string>9807F4C80F4FEFF1008E3E5B</string>
 											<string>9807F5770F4FF37F008E3E5B</string>
 											<string>9807F5830F4FF37F008E3E5B</string>
 											<string>9807F5840F4FF37F008E3E5B</string>
@@ -435,15 +433,13 @@
 											<string>9807F7CC0F506693008E3E5B</string>
 											<string>9807F8480F51543A008E3E5B</string>
 											<string>9807F8600F51551F008E3E5B</string>
-											<string>9807F8610F51551F008E3E5B</string>
 											<string>9807F8620F51551F008E3E5B</string>
-											<string>9807F8630F51551F008E3E5B</string>
 											<string>9807F8640F51551F008E3E5B</string>
-											<string>9807F86A0F5155BF008E3E5B</string>
 											<string>9807F86B0F5155BF008E3E5B</string>
 											<string>9807F86C0F5155BF008E3E5B</string>
 											<string>9807F8700F515629008E3E5B</string>
-											<string>9807F87E0F515762008E3E5B</string>
+											<string>9807F88F0F515862008E3E5B</string>
+											<string>9807F8900F515862008E3E5B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -641,8 +637,8 @@
 		<string>9807F8810F515762008E3E5B</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>/Users/kiron/Desktop/FYP Project/Source/real_source/FYP/FYP.xcodeproj</string>
 		<string>9868F13A0F130A07004AE96C</string>
+		<string>/Users/kiron/Desktop/FYP Project/Source/real_source/FYP/FYP.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>5 97 1440 780 0 0 1440 878 </string>
