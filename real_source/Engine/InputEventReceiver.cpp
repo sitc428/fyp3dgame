@@ -2,7 +2,7 @@
 #include <iostream>
 
 InputEventReceiver::InputEventReceiver(GameEngine& engine)
- : _engine(engine)
+ :_engine(engine)
 {
 	// init keyboard states. 
 	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i)

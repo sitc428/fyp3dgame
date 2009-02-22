@@ -824,7 +824,7 @@ void PlayerOnFoot::PlaceLeftFootPrint()
 	CFloorDecalSceneNode* footStepNode = GEngine->addFloorDecalSceneNode(NULL, core::dimension2d<f32>(4.5, 4.5));
 	check(shadowNode);
 	footStepNode->setMaterialFlag(video::EMF_LIGHTING, false);
-	footStepNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL/*EMT_TRANSPARENT_ADD_COLOR*/);
+	footStepNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 	footStepNode->setMaterialTexture(0, GEngine->GetDriver().getTexture(CHARACTER_LEFT_FOOTSTEP_TEXTURE));
 	footStepNode->setRotation(node->getRotation() + vector3df(0.f,180.f,0.f));
 	footStepNode->setPosition(pos);
