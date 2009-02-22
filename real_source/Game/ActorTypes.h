@@ -1,5 +1,5 @@
-#ifndef ActorTypes_h
-#define ActorTypes_h
+#ifndef __ACTOR_TYPES_HPP__
+#define __ACTOR_TYPES_HPP__
 
 // all the distinct types of actors we have
 enum EActorType
@@ -22,4 +22,4 @@ enum EActorType
 	ACTOR_EXPLOSION_EFFECT_ENEMYDEATH = 0x00004000,
 };
 
-#endif //ActorTypes_h
+#endif //__ACTOR_TYPES_HPP__

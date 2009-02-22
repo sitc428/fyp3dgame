@@ -1,8 +1,5 @@
-/**
- * GameWorld is responsible for initializing, running and exiting gameplay
- */
-#ifndef GameWorld_h
-#define GameWorld_h
+#ifndef __GAME_WORLD_HPP__
+#define __GAME_WORLD_HPP__
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
@@ -173,4 +170,4 @@ struct CollisionInfo
 	const irr::core::array<Actor*>& Actors;
 };
 
-#endif //GameWorld_h
+#endif //__GAME_WORLD_HPP__

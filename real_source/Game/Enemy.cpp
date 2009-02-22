@@ -205,7 +205,7 @@ void Enemy::ReceiveDamage( irr::f32 value )
 			// sound->drop();
 
 			// update the player score
-			world.GetCurrentPlayer().AddScore(1);
+			//world.GetCurrentPlayer().AddScore(1);
 
 			// start off the enemy death effect if the player was killed with a dynamite
 			if( world.GetCurrentPlayer().GetActorType() != ACTOR_PLAYER_ON_SNOWPLOW )

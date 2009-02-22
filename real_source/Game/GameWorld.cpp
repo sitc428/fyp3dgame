@@ -727,8 +727,6 @@ void GameWorld::Tick( irr::f32 delta )
 
 					irr::core::stringw msgString;
 					msgString += "                      YOU WIN!\n";
-					msgString += "                      SCORE: ";
-					msgString += GetCurrentPlayer().GetScore();
 					msgString += "\n\nCREDITS:\n\n";
 					msgString += "Jaroslaw Gwarnicki          Programmer\n";
 					msgString += "John Min                         Programmer\n";

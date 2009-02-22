@@ -1,5 +1,5 @@
-#ifndef Camera_h
-#define Camera_h
+#ifndef __CAMERA_HPP__
+#define __CAMERA_HPP__
 
 #include "irrlicht/irrlicht.h"
 #include "irrlicht/vector3d.h"
@@ -46,4 +46,4 @@ class Camera: public Actor
 		irr::scene::ISceneNode* lastSelectedSceneNode;
 };
 
-#endif //Player_h
+#endif //__CAMERA_HPP__

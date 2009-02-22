@@ -1,5 +1,5 @@
-#ifndef Enemy_h
-#define Enemy_h
+#ifndef __ENEMY_HPP__
+#define __ENEMY_HPP__
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
@@ -80,4 +80,4 @@ class Enemy: public Actor
 		// ISound* sounds[sound_TOTAL_NUM]; 
 };
 
-#endif //Enemy_h
+#endif //__ENEMY_HPP__
