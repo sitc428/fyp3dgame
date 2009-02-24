@@ -3,6 +3,8 @@
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
+#include <map>
+#include <string>
 #include "Check.h"
 
 class InputEventReceiver;
@@ -13,6 +15,12 @@ class ParticleManager;
 
 namespace irr
 {
+	namespace gui
+	{
+		class CGUITTFace;
+		class CGUITTFont;
+	}
+
 	namespace scene
 	{
 		class CFloorDecalSceneNode;
@@ -64,7 +72,15 @@ class GameEngine
 
 		const irr::core::dimension2d<irr::s32>& GetScreenSize() const { return screenSize; }
 
-		irr::u32 GetRealTime() const { return GetDevice().getTimer()->getTime(); }
+		irr::u32 GetRealTime() const {
+#if defined _IRR_WINDOWS_
+			return GetDevice().getTimer()->getRealTime();
+#else
+			return GetDevice().getTimer()->getTime();
+#endif
+		}
+
+		irr::gui::CGUITTFont* GetFont(std::string fontName, int fontSize) { return _fonts[std::pair<std::string, int>(fontName, fontSize)]; }
 
 		// unbuffered mouse input 
 		void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
@@ -117,6 +133,9 @@ class GameEngine
 		InputEventReceiver* receiver;
 		irrklang::ISoundEngine* soundEngine;
 		ParticleManager* particleManager; // particle manager for easy creation of particle effects 
+
+		std::map<std::string, irr::gui::CGUITTFace*> _faces;
+		std::map< std::pair<std::string, int>, irr::gui::CGUITTFont* > _fonts;
 
 		irr::core::dimension2d<irr::s32> screenSize;
 

@@ -6,6 +6,8 @@
 #include "FrontEnd.h"
 #include "FloorDecalSceneNode.h"
 #include "ParticleManager.h"
+#include "CGUITTFont.h"
+#include "CGUIStaticTTText.hpp"
 
 #ifdef _IRR_WINDOWS_
 #include <windows.h>
@@ -73,6 +75,16 @@ bool GameEngine::Init()
 	scrMid.X = screenSize.Width/2;
 	scrMid.Y = screenSize.Height/2;
 
+	// setup the true type fonts
+	_faces["font/kochi-gothic-subst.ttf"] = new irr::gui::CGUITTFace;
+	_faces["font/kochi-gothic-subst.ttf"]->load("font/kochi-gothic-subst.ttf");
+	
+	irr::gui::CGUITTFont* _font = new irr::gui::CGUITTFont(driver);
+	_font->attach(_faces["font/kochi-gothic-subst.ttf"], 24);
+	_font->AntiAlias = true;
+
+	_fonts[std::pair<std::string, int>("font/kochi-gothic-subst.ttf", 24)] = _font;
+
 	// create sound engine
 	soundEngine = irrklang::createIrrKlangDevice();
 	if( !soundEngine )
@@ -110,6 +122,9 @@ void GameEngine::Exit()
 	check( startupScreen == NULL );
 	check( frontEnd == NULL );
 	check( world == NULL );
+
+	for(std::map<std::pair<std::string, int>, irr::gui::CGUITTFont*>::iterator i = _fonts.begin(); i != _fonts.end(); ++i)
+		(*i).second->drop();
 
 	if(soundEngine)
 	{
@@ -346,7 +361,7 @@ bool GameEngine::PromptForScreenSize( irr::core::dimension2d<irr::s32>& outScree
   */
 irr::f32 GameEngine::CalcElapsedTime()
 {
-#ifdef WIN32
+#ifdef _IRR_WINDOWS_
 	static __int64 gTime, gLastTime;
 	__int64 freq;
 	QueryPerformanceCounter((LARGE_INTEGER *)&gTime);
