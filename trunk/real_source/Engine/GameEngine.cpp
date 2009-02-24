@@ -7,7 +7,7 @@
 #include "FloorDecalSceneNode.h"
 #include "ParticleManager.h"
 #include "CGUITTFont.h"
-#include "CGUIStaticTTText.hpp"
+//#include "CGUIStaticTTText.hpp"
 
 #ifdef _IRR_WINDOWS_
 #include <windows.h>
