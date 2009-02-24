@@ -49,11 +49,13 @@ void FrontEnd::Init()
 	BackgroundImage = env->addImage( irr::core::rect<irr::s32>(backgroundPos, scrSize) );
 	BackgroundImage->setImage( FrontEndBackground );
 
-	irr::gui::IGUIFont* font = env->getFont( FRONTEND_FONT_FILE );
+	/*irr::gui::IGUIFont* font = env->getFont( FRONTEND_FONT_FILE );
 	if (font)
 	{
 		env->getSkin()->setFont(font);
-	}
+	}*/
+
+	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("font/kochi-gothic-subst.ttf", 24));
 
 	// add the text elements
 	StartGameText = env->addStaticText(

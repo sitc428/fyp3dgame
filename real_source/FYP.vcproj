@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Engine\CGUIStaticTTText.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Engine\CGUITTFont.h"
 				>
 			</File>
@@ -270,6 +274,10 @@
 			</File>
 			<File
 				RelativePath=".\game\Camera.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Engine\CGUIStaticTTText.cpp"
 				>
 			</File>
 			<File
