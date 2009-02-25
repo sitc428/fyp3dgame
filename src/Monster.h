@@ -146,7 +146,7 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
       std::cout<<a-s+q<<"\n";
     }
 	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
-		_player->reduceHealth(1);
+		_player->reduceHealth(10);
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
 	}
