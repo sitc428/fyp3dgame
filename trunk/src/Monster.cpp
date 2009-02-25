@@ -2,13 +2,12 @@
  *  Monster.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09�?????
+ *  Created by Mr.JJ on 09年2月9日.
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
 
 #include "Monster.h"
-#include <string>
 
 Monster::Monster(irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
 :_monster(source),_speed(speed){
@@ -75,9 +74,18 @@ void Monster::update(Player* _player){
 	if(Health <= 0){//Death
 		FSM.process_event( EvDie());
 		FSM.reaction(_monster, _player);
-	}else if(_player->getPosition().getDistanceFrom(pos)< 2.5f){
-		FSM.process_event( EvWithinAttackRange());
-		FSM.reaction(_monster, _player);
+	}else if(_player->getPosition().getDistanceFrom(pos)< 2.5f){//Attacking
+		
+		if(FSM.GetName() != "Attacking"){
+			FSM.process_event( EvWithinAttackRange());
+			mon_timer->restart();
+			FSM.reaction(_monster, _player);
+		}else{
+			if(mon_timer->elapsed() > timeout){
+				mon_timer->restart();
+				FSM.reaction(_monster, _player);			
+			}
+		}
 	
 	
 	}else if( _player->getPosition().getDistanceFrom(original)< 7.0f || _player->getPosition().getDistanceFrom(pos)< 4.0f ){
