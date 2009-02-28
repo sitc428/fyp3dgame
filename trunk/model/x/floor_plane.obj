@@ -1,0 +1,23 @@
+# 
+# Wavefront OBJ file
+# Converted by the DEEP Exploration Deep Exploration 5.7 5.7.0.4228 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+mtllib floor_plane.mtl
+# object pPlane1
+g pPlane1
+v -62.89840 -62.89840 -0.00000
+v 62.89840 -62.89840 -0.00000
+v -62.89840 62.89840 0.00000
+v 62.89840 62.89840 0.00000
+# 4 verticies
+vt 0.00000 0.00000
+vt -30.00000 0.00000
+vt -30.00000 -30.00000
+vt 0.00000 -30.00000
+# 4 texture verticies
+vn 0.00000 -0.00000 1.00000
+# 1 normals
+usemtl ground
+f  1/1/1 2/2/1 4/3/1 3/4/1
