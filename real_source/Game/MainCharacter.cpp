@@ -12,7 +12,7 @@
 extern GameEngine* GEngine;
 
 // Parameters specifying default parameters
-static const irr::core::vector3df		defaultPosition = irr::core::vector3df(0,1,0);
+static const irr::core::vector3df		defaultPosition = irr::core::vector3df(100,50,0);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0,0,0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "model/x/fullbody_real.x";
@@ -173,8 +173,8 @@ void MainCharacter::RecreateCollisionResponseAnimator()
 
 	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
 		&world.GetLevelTriangleSelector(), node, radius,
-		//irr::core::vector3df(0,-.08f,0), // gravity
-		irr::core::vector3df(0, 1, 0), // gravity
+		irr::core::vector3df(0,-.08f,0), // gravity
+		//irr::core::vector3df(0, 0, 0), // gravity
 		irr::core::vector3df(0, -radius.Y, 0), // ellipsoid translation
 		0.0001f); // sliding value
 	node->addAnimator(collisionAnimator);
