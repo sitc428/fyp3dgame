@@ -122,7 +122,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
+				Optimization="0"
 				AdditionalIncludeDirectories=".\Utils;.\Game;.\Engine;..\include;&quot;C:\Program Files\Microsoft Platform SDK\Include&quot;"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\MainCharacter.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\game\NodeID.h"
 				>
 			</File>
@@ -314,6 +318,10 @@
 			</File>
 			<File
 				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\MainCharacter.cpp"
 				>
 			</File>
 			<File
