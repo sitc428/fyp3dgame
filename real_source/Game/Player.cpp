@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Check.h"
 #include "GameEngine.h"
+#include <iostream>
 
 extern GameEngine* GEngine;
 
@@ -36,13 +37,14 @@ void Player::SetActive( bool bValue )
 }
 
 // set the translation vector for player
-void Player::SetTranslation( const irr::core::vector3df& trans )
+void Player::SetTranslation( const irr::core::vector3df trans )
 {
+	std::cout << trans.X << " " << trans.Y << " " << trans.Z << std::endl;
 	translation = trans;
 }
 
 // set the rotation vector for player
-void Player::SetRotation( const irr::core::vector3df& rot )
+void Player::SetRotation( const irr::core::vector3df rot )
 {
 	// we only support rotation about the Y axis for now
 	//check(rot.X == 0.0f && rot.Z == 0.0f);
