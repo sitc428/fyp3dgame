@@ -119,8 +119,8 @@ class GameWorld
 		EGameState gameState; // current state of the game
 
 		irr::scene::ISceneManager& smgr; // scene manager from the engine
-		Player* playerOnFoot; // player on foot actor
-		Player* playerOnSnowplow;// player on snowplow actor
+		Player* mainCharacter; // player on foot actor
+		//Player* playerOnSnowplow;// player on snowplow actor
 		bool bUseOnFootPlayer; // which player model are we currently using
 		bool bSwitchPlayers;   // whether we should perform the player switch after all players have been ticked
 		Camera* camera; // camera object

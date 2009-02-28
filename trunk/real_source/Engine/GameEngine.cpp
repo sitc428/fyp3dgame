@@ -78,12 +78,21 @@ bool GameEngine::Init()
 	// setup the true type fonts
 	_faces["font/kochi-gothic-subst.ttf"] = new irr::gui::CGUITTFace;
 	_faces["font/kochi-gothic-subst.ttf"]->load("font/kochi-gothic-subst.ttf");
+
+	_faces["font/impact.ttf"] = new irr::gui::CGUITTFace;
+	_faces["font/impact.ttf"]->load("font/impact.ttf");
 	
 	irr::gui::CGUITTFont* _font = new irr::gui::CGUITTFont(driver);
 	_font->attach(_faces["font/kochi-gothic-subst.ttf"], 24);
 	_font->AntiAlias = true;
 
 	_fonts[std::pair<std::string, int>("font/kochi-gothic-subst.ttf", 24)] = _font;
+
+	irr::gui::CGUITTFont* _font2 = new irr::gui::CGUITTFont(driver);
+	_font2->attach(_faces["font/impact.ttf"], 24);
+	_font2->AntiAlias = true;
+
+	_fonts[std::pair<std::string, int>("font/impact.ttf", 24)] = _font2;
 
 	// create sound engine
 	soundEngine = irrklang::createIrrKlangDevice();

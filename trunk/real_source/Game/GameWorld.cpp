@@ -5,6 +5,7 @@
 //#include "EnemyBoss.h"
 #include "Camera.h"
 #include "Player.h"
+#include "MainCharacter.hpp"
 //#include "PlayerOnFoot.h"
 //#include "PlayerOnSnowplow.h"
 //#include "SnowballProjectile.h"
@@ -22,7 +23,7 @@
 #include "math.h"  // for tan(x) function
 
 
-static const irr::c8* LEVEL_FILE = "../art/levels/FinalLevelmkI.irr";
+static const irr::c8* LEVEL_FILE = "model/x/scene1.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
 
 static const irr::u32 MAX_SNOWBALLS = 20;
@@ -40,8 +41,7 @@ extern GameEngine* GEngine;
 
 GameWorld::GameWorld( const GameEngine& Engine ):
 	smgr(Engine.GetSceneManager()),
-	playerOnFoot(NULL),
-	playerOnSnowplow(NULL),
+	mainCharacter(NULL),
 	bUseOnFootPlayer(true),
 	bSwitchPlayers(false),
 	camera(NULL),
@@ -179,14 +179,14 @@ void GameWorld::RestartLevel()
 		{
 			Actor::DestroyActor(actors[i]);
 			actors.erase( i );
-			playerOnFoot = NULL;
+			//playerOnFoot = NULL;
 		}
 		// delete player on snowplow
 		else if( actors[i]->GetActorType() == ACTOR_PLAYER_ON_SNOWPLOW )
 		{
 			Actor::DestroyActor(actors[i]);
 			actors.erase( i );
-			playerOnSnowplow = NULL;
+			//playerOnSnowplow = NULL;
 		}
 		// delete enemies
 		else if( actors[i]->GetActorType() == ACTOR_ENEMY)
@@ -276,7 +276,6 @@ void GameWorld::InitLight()
 // sets up the player model and player collisions with the world
 void GameWorld::InitPlayer()
 {
-
 	/* 
 	// create main player actor
 	playerOnFoot = new PlayerOnFoot( *this, GEngine->GetDriver() );
@@ -296,6 +295,9 @@ void GameWorld::InitPlayer()
 	// hide the current player to avoid the first frame pop
 	GetCurrentPlayer().GetNode().setVisible(false);
 	*/
+
+	mainCharacter = new MainCharacter( *this, GEngine->GetDriver() );
+	actors.push_back( mainCharacter );
 }
 
 // sets up the enemies in the world
@@ -518,8 +520,9 @@ void GameWorld::Exit()
 	}
 	actors.clear();
 
-	playerOnFoot = NULL;
-	playerOnSnowplow = NULL;
+	//playerOnFoot = NULL;
+	//playerOnSnowplow = NULL;
+	mainCharacter = NULL;
 	camera = NULL;
 
 	// clean up the triangle selector
@@ -1242,7 +1245,7 @@ ExplosionEffect* GameWorld::GetFirstAvailableEnemyDeathEffect() const
 // returns the player actor which is currently used
 Player& GameWorld::GetCurrentPlayer() const
 {
-	if( bUseOnFootPlayer )
+	/*if( bUseOnFootPlayer )
 	{
 		check(playerOnFoot);
 		return *playerOnFoot;
@@ -1251,7 +1254,9 @@ Player& GameWorld::GetCurrentPlayer() const
 	{
 		check(playerOnSnowplow);
 		return *playerOnSnowplow;
-	}
+	}*/
+
+	return *mainCharacter;
 }
 
 // switches the player models from onFoot to onSnowplow, and notifies all the necessary actors about the change
@@ -1259,7 +1264,7 @@ void GameWorld::SwitchPlayers( )
 { 
 	// transfer the position, rotation and ammo information from old player to the new
 	// this is so any pickups picked up will transfer to the other one
-	Player* oldPlayer = bUseOnFootPlayer ? playerOnFoot : playerOnSnowplow;
+	/*Player* oldPlayer = bUseOnFootPlayer ? playerOnFoot : playerOnSnowplow;
 	Player* newPlayer = bUseOnFootPlayer ? playerOnSnowplow: playerOnFoot;
 
 	newPlayer->SetNodePosition( oldPlayer->GetNodePosition() );
@@ -1272,7 +1277,7 @@ void GameWorld::SwitchPlayers( )
 	oldPlayer->SetActive( false );
 
 	bUseOnFootPlayer = !bUseOnFootPlayer;
-	NotifyNewPlayerTarget( GetCurrentPlayer() );
+	NotifyNewPlayerTarget( GetCurrentPlayer() );*/
 }
 
 // notifies all the actors that a new player is to be their target
@@ -1308,7 +1313,8 @@ void GameWorld::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
 {
 	// route the unbuffered mouse input events to the player
 	// don't route input if the player actors have not been created yet
-	if( playerOnFoot && playerOnSnowplow )
+	//if( playerOnFoot && playerOnSnowplow )
+	if( mainCharacter )
 	{
 		GetCurrentPlayer().OnMouseEvent( mouseEvent );
 	}

@@ -1,6 +1,7 @@
 #include "FrontEnd.h"
 #include "GameEngine.h"
 #include "InputEventReceiver.hpp"
+#include "CGUIStaticTTText.hpp"
 
 extern GameEngine* GEngine;
 
@@ -11,7 +12,7 @@ static const irr::video::SColor SELECTED_ITEM_OVERRIDE_COLOR = irr::video::SColo
 
 // dimensions of the text elements in the frontend
 static const irr::s32 TEXT_ELEMENT_WIDTH = 200;
-static const irr::s32 TEXT_ELEMENT_HEIGHT = 20;
+static const irr::s32 TEXT_ELEMENT_HEIGHT = 24;
 static const irr::s32 FIRST_TEXT_ELEMENT_Y_OFFSET = 200;
 static const irr::s32 SECOND_TEXT_ELEMENT_Y_OFFSET = 230;
 
@@ -55,17 +56,17 @@ void FrontEnd::Init()
 		env->getSkin()->setFont(font);
 	}*/
 
-	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("font/kochi-gothic-subst.ttf", 24));
+	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("font/impact.ttf", 24));
 
 	// add the text elements
 	StartGameText = env->addStaticText(
-			L"Start   Game",
+			L"Start\tGame",
 			irr::core::rect<irr::s32>(
 				scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
 				scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET,
 				scrSize.Width/2 + TEXT_ELEMENT_WIDTH/2,
 				scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + FIRST_TEXT_ELEMENT_Y_OFFSET),
-			false, false, 0, -1, false);
+				false, false, 0, -1, false);
 	check(StartGameText);
 	StartGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
 
