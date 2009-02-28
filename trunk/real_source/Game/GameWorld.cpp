@@ -830,6 +830,7 @@ void GameWorld::DoInput()
 	if(receiver.keyDown(irr::KEY_KEY_W))
 	{ 
 		playerTranslation.Z = 20;
+		std::cout << "WWWW" << std::endl;
 	}
 	else if(receiver.keyDown(irr::KEY_KEY_S))
 	{
@@ -881,6 +882,11 @@ void GameWorld::DoPhysics()
 {
 	// check collisions between the actors
 	CheckCollisions();
+	std::cout << "X" << std::endl;
+	irr::core::vector3df currentPosition = GetCurrentPlayer().GetNodePosition();
+
+	if( currentPosition.Y < 0 )
+		GetCurrentPlayer().SetNodePosition(irr::core::vector3df(currentPosition.X, 10, currentPosition.Z));
 }
 
 void GameWorld::AdvanceLevel()
