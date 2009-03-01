@@ -94,21 +94,19 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
-	node->setDebugDataVisible( irr::scene::EDS_BBOX );
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
 
 	// create a triangle selector for player
-	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( node );
-	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh()->getMesh(0), node );
-
+	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( node );
+	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh()->getMesh(0), node );
 	node->setTriangleSelector( triangleSelector );
 	triangleSelector->drop();
 	triangleSelector = NULL;
 
 	// setup player shadow
-	shadowNode = GEngine->addFloorDecalSceneNode(node, irr::core::dimension2d<irr::f32>(11, 11));
+	shadowNode = GEngine->addFloorDecalSceneNode(node, irr::core::dimension2d<irr::f32>(0, 0));
 	check(shadowNode);
 	shadowNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	shadowNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
@@ -165,15 +163,15 @@ void MainCharacter::RecreateCollisionResponseAnimator()
 	}
 
 	// setup torso collision with the world
-	irr::core::aabbox3df box = node->getBoundingBox();
+	//irr::core::aabbox3df box = node->getBoundingBox();
+	irr::core::aabbox3df box = node->getMesh()->getMesh(0)->getBoundingBox();
+	//irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 	irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 
 	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
 		&world.GetLevelTriangleSelector(), node, radius,
 		irr::core::vector3df(0,-.08f,0), // gravity
-		//irr::core::vector3df(0, 0, 0), // gravity
-		//irr::core::vector3df(0, -radius.Y, 0), // ellipsoid translation
-		irr::core::vector3df(0, 5, 0),
+		irr::core::vector3df(0, 0, 0),
 		0.0001f); // sliding value
 	node->addAnimator(collisionAnimator);
 }
