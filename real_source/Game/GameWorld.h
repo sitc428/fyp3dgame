@@ -13,7 +13,7 @@ class GameEngine;
 //class SnowballProjectile;
 //class LandMine;
 //class ExplosionEffect;
-//class GameHUD;
+class GameHUD;
 //class EnemyWave;
 
 // different states for the game
@@ -120,7 +120,6 @@ class GameWorld
 
 		irr::scene::ISceneManager& smgr; // scene manager from the engine
 		Player* mainCharacter; // player on foot actor
-		//Player* playerOnSnowplow;// player on snowplow actor
 		bool bUseOnFootPlayer; // which player model are we currently using
 		bool bSwitchPlayers;   // whether we should perform the player switch after all players have been ticked
 		Camera* camera; // camera object
@@ -128,7 +127,7 @@ class GameWorld
 		irr::core::array<Actor*> actors; // all the actors that are currently in the world, includes the player and the camera
 
 		irr::scene::IMetaTriangleSelector* levelTriangleSelector;  // triangle selector for doing collision checks with the level 
-		// GameHUD* gameHUD; // HUD object
+		GameHUD* gameHUD; // HUD object
 
 		irr::f32 lastEnemySpawn; // last time an enemy was spawned
 		irr::f32 spawnTimer; // time till next spawn

@@ -17,7 +17,7 @@
 //#include "DynamiteExplosionEffect.h"
 //#include "SnowballExplosionEffect.h"
 //#include "EnemyDeathEffect.h"
-//#include "GameHUD.h"
+#include "GameHUD.h"
 #include "NodeID.h"
 //#include "EnemyWave.h"
 #include <cmath>  // for tan(x) function
@@ -46,7 +46,7 @@ GameWorld::GameWorld( const GameEngine& Engine ):
 	bSwitchPlayers(false),
 	camera(NULL),
 	levelTriangleSelector(NULL),
-	// gameHUD(NULL),
+	gameHUD(NULL),
 	lastEnemySpawn(0),
 	totalEnemyOne(0),
 	totalEnemyTwo(0),
@@ -492,12 +492,9 @@ void GameWorld::InitPickups()
 }
 
 void GameWorld::InitHUD()
-{/*
-    check(gameHUD == NULL);
-    gameHUD = new GameHUD( GEngine->GetDevice() );
-    check(gameHUD);
-    gameHUD->Init();
-    */
+{
+	gameHUD = new GameHUD( GEngine->GetDevice() );
+	gameHUD->Init();
 }
 
 // cleans up the game world
