@@ -54,9 +54,9 @@ public:
 	virtual EActorType GetActorType() const { return ACTOR_PLAYER; }
 
 	// set the movement translation vector for player
-	virtual void SetTranslation( const irr::core::vector3df trans );
+	virtual void SetTranslation( const irr::core::vector3df& trans );
 	// set the movement rotation vector for player
-	virtual void SetRotation( const irr::core::vector3df rot );
+	virtual void SetRotation( const irr::core::vector3df& rot );
 
 	// accessor methods for node position and rotation
 	virtual irr::core::vector3df GetNodePosition() const { node->updateAbsolutePosition(); return node->getAbsolutePosition(); }

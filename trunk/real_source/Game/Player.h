@@ -40,8 +40,8 @@ class Player: public Actor
 		virtual void SetNodePosition( const irr::core::vector3df& vect ) = 0;
 		virtual void SetNodeRotation( const irr::core::vector3df& vect ) = 0;
 
-		virtual void SetTranslation( const irr::core::vector3df trans );
-		virtual void SetRotation( const irr::core::vector3df rot );
+		virtual void SetTranslation( const irr::core::vector3df& trans );
+		virtual void SetRotation( const irr::core::vector3df& rot );
 		const irr::core::vector3df& GetTranslation() const { return translation; }
 		const irr::core::vector3df& GetRotation() const { return rotation; }
 		const irr::core::vector3df& GetAimVector() const { return aimVector; } 
