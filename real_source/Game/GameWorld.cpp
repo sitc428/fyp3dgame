@@ -103,7 +103,8 @@ void GameWorld::InitLevel()
 				FenceToFall = meshNode;
 			}
 
-			irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelectorFromBoundingBox( meshNode );
+			//irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelectorFromBoundingBox( meshNode );
+			irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
 			check(meshTriangleSelector);
 			meshNode->setTriangleSelector( meshTriangleSelector );
 			levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
@@ -123,7 +124,7 @@ void GameWorld::InitLevel()
 	{
 		//irr::scene::IAnimatedMeshSceneNode* meshNode = dynamic_cast<irr::scene::IAnimatedMeshSceneNode*>(outNodes[i]);
 		irr::scene::IAnimatedMeshSceneNode* meshNode = (irr::scene::IAnimatedMeshSceneNode*)(outNodes[i]);
-		check(meshNode);
+
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
@@ -689,17 +690,15 @@ void GameWorld::Tick( irr::f32 delta )
 
 					gameMessage = GEngine->GetDevice().getGUIEnvironment()->addStaticText( L"It Begins...",
 							irr::core::rect<irr::s32>(scrSize.Width-64, scrSize.Height-32, scrSize.Width+128, scrSize.Height+48) );
-					check(gameMessage);
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
 					gameMessage->setOverrideFont( GEngine->GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 				}
-				else if( stateTimer < START_LEVEL_STATE_TIMER )
+				/*else if( stateTimer < START_LEVEL_STATE_TIMER )
 				{
 					stateTimer += delta;
-				}
+				}*/
 				else
 				{
-					check(gameMessage);
 					gameMessage->remove();
 					gameMessage = NULL;
 
@@ -771,9 +770,6 @@ void GameWorld::Tick( irr::f32 delta )
 // performs actual gameplay
 void GameWorld::DoGameplay( irr::f32 delta )
 {
-	// make sure only one of the player's is active
-	check( playerOnFoot->IsActive() != playerOnSnowplow->IsActive() );
-
 	// update AI calculations
 	DoAI( delta );
 
@@ -800,11 +796,11 @@ void GameWorld::DoGameplay( irr::f32 delta )
 	DoHUD();
 
 	// it is safe to perform a player switch now
-	if( bSwitchPlayers )
+	/*if( bSwitchPlayers )
 	{
 		SwitchPlayers();
 		bSwitchPlayers = false;
-	}
+	}*/
 
 	// check if we're supposed to bring the fence section down
 	if( FenceFallTime > 0.f )
@@ -882,11 +878,6 @@ void GameWorld::DoPhysics()
 {
 	// check collisions between the actors
 	CheckCollisions();
-	std::cout << "X" << std::endl;
-	irr::core::vector3df currentPosition = GetCurrentPlayer().GetNodePosition();
-
-	if( currentPosition.Y < 0 )
-		GetCurrentPlayer().SetNodePosition(irr::core::vector3df(currentPosition.X, 10, currentPosition.Z));
 }
 
 void GameWorld::AdvanceLevel()

@@ -12,8 +12,8 @@
 extern GameEngine* GEngine;
 
 // Parameters specifying default parameters
-static const irr::core::vector3df		defaultPosition = irr::core::vector3df(100,50,0);
-static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0,0,0);
+static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,0);
+static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0,-90,0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "model/x/fullbody_real.x";
 //static const irr::c8*		CHARACTER_ARMS_MODEL = "../art/characters/Fatty/ArmSplit.ms3d";
@@ -89,12 +89,12 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	// load the animated mesh, and add a new scene graph node for it
 	irr::scene::ISkinnedMesh* mainCharacterMesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( MAIN_CHARACTER_MODEL ));
 	node = smgr.addAnimatedMeshSceneNode( mainCharacterMesh, smgr.getRootSceneNode() );
-	//node->setPosition( world.GetPlayerSpawn() );
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
+	node->setDebugDataVisible( irr::scene::EDS_BBOX );
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
@@ -102,9 +102,6 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	// create a triangle selector for player
 	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( node );
 	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh()->getMesh(0), node );
-	check( triangleSelector );
-
-	std::cout << triangleSelector << std::endl;
 
 	node->setTriangleSelector( triangleSelector );
 	triangleSelector->drop();
@@ -175,7 +172,8 @@ void MainCharacter::RecreateCollisionResponseAnimator()
 		&world.GetLevelTriangleSelector(), node, radius,
 		irr::core::vector3df(0,-.08f,0), // gravity
 		//irr::core::vector3df(0, 0, 0), // gravity
-		irr::core::vector3df(0, -radius.Y, 0), // ellipsoid translation
+		//irr::core::vector3df(0, -radius.Y, 0), // ellipsoid translation
+		irr::core::vector3df(0, 5, 0),
 		0.0001f); // sliding value
 	node->addAnimator(collisionAnimator);
 }
@@ -211,7 +209,7 @@ void MainCharacter::SetActive( bool bValue )
 */
 
 // set the translation vector for player
-void MainCharacter::SetTranslation( const irr::core::vector3df trans )
+void MainCharacter::SetTranslation( const irr::core::vector3df& trans )
 {
 	Player::SetTranslation( trans );
 //	sfxFootstep->setVolume( 0.65f );
@@ -220,7 +218,7 @@ void MainCharacter::SetTranslation( const irr::core::vector3df trans )
 }
 
 // set the rotation vector for player
-void MainCharacter::SetRotation( const irr::core::vector3df rot )
+void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 {
 	Player::SetRotation( rot );
 
@@ -342,8 +340,8 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			if( prevMoveState != state_PLAYER_MOVE_IDLE )
 			{
 				walkStopState = prevMoveState;
-				walkStopFrameNumber = node->getFrameNr();
-				node->setFrameLoop((irr::s32)walkStopFrameNumber,(irr::s32)walkStopFrameNumber);
+				//walkStopFrameNumber = node->getFrameNr();
+				//node->setFrameLoop((irr::s32)walkStopFrameNumber,(irr::s32)walkStopFrameNumber);
 			}	
 			break;
 		}
@@ -352,11 +350,11 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			// setup animation for this state
 			if( prevMoveState != state_PLAYER_MOVE_LEFT )
 			{
-				node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_LEFT_START,PLAYER_ANIM_WALK_SIDESTEP_LEFT_END);
+				//node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_LEFT_START,PLAYER_ANIM_WALK_SIDESTEP_LEFT_END);
 				if( prevMoveState == state_PLAYER_MOVE_IDLE 
 				&&	walkStopState == state_PLAYER_MOVE_LEFT )
 				{
-					node->setCurrentFrame(walkStopFrameNumber);
+					//node->setCurrentFrame(walkStopFrameNumber);
 				}
 			}
 			UpdatePosition( delta );
@@ -367,11 +365,11 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			// setup animation for this state
 			if( prevMoveState != state_PLAYER_MOVE_RIGHT )
 			{
-				node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_RIGHT_START,PLAYER_ANIM_WALK_SIDESTEP_RIGHT_END);
+				//node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_RIGHT_START,PLAYER_ANIM_WALK_SIDESTEP_RIGHT_END);
 				if( prevMoveState == state_PLAYER_MOVE_IDLE 
 				&&	walkStopState == state_PLAYER_MOVE_RIGHT )
 				{
-					node->setCurrentFrame(walkStopFrameNumber);
+					//node->setCurrentFrame(walkStopFrameNumber);
 				}
 			}
 			UpdatePosition( delta );
@@ -386,11 +384,11 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			&&	prevMoveState != state_PLAYER_MOVE_FORWARD_LEFT
 			&&	prevMoveState != state_PLAYER_MOVE_FORWARD_RIGHT )
 			{
-				node->setFrameLoop(PLAYER_ANIM_WALK_FORWARD_START,PLAYER_ANIM_WALK_FORWARD_END);
+				//node->setFrameLoop(PLAYER_ANIM_WALK_FORWARD_START,PLAYER_ANIM_WALK_FORWARD_END);
 				if( prevMoveState == state_PLAYER_MOVE_IDLE 
 				&&	(walkStopState == state_PLAYER_MOVE_FORWARD || walkStopState == state_PLAYER_MOVE_FORWARD_LEFT || state_PLAYER_MOVE_FORWARD_RIGHT))
 				{
-					node->setCurrentFrame(walkStopFrameNumber);
+					//node->setCurrentFrame(walkStopFrameNumber);
 				}
 			}
 			UpdatePosition( delta );
@@ -405,11 +403,11 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			&&	prevMoveState != state_PLAYER_MOVE_BACK_LEFT
 			&&	prevMoveState != state_PLAYER_MOVE_BACK_RIGHT )
 			{
-				node->setFrameLoop(PLAYER_ANIM_WALK_BACK_START,PLAYER_ANIM_WALK_BACK_END);
+				//node->setFrameLoop(PLAYER_ANIM_WALK_BACK_START,PLAYER_ANIM_WALK_BACK_END);
 				if( prevMoveState == state_PLAYER_MOVE_IDLE 
 				&&	(walkStopState == state_PLAYER_MOVE_BACK || walkStopState == state_PLAYER_MOVE_BACK_LEFT || state_PLAYER_MOVE_BACK_RIGHT))
 				{
-					node->setCurrentFrame(walkStopFrameNumber);
+					//node->setCurrentFrame(walkStopFrameNumber);
 				}
 			}
 			UpdatePosition( delta );
@@ -430,22 +428,22 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 	// place footstep texture, only when we're visbile, otherwise footsteps appear floating in the air
 	if( node->isVisible() )
 	{
-		irr::s32 currAnimFrame = (irr::s32)node->getFrameNr();
+		/*irr::s32 currAnimFrame = (irr::s32)node->getFrameNr();
 		if( currAnimFrame == PLAYER_ANIM_WALK_FORWARD_LEFT_FOOTSTEP_FRAME
 		||	currAnimFrame == PLAYER_ANIM_WALK_BACK_LEFT_FOOTSTEP_FRAME
 		||  currAnimFrame == PLAYER_ANIM_WALK_BACK_LEFT_FOOTSTEP2_FRAME
 		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_LEFT_LEFT_FOOTSTEP_FRAME
 		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_RIGHT_LEFT_FOOTSTEP_FRAME )
 		{
-//			PlaceLeftFootPrint();
+			PlaceLeftFootPrint();
 		}
 		else if( currAnimFrame == PLAYER_ANIM_WALK_FORWARD_RIGHT_FOOTSTEP_FRAME
 		||	currAnimFrame == PLAYER_ANIM_WALK_BACK_RIGHT_FOOTSTEP_FRAME
 		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_LEFT_RIGHT_FOOTSTEP_FRAME
 		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_RIGHT_RIGHT_FOOTSTEP_FRAME)
 		{
-//			PlaceRightFootPrint();
-		}
+			PlaceRightFootPrint();
+		}*/
 	}
 }
 
