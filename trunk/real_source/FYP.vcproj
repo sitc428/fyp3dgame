@@ -233,6 +233,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\GameHUD.h"
+				>
+			</File>
+			<File
 				RelativePath=".\game\GameWorld.h"
 				>
 			</File>
@@ -310,6 +314,10 @@
 			</File>
 			<File
 				RelativePath=".\engine\GameEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\GameHUD.cpp"
 				>
 			</File>
 			<File
