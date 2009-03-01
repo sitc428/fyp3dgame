@@ -48,7 +48,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	WaveDisplay =  env->addStaticText(
 		L"",
-									  core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -5 -ELEMENT_HEIGHT, scrSize.Width -5,scrSize.Height -5),
+		core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -5 -ELEMENT_HEIGHT, scrSize.Width -5,scrSize.Height -5),
 		false, true,	0, -1, false);
 
 	check(WaveDisplay);
@@ -57,7 +57,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	ScoreDisplay = env->addStaticText(
 		L"",
-									  core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -42 -ELEMENT_HEIGHT ,scrSize.Width -5,scrSize.Height -42),
+		core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -42 -ELEMENT_HEIGHT ,scrSize.Width -5,scrSize.Height -42),
 		false, true,	0, -1, false);
 
 	check(ScoreDisplay);
@@ -66,7 +66,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	AmmoDisplay = env->addStaticText(
 		L"",
-									 core::rect<irr::s32>(5,scrSize.Height -42 -ELEMENT_HEIGHT, 155,scrSize.Height -42),
+		core::rect<irr::s32>(5,scrSize.Height -42 -ELEMENT_HEIGHT, 155,scrSize.Height -42),
 		false, true,	0, -1, false);
 
 	check(AmmoDisplay);
@@ -75,7 +75,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	PlayerLives = env->addStaticText(
 		L"",
-									 core::rect<irr::s32>(5,scrSize.Height -5 -ELEMENT_HEIGHT , 250,scrSize.Height -5),
+		core::rect<irr::s32>(5,scrSize.Height -5 -ELEMENT_HEIGHT , 250,scrSize.Height -5),
 		false, true,	0, -1, false);
 
 	check(PlayerLives);
@@ -87,7 +87,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	PlayerHealth = env->addStaticText(
 		L"",
-									  irr::core::rect<irr::s32>(scrSize.Width/2 - 120,scrSize.Height -5 -ELEMENT_HEIGHT , scrSize.Width/2 + 100,scrSize.Height -5),
+		irr::core::rect<irr::s32>(scrSize.Width/2 - 120,scrSize.Height -5 -ELEMENT_HEIGHT , scrSize.Width/2 + 100,scrSize.Height -5),
 		false, true,	0, -1, false);
 	check(PlayerHealth);
 	PlayerHealth->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
@@ -101,7 +101,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	GodModeDisplay = env->addStaticText(
 		L"GOD MODE ENABLED",
-		co<irr::s32irr::s32>(16,0,512,32),
+		irr::core::rect<irr::s32>(16,0,512,32),
 		false, true,	0, -1, false);
 	check(GodModeDisplay);
 	GodModeDisplay->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
@@ -170,16 +170,16 @@ void GameHUD::Init()
 void GameHUD::Update( irr::s32 Ammo, irr::s32 Score, irr::s32 Lives, irr::s32 CurrWave, irr::s32 TotalWaves, irr::f32 Health, bool godMode )
 {
 	wchar_t buffer[32];
-	swprintf(buffer,L"AMMO: %i", Ammo);
+	//swprintf(buffer,L"AMMO: %i", Ammo);
 	AmmoDisplay->setText(buffer);
 
-	swprintf(buffer,L"SCORE: %i", Score);
+	//swprintf(buffer,L"SCORE: %i", Score);
 	ScoreDisplay->setText(buffer);
 
-	swprintf(buffer,L"WAVE: %i/%i", CurrWave, TotalWaves);
+	//swprintf(buffer,L"WAVE: %i/%i", CurrWave, TotalWaves);
 	WaveDisplay->setText(buffer);
 
-	swprintf(buffer,L"LIVES:");
+	//swprintf(buffer,L"LIVES:");
 	PlayerLives->setText(buffer);
 
 	// set visibility of icons based on the number of lives
@@ -212,7 +212,7 @@ void GameHUD::Update( irr::s32 Ammo, irr::s32 Score, irr::s32 Lives, irr::s32 Cu
 		check(false); // should not be here
 	}
 
-	swprintf(buffer,L" HEALTH:");
+	//swprintf(buffer,L" HEALTH:");
 	PlayerHealth->setText(buffer);
 	PlayerHealth->setVisible(true);
 
