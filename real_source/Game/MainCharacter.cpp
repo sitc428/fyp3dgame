@@ -6,6 +6,7 @@
 #include "SnowballProjectile.h"
 #include "LandMine.h"*/
 #include "FloorDecalSceneNode.h"
+#include "ProgressCircle.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -83,7 +84,10 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	throwFillupTimer( 0.0f ),
 	bDoFillup( false ),
 	world(gameWorld),
-	sfxTimer(12)
+	sfxTimer(12),
+	_health(100),
+	_maxHealth(100),
+	_healthBar(NULL)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	// load the animated mesh, and add a new scene graph node for it
@@ -107,10 +111,12 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 
 	// setup player shadow
 	shadowNode = GEngine->addFloorDecalSceneNode(node, irr::core::dimension2d<irr::f32>(0, 0));
-	check(shadowNode);
 	shadowNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	shadowNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 	shadowNode->setMaterialTexture(0, driver.getTexture(MAIN_CHARACTER_SHADOWTEXTURE));
+
+	// setup the player health bar
+	_healthBar = new ProgressCircle(node, & (world.GetSceneManager()), 2222, world.GetSceneManager().getSceneCollisionManager());
 
 	// setup snow steps sound effect
 //	sfxFootstep = GEngine->GetSoundEngine().play2D( "../audio/sfx/snowstepsrun.mp3", true, false, true );
@@ -171,7 +177,7 @@ void MainCharacter::RecreateCollisionResponseAnimator()
 	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
 		&world.GetLevelTriangleSelector(), node, radius,
 		irr::core::vector3df(0,-.08f,0), // gravity
-		irr::core::vector3df(0, 0, 0),
+		irr::core::vector3df(0, 0, 0), // ellipsoid translation
 		0.0001f); // sliding value
 	node->addAnimator(collisionAnimator);
 }

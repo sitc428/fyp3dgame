@@ -38,11 +38,9 @@ void FrontEnd::Init()
 {
 	// load the background image
 	FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
-	check(FrontEndBackground);
 
 	// init the ammo display
 	irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
-	check(env);
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 
 	irr::core::position2d<irr::s32> backgroundPos = irr::core::position2d<irr::s32>(0,0);
@@ -50,13 +48,8 @@ void FrontEnd::Init()
 	BackgroundImage = env->addImage( irr::core::rect<irr::s32>(backgroundPos, scrSize) );
 	BackgroundImage->setImage( FrontEndBackground );
 
-	/*irr::gui::IGUIFont* font = env->getFont( FRONTEND_FONT_FILE );
-	if (font)
-	{
-		env->getSkin()->setFont(font);
-	}*/
-
 	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("font/impact.ttf", 24));
+	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
 
 	// add the text elements
 	StartGameText = env->addStaticText(
@@ -79,9 +72,8 @@ void FrontEnd::Init()
 				scrSize.Height/2 + TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET),
 			false, false, 0, -1, false);
 
-	check(ExitGameText);
 	ExitGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
-	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
+
 	GetCurrentlySelectedItem()->setOverrideColor( SELECTED_ITEM_OVERRIDE_COLOR );
 }
 

@@ -257,6 +257,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\ProgressCircle.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\engine\StartupScreen.h"
 				>
 			</File>
@@ -330,6 +334,10 @@
 			</File>
 			<File
 				RelativePath=".\game\Player.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\ProgressCircle.cpp"
 				>
 			</File>
 			<File
