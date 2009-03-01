@@ -5,6 +5,8 @@
 #include <irrklang/irrKlang.h>
 #include "Player.h"
 
+class ProgressCircle;
+
 using namespace irrklang;
 
 namespace irr
@@ -138,7 +140,12 @@ private:
 	ISound* sfxFootstep;
 	irr::f32 sfxTimer;
 
-	GameWorld&								world;
+	irr::s32 _health;
+	irr::s32 _maxHealth;
+
+	ProgressCircle* _healthBar;
+
+	GameWorld& world;
 };
 
 #endif //__MAIN_CHARACTER_HPP__
