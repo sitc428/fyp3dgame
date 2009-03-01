@@ -20,7 +20,7 @@
 //#include "GameHUD.h"
 #include "NodeID.h"
 //#include "EnemyWave.h"
-#include "math.h"  // for tan(x) function
+#include <cmath>  // for tan(x) function
 
 
 static const irr::c8* LEVEL_FILE = "model/x/scene1.irr";
