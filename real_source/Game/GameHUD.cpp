@@ -44,11 +44,11 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 		skin->setFont(font);
 	}
 
-	dimension2d<s32> scrSize = GEngine->GetScreenSize();
+	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 
 	WaveDisplay =  env->addStaticText(
 		L"",
-		core::rect<s32>(scrSize.Width -155,scrSize.Height -5 -ELEMENT_HEIGHT, scrSize.Width -5,scrSize.Height -5),
+									  core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -5 -ELEMENT_HEIGHT, scrSize.Width -5,scrSize.Height -5),
 		false, true,	0, -1, false);
 
 	check(WaveDisplay);
@@ -57,7 +57,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	ScoreDisplay = env->addStaticText(
 		L"",
-		core::rect<s32>(scrSize.Width -155,scrSize.Height -42 -ELEMENT_HEIGHT ,scrSize.Width -5,scrSize.Height -42),
+									  core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -42 -ELEMENT_HEIGHT ,scrSize.Width -5,scrSize.Height -42),
 		false, true,	0, -1, false);
 
 	check(ScoreDisplay);
@@ -66,7 +66,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	AmmoDisplay = env->addStaticText(
 		L"",
-		core::rect<s32>(5,scrSize.Height -42 -ELEMENT_HEIGHT, 155,scrSize.Height -42),
+									 core::rect<irr::s32>(5,scrSize.Height -42 -ELEMENT_HEIGHT, 155,scrSize.Height -42),
 		false, true,	0, -1, false);
 
 	check(AmmoDisplay);
@@ -75,7 +75,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	PlayerLives = env->addStaticText(
 		L"",
-		core::rect<s32>(5,scrSize.Height -5 -ELEMENT_HEIGHT , 250,scrSize.Height -5),
+									 core::rect<irr::s32>(5,scrSize.Height -5 -ELEMENT_HEIGHT , 250,scrSize.Height -5),
 		false, true,	0, -1, false);
 
 	check(PlayerLives);
@@ -87,7 +87,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	PlayerHealth = env->addStaticText(
 		L"",
-		core::rect<s32>(scrSize.Width/2 - 120,scrSize.Height -5 -ELEMENT_HEIGHT , scrSize.Width/2 + 100,scrSize.Height -5),
+									  irr::core::rect<irr::s32>(scrSize.Width/2 - 120,scrSize.Height -5 -ELEMENT_HEIGHT , scrSize.Width/2 + 100,scrSize.Height -5),
 		false, true,	0, -1, false);
 	check(PlayerHealth);
 	PlayerHealth->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
@@ -101,7 +101,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 
 	GodModeDisplay = env->addStaticText(
 		L"GOD MODE ENABLED",
-		core::rect<s32>(16,0,512,32),
+		co<irr::s32irr::s32>(16,0,512,32),
 		false, true,	0, -1, false);
 	check(GodModeDisplay);
 	GodModeDisplay->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
@@ -127,21 +127,21 @@ void GameHUD::Init()
 {
 	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
-	rect<s32> rectangle = rect<s32>(position2d<s32>(100, 0), position2d<s32>(132,32));
+	irr::core::rect<irr::s32> rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(100, 0), irr::core::position2d<irr::s32>(132,32));
 	PlayerLife1 = env->addImage( rectangle, PlayerLives );
 	PlayerLife1->setImage( PlayerLifeTexture );
 	PlayerLife1->setScaleImage(true);
 	PlayerLife1->setUseAlphaChannel(true);
 	PlayerLife1->setVisible(false);
 
-	rectangle = rect<s32>(position2d<s32>(137, 0), position2d<s32>(169,32));
+	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(137, 0), irr::core::position2d<irr::s32>(169,32));
 	PlayerLife2 = env->addImage( rectangle, PlayerLives );
 	PlayerLife2->setImage( PlayerLifeTexture );
 	PlayerLife2->setScaleImage(true);
 	PlayerLife2->setUseAlphaChannel(true);
 	PlayerLife2->setVisible(false);
 
-	rectangle = rect<s32>(position2d<s32>(174, 0), position2d<s32>(206,32));
+	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(174, 0), irr::core::position2d<irr::s32>(206,32));
 	PlayerLife3 = env->addImage( rectangle, PlayerLives );
 	PlayerLife3->setImage( PlayerLifeTexture );
 	PlayerLife3->setScaleImage(true);
@@ -152,14 +152,14 @@ void GameHUD::Init()
 	check(PlayerLife2);
 	check(PlayerLife3);
 
-	rectangle = rect<s32>(position2d<s32>(120, 0), position2d<s32>(120 + HEALTH_BAR_WIDTH,ELEMENT_HEIGHT));
+	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(120, 0), irr::core::position2d<irr::s32>(120 + HEALTH_BAR_WIDTH,ELEMENT_HEIGHT));
 	PlayerHealthBar = env->addImage( rectangle, PlayerHealth );
 	PlayerHealthBar->setImage( PlayerHealthBarTexture );
 	PlayerHealthBar->setScaleImage(true);
 	PlayerHealthBar->setUseAlphaChannel(true);
 	check(PlayerHealthBar);
 
-	rectangle = rect<s32>(position2d<s32>(2, 2), position2d<s32>(HEALTH_BAR_FILL_WIDTH,ELEMENT_HEIGHT - 2));
+	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(2, 2), irr::core::position2d<irr::s32>(HEALTH_BAR_FILL_WIDTH,ELEMENT_HEIGHT - 2));
 	PlayerHealthFill = env->addImage( rectangle, PlayerHealthBar );
 	PlayerHealthFill->setImage( PlayerHealthFillTexture );
 	PlayerHealthFill->setScaleImage(true);
@@ -167,7 +167,7 @@ void GameHUD::Init()
 	check(PlayerHealthFill);
 }
 
-void GameHUD::Update( s32 Ammo, s32 Score, s32 Lives, s32 CurrWave, s32 TotalWaves, f32 Health, bool godMode )
+void GameHUD::Update( irr::s32 Ammo, irr::s32 Score, irr::s32 Lives, irr::s32 CurrWave, irr::s32 TotalWaves, irr::f32 Health, bool godMode )
 {
 	wchar_t buffer[32];
 	swprintf(buffer,L"AMMO: %i", Ammo);
@@ -216,8 +216,8 @@ void GameHUD::Update( s32 Ammo, s32 Score, s32 Lives, s32 CurrWave, s32 TotalWav
 	PlayerHealth->setText(buffer);
 	PlayerHealth->setVisible(true);
 
-	s32 barWidth = s32(HEALTH_BAR_FILL_WIDTH * Health/100);
-	PlayerHealthFill->setRelativePosition( rect<s32>(position2d<s32>(2, 2), position2d<s32>(barWidth, ELEMENT_HEIGHT - 2)) );
+	irr::s32 barWidth = irr::s32(HEALTH_BAR_FILL_WIDTH * Health/100);
+	PlayerHealthFill->setRelativePosition( irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(2, 2), irr::core::position2d<irr::s32>(barWidth, ELEMENT_HEIGHT - 2)) );
 
 	GodModeDisplay->setVisible(godMode);
 }
