@@ -19,11 +19,11 @@ public:
 	~GameHUD();
 
 	void Init();
-	void Update( s32 Ammo, s32 Score, s32 Lives, s32 CurrWave, s32 TotalWaves, f32 Health, bool godMode );
+	void Update( irr::s32 Ammo, irr::s32 Score, irr::s32 Lives, irr::s32 CurrWave, irr::s32 TotalWaves, irr::f32 Health, bool godMode );
 	void Exit();
 
 private:
-
+	/*
 	IGUIStaticText* AmmoDisplay;
 	IGUIStaticText* ScoreDisplay;
 	IGUIStaticText* WaveDisplay;
@@ -39,8 +39,19 @@ private:
 	ITexture*		PlayerHealthFillTexture;
 	IGUIImage*		PlayerHealthBar;
 	IGUIImage*		PlayerHealthFill;
+	*/
+	IGUIImage*		HealthBarFrame;
+	ITexture*		HealthBarFrameTexture;
+	IGUIImage*		MagicCharge;
+	ITexture*		MagicChargeTexture;
+	IGUIImage*		MagicLevel;
+	ITexture*		MagicLevelTexture;
+	IGUIImage*		CD;
+	ITexture*		CDTexture;
+	
+	
 
-	IGUIStaticText* GodModeDisplay;
+	//IGUIStaticText* GodModeDisplay;
 };
 
 #endif //GameHUD_h
