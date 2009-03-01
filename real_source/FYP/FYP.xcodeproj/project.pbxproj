@@ -32,6 +32,9 @@
 		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
 		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
 		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
+		98C903B50F5483C6004F7DB8 /* CGUITTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98C903B30F5483C6004F7DB8 /* CGUITTFont.cpp */; };
+		98F7F6920F59BAF80060BD7D /* MainCharacter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98F7F6900F59BAF80060BD7D /* MainCharacter.cpp */; };
+		98F7F7840F5A8BFD0060BD7D /* GameHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98F7F7830F5A8BFD0060BD7D /* GameHUD.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +80,12 @@
 		9868EF530F130414004AE96C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		9868F1060F1305AD004AE96C /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9868F1090F1305AD004AE96C /* FYP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FYP-Info.plist"; sourceTree = "<group>"; };
+		98C903B30F5483C6004F7DB8 /* CGUITTFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGUITTFont.cpp; sourceTree = "<group>"; };
+		98C903B40F5483C6004F7DB8 /* CGUITTFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGUITTFont.h; sourceTree = "<group>"; };
+		98F7F6900F59BAF80060BD7D /* MainCharacter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainCharacter.cpp; sourceTree = "<group>"; };
+		98F7F6910F59BAF80060BD7D /* MainCharacter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MainCharacter.hpp; sourceTree = "<group>"; };
+		98F7F7820F5A8BFD0060BD7D /* GameHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameHUD.h; sourceTree = "<group>"; };
+		98F7F7830F5A8BFD0060BD7D /* GameHUD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHUD.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +114,8 @@
 		9807F47E0F4FED52008E3E5B /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				98C903B30F5483C6004F7DB8 /* CGUITTFont.cpp */,
+				98C903B40F5483C6004F7DB8 /* CGUITTFont.h */,
 				9807F47F0F4FED52008E3E5B /* FloorDecalSceneNode.cpp */,
 				9807F4800F4FED52008E3E5B /* FloorDecalSceneNode.h */,
 				9807F4810F4FED52008E3E5B /* FrontEnd.cpp */,
@@ -134,8 +145,12 @@
 		9807F4D60F4FF003008E3E5B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				98F7F7820F5A8BFD0060BD7D /* GameHUD.h */,
+				98F7F7830F5A8BFD0060BD7D /* GameHUD.cpp */,
 				9807F4D70F4FF003008E3E5B /* Actor.cpp */,
 				9807F4D80F4FF003008E3E5B /* Actor.h */,
+				98F7F6900F59BAF80060BD7D /* MainCharacter.cpp */,
+				98F7F6910F59BAF80060BD7D /* MainCharacter.hpp */,
 				9807F4D90F4FF003008E3E5B /* ActorTypes.h */,
 				9807F4DA0F4FF003008E3E5B /* Camera.cpp */,
 				9807F4DB0F4FF003008E3E5B /* Camera.h */,
@@ -259,6 +274,9 @@
 				9807F50F0F4FF003008E3E5B /* ParticleManager.cpp in Sources */,
 				9807F5100F4FF003008E3E5B /* Player.cpp in Sources */,
 				9807F8570F51550E008E3E5B /* InputEventReceiver.cpp in Sources */,
+				98C903B50F5483C6004F7DB8 /* CGUITTFont.cpp in Sources */,
+				98F7F6920F59BAF80060BD7D /* MainCharacter.cpp in Sources */,
+				98F7F7840F5A8BFD0060BD7D /* GameHUD.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
