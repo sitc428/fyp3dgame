@@ -1,11 +1,11 @@
 #include "FrontEnd.h"
 #include "GameEngine.h"
 #include "InputEventReceiver.hpp"
-#include "CGUIStaticTTText.hpp"
+//#include "CGUIStaticTTText.hpp"
 
 extern GameEngine* GEngine;
 
-static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "model/StartupScreen/800x600GameSplash.png";
+static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "model/StartupScreen/startupscreen.png";
 //static const irr::c8* FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
 static const irr::c8* FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
 static const irr::video::SColor SELECTED_ITEM_OVERRIDE_COLOR = irr::video::SColor(255,255,0,0);
@@ -13,8 +13,8 @@ static const irr::video::SColor SELECTED_ITEM_OVERRIDE_COLOR = irr::video::SColo
 // dimensions of the text elements in the frontend
 static const irr::s32 TEXT_ELEMENT_WIDTH = 200;
 static const irr::s32 TEXT_ELEMENT_HEIGHT = 24;
-static const irr::s32 FIRST_TEXT_ELEMENT_Y_OFFSET = 200;
-static const irr::s32 SECOND_TEXT_ELEMENT_Y_OFFSET = 230;
+static const irr::s32 FIRST_TEXT_ELEMENT_Y_OFFSET = 150;
+static const irr::s32 SECOND_TEXT_ELEMENT_Y_OFFSET = 170;
 
 // constructor
 FrontEnd::FrontEnd()
@@ -71,7 +71,7 @@ void FrontEnd::Init()
 	StartGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
 
 	ExitGameText = env->addStaticText(
-			L"Exit",
+			L"Load",
 			irr::core::rect<irr::s32>(
 				scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
 				scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET,
@@ -81,7 +81,7 @@ void FrontEnd::Init()
 
 	check(ExitGameText);
 	ExitGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
-
+	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
 	GetCurrentlySelectedItem()->setOverrideColor( SELECTED_ITEM_OVERRIDE_COLOR );
 }
 
