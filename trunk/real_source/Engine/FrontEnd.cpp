@@ -73,11 +73,8 @@ void FrontEnd::Init()
 			false, false, 0, -1, false);
 
 	ExitGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
-<<<<<<< .mine
 	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(0, 255, 255, 255) );
-=======
 
->>>>>>> .r399
 	GetCurrentlySelectedItem()->setOverrideColor( SELECTED_ITEM_OVERRIDE_COLOR );
 }
 
