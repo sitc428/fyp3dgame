@@ -5,7 +5,7 @@
 
 extern GameEngine* GEngine;
 
-static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "model/StartupScreen/startupscreen.png";
+static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "media/StartupScreen/startupscreen.png";
 //static const irr::c8* FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
 static const irr::c8* FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
 static const irr::video::SColor SELECTED_ITEM_OVERRIDE_COLOR = irr::video::SColor(255,255,0,0);
@@ -48,7 +48,7 @@ void FrontEnd::Init()
 	BackgroundImage = env->addImage( irr::core::rect<irr::s32>(backgroundPos, scrSize) );
 	BackgroundImage->setImage( FrontEndBackground );
 
-	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("font/impact.ttf", 24));
+	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("media/font/impact.ttf", 24));
 	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
 
 	// add the text elements

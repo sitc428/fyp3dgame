@@ -2,8 +2,8 @@
 #include "GameEngine.h"
 #include "InputEventReceiver.hpp"
 
-static const irr::c8* STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "model/StartupScreen/psan2logo.png";
-static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "model/StartupScreen/irrLogo.png";
+static const irr::c8* STARTUP_LETHALINDUSTRYSTUDIO_TEXTURE = "media/StartupScreen/psan2logo.png";
+static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "media/StartupScreen/irrLogo.png";
 static const irr::f32 STARTUP_SCREEN_TIME_MAX = 14.5f;  // end of irr logo duration
 static const irr::f32 STARTUP_LIS_LOGO_START_TIME = 0.5f;
 static const irr::f32 STARTUP_LIS_LOGO_FADE_DURATION = 2.5f;
