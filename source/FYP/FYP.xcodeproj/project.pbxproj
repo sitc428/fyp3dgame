@@ -65,9 +65,9 @@
 		9807F4F50F4FF003008E3E5B /* ParticleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleManager.h; sourceTree = "<group>"; };
 		9807F4F60F4FF003008E3E5B /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		9807F4F70F4FF003008E3E5B /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		9807F7340F505DE3008E3E5B /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = ../../libirrklang.dylib; sourceTree = SOURCE_ROOT; };
+		9807F7340F505DE3008E3E5B /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = ../../lib/libirrklang.dylib; sourceTree = SOURCE_ROOT; };
 		9807F7AB0F50645B008E3E5B /* libirrKlang.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libirrKlang.a; path = ../../lib/libirrKlang.a; sourceTree = SOURCE_ROOT; };
-		9807F7BA0F506674008E3E5B /* libikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libikpMP3.dylib; path = ../../libikpMP3.dylib; sourceTree = SOURCE_ROOT; };
+		9807F7BA0F506674008E3E5B /* libikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libikpMP3.dylib; path = ../../lib/libikpMP3.dylib; sourceTree = SOURCE_ROOT; };
 		9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputEventReceiver.cpp; sourceTree = "<group>"; };
 		9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputEventReceiver.hpp; sourceTree = "<group>"; };
 		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
