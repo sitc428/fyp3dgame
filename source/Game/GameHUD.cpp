@@ -2,13 +2,15 @@
 #include "GameEngine.h"
 #include "Check.h"
 
+/*
 static const c8*	FONT_FILE = "../art/fonts/HUDfont.png";  // default font for the HUD
 static const c8*	PLAYER_LIFE_TEXTURE = "model/HUD/frame_hud.png";  // icon indicating player life
 static const c8*	PLAYER_HEALTH_BAR_TEXTURE = "model/HUD/frame_hud.png";
 static const c8*	PLAYER_HEALTH_FILL_TEXTURE = "model/HUD/frame_hud.png";
-static const c8*	HEALTH_BAR_FRANE_TEXTURE = "model/HUD/frame_hud.png";
-static const c8*	MAGIC_CHARGE_TEXTURE = "model/HUD/circle_bar_hud.png";
-static const c8*	MAGIC_LEVEL_TEXTURE = "model/HUD/chargebar_hud_c.png";
+ */
+static const c8*	HEALTH_BAR_FRANE_TEXTURE = "media/HUD/frame_hud.png";
+static const c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
+static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
 
 
 static const SColor		HUD_FONT_OVERRIDE_COLOR =  SColor(255,14,0,89);

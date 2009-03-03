@@ -23,7 +23,7 @@
 #include <cmath>  // for tan(x) function
 
 
-static const irr::c8* LEVEL_FILE = "model/x/scene1.irr";
+static const irr::c8* LEVEL_FILE = "media/model/scene1.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
 
 static const irr::u32 MAX_SNOWBALLS = 20;

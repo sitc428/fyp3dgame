@@ -16,7 +16,7 @@ extern GameEngine* GEngine;
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,0);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0,-90,0);
 
-static const irr::c8*		MAIN_CHARACTER_MODEL  = "model/x/fullbody_real.x";
+static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/fullbody_real.x";
 //static const irr::c8*		CHARACTER_ARMS_MODEL = "../art/characters/Fatty/ArmSplit.ms3d";
 static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "../art/sfx/Flats/CharacterShadow.png";
 //static const irr::c8*		CHARACTER_LEFT_FOOTSTEP_TEXTURE = "../art/sfx/Flats/FootPrintLeft.png";
@@ -24,7 +24,7 @@ static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "../art/sfx/Flats/Characte
 //static const irr::c8*		ARMS_TORSO_COMMON_JOINT_NAME = "LeftShoulder";
 //static const irr::c8*		TORSO_ATTACH_JOINT = "Back";
 
-static const irr::c8*		defaultTexture = "model/x/fullbody_real.png";
+static const irr::c8*		defaultTexture = "media/model/fullbody_real.png";
 static const irr::f32			ANIMATION_SPEED = 45; // 45 FPS
 static const irr::f32			ANIMATION_TRANSITION_BLEND_TIME = 0.2f;
 
