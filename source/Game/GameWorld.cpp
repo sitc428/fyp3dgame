@@ -6,8 +6,6 @@
 #include "Camera.h"
 #include "Player.h"
 #include "MainCharacter.hpp"
-//#include "PlayerOnFoot.h"
-//#include "PlayerOnSnowplow.h"
 //#include "SnowballProjectile.h"
 //#include "DynamiteProjectile.h"
 //#include "LandMine.h"
@@ -299,6 +297,7 @@ void GameWorld::InitPlayer()
 
 	mainCharacter = new MainCharacter( *this, GEngine->GetDriver() );
 	actors.push_back( mainCharacter );
+	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
 }
 
 // sets up the enemies in the world
@@ -413,7 +412,6 @@ void GameWorld::InitEnemies()
 void GameWorld::InitCamera()
 {
 	camera = new Camera( *this, GEngine->GetDriver(), *levelTriangleSelector, GetCurrentPlayer() );
-	check( camera );
 	// add the camera to the actor's list so it gets ticked
 	actors.push_back( camera );
 }
@@ -822,12 +820,11 @@ void GameWorld::DoInput()
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 	if(receiver.keyDown(irr::KEY_KEY_W))
 	{ 
-		playerTranslation.Z = 20;
-		std::cout << "WWWW" << std::endl;
+		playerTranslation.Z = -20;
 	}
 	else if(receiver.keyDown(irr::KEY_KEY_S))
 	{
-		playerTranslation.Z = -20;
+		playerTranslation.Z = 20;
 	}
 	if(receiver.keyDown(irr::KEY_KEY_A))
 	{
@@ -838,6 +835,7 @@ void GameWorld::DoInput()
 		playerTranslation.X = -20;
 	}
 
+	/*
 	static bool GKeyIsDown = false;
 	if( receiver.keyDown(irr::KEY_KEY_G) && !GKeyIsDown )
 	{
@@ -856,8 +854,11 @@ void GameWorld::DoInput()
 	{
 		KillAllEnemies();
 	}
+	*/
 
 	// set player rotation
+
+	/*
 	irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
 	irr::f32 mouseDX = mouseDelta.X * 0.2f;
 	irr::f32 mouseDY = mouseDelta.Y * 0.075f;
@@ -865,6 +866,7 @@ void GameWorld::DoInput()
 	{
 		GetCurrentPlayer().SetRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
 	}
+	*/
 
 	// set player translation
 	GetCurrentPlayer().SetTranslation( playerTranslation );
