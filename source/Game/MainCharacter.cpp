@@ -641,7 +641,7 @@ void MainCharacter::ShootDynamite( irr::f32 power, DynamiteProjectile& projectil
 	check( 0 <= power && power <= 1 );
 
 	// start position for the dynamite
-	irr::core::vector3df startPos = GetNodePosition() + PROJECTILE_START_OFFSET;
+	irr::core::vector3df startPos = Position() + PROJECTILE_START_OFFSET;
 	// start rotation for the dynamite
 	irr::core::vector3df startRot = node->getRotation();
 
