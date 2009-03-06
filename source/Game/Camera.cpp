@@ -27,6 +27,9 @@ Camera::Camera( GameWorld& gameWorld,
 	node->setPosition( defaultPosition );
 	node->setRotation( defaultRotation );
 
+	node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX );
+	node->setFarValue( 500 );
+
 	// setup camera collision with the world
 	/* irr::scene::ISceneNodeAnimator* anim = world.GetSceneManager().createCollisionResponseAnimator(
 	   &levelTriangleSelector, node, irr::core::vector3df( 5, 5, 5 ),
