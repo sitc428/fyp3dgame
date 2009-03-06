@@ -2,10 +2,13 @@
  *  FiniteStateMachine.h
  *  FYP
  *
- *  Created by Mr.JJ on 09年1月13日.
+ *  Created by Mr.JJ on 09�???3??
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
+
+#ifndef __MONSTER_HPP__
+#define __MONSTER_HPP__
 
 #include <boost/mpl/list.hpp>
 #include <boost/statechart/event.hpp>
@@ -243,8 +246,6 @@ class Monster: public Actor{
 		//void update(Player*);
 		void Tick( irr::f32 delta );
 		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
-		void AttachActor( Actor&, const irr::c8* );
-		void DetachActor( Actor& );
 		EActorType GetActorType() const { return ACTOR_NONE; }
 		bool ShouldPerformCollisionCheck() const { return false; }
 		void DoCollisions( const CollisionInfo& collInfo ) { check(false); }
@@ -266,3 +267,4 @@ class Monster: public Actor{
 	
 };
 
+#endif //__MONSTER_HPP__

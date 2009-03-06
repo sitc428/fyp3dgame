@@ -2,7 +2,7 @@
  *  Monster.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09年2月9日.
+ *  Created by Mr.JJ on 09�?????
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
@@ -148,9 +148,8 @@ void Monster::ReceiveDamage(irr::f32  damage){
 	std::cout<<health<<std::endl;
 }
 
-/*
-
 void  Monster::Tick(irr::f32 delta){}
+/*
 
 irr::scene::ISceneNode& Monster::GetNode(){}
 
