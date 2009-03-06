@@ -9,9 +9,9 @@ extern GameEngine* GEngine;
 Player::Player( GameWorld& gameWorld )
 	:Actor(gameWorld),
 	playerState( state_PLAYER_INACTIVE ),
-	aimVector( irr::core::vector3df(0.0f,0.0f,1.0f) ),
-	translation( irr::core::vector3df(0.0f,0.0f,0.0f) ),
-	rotation( irr::core::vector3df(0.0f,-90.0f,0.0f) ),
+	aimVector( irr::core::vector3df(0.0f, 0.0f, 1.0f) ),
+	translation( irr::core::vector3df(0.0f, 0.0f, 0.0f) ),
+	rotation( irr::core::vector3df(0.0f, 0.0f, 0.0f) ),
 	velApprox(0,0,0),
 	health( 100 ),
 	godMode( false )

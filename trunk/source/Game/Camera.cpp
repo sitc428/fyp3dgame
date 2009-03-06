@@ -6,9 +6,9 @@
 #include <irrlicht/irrlicht.h>
 
 // Parameters specifying default parameters
-static const irr::core::vector3df defaultPosition = irr::core::vector3df(40,60,45);
-static const irr::core::vector3df defaultRotation = irr::core::vector3df(0,-90,0);
-static const irr::core::vector3df cameraOffset = irr::core::vector3df(0, 18.0f, 26.0f);
+static const irr::core::vector3df defaultPosition = irr::core::vector3df(10, 60, 10);
+static const irr::core::vector3df defaultRotation = irr::core::vector3df(0, 0, 0);
+static const irr::core::vector3df cameraOffset = irr::core::vector3df(-10.0f, 18.0f, -10.0f);
 
 // constructor
 Camera::Camera( GameWorld& gameWorld,
@@ -22,8 +22,7 @@ Camera::Camera( GameWorld& gameWorld,
 	lastSelectedSceneNode(NULL)
 {
 	//node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
-	node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, irr::core::vector3df(0, 0, 0));
-	check( node ); 
+	node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, irr::core::vector3df(0, 0, 0) );
 
 	node->setPosition( defaultPosition );
 	node->setRotation( defaultRotation );
@@ -82,19 +81,21 @@ void Camera::Tick( irr::f32 delta )
 
 	}
 	*/
-Player* player = (Player *)target;
-irr::core::vector3df rotation = player->GetRotation();
-
-irr::core::vector3df aimVector = target->GetAimVector();
-irr::core::vector3df position = target->GetNodePosition();
-position -= target->GetAimVector() * cameraOffset.Z;
-position.Y += cameraOffset.Y - rotation.X;
-
-// update camera position
-node->setPosition( position );
-
-
-
-// update target position
-node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
+//Player* player = (Player *)target;
+//irr::core::vector3df rotation = player->GetRotation();
+//
+//irr::core::vector3df aimVector = target->GetAimVector();
+//irr::core::vector3df position = target->GetNodePosition();
+//position -= target->GetAimVector() * cameraOffset.Z;
+//position.Y += cameraOffset.Y - rotation.X;
+//
+//// update camera position
+//node->setPosition( position );
+//
+//
+//
+//// update target position
+//node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
+	node->setPosition( target->GetNode().getAbsolutePosition() + irr::core::vector3df(0, 30, 60) );
+	node->setTarget( target->GetNodePosition() );
 }

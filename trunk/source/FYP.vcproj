@@ -249,6 +249,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\Monster.h"
+				>
+			</File>
+			<File
 				RelativePath=".\game\NodeID.h"
 				>
 			</File>
@@ -334,6 +338,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\MainCharacter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\Monster.cpp"
 				>
 			</File>
 			<File
