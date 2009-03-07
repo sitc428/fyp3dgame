@@ -2,7 +2,7 @@
  *  FiniteStateMachine.h
  *  FYP
  *
- *  Created by Mr.JJ on 09�???3??
+ *  Created by Mr.JJ on 09Âπ???3??
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
@@ -251,6 +251,7 @@ class Monster: public Actor{
 		void DoCollisions( const CollisionInfo& collInfo ) { check(false); }
 		void ReceiveDamage(irr::f32 );
 		void DestroyActor( Actor*& actorToDestroy );
+		void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
 		//int GetHealth();
 			
 	private:
