@@ -2,7 +2,7 @@
  *  Monster.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09�?????
+ *  Created by Mr.JJ on 09Âπ?????
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
@@ -11,10 +11,10 @@
 
 Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
 :Actor(gameWorld),_monster(source),_speed(speed){
-	_monster->setLoopMode(false);
-	_monster->setPosition(position);
-	_monster->setScale(scale);
-	_monster->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+	//_monster->setLoopMode(false);
+	//SetNodePosition(position);
+	//_monster->setScale(scale);
+	//_monster->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	FSM.initiate();
 	original = position; 
 	pos = position;
