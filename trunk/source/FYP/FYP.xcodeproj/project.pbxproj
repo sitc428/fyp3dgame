@@ -32,6 +32,7 @@
 		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
 		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
 		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
+		989C3A080F64056F0082CD29 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 989C3A070F64056F0082CD29 /* Monster.cpp */; };
 		98C903B50F5483C6004F7DB8 /* CGUITTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98C903B30F5483C6004F7DB8 /* CGUITTFont.cpp */; };
 		98F7F6920F59BAF80060BD7D /* MainCharacter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98F7F6900F59BAF80060BD7D /* MainCharacter.cpp */; };
 		98F7F7840F5A8BFD0060BD7D /* GameHUD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98F7F7830F5A8BFD0060BD7D /* GameHUD.cpp */; };
@@ -81,6 +82,8 @@
 		9868EF530F130414004AE96C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		9868F1060F1305AD004AE96C /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9868F1090F1305AD004AE96C /* FYP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FYP-Info.plist"; sourceTree = "<group>"; };
+		989C3A060F64056F0082CD29 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
+		989C3A070F64056F0082CD29 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		98C903B30F5483C6004F7DB8 /* CGUITTFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGUITTFont.cpp; sourceTree = "<group>"; };
 		98C903B40F5483C6004F7DB8 /* CGUITTFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGUITTFont.h; sourceTree = "<group>"; };
 		98F7F6900F59BAF80060BD7D /* MainCharacter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainCharacter.cpp; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 		9807F4D60F4FF003008E3E5B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				989C3A060F64056F0082CD29 /* Monster.h */,
+				989C3A070F64056F0082CD29 /* Monster.cpp */,
 				98F7F9BC0F5B00010060BD7D /* ProgressCircle.cpp */,
 				98F7F9BD0F5B00010060BD7D /* ProgressCircle.hpp */,
 				98F7F7820F5A8BFD0060BD7D /* GameHUD.h */,
@@ -283,6 +288,7 @@
 				98F7F6920F59BAF80060BD7D /* MainCharacter.cpp in Sources */,
 				98F7F7840F5A8BFD0060BD7D /* GameHUD.cpp in Sources */,
 				98F7F9BE0F5B00010060BD7D /* ProgressCircle.cpp in Sources */,
+				989C3A080F64056F0082CD29 /* Monster.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
