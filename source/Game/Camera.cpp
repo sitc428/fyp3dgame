@@ -22,7 +22,8 @@ Camera::Camera( GameWorld& gameWorld,
 	node(NULL),
 	levelTriangleSelector(levelSelector),
 	target(&player),
-	lastSelectedSceneNode(NULL)
+	lastSelectedSceneNode(NULL),
+	zoom(1)
 {
 	//node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
 	node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, irr::core::vector3df(0, 0, 0) );

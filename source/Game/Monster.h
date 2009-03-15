@@ -241,7 +241,7 @@ class Monster: public Actor{
 	public:
 	
 		Monster(GameWorld& ,irr::scene::IAnimatedMeshSceneNode*, irr::core::vector3df , irr::core::vector3df , float);
-		Monster( GameWorld& gameWorld, irr::video::IVideoDriver& );
+		Monster( GameWorld&, irr::video::IVideoDriver& );
 		~Monster(){};
 		//void change(char, Player*);
 		//void update(Player*);
