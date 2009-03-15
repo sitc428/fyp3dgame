@@ -47,8 +47,8 @@ struct Name_test
 {
 	virtual std::string GetName() const = 0;
 	virtual void test(int, int, int) const =0;
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player* ) const = 0;
-	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode*,Player*,irr::core::vector3df) const = 0;
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player& ) const = 0;
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode*,Player&,irr::core::vector3df) const = 0;
 };
 
 /*struct State
@@ -82,10 +82,10 @@ struct FiniteStateMachine : sc::state_machine<FiniteStateMachine, NotDeath >{
 	{
 		state_cast<const Name_test & >().test(a,s,q);
 	}
-	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player ){
+	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player ){
 		state_cast< const Name_test & >().reaction(_mon,_player);
 	}
-	void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player,irr::core::vector3df pos){
+	void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df pos){
 		state_cast< const Name_test & >().IdleTooLong(_mon,_player, pos);
 	}
 	
@@ -102,10 +102,10 @@ struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
     {
       std::cout<<-a+s+q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player) const{
 		_mon->setLoopMode(true);
 	}
-	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player,irr::core::vector3df pos) const{
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df pos) const{
 	}
 	virtual ~Death() {};
 };
@@ -121,10 +121,10 @@ struct NotDeath :Name_test, sc::simple_state<NotDeath, FiniteStateMachine, Idle 
     {
       std::cout<<"a-s-q"<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
 	
 	}
-	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
 	}
 	// virtual const std::string name () const { return "NotDeath"; };
 	typedef sc::transition< EvDie, Death>reactions ;
@@ -149,10 +149,11 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
     {
       std::cout<<a-s+q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
 		//_player->reduceHealth(1);
+		_player.ReceiveDamage(1);
 	}
-	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
 	}
 	virtual ~Attacking() {};
 	//virtual const std::string name () const { return "Attacking"; };
@@ -173,14 +174,14 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
     {
       std::cout<<a+s-q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
 		_mon->setLoopMode(false);
 	}
-	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
+	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
 		std::cout<<"Move\n";
 		_mon->setLoopMode(true);
 		irr::core::matrix4 m;
-		irr::core::vector3df targetPos = _player->GetNodePosition();
+		irr::core::vector3df targetPos = _player.GetNodePosition();
 		m.setRotationDegrees(_mon->getRotation());
 		m.transformVect(targetPos);
 		targetPos=pos;
@@ -212,14 +213,14 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 		{
 			std::cout<<a+s+q<<"\n";
 		}
-		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player* _player) const{
+		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
 			//_mon->setLoopMode(true);
 			irr::core::matrix4 m;
-			irr::core::vector3df targetPos = _player->GetNodePosition();
+			irr::core::vector3df targetPos = _player.GetNodePosition();
 			m.setRotationDegrees(_mon->getRotation());
 			m.transformVect(targetPos);
 			float y = _mon->getPosition().Y;
-			targetPos = _mon->getPosition()+((_player->GetNodePosition() - _mon->getPosition())/42.5f); 
+			targetPos = _mon->getPosition()+((_player.GetNodePosition() - _mon->getPosition())/42.5f); 
 			targetPos.Y = y;
 			
 			irr::core::vector3df direction = _mon->getPosition()-targetPos;
@@ -229,7 +230,7 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 			_mon->updateAbsolutePosition();
 			
 		}
-		virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player* _player, irr::core::vector3df pos) const{
+		virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
 		}
 		typedef mpl::list< 
 			sc::transition< EvPlayerWithinRange, Idle >,
@@ -241,10 +242,10 @@ class Monster: public Actor{
 	public:
 	
 		Monster(GameWorld& ,irr::scene::IAnimatedMeshSceneNode*, irr::core::vector3df , irr::core::vector3df , float);
-		Monster( GameWorld&, irr::video::IVideoDriver& );
+		Monster( GameWorld& gameWorld, irr::video::IVideoDriver& );
 		~Monster(){};
-		//void change(char, Player*);
-		//void update(Player*);
+		void change(Player&);
+		void update(Player&);
 		void Tick( irr::f32 delta );
 		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
 		EActorType GetActorType() const { return ACTOR_ENEMY; }
@@ -266,7 +267,9 @@ class Monster: public Actor{
 		irr::core::vector3df target;
 		irr::core::vector3df original;
 		irr::core::vector3df pos;
-	
+		//int  Health;
+		
+		GameWorld& world;
 };
 
 #endif //__MONSTER_HPP__
