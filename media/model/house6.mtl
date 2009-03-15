@@ -1,0 +1,150 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 5.7 5.7.0.4228 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl _2___Default
+Ka 0.647059 0.0666667 0.0666667
+Kd 0.647059 0.0666667 0.0666667
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 4
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__39
+Ka 0.584314 0.584314 0.584314
+Kd 0.584314 0.584314 0.584314
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 4
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl _4___Default
+Ka 0.588235 0.588235 0.588235
+Kd 0.588235 0.588235 0.588235
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 4
+map_Kd THERMAL .JPG
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Explorer_Default
+Ka 0.117647 0.117647 0.117647
+Kd 0.752941 0.752941 0.752941
+Ks 0.752941 0.752941 0.752941
+illum 2
+Ns 8
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl _1___Default
+Ka 0.901961 0.901961 0.901961
+Kd 0.901961 0.901961 0.901961
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 4
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__27
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 4
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl panel
+Ka 0.588235 0.588235 0.588235
+Kd 0.588235 0.588235 0.588235
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 4
+map_Kd WOODS & .JPG
+map_bump WOODS & .JPG
+bump WOODS & .JPG
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__48
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 4
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__47
+Ka 0 0 0
+Kd 0 0 0
+Ks 0.898039 0.898039 0.898039
+illum 2
+Ns 29.8571
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl CLOUD2.JPG
+map_kS 
+map_kA 
+map_Ns 

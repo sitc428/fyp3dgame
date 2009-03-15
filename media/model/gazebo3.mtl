@@ -1,0 +1,22 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 5.7 5.7.0.4228 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl blinn1SG
+Ka 0 0 0
+Kd 0 0 0
+Ks 0.09 0.09 0.09
+illum 2
+Ns 8
+map_Kd gazebo copy.png
+map_bump -mm 0 0.57024 gazebobump copy.jpg -bm 0.0416
+bump -mm 0 0.57024 gazebobump copy.jpg -bm 0.0416
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
