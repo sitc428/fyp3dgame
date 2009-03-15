@@ -14,7 +14,7 @@ extern GameEngine* GEngine;
 
 // Parameters specifying default parameters
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,10);
-static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, -90,0);
+static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 90, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/FYP Projecttesting.x";
 //static const irr::c8*		CHARACTER_ARMS_MODEL = "../art/characters/Fatty/ArmSplit.ms3d";
@@ -95,7 +95,8 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node = smgr.addAnimatedMeshSceneNode( mainCharacterMesh, smgr.getRootSceneNode() );
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
-	//node->setRotation( defaultRotation );
+	node->setRotation( defaultRotation );
+
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
@@ -227,14 +228,9 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 {
 	Player::SetRotation( rot );
 
-	// limit rotation on x-axis
-	if( rotation.X < MIN_XROT_ANGLE )
-		rotation.X = MIN_XROT_ANGLE;
-	else if( rotation.X > MAX_XROT_ANGLE )
-		rotation.X = MAX_XROT_ANGLE;
-
 	// rotate player
-	node->setRotation( irr::core::vector3df( 0, rotation.Y, 0 ) );
+	node->setRotation( irr::core::vector3df( 0, rotation.Y + defaultRotation.Y, 0 ) );
+	//node->setRotation( irr::core::vector3df( 0, rotation.Y, 0 ) );
 
 	// set the rotation state
 	if(rot.Y > 0.0f)
@@ -265,29 +261,12 @@ void MainCharacter::Tick( irr::f32 delta )
 
 void MainCharacter::UpdateRotationState()
 {
-	switch(rotationState)
-	{
-		case state_PLAYER_ROTATE_LEFT:
-		case state_PLAYER_ROTATE_RIGHT:
-		{			
-			// rotate aim vector
-			aimVector.set( 1, 0, 0 );
-			aimVector.rotateXZBy( -rotation.Y, irr::core::vector3df( 0, 0, 0 ) );
-			aimVector.normalize();
+	// rotate aim vector
+	aimVector.set( 1, 0, 0 );
+	aimVector.rotateXZBy( -rotation.Y, irr::core::vector3df( 0, 0, 0 ) );
+	aimVector.normalize();
 
-			rotationState = state_PLAYER_ROTATE_IDLE;
-			break;
-		}
-		case state_PLAYER_ROTATE_IDLE:
-		{
-			// do nothing
-			break;
-		}
-		default:
-		{
-			check(false); // should not be here
-		}
-	}
+	rotationState = state_PLAYER_ROTATE_IDLE;
 }
 
 void MainCharacter::UpdateMoveState( irr::f32 delta )

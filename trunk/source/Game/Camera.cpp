@@ -70,7 +70,16 @@ void Camera::Tick( irr::f32 delta )
 
 	node->setPosition( target->GetNode().getAbsolutePosition() + zoom * cameraOffset + translation);
 
-	node->setTarget( target->GetNodePosition() );
+	node->setTarget( target->GetNodePosition() + translation );
+
+	irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
+	irr::f32 mouseDX = mouseDelta.X * 0.2f;
+	irr::f32 mouseDY = mouseDelta.Y * 0.075f;
+	if( mouseDX || mouseDY)
+	{
+		node->setRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
+	}
+
 }
 
 void Camera::DoInput( irr::f32 delta )
@@ -96,7 +105,12 @@ void Camera::DoInput( irr::f32 delta )
 		cameraTranslation.X = -20;
 	}
 
-	zoom = zoom + receiver.wheel() * delta;
+	zoom = zoom - receiver.wheel() * delta;
+
+	if( zoom < 0.5 )
+		zoom = 0.5;
+	if( zoom > 3.0 )
+		zoom = 2.0;
 
 	translation += cameraTranslation * delta;
 }
