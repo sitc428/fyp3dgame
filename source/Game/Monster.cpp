@@ -12,7 +12,7 @@
 #include "GameWorld.h"
 
 static const irr::c8* MONSTER_MODEL = "media/model/dwarf.x";
-static const irr::core::vector3df defaultPosition = irr::core::vector3df(30,80,30);
+static const irr::core::vector3df defaultPosition = irr::core::vector3df(30,10,30);
 
 Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
 	:Actor(gameWorld),
@@ -27,7 +27,7 @@ Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* sourc
 	FSM.initiate();
 	original = position; 
 	pos = position;
-	target=pos;
+	target = pos;
 	moved = false;
 	health = 100;
 	timeout = 5.0;
@@ -100,14 +100,13 @@ void Monster::change(Player& _player)
 
 void Monster::update(Player& _player)
 {
-
 	std::cout<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
 	if(health <= 0)
 	{
 		//Death
 		FSM.process_event( EvDie());
 		FSM.reaction(_monster, _player);
-	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 2.5f)
+	}else if(_player.GetNodePosition().getDistanceFrom(pos) < 2.5f)
 	{
 		FSM.process_event( EvWithinAttackRange());
 		FSM.reaction(_monster, _player);
@@ -169,9 +168,7 @@ void Monster::update(Player& _player)
 					{
 						moved = false;
 						mon_timer->restart();
-
 					}
-
 				}
 				else
 				{
