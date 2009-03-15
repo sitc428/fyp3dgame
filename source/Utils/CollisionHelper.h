@@ -18,6 +18,8 @@ class CollisionHelper
 
 		// check if the distance between the points is within the given tolerance
 		static bool CheckProximity( const irr::core::vector3df& pos1, const irr::core::vector3df& pos2, irr::f32 tolerance );
+
+		static bool CheckProximity2D( const irr::core::vector3df& pos1, const irr::core::vector3df& pos2, irr::f32 tolerance );
 };
 
 #endif //__COLLISION_HELPER_HPP__

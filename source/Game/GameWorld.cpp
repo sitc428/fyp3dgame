@@ -1,6 +1,8 @@
+#include "CollisionHelper.h"
 #include "GameWorld.h"
 #include "GameEngine.h"
-#include "Enemy.h"
+#include "Monster.h"
+//#include "Enemy.h"
 //#include "EnemyTwo.h"
 //#include "EnemyBoss.h"
 #include "Camera.h"
@@ -56,7 +58,8 @@ GameWorld::GameWorld( const GameEngine& Engine ):
 	spawnsDone(false),
 	curLevel(0),
 	FenceToFall(NULL),
-	FenceFallTime(0.f)
+	FenceFallTime(0.f),
+	paused(false)
 {
 }
 
@@ -116,7 +119,7 @@ void GameWorld::InitLevel()
 	}
 	outNodes.clear();
 
-	smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
+	/*smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
 	irr::u32 TreePoseCounter = 1;
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
@@ -145,7 +148,7 @@ void GameWorld::InitLevel()
 			meshNode->setLoopMode(false);
 			TreePoseCounter = TreePoseCounter++ % 8;
 		}
-	}
+	}*/
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 
@@ -303,6 +306,7 @@ void GameWorld::InitPlayer()
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
+	/*
 	// hard-coded "file" for enemy waves
 	irr::s32 levelOneWaves[] = { 3, // total number of waves
 		3, 5, // number of spawns, time till next wave
@@ -362,7 +366,7 @@ void GameWorld::InitEnemies()
 	enemyWaves[i] = 0;
 	}
 	enemyWaves.clear();
-	*/
+	
 	// load in waves depending on the level
 	irr::s32 index = 0;
 	irr::s32 numSpawns;
@@ -406,6 +410,10 @@ void GameWorld::InitEnemies()
 	for( irr::u32 i = 0; i < nodes.size(); ++i )
 		if( nodes[i]->getID() == spawnNodeID )
 			spawnNodes.push_back( nodes[i] );
+			*/
+
+	Monster * m = new Monster( *this, GEngine->GetDriver());
+	actors.push_back(m);
 }
 
 // sets up the camera to be able to look at the scene
@@ -516,8 +524,6 @@ void GameWorld::Exit()
 	}
 	actors.clear();
 
-	//playerOnFoot = NULL;
-	//playerOnSnowplow = NULL;
 	mainCharacter = NULL;
 	camera = NULL;
 
@@ -532,9 +538,9 @@ void GameWorld::Exit()
 	// GEngine->GetSoundEngine().removeAllSoundSources();
 
 	// clean up the HUD
-	// gameHUD->Exit();
-	// delete gameHUD;
-	// gameHUD = NULL;
+	gameHUD->Exit();
+	delete gameHUD;
+	gameHUD = NULL;
 
 	// clear scene
 	smgr.clear();
@@ -547,7 +553,6 @@ void GameWorld::Exit()
 // called every frame with the frame's elapsed time
 void GameWorld::Tick( irr::f32 delta )
 {
-
 	switch( gameState )
 	{
 		case state_GAMEPLAY:
@@ -765,59 +770,57 @@ void GameWorld::Tick( irr::f32 delta )
 // performs actual gameplay
 void GameWorld::DoGameplay( irr::f32 delta )
 {
-	// update AI calculations
-	DoAI( delta );
-
-	// check for early exit
-	if( gameState == state_RESTART_LEVEL )
-		return;
-
-	// perform an input update
-	DoInput();
-
-	// tick all actors
-	for( irr::u32 i=0; i < actors.size(); ++i )
+	if(!paused)
 	{
-		actors[i]->Tick( delta );
+		// update AI calculations
+		DoAI( delta );
+
+		// check for early exit
+		if( gameState == state_RESTART_LEVEL )
+			return;
+
+		// perform an input update
+		DoInput();
+		camera->Tick( delta );
+
+		// tick all actors
+		for( irr::u32 i=0; i < actors.size(); ++i )
+		{
+			actors[i]->Tick( delta );
+		}
+
+		// update 3d audio information
+		DoAudio(); 
+
+		// perform a physics update
+		DoPhysics();
+
+		// update the HUD
+		DoHUD();
+
+		// deletes all the dead actors
+		DoCleanup();
 	}
-
-	// update 3d audio information
-	DoAudio(); 
-
-	// perform a physics update
-	DoPhysics();
-
-	// update the HUD
-	DoHUD();
-
-	// it is safe to perform a player switch now
-	/*if( bSwitchPlayers )
+	else
 	{
-		SwitchPlayers();
-		bSwitchPlayers = false;
-	}*/
-
-	// check if we're supposed to bring the fence section down
-	if( FenceFallTime > 0.f )
-	{
-		irr::core::vector3df currRot = FenceToFall->getRotation();
-		irr::core::vector3df rotDelta = irr::core::vector3df( 0, 0, delta / FENCE_FALL_TIME * 90 );
-		FenceToFall->setRotation( currRot + rotDelta );
-		FenceFallTime -= delta;
+		DoInput();
 	}
-
-	// deletes all the dead actors
-	DoCleanup();
 }
 
 // perform an tick of the input system
 void GameWorld::DoInput()
 {
+	// handle user input for player
+	InputEventReceiver& receiver = GEngine->GetReceiver();
+
+	if(receiver.keyDown(irr::KEY_SPACE))
+	{
+		paused = !paused;
+		return;
+	}
+
 	irr::core::vector3df playerTranslation(0, 0, 0);
 
-	// handle user input for player
-
-	InputEventReceiver& receiver = GEngine->GetReceiver();
 	if(receiver.keyDown(irr::KEY_KEY_W))
 	{ 
 		playerTranslation.Z = -20;
@@ -828,11 +831,27 @@ void GameWorld::DoInput()
 	}
 	if(receiver.keyDown(irr::KEY_KEY_A))
 	{
-		playerTranslation.X = 20;
+		//playerTranslation.X = -20;
 	}
 	else if(receiver.keyDown(irr::KEY_KEY_D))
 	{
-		playerTranslation.X = -20;
+		//playerTranslation.X = 20;
+	}
+
+	if(receiver.keyPressed(irr::KEY_RETURN))
+	{
+		for( irr::u32 i=0; i < actors.size(); ++i )
+		{
+			if( actors[i]->GetActorType() != ACTOR_ENEMY)
+				continue;
+
+			std::cout << "!!!"<< std::endl;
+			
+			if( CollisionHelper::CheckProximity2D(mainCharacter->GetNodePosition(), actors[i]->GetNode().getPosition(), 10.0f) )
+			{
+				mainCharacter->ReceiveDamage( 10 );
+			}
+		}
 	}
 
 	/*
@@ -856,19 +875,8 @@ void GameWorld::DoInput()
 	}
 	*/
 
-	// set player rotation
-
-	/*
-	irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
-	irr::f32 mouseDX = mouseDelta.X * 0.2f;
-	irr::f32 mouseDY = mouseDelta.Y * 0.075f;
-	if( mouseDX || mouseDY)
-	{
-		GetCurrentPlayer().SetRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
-	}
-	*/
-
 	// set player translation
+	
 	GetCurrentPlayer().SetTranslation( playerTranslation );
 }
 
@@ -1033,6 +1041,7 @@ void GameWorld::DoAI( irr::f32 delta )
 	}
 
 	// inform enemies of new player location
+	/*
 	for( irr::u32 i=0; i < actors.size(); ++i )
 	{
 		if( actors[i]->GetActorType() == ACTOR_ENEMY )
@@ -1050,8 +1059,8 @@ void GameWorld::DoAI( irr::f32 delta )
 		   EnemyBoss* enemy = (EnemyBoss *)actors[i];
 		   enemy->SetAimTarget( GetCurrentPlayer() );
 		   }
-		   */
 	}
+	*/
 }
 
 // perform collision checks between the actors
@@ -1106,6 +1115,8 @@ void GameWorld::DoHUD()
 {
 	// Player& p = GetCurrentPlayer();
 	// gameHUD->Update( p.GetAmmo(), p.GetScore(), numLives, curEnemyWave+1, enemyWaves.size(), GetCurrentPlayer().GetHealth(), GetCurrentPlayer().HasGodMode() );
+
+	/* Do the pause here! */
 }
 
 // return the first available dynamite projectile for throwing, NULL if none are available
@@ -1241,17 +1252,6 @@ ExplosionEffect* GameWorld::GetFirstAvailableEnemyDeathEffect() const
 // returns the player actor which is currently used
 Player& GameWorld::GetCurrentPlayer() const
 {
-	/*if( bUseOnFootPlayer )
-	{
-		check(playerOnFoot);
-		return *playerOnFoot;
-	}
-	else
-	{
-		check(playerOnSnowplow);
-		return *playerOnSnowplow;
-	}*/
-
 	return *mainCharacter;
 }
 
@@ -1283,6 +1283,7 @@ void GameWorld::NotifyNewPlayerTarget( Player& player ) const
 	camera->SetAimTarget( player );
 
 	// notify the enemies about the target player change
+	/*
 	for( irr::u32 i=0; i < actors.size(); ++i )
 	{
 		if( actors[i]->GetActorType() == ACTOR_ENEMY )
@@ -1290,7 +1291,7 @@ void GameWorld::NotifyNewPlayerTarget( Player& player ) const
 			Enemy* enemy = dynamic_cast<Enemy*>(actors[i]);
 			enemy->SetAimTarget( player );
 		}
-		/* else if( actors[i]->GetActorType() == ACTOR_ENEMY_TWO )
+		else if( actors[i]->GetActorType() == ACTOR_ENEMY_TWO )
 		   {
 		   EnemyTwo* enemy2 = dynamic_cast<EnemyTwo*>(actors[i]);
 		   enemy2->SetAimTarget( player );
@@ -1300,16 +1301,13 @@ void GameWorld::NotifyNewPlayerTarget( Player& player ) const
 		   EnemyBoss* enemyBoss = dynamic_cast<EnemyBoss*>(actors[i]);
 		   enemyBoss->SetAimTarget( player );
 		   }
-		   */
 	}
+	*/
 }
 
 // unbuffered mouse input 
 void GameWorld::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
 {
-	// route the unbuffered mouse input events to the player
-	// don't route input if the player actors have not been created yet
-	//if( playerOnFoot && playerOnSnowplow )
 	if( mainCharacter )
 	{
 		GetCurrentPlayer().OnMouseEvent( mouseEvent );

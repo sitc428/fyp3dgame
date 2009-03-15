@@ -7,6 +7,7 @@
 
 // forward declares
 class Player;
+class GameEngine;
 
 class Camera: public Actor
 {
@@ -35,6 +36,11 @@ class Camera: public Actor
 	private:
 		// disallow copy constructor from being invoked
 		Camera( const Camera& other );
+
+		void DoInput( irr::f32 );
+
+		irr::core::vector3df translation;
+		irr::f32 zoom;
 
 		// scene graph node for camera
 		irr::scene::ICameraSceneNode* node;

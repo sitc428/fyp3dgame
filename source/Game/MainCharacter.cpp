@@ -13,7 +13,7 @@
 extern GameEngine* GEngine;
 
 // Parameters specifying default parameters
-static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,0);
+static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,10);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0,0,0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/FYP Projecttesting.x";
@@ -95,8 +95,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node = smgr.addAnimatedMeshSceneNode( mainCharacterMesh, smgr.getRootSceneNode() );
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
-//	node->setRotation( defaultRotation );
-	node->setRotation( irr::core::vector3df( 0, -45, 0 ));
+	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
@@ -251,59 +250,16 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 		rotationState = state_PLAYER_ROTATE_IDLE;
 	}
 }
- /*
-// sets the player into firing state
-void MainCharacter::DoLaunchProjectile( )
-{
-	// play throwing sound effect
-	switch(rand()%3)
-	{
-	case 0:
-		GEngine->GetSoundEngine().play2D("../audio/sfx/throw1.mp3");
-		break;
-	case 1:
-		GEngine->GetSoundEngine().play2D("../audio/sfx/throw2.wav");
-		break;
-	case 2:
-		GEngine->GetSoundEngine().play2D("../audio/sfx/throw3.wav");
-		break;
-	default:
-		break;
-	}
-
-//	GEngine->GetSoundEngine().play2D("../audio/sfx/throw1.mp3");
-
-	// update player's throwing state
-	armsState = state_PLAYER_ARMS_THROW;
-}*/
 
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
-	// don't tick the player if its inactive
-	//if( playerState == state_PLAYER_INACTIVE )
-	//	return;
-
 	// player's rotation update, must happen before the position updates
 	UpdateRotationState();
 
 	// player's movement
 	UpdateMoveState( delta );
-//	node->animateJoints();
 
-	// player's actions
-//	UpdateArmsState();
-//	arms->animateJoints();
-
-	// update the power of the throw power
-//	UpdateThrowMeter( delta );
-
-	// check if our player gained some snowplowTime, if yes then signal player change to the world
-//	if( snowplowTimeRemaining > 0.0f )
-//	{
-//		world.RequestPlayerSwitch( );
-//		sfxFootstep->setVolume( 0 );
-//	}
 	sfxTimer++;
 }
 
@@ -430,75 +386,7 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 		}
 	}
 	prevMoveState = moveState;
-
-	// place footstep texture, only when we're visbile, otherwise footsteps appear floating in the air
-	if( node->isVisible() )
-	{
-		/*irr::s32 currAnimFrame = (irr::s32)node->getFrameNr();
-		if( currAnimFrame == PLAYER_ANIM_WALK_FORWARD_LEFT_FOOTSTEP_FRAME
-		||	currAnimFrame == PLAYER_ANIM_WALK_BACK_LEFT_FOOTSTEP_FRAME
-		||  currAnimFrame == PLAYER_ANIM_WALK_BACK_LEFT_FOOTSTEP2_FRAME
-		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_LEFT_LEFT_FOOTSTEP_FRAME
-		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_RIGHT_LEFT_FOOTSTEP_FRAME )
-		{
-			PlaceLeftFootPrint();
-		}
-		else if( currAnimFrame == PLAYER_ANIM_WALK_FORWARD_RIGHT_FOOTSTEP_FRAME
-		||	currAnimFrame == PLAYER_ANIM_WALK_BACK_RIGHT_FOOTSTEP_FRAME
-		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_LEFT_RIGHT_FOOTSTEP_FRAME
-		||	currAnimFrame == PLAYER_ANIM_WALK_SIDESTEP_RIGHT_RIGHT_FOOTSTEP_FRAME)
-		{
-			PlaceRightFootPrint();
-		}*/
-	}
 }
-
-/*
-void MainCharacter::UpdateArmsState()
-{
-	switch(armsState)
-	{
-		case state_PLAYER_ARMS_IDLE:
-		{
-			// setup animation
-			if( prevArmsState != state_PLAYER_ARMS_IDLE )
-			{
-				armsStopFrameNumber = arms->getFrameNr();
-				arms->setFrameLoop((irr::s32)armsStopFrameNumber,(irr::s32)armsStopFrameNumber);
-			}	
-			break;
-		}
-		case state_PLAYER_ARMS_WALKING:
-		{
-			// setup animation for this state
-			if( prevArmsState != state_PLAYER_ARMS_WALKING )
-			{
-				arms->setFrameLoop(PLAYER_ANIM_ARMS_WALK_START,PLAYER_ANIM_ARMS_WALK_END);
-				arms->setLoopMode(true);
-				node->setCurrentFrame(armsStopFrameNumber);
-			}
-			break;
-		}
-		case state_PLAYER_ARMS_THROW:
-		{
-			arms->setFrameLoop(PLAYER_ANIM_ARMS_THROW_START,PLAYER_ANIM_ARMS_THROW_END);
-			arms->setLoopMode(false);
-			arms->setAnimationEndCallback( ThrowAnimEndCallback );
-			armsState = state_PLAYER_ARMS_THROWING;
-			break;
-		}
-		case state_PLAYER_ARMS_THROWING:
-		{
-			// do nothing, the callback will handle the state transition
-			break;
-		}
-		default:
-		{
-			check(false); // should not be here
-		}
-	}
-	prevArmsState = armsState;
-}*/
 
 // updated the player position based on the value of translation set
 void MainCharacter::UpdatePosition( irr::f32 delta )
@@ -591,6 +479,8 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 		return;
 
 	health -= value;
+
+	_healthBar->setProgress( health );
 
 	if( health <= 0 )
 	{

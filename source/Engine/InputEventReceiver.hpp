@@ -20,9 +20,9 @@ public:
 
 	bool OnEvent(const irr::SEvent& event);
 
-	float wheel() const;
-	int x() const;
-	int y() const;
+	irr::f32 wheel() const;
+	irr::s32 x() const;
+	irr::s32 y() const;
 	bool mouseReleased(mouseButtons mbType) const;
 	bool mouseUp(mouseButtons mbType) const;
 	bool mousePressed(mouseButtons mbType) const;

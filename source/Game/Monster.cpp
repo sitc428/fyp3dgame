@@ -2,12 +2,16 @@
  *  Monster.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09Âπ?????
+ *  Created by Mr.JJ on 09???????
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
 
 #include "Monster.h"
+#include "GameEngine.h"
+#include "GameWorld.h"
+
+static const irr::c8*		MONSTER_MODEL  = "media/model/dwarf.x";
 
 Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
 :Actor(gameWorld),_monster(source),_speed(speed){
@@ -27,6 +31,23 @@ Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* sourc
 	//mon_timer->stop();
 	//FSM.test() = "TEST";
 }
+
+Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
+: Actor(gameWorld)
+{
+	irr::scene::ISceneManager& smgr = gameWorld.GetSceneManager();
+	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
+	FSM.initiate();
+	original = irr::core::vector3df(10, 40, 20);
+	pos = irr::core::vector3df(10, 40, 20);
+	target = pos;
+	moved = false;
+	health = 100;
+	timeout = 5.0;
+	mon_timer = new boost::timer();
+	mon_timer->restart();
+}
+
 /*
 void Monster::change(char c, Player* _player){
 		int num =1;

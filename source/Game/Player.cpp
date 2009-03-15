@@ -39,7 +39,6 @@ void Player::SetActive( bool bValue )
 // set the translation vector for player
 void Player::SetTranslation( const irr::core::vector3df& trans )
 {
-	std::cout << trans.X << " " << trans.Y << " " << trans.Z << std::endl;
 	translation = trans;
 }
 
