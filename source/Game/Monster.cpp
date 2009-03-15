@@ -12,7 +12,7 @@
 #include "GameWorld.h"
 
 static const irr::c8* MONSTER_MODEL = "media/model/dwarf.x";
-static const irr::core::vector3df defaultPosition = irr::core::vector3df(30,10,30);
+static const irr::core::vector3df defaultPosition = irr::core::vector3df(50,0,80);
 
 Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
 	:Actor(gameWorld),
@@ -27,7 +27,7 @@ Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* sourc
 	FSM.initiate();
 	original = position; 
 	pos = position;
-	target = pos;
+	target=pos;
 	moved = false;
 	health = 100;
 	timeout = 5.0;
@@ -53,6 +53,8 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	timeout = 5.0;
 	mon_timer = new boost::timer();
 	mon_timer->restart();
+	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
+	_monster->setLoopMode(false);
 }
 
 
@@ -100,24 +102,33 @@ void Monster::change(Player& _player)
 
 void Monster::update(Player& _player)
 {
+	pos= _monster->getAbsolutePosition();
 	std::cout<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
 	if(health <= 0)
 	{
 		//Death
 		FSM.process_event( EvDie());
 		FSM.reaction(_monster, _player);
-	}else if(_player.GetNodePosition().getDistanceFrom(pos) < 2.5f)
+	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
 	{
-		FSM.process_event( EvWithinAttackRange());
-		FSM.reaction(_monster, _player);
+		if(FSM.GetName() != "Attacking"){
+			FSM.process_event( EvWithinAttackRange());
+			mon_timer->restart();
+			FSM.reaction(_monster, _player);
+		}else{
+			if(mon_timer->elapsed() > timeout){
+				mon_timer->restart();
+				FSM.reaction(_monster, _player);			
+			}
+		}
 	}
-	else if( _player.GetNodePosition().getDistanceFrom(original)< 7.0f
-		|| _player.GetNodePosition().getDistanceFrom(pos)< 4.0f )
+	else if( _player.GetNodePosition().getDistanceFrom(original)< 80.0f
+		|| _player.GetNodePosition().getDistanceFrom(pos)< 30.0f )
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
 
-		if( targetPos.getDistanceFrom(original) < 7.0f )
+		if( targetPos.getDistanceFrom(original) < 80.0f )
 		{
 			//Tracing mode
 			FSM.process_event( EvPlayerWithinRange());
@@ -147,7 +158,7 @@ void Monster::update(Player& _player)
 		{
 			if( mon_timer->elapsed() > timeout )
 			{
-				if( (target - pos) < irr::core::vector3df(0.15, 0.15, 0.15) || target ==pos )
+				if( (target - pos) < irr::core::vector3df(8.0, 8.0, 8.0) || target ==pos )
 				{
 					if(!moved)
 					{
@@ -156,9 +167,9 @@ void Monster::update(Player& _player)
 						float x = ((float)(rand() % 10 + 1)/10)-0.5;
 						float z = ((float)(rand() % 10 + 1)/10)-0.5;
 						float y = _monster->getPosition().Y;
-						target.X = original.X+x;
-						target.Y = original.Y;
-						target.Z = original.Z+z;
+						target.X = pos.X+x;
+						target.Y = pos.Y;
+						target.Z = pos.Z+z;
 						irr::core::vector3df direction = pos-target;
 						_monster->setRotation(direction.getHorizontalAngle());
 						FSM.IdleTooLong(_monster,_player, target);
@@ -168,7 +179,9 @@ void Monster::update(Player& _player)
 					{
 						moved = false;
 						mon_timer->restart();
+
 					}
+
 				}
 				else
 				{
