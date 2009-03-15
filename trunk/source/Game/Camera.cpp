@@ -3,12 +3,15 @@
 #include "GameEngine.h"
 #include "GameWorld.h"
 #include "Player.h"
+#include "InputEventReceiver.hpp"
 #include <irrlicht/irrlicht.h>
 
 // Parameters specifying default parameters
-static const irr::core::vector3df defaultPosition = irr::core::vector3df(10, 60, 10);
+static const irr::core::vector3df defaultPosition = irr::core::vector3df(0, 60, 10);
 static const irr::core::vector3df defaultRotation = irr::core::vector3df(0, 0, 0);
-static const irr::core::vector3df cameraOffset = irr::core::vector3df(-10.0f, 18.0f, -10.0f);
+static const irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 30.0f, 60.0f);
+
+extern GameEngine* GEngine;
 
 // constructor
 Camera::Camera( GameWorld& gameWorld,
@@ -62,43 +65,37 @@ irr::core::vector3df Camera::GetTarget()
 // updates the camera every fram with the elapsed time since last frame
 void Camera::Tick( irr::f32 delta )
 {
-	// **WIP** - hide any obstruction betweeen camera and player
-	/* line3d<irr::f32> ray;
-	   ray.end = target.GetPosition();
-	   ray.start = node->getAbsolutePosition();
-	   ray.start.Y = ray.end.Y;
+	DoInput( delta );
 
-	   irr::scene::ISceneNode* selectedSceneNode = world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(ray);
+	node->setPosition( target->GetNode().getAbsolutePosition() + zoom * cameraOffset + translation);
 
-	   if( selectedSceneNode )
-	   {
-	   if( selectedSceneNode->getID() != 999 )
-	   {
-	   selectedSceneNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	   }
-
-	// if( lastSelectedSceneNode )
-	// lastSelectedSceneNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-	// lastSelectedSceneNode = selectedSceneNode;
-	// }
-
-	}
-	*/
-//Player* player = (Player *)target;
-//irr::core::vector3df rotation = player->GetRotation();
-//
-//irr::core::vector3df aimVector = target->GetAimVector();
-//irr::core::vector3df position = target->GetNodePosition();
-//position -= target->GetAimVector() * cameraOffset.Z;
-//position.Y += cameraOffset.Y - rotation.X;
-//
-//// update camera position
-//node->setPosition( position );
-//
-//
-//
-//// update target position
-//node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
-	node->setPosition( target->GetNode().getAbsolutePosition() + irr::core::vector3df(0, 30, 60) );
 	node->setTarget( target->GetNodePosition() );
+}
+
+void Camera::DoInput( irr::f32 delta )
+{
+	InputEventReceiver& receiver = GEngine->GetReceiver();
+
+	irr::core::vector3df cameraTranslation(0, 0, 0);
+
+	if(receiver.keyDown(irr::KEY_KEY_1))
+	{
+		cameraTranslation.Y = 20;
+	}
+	else if(receiver.keyDown(irr::KEY_KEY_2))
+	{
+		cameraTranslation.Y = -20;
+	}
+	else if(receiver.keyDown(irr::KEY_KEY_Q))
+	{
+		cameraTranslation.X = 20;
+	}
+	else if(receiver.keyDown(irr::KEY_KEY_E))
+	{
+		cameraTranslation.X = -20;
+	}
+
+	zoom = zoom + receiver.wheel() * delta;
+
+	translation += cameraTranslation * delta;
 }

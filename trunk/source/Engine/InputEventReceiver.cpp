@@ -26,41 +26,6 @@ InputEventReceiver::~InputEventReceiver()
 
 void InputEventReceiver::operator()()
 {
-//	if(keyDown(irr::KEY_KEY_W))
-//	{
-//		_goc->moveForward();
-//	}
-//	if(keyUp(irr::KEY_KEY_W))
-//	{
-//		_goc->stopMove();
-//	}
-//	
-//	if(keyDown(irr::KEY_KEY_S))
-//	{
-//		_goc->moveBackward();
-//	}
-//
-//	if(keyDown(irr::KEY_KEY_A))
-//	{
-//		//_goc->moveLeft();
-//		_goc->rotateLeft();
-//	}
-//
-//	if(keyDown(irr::KEY_KEY_D))
-//	{
-//		//_goc->moveRight();
-//		_goc->rotateRight();
-//	}
-//	if(keyDown(irr::KEY_KEY_P))
-//	{
-//		//_goc->moveRight();
-//		_goc->controlMonster();
-//	}
-//
-//	if(keyPressed(irr::KEY_SPACE))
-//	{
-//		_goc->togglePause();
-//	}
 }
 
 bool InputEventReceiver::OnEvent(const irr::SEvent& event)
@@ -140,17 +105,17 @@ bool InputEventReceiver::OnEvent(const irr::SEvent& event)
 	return eventprocessed;
 }
 
-float InputEventReceiver::wheel() const
+irr::f32 InputEventReceiver::wheel() const
 {
 	return mouse._wheel;
 }
 
-int InputEventReceiver::x() const
+irr::s32 InputEventReceiver::x() const
 {
 	return mouse._x;
 }
 
-int InputEventReceiver::y() const
+irr::s32 InputEventReceiver::y() const
 {
 	return mouse._y;
 }

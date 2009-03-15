@@ -2,7 +2,7 @@
  *  FiniteStateMachine.h
  *  FYP
  *
- *  Created by Mr.JJ on 09Âπ???3??
+ *  Created by Mr.JJ on 09?????3??
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
@@ -241,12 +241,13 @@ class Monster: public Actor{
 	public:
 	
 		Monster(GameWorld& ,irr::scene::IAnimatedMeshSceneNode*, irr::core::vector3df , irr::core::vector3df , float);
+		Monster( GameWorld& gameWorld, irr::video::IVideoDriver& );
 		~Monster(){};
 		//void change(char, Player*);
 		//void update(Player*);
 		void Tick( irr::f32 delta );
 		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
-		EActorType GetActorType() const { return ACTOR_NONE; }
+		EActorType GetActorType() const { return ACTOR_ENEMY; }
 		bool ShouldPerformCollisionCheck() const { return false; }
 		void DoCollisions( const CollisionInfo& collInfo ) { check(false); }
 		void ReceiveDamage(irr::f32 );

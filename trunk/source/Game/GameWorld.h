@@ -155,6 +155,8 @@ class GameWorld
 		irr::s32 numLives; // since there is more than one class/object representing the player, it makes sense to put it here instead
 
 		irr::s32 curLevel;
+
+		bool paused;
 };
 
 // helper struct for passing collision information to actors

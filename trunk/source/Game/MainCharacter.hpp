@@ -103,15 +103,9 @@ private:
 	void UpdateRotationState( );
 	void UpdateMoveState( irr::f32 delta );
 
-	// makes the player throw the dynamite
-	// void ShootDynamite( irr::f32 power, DynamiteProjectile& projectile );
-	// makes the player throw a snowball
-	// void ShootSnowball( irr::f32 power, SnowballProjectile& projectile );
-	// makes the player put a landmine on the ground
-	// void PlaceMine( class LandMine& mine );
-
 	// scene graph node for player
 	irr::scene::IAnimatedMeshSceneNode* node;
+
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
 	

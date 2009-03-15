@@ -33,3 +33,13 @@ bool CollisionHelper::CheckProximity( const irr::core::vector3df& pos1, const ir
 
 	return (dist <= tolerance);
 }
+
+// check if the distance between the points is within the given tolerance
+bool CollisionHelper::CheckProximity2D( const irr::core::vector3df& pos1, const irr::core::vector3df& pos2, irr::f32 tolerance )
+{
+	check( tolerance >= 0.0f );
+	// get the distance between the points
+	irr::f32 dist = pos1.getDistanceFrom( irr::core::vector3df(pos2.X, pos1.Y, pos2.Z) );
+
+	return (dist <= tolerance);
+}
