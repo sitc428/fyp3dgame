@@ -855,7 +855,7 @@ void GameWorld::DoInput()
 				CollisionHelper::CheckProximity2D(
 					mainCharacter->GetNodePosition(),
 					actors[i]->GetNode().getPosition(),
-					5.0f
+					25.0f
 				)
 			)
 			{
