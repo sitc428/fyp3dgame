@@ -33,10 +33,11 @@ Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* sourc
 }
 
 Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
-: Actor(gameWorld)
+: Actor( gameWorld )
 {
 	irr::scene::ISceneManager& smgr = gameWorld.GetSceneManager();
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
+	_monster->setScale(irr::core::vector3df(0.5, 0.5, 0.5));
 	FSM.initiate();
 	original = irr::core::vector3df(10, 40, 20);
 	pos = irr::core::vector3df(10, 40, 20);

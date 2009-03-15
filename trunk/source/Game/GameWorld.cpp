@@ -829,14 +829,16 @@ void GameWorld::DoInput()
 	{
 		playerTranslation.Z = 20;
 	}
-	if(receiver.keyDown(irr::KEY_KEY_A))
-	{
-		//playerTranslation.X = -20;
-	}
-	else if(receiver.keyDown(irr::KEY_KEY_D))
-	{
-		//playerTranslation.X = 20;
-	}
+	//if(receiver.keyDown(irr::KEY_KEY_A))
+	//{
+	//	//playerTranslation.X = -20;
+	//	playerRotation.Y = 1;
+	//}
+	//else if(receiver.keyDown(irr::KEY_KEY_D))
+	//{
+	//	//playerTranslation.X = 20;
+	//	playerRotation.Y = -1;
+	//}
 
 	if(receiver.keyPressed(irr::KEY_RETURN))
 	{
@@ -847,9 +849,21 @@ void GameWorld::DoInput()
 
 			std::cout << "!!!"<< std::endl;
 			
-			if( CollisionHelper::CheckProximity2D(mainCharacter->GetNodePosition(), actors[i]->GetNode().getPosition(), 10.0f) )
+			if(
+				CollisionHelper::CheckProximity2D(
+					mainCharacter->GetNodePosition(),
+					actors[i]->GetNode().getPosition(),
+					5.0f
+				)
+			)
 			{
-				mainCharacter->ReceiveDamage( 10 );
+				std::cout<<"Y"<<std::endl;
+				//mainCharacter->ReceiveDamage( 10 );
+				actors[i]->ReceiveDamage(10);
+			}
+			else
+			{
+				std::cout<<"N"<<std::endl;
 			}
 		}
 	}
@@ -876,7 +890,14 @@ void GameWorld::DoInput()
 	*/
 
 	// set player translation
-	
+	irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
+	irr::f32 mouseDX = mouseDelta.X * 0.2f;
+	irr::f32 mouseDY = mouseDelta.Y * 0.075f;
+	if( mouseDX || mouseDY)
+	{
+		GetCurrentPlayer().SetRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
+	}
+
 	GetCurrentPlayer().SetTranslation( playerTranslation );
 }
 

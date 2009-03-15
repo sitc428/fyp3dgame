@@ -14,7 +14,7 @@ extern GameEngine* GEngine;
 
 // Parameters specifying default parameters
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,10);
-static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0,0,0);
+static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, -90,0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/FYP Projecttesting.x";
 //static const irr::c8*		CHARACTER_ARMS_MODEL = "../art/characters/Fatty/ArmSplit.ms3d";
@@ -95,7 +95,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node = smgr.addAnimatedMeshSceneNode( mainCharacterMesh, smgr.getRootSceneNode() );
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
-	node->setRotation( defaultRotation );
+	//node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
