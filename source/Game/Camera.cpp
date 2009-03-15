@@ -68,7 +68,7 @@ void Camera::Tick( irr::f32 delta )
 {
 	DoInput( delta );
 
-	node->setPosition( target->GetNode().getAbsolutePosition() + zoom * cameraOffset + translation);
+	/*node->setPosition( target->GetNode().getAbsolutePosition() + zoom * cameraOffset + translation);
 
 	node->setTarget( target->GetNodePosition() + translation );
 
@@ -78,7 +78,21 @@ void Camera::Tick( irr::f32 delta )
 	if( mouseDX || mouseDY)
 	{
 		node->setRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
-	}
+	}*/
+
+	Player* player = (Player *)target;
+	irr::core::vector3df rotation = player->GetRotation();
+
+	irr::core::vector3df aimVector = target->GetAimVector();
+	irr::core::vector3df position = target->GetNodePosition();
+	position += target->GetAimVector() * zoom * cameraOffset.Z;
+	position.Y += zoom * cameraOffset.Y - rotation.X;
+
+	// update camera position
+	node->setPosition( position );
+
+	// update target position
+	node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
 
 }
 
@@ -86,7 +100,7 @@ void Camera::DoInput( irr::f32 delta )
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
-	irr::core::vector3df cameraTranslation(0, 0, 0);
+	/*irr::core::vector3df cameraTranslation(0, 0, 0);
 
 	if(receiver.keyDown(irr::KEY_KEY_1))
 	{
@@ -103,7 +117,7 @@ void Camera::DoInput( irr::f32 delta )
 	else if(receiver.keyDown(irr::KEY_KEY_E))
 	{
 		cameraTranslation.X = -20;
-	}
+	}*/
 
 	zoom = zoom - receiver.wheel() * delta;
 
@@ -112,5 +126,5 @@ void Camera::DoInput( irr::f32 delta )
 	if( zoom > 3.0 )
 		zoom = 2.0;
 
-	translation += cameraTranslation * delta;
+	//translation += cameraTranslation * delta;
 }

@@ -819,6 +819,9 @@ void GameWorld::DoInput()
 		return;
 	}
 
+	if( paused )
+		return;
+
 	irr::core::vector3df playerTranslation(0, 0, 0);
 	irr::core::vector3df playerRotation(0, 0, 0);
 
@@ -832,11 +835,11 @@ void GameWorld::DoInput()
 	}
 	if(receiver.keyDown(irr::KEY_KEY_A))
 	{
-		playerRotation.Y = 10;
+		playerRotation.Y = 15;
 	}
 	else if(receiver.keyDown(irr::KEY_KEY_D))
 	{
-		playerRotation.Y = -10;
+		playerRotation.Y = -15;
 	}
 
 	if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
