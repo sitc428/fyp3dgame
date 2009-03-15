@@ -820,6 +820,7 @@ void GameWorld::DoInput()
 	}
 
 	irr::core::vector3df playerTranslation(0, 0, 0);
+	irr::core::vector3df playerRotation(0, 0, 0);
 
 	if(receiver.keyDown(irr::KEY_KEY_W))
 	{ 
@@ -829,18 +830,16 @@ void GameWorld::DoInput()
 	{
 		playerTranslation.Z = 20;
 	}
-	//if(receiver.keyDown(irr::KEY_KEY_A))
-	//{
-	//	//playerTranslation.X = -20;
-	//	playerRotation.Y = 1;
-	//}
-	//else if(receiver.keyDown(irr::KEY_KEY_D))
-	//{
-	//	//playerTranslation.X = 20;
-	//	playerRotation.Y = -1;
-	//}
+	if(receiver.keyDown(irr::KEY_KEY_A))
+	{
+		playerRotation.Y = 10;
+	}
+	else if(receiver.keyDown(irr::KEY_KEY_D))
+	{
+		playerRotation.Y = -10;
+	}
 
-	if(receiver.keyPressed(irr::KEY_RETURN))
+	if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
 	{
 		for( irr::u32 i=0; i < actors.size(); ++i )
 		{
@@ -890,14 +889,15 @@ void GameWorld::DoInput()
 	*/
 
 	// set player translation
-	irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
-	irr::f32 mouseDX = mouseDelta.X * 0.2f;
-	irr::f32 mouseDY = mouseDelta.Y * 0.075f;
-	if( mouseDX || mouseDY)
-	{
-		GetCurrentPlayer().SetRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
-	}
+	//irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
+	//irr::f32 mouseDX = mouseDelta.X * 0.2f;
+	//irr::f32 mouseDY = mouseDelta.Y * 0.075f;
+	//if( mouseDX || mouseDY)
+	//{
+	//	GetCurrentPlayer().SetRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
+	//}
 
+	GetCurrentPlayer().SetRotation( playerRotation );
 	GetCurrentPlayer().SetTranslation( playerTranslation );
 }
 
