@@ -7,7 +7,8 @@
 #define NODE_ID_DYNAMITEPICKUP 2
 #define NODE_ID_SNOWPLOWPICKUP 3
 #define NODE_ID_TREE 4
-#define NODE_ID_FENCE_TO_FALL 5
+//for NODE ID=-1, no triangle selector should be added
+#define NODE_ID_FENCE_TO_FALL -1
 #define NODE_ID_ENEMYSPAWNER2 6
 #define NODE_ID_PLAYERSPAWN_ONE 7
 #define NODE_ID_PLAYERSPAWN_TWO 8

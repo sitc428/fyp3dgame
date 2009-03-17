@@ -89,7 +89,6 @@ void GameWorld::InitLevel()
 	// add triangle selectors for every mesh node in the level
 	irr::core::array<irr::scene::ISceneNode*> outNodes;
 	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
-
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
 		//irr::scene::IMeshSceneNode* meshNode = dynamic_cast<irr::scene::IMeshSceneNode*>(outNodes[i]);
@@ -99,24 +98,32 @@ void GameWorld::InitLevel()
 		if( meshNode->getMesh() )
 		{
 			// find the section of the fence we are supposed to bring down to transition to next level
+			//std::cout << meshNode->getID() << std::endl;
+			//printf("%s \n", meshNode->getName());
+			//printf("%s \n", NODE_ID_FENCE_TO_FALL);
+			//Check whether the ID is -1
 			if( meshNode->getID() == NODE_ID_FENCE_TO_FALL )
 			{
 				FenceToFall = meshNode;
 			}
+			else
+			{
 
-			//irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelectorFromBoundingBox( meshNode );
-			irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
-			check(meshTriangleSelector);
-			meshNode->setTriangleSelector( meshTriangleSelector );
-			levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-			meshTriangleSelector->drop();
-			meshTriangleSelector = NULL;
+				//irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelectorFromBoundingBox( meshNode );
+				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
+				check(meshTriangleSelector);
+				meshNode->setTriangleSelector( meshTriangleSelector );
+				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+				meshTriangleSelector->drop();
+				meshTriangleSelector = NULL;
+			}
 		}
 		else
 		{
 			printf("GAME WARNING: level mesh node %s does not have a mesh assigned to it\n", meshNode->getName());
 		}
 	}
+	system("pause");
 	outNodes.clear();
 
 	/*smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
