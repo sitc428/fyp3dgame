@@ -40,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E1639000F70CFD400FE6F87 /* NodeID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeID.h; sourceTree = "<group>"; };
 		9807F47C0F4FED16008E3E5B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
 		9807F47F0F4FED52008E3E5B /* FloorDecalSceneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloorDecalSceneNode.cpp; sourceTree = "<group>"; };
 		9807F4800F4FED52008E3E5B /* FloorDecalSceneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorDecalSceneNode.h; sourceTree = "<group>"; };
@@ -164,6 +165,7 @@
 				9807F4D90F4FF003008E3E5B /* ActorTypes.h */,
 				9807F4DA0F4FF003008E3E5B /* Camera.cpp */,
 				9807F4DB0F4FF003008E3E5B /* Camera.h */,
+				8E1639000F70CFD400FE6F87 /* NodeID.h */,
 				9807F4E20F4FF003008E3E5B /* Enemy.cpp */,
 				9807F4E30F4FF003008E3E5B /* Enemy.h */,
 				9807F4EF0F4FF003008E3E5B /* GameWorld.cpp */,
