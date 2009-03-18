@@ -16,7 +16,7 @@ extern GameEngine* GEngine;
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,10);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 90, 0);
 
-static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/fbx.x";
+static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/FYP Projecttesting.x";
 //static const irr::c8*		CHARACTER_ARMS_MODEL = "../art/characters/Fatty/ArmSplit.ms3d";
 static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/MainTexutre1.png";
 //static const irr::c8*		CHARACTER_LEFT_FOOTSTEP_TEXTURE = "../art/sfx/Flats/FootPrintLeft.png";
