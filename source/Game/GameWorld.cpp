@@ -123,7 +123,7 @@ void GameWorld::InitLevel()
 			printf("GAME WARNING: level mesh node %s does not have a mesh assigned to it\n", meshNode->getName());
 		}
 	}
-	system("pause");
+	//system("pause"); 
 	outNodes.clear();
 
 	/*smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
