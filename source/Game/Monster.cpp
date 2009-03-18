@@ -18,7 +18,8 @@ Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* sourc
 	:Actor(gameWorld),
 	_monster(source),
 	_speed(speed),
-	world(gameWorld)
+	world(gameWorld),
+	collisionAnimator(NULL)
 {
 	//_monster->setLoopMode(false);
 	//SetNodePosition(position);
@@ -35,13 +36,16 @@ Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* sourc
 	mon_timer->restart();
 	//mon_timer->stop();
 	//FSM.test() = "TEST";
+	
+	
+	
 }
 
 Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	:Actor(gameWorld),
 	world(gameWorld)
 {
-	irr::scene::ISceneManager& smgr = gameWorld.GetSceneManager();
+	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	_monster->setPosition( defaultPosition );
 	FSM.initiate();
@@ -55,9 +59,18 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	mon_timer->restart();
 	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
 	_monster->setLoopMode(false);
+	
+	// setup player collision with the world
+	RecreateCollisionResponseAnimator();
+	
+	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
+	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh()->getMesh(0), node );
+	_monster->setTriangleSelector( triangleSelector );
+	triangleSelector->drop();
+	triangleSelector = NULL;
 }
 
-
+/*
 void Monster::change(Player& _player)
 {
 	int num =1;
@@ -97,8 +110,9 @@ void Monster::change(Player& _player)
 	break;
 	}
 	}
-	*/
+	
 }
+*/
 
 void Monster::update(Player& _player)
 {
@@ -194,6 +208,31 @@ void Monster::update(Player& _player)
 		}
 	}
 }
+
+
+void Monster::RecreateCollisionResponseAnimator()
+{
+	// drop the current collision response animator
+	if( collisionAnimator )  // soft fail which allows us to call RecreateCollisionResponseAnimator to first initialize the non-existing animator
+	{
+		_monster->removeAnimator( collisionAnimator );
+		collisionAnimator->drop();
+		collisionAnimator = NULL;
+	}
+	
+	// setup torso collision with the world
+	//irr::core::aabbox3df box = node->getBoundingBox();
+	irr::core::aabbox3df box = _monster->getMesh()->getMesh(0)->getBoundingBox();
+	//irr::core::vector3df radius = box.MaxEdge - box.getCenter();
+	irr::core::vector3df radius = box.MaxEdge - box.getCenter();
+	
+	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
+				&world.GetLevelTriangleSelector(), _monster, radius,irr::core::vector3df(0,-.08f,0), // gravity
+				irr::core::vector3df(0, 0, 0), // ellipsoid translation
+			    0.0001f); // sliding value
+	_monster->addAnimator(collisionAnimator);
+}
+
 
 void Monster::ReceiveDamage(irr::f32  damage)
 {
