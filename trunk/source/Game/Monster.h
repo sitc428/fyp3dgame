@@ -243,8 +243,17 @@ class Monster: public Actor{
 	
 		Monster(GameWorld& ,irr::scene::IAnimatedMeshSceneNode*, irr::core::vector3df , irr::core::vector3df , float);
 		Monster( GameWorld& gameWorld, irr::video::IVideoDriver& );
-		~Monster(){};
-		void change(Player&);
+		~Monster(){
+			//collisionAnimator->drop();
+			//collisionAnimator = NULL;
+			
+		//	irr::scene::ISceneManager& smgr = world.GetSceneManager();
+		//	smgr.addToDeletionQueue( _monster );
+		};
+		// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
+		virtual void RecreateCollisionResponseAnimator();
+
+		//void change(Player&);
 		void update(Player&);
 		void Tick( irr::f32 delta );
 		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
@@ -259,6 +268,10 @@ class Monster: public Actor{
 	private:
 		FiniteStateMachine FSM;
 		irr::scene::IAnimatedMeshSceneNode *_monster;
+	
+		// cached collision response animator
+		irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
+	
 		float _speed; 
 		irr::f32 health;
 		boost::timer* mon_timer;
