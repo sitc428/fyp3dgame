@@ -419,8 +419,12 @@ void GameWorld::InitEnemies()
 			spawnNodes.push_back( nodes[i] );
 			*/
 
-	Monster * m = new Monster( *this, GEngine->GetDriver());
-	actors.push_back(m);
+	Monster * m1 = new Monster( *this, GEngine->GetDriver());
+	actors.push_back(m1);
+	m1->ReSetPosition(irr::core::vector3df(70,0,80));
+	Monster * m2 = new Monster( *this, GEngine->GetDriver());
+	actors.push_back(m2);
+	m2->ReSetPosition(irr::core::vector3df(50,0,200));
 }
 
 // sets up the camera to be able to look at the scene
