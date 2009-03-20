@@ -137,9 +137,6 @@ struct Attacking;
 struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 	Attacking(){ 
 		std::cout<<"Attacking\n";
-		int i;
-		for(i=0; i<100; i++)
-			std::cout<<i<<"\n";
 	};
 	virtual std::string GetName() const
     {
@@ -157,7 +154,7 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 	}
 	virtual ~Attacking() {};
 	//virtual const std::string name () const { return "Attacking"; };
-	typedef sc::transition< EvPlayerWithinRange, Idle >reactions;
+	typedef sc::transition< EvFiniteStateMachineOutOfRange, Idle >reactions;
 };
 
 struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
@@ -233,7 +230,7 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 		virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
 		}
 		typedef mpl::list< 
-			sc::transition< EvPlayerWithinRange, Idle >,
+			sc::transition< EvPlayerWithinRange, Tracing >,
 			sc::transition< EvFiniteStateMachineOutOfRange, Idle >, 
 			sc::transition< EvWithinAttackRange, Attacking > >reactions;
 	
@@ -263,6 +260,7 @@ class Monster: public Actor{
 		void ReceiveDamage(irr::f32 );
 		void DestroyActor( Actor*& actorToDestroy );
 		void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
+		virtual void ReSetPosition(irr::core::vector3df);
 		//int GetHealth();
 			
 	private:
@@ -275,6 +273,7 @@ class Monster: public Actor{
 		float _speed; 
 		irr::f32 health;
 		boost::timer* mon_timer;
+		boost::timer* attack_timer;
 		double timeout;
 		bool moved;
 		irr::core::vector3df target;
