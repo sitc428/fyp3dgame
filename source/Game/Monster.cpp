@@ -56,12 +56,14 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	health = 100;
 	timeout = 5.0;
 	mon_timer = new boost::timer();
+	attack_timer = new boost::timer();
 	mon_timer->restart();
+	attack_timer->restart();
 	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
 	_monster->setLoopMode(false);
 	
 	// setup player collision with the world
-	RecreateCollisionResponseAnimator();
+	//RecreateCollisionResponseAnimator();
 	
 	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
 	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh()->getMesh(0), node );
@@ -117,21 +119,27 @@ void Monster::change(Player& _player)
 void Monster::update(Player& _player)
 {
 	pos= _monster->getAbsolutePosition();
+	std::cout<<_player.GetNodePosition().getDistanceFrom(original)<<"\n";
 	std::cout<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
 	if(health <= 0)
 	{
 		//Death
 		FSM.process_event( EvDie());
 		FSM.reaction(_monster, _player);
-	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
+	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 38.0f)
 	{
+		std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM.GetName() != "Attacking"){
 			FSM.process_event( EvWithinAttackRange());
-			mon_timer->restart();
-			FSM.reaction(_monster, _player);
+			if(attack_timer->elapsed() > timeout){
+				attack_timer->restart();
+				FSM.reaction(_monster, _player);
+			}
 		}else{
-			if(mon_timer->elapsed() > timeout){
-				mon_timer->restart();
+			
+			if(attack_timer->elapsed() > timeout){
+				std::cout<<"Mon_timer:------------"<<"\n";
+				attack_timer->restart();
 				FSM.reaction(_monster, _player);			
 			}
 		}
@@ -145,10 +153,14 @@ void Monster::update(Player& _player)
 		if( targetPos.getDistanceFrom(original) < 80.0f )
 		{
 			//Tracing mode
-			FSM.process_event( EvPlayerWithinRange());
-			FSM.reaction(_monster, _player);
-			pos = _monster->getPosition();
-			target = pos;
+			//if(FSM.GetName() != "Tracing"){
+			if(FSM.GetName() == "Attacking")
+				FSM.process_event(EvFiniteStateMachineOutOfRange());
+				FSM.process_event( EvPlayerWithinRange());
+				FSM.reaction(_monster, _player);
+				pos = _monster->getPosition();
+				target = pos;
+			
 		}
 		else
 		{
@@ -159,11 +171,13 @@ void Monster::update(Player& _player)
 	else
 	{
 		//Idle	
-		std::cout<<mon_timer->elapsed()<<"\n";
+		std::cout<<"Mon_timer: "<<mon_timer->elapsed()<<"\n";
 		//irr::u32 current = mon_timer->getTime();
 		if( FSM.GetName() != "Idle" )
 		{
 			mon_timer->restart();
+			std::cout<<"Mon_timer:Restart "<<"\n";
+			
 			FSM.process_event( EvFiniteStateMachineOutOfRange());
 			FSM.reaction(_monster, _player);
 
@@ -172,17 +186,17 @@ void Monster::update(Player& _player)
 		{
 			if( mon_timer->elapsed() > timeout )
 			{
-				if( (target - pos) < irr::core::vector3df(8.0, 8.0, 8.0) || target ==pos )
+				if( (target - pos) < irr::core::vector3df(10.0, 0.0, 10.0) || target ==pos||mon_timer->elapsed() > 7.0  )
 				{
-					if(!moved)
+					if(!moved )
 					{
 
 						srand ( time(NULL) );
-						float x = ((float)(rand() % 10 + 1)/10)-0.5;
-						float z = ((float)(rand() % 10 + 1)/10)-0.5;
+						float x = ((float)(rand() % 20 + 1))-10;
+						float z = ((float)(rand() % 20 + 1))-10;
 						float y = _monster->getPosition().Y;
 						target.X = pos.X+x;
-						target.Y = pos.Y;
+						target.Y = y;
 						target.Z = pos.Z+z;
 						irr::core::vector3df direction = pos-target;
 						_monster->setRotation(direction.getHorizontalAngle());
@@ -201,12 +215,15 @@ void Monster::update(Player& _player)
 				{
 					//FSM.process_event( EvFiniteStateMachineOutOfRange());
 					FSM.IdleTooLong(_monster,_player, target);
-					pos = _monster->getPosition(); 
+					pos = _monster->getPosition();
+					target=pos;
 					moved = true;
 				}
 			}
 		}
 	}
+	
+	
 }
 
 
@@ -237,12 +254,21 @@ void Monster::RecreateCollisionResponseAnimator()
 void Monster::ReceiveDamage(irr::f32  damage)
 {
 	health-=damage;
-	std::cout<<health<<std::endl;
+//	std::cout<<"Health: "<<health<<std::endl;
 }
 
 void  Monster::Tick(irr::f32 delta)
 {
 	update(world.GetCurrentPlayer());
+
+}
+
+void Monster::ReSetPosition(irr::core::vector3df NewPosition){
+	original = NewPosition;
+	pos = NewPosition;
+	target = NewPosition;
+	 _monster->setPosition(NewPosition); 
+	_monster->updateAbsolutePosition();
 
 }
 /*
