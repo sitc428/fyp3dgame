@@ -406,6 +406,8 @@ void GameEngine::DisplayFPS()
 		str += driver->getName();
 		str += "] FPS:";
 		str += fps;
+		str += " ";
+		str += driver->getPrimitiveCountDrawn();
 
 		device->setWindowCaption(str.c_str());
 		lastFPS = fps;
