@@ -92,7 +92,9 @@ struct FiniteStateMachine : sc::state_machine<FiniteStateMachine, NotDeath >{
 };
 
 struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
-	Death(){ std::cout<<"Death\n";};
+	Death(){
+		//std::cout<<"Death\n";
+	};
 	//virtual const std::string name () const { return "Death"; };
 	virtual std::string GetName() const
     {
@@ -136,7 +138,7 @@ struct Attacking;
 
 struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 	Attacking(){ 
-		std::cout<<"Attacking\n";
+		//std::cout<<"Attacking\n";
 	};
 	virtual std::string GetName() const
     {
@@ -158,7 +160,9 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 };
 
 struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
-	Idle(){ std::cout<<"Idle\n"; /*std::cout<<GetName(1);*/ };
+	Idle(){
+		//std::cout<<"Idle\n"; /*std::cout<<GetName(1);*/
+	};
 	virtual ~Idle() {};
 	
 	
@@ -175,7 +179,7 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 		_mon->setLoopMode(false);
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
-		std::cout<<"Move\n";
+		//std::cout<<"Move\n";
 		_mon->setLoopMode(true);
 		irr::core::matrix4 m;
 		irr::core::vector3df targetPos = _player.GetNodePosition();
@@ -199,7 +203,9 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 	
 };
 struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
-		Tracing(){ std::cout<<"Tracing\n";};
+		Tracing(){ 
+			//std::cout<<"Tracing\n";
+		};
 		virtual ~Tracing() {};
 	//	virtual const std::string name () const { return "Tracing"; };
 		virtual std::string GetName() const
