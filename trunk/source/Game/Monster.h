@@ -244,7 +244,6 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 class Monster: public Actor{
 	public:
 	
-		Monster(GameWorld& ,irr::scene::IAnimatedMeshSceneNode*, irr::core::vector3df , irr::core::vector3df , float);
 		Monster( GameWorld& gameWorld, irr::video::IVideoDriver& );
 		~Monster(){
 			//collisionAnimator->drop();

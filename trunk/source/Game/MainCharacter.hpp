@@ -17,26 +17,36 @@ namespace scene
 }
 }
 
-// player states 
-enum EPlayerMoveState
+enum EMainCharacterActionState
 {
-	state_PLAYER_MOVE_IDLE,			// player is not moving
-	state_PLAYER_MOVE_FORWARD,
-	state_PLAYER_MOVE_BACK,
-	state_PLAYER_MOVE_LEFT,
-	state_PLAYER_MOVE_RIGHT,
-	state_PLAYER_MOVE_FORWARD_LEFT,
-	state_PLAYER_MOVE_FORWARD_RIGHT,
-	state_PLAYER_MOVE_BACK_LEFT,
-	state_PLAYER_MOVE_BACK_RIGHT,
-	state_PLAYER_MOVE_DEAD
+	EMCAS_IDLE = 0,
+	EMCAS_MOVE = 1,
+	EMCAS_ROTATE = 2,
+	EMCAS_JUMP = 4,
+	EMCAS_ATTACK = 8,
+	EMCAS_DEFEND = 16,
+	EMCAS_DEAD = 1 << 31
 };
 
-enum EPlayerRotationState
+// player states 
+enum EMainCharacterMoveState
 {
-	state_PLAYER_ROTATE_IDLE,		// player is not rotating
-	state_PLAYER_ROTATE_LEFT,
-	state_PLAYER_ROTATE_RIGHT,
+	EMCMS_IDLE,			// player is not moving
+	EMCMS_FORWARD,
+	EMCMS_BACK,
+	EMCMS_LEFT,
+	EMCMS_RIGHT,
+	EMCMS_FORWARD_LEFT,
+	EMCMS_FORWARD_RIGHT,
+	EMCMS_BACK_LEFT,
+	EMCMS_BACK_RIGHT
+};
+
+enum EMainCharacterRotateState
+{
+	EMCRS_IDLE,		// player is not rotating
+	EMCRS_LEFT,
+	EMCRS_RIGHT
 };
 
 class MainCharacter: public Player
@@ -72,7 +82,7 @@ public:
 	// damage done to player
 	virtual void ReceiveDamage( irr::f32 value );
 	// check if the player is dead
-	bool IsDead() const { return moveState == state_PLAYER_MOVE_DEAD; }	
+	bool IsDead() const { return action == EMCAS_DEAD; }	
 
 	// unbuffered mouse input 
 	virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
@@ -114,15 +124,18 @@ private:
 	
 	// player's shadow, a simple static texture
 	irr::scene::CFloorDecalSceneNode* shadowNode;
+
+	EMainCharacterActionState action;
+
 	// player's move direction
-	EPlayerMoveState moveState;
-	EPlayerMoveState prevMoveState;
+	EMainCharacterMoveState moveState;
+	EMainCharacterMoveState prevMoveState;
 	// player's rotation direction
-	EPlayerRotationState rotationState;
+	EMainCharacterRotateState rotationState;
 
 	// the frame number where the walking animation was stopped last, used for restarting it from the right spot
-	EPlayerMoveState walkStopState;
-	irr::f32	walkStopFrameNumber;
+	EMainCharacterMoveState walkStopState;
+	irr::f32 walkStopFrameNumber;
 
 	// the meter which tracks how long the player is holding the throw button;
 	irr::f32 throwFillupTimer;

@@ -76,10 +76,11 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	:Player(gameWorld),node(NULL),
 	collisionAnimator(NULL),
 	shadowNode(NULL),
-	moveState(state_PLAYER_MOVE_IDLE),
-	prevMoveState(state_PLAYER_MOVE_IDLE),
-	rotationState(state_PLAYER_ROTATE_IDLE),
-	walkStopState(state_PLAYER_MOVE_IDLE),
+	action(EMCAS_IDLE),
+	moveState(EMCMS_IDLE),
+	prevMoveState(EMCMS_IDLE),
+	rotationState(EMCRS_IDLE),
+	walkStopState(EMCMS_IDLE),
 	walkStopFrameNumber(0.0f),
 	throwFillupTimer( 0.0f ),
 	bDoFillup( false ),
@@ -229,21 +230,21 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 
 	// rotate player
 	node->setRotation( irr::core::vector3df( 0, rotation.Y + defaultRotation.Y, 0 ) );
-	//node->setRotation( irr::core::vector3df( 0, rotation.Y, 0 ) );
 
 	// set the rotation state
 	if(rot.Y > 0.0f)
-	{
-		rotationState = state_PLAYER_ROTATE_RIGHT;
-	}
+		rotationState = EMCRS_RIGHT;
 	else if(rot.Y < 0.0f)
-	{
-		rotationState = state_PLAYER_ROTATE_LEFT;
-	}
+		rotationState = EMCRS_LEFT;
 	else
 	{
-		rotationState = state_PLAYER_ROTATE_IDLE;
+		rotationState = EMCRS_IDLE;
+		action |= EMCAS_ROTATE;
+
+		return;
 	}
+
+	action &= !EMCAS_ROTATE;
 }
 
 // updates the player every fram with the elapsed time since last frame
@@ -265,19 +266,19 @@ void MainCharacter::UpdateRotationState()
 	aimVector.rotateXZBy( -rotation.Y, irr::core::vector3df( 0, 0, 0 ) );
 	aimVector.normalize();
 
-	rotationState = state_PLAYER_ROTATE_IDLE;
+	rotationState = EMCRS_IDLE;
 }
 
 void MainCharacter::UpdateMoveState( irr::f32 delta )
 {
 	switch(moveState)
 	{
-		case state_PLAYER_MOVE_IDLE:
+		case EMCMS_IDLE:
 		{
 			velApprox.set( 0, 0, 0 );
 
 			// setup animation
-			if( prevMoveState != state_PLAYER_MOVE_IDLE )
+			if( prevMoveState != EMCMS_IDLE )
 			{
 				walkStopState = prevMoveState;
 				//walkStopFrameNumber = node->getFrameNr();
@@ -285,14 +286,14 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			}	
 			break;
 		}
-		case state_PLAYER_MOVE_LEFT:
+		case EMCMS_LEFT:
 		{
 			// setup animation for this state
-			if( prevMoveState != state_PLAYER_MOVE_LEFT )
+			if( prevMoveState != EMCMS_LEFT )
 			{
 				//node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_LEFT_START,PLAYER_ANIM_WALK_SIDESTEP_LEFT_END);
-				if( prevMoveState == state_PLAYER_MOVE_IDLE 
-				&&	walkStopState == state_PLAYER_MOVE_LEFT )
+				if( prevMoveState == EMCMS_IDLE 
+				&&	walkStopState == EMCMS_LEFT )
 				{
 					//node->setCurrentFrame(walkStopFrameNumber);
 				}
@@ -300,14 +301,14 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			UpdatePosition( delta );
 			break;
 		}
-		case state_PLAYER_MOVE_RIGHT:
+		case EMCMS_RIGHT:
 		{
 			// setup animation for this state
-			if( prevMoveState != state_PLAYER_MOVE_RIGHT )
+			if( prevMoveState != EMCMS_RIGHT )
 			{
 				//node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_RIGHT_START,PLAYER_ANIM_WALK_SIDESTEP_RIGHT_END);
-				if( prevMoveState == state_PLAYER_MOVE_IDLE 
-				&&	walkStopState == state_PLAYER_MOVE_RIGHT )
+				if( prevMoveState == EMCMS_IDLE 
+				&&	walkStopState == EMCMS_RIGHT )
 				{
 					//node->setCurrentFrame(walkStopFrameNumber);
 				}
@@ -315,18 +316,18 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			UpdatePosition( delta );
 			break;
 		}		
-		case state_PLAYER_MOVE_FORWARD:
-		case state_PLAYER_MOVE_FORWARD_LEFT:
-		case state_PLAYER_MOVE_FORWARD_RIGHT:
+		case EMCMS_FORWARD:
+		case EMCMS_FORWARD_LEFT:
+		case EMCMS_FORWARD_RIGHT:
 		{
 			// setup animation for this state
-			if( prevMoveState != state_PLAYER_MOVE_FORWARD
-			&&	prevMoveState != state_PLAYER_MOVE_FORWARD_LEFT
-			&&	prevMoveState != state_PLAYER_MOVE_FORWARD_RIGHT )
+			if( prevMoveState != EMCMS_FORWARD
+			&&	prevMoveState != EMCMS_FORWARD_LEFT
+			&&	prevMoveState != EMCMS_FORWARD_RIGHT )
 			{
 				//node->setFrameLoop(PLAYER_ANIM_WALK_FORWARD_START,PLAYER_ANIM_WALK_FORWARD_END);
-				if( prevMoveState == state_PLAYER_MOVE_IDLE 
-				&&	(walkStopState == state_PLAYER_MOVE_FORWARD || walkStopState == state_PLAYER_MOVE_FORWARD_LEFT || state_PLAYER_MOVE_FORWARD_RIGHT))
+				if( prevMoveState == EMCMS_IDLE 
+				&&	(walkStopState == EMCMS_FORWARD || walkStopState == EMCMS_FORWARD_LEFT || EMCMS_FORWARD_RIGHT))
 				{
 					//node->setCurrentFrame(walkStopFrameNumber);
 				}
@@ -334,35 +335,30 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			UpdatePosition( delta );
 			break;
 		}
-		case state_PLAYER_MOVE_BACK:
-		case state_PLAYER_MOVE_BACK_LEFT:
-		case state_PLAYER_MOVE_BACK_RIGHT:
+		case EMCMS_BACK:
+		case EMCMS_BACK_LEFT:
+		case EMCMS_BACK_RIGHT:
 		{
 			// setup animation for this state
-			if( prevMoveState != state_PLAYER_MOVE_BACK
-			&&	prevMoveState != state_PLAYER_MOVE_BACK_LEFT
-			&&	prevMoveState != state_PLAYER_MOVE_BACK_RIGHT )
+			if( prevMoveState != EMCMS_BACK
+			&&	prevMoveState != EMCMS_BACK_LEFT
+			&&	prevMoveState != EMCMS_BACK_RIGHT )
 			{
 				//node->setFrameLoop(PLAYER_ANIM_WALK_BACK_START,PLAYER_ANIM_WALK_BACK_END);
-				if( prevMoveState == state_PLAYER_MOVE_IDLE 
-				&&	(walkStopState == state_PLAYER_MOVE_BACK || walkStopState == state_PLAYER_MOVE_BACK_LEFT || state_PLAYER_MOVE_BACK_RIGHT))
+				if( prevMoveState == EMCMS_IDLE 
+				&&	(walkStopState == EMCMS_BACK || walkStopState == EMCMS_BACK_LEFT || EMCMS_BACK_RIGHT))
 				{
 					//node->setCurrentFrame(walkStopFrameNumber);
 				}
 			}
 			UpdatePosition( delta );
-			break;
-		}
-		case state_PLAYER_MOVE_DEAD:
-		{
 			break;
 		}
 
 		default:
-		{
-			check(false); // should not be here
-		}
+			break;
 	}
+
 	prevMoveState = moveState;
 }
 
@@ -407,53 +403,30 @@ void MainCharacter::SetMoveState( )
 	if( translation.Z > 0.0f )
 	{
 		if( translation.X > 0.0f )
-		{
-			moveState = state_PLAYER_MOVE_FORWARD_LEFT;
-		}
+			moveState = EMCMS_FORWARD_LEFT;
 		else if( translation.X < 0.0f )
-		{
-			moveState = state_PLAYER_MOVE_FORWARD_RIGHT;
-		}
+			moveState = EMCMS_FORWARD_RIGHT;
 		else
-		{
-			moveState = state_PLAYER_MOVE_FORWARD;
-		}
+			moveState = EMCMS_FORWARD;
 	}
 	else if( translation.Z < 0.0f )
 	{
 		if( translation.X > 0.0f )
-		{
-			moveState = state_PLAYER_MOVE_BACK_LEFT;
-		}
+			moveState = EMCMS_BACK_LEFT;
 		else if( translation.X < 0.0f )
-		{
-			moveState = state_PLAYER_MOVE_BACK_RIGHT;
-		}
+			moveState = EMCMS_BACK_RIGHT;
 		else
-		{
-			moveState = state_PLAYER_MOVE_BACK;
-		}
+			moveState = EMCMS_BACK;
 	}
 	else	// trans.Z == 0
 	{
 		if( translation.X > 0.0f )
-		{
-			moveState = state_PLAYER_MOVE_LEFT;
-		}
+			moveState = EMCMS_LEFT;
 		else if( translation.X < 0.0f )
-		{
-			moveState = state_PLAYER_MOVE_RIGHT;
-		}
+			moveState = EMCMS_RIGHT;
 		else
-		{
-			moveState = state_PLAYER_MOVE_IDLE;
-		}
-
-		node->setLoopMode(false);
-		node->setCurrentFrame(30);
-		return;
+			moveState = EMCMS_IDLE;
 	}
-	node->setLoopMode(true);
 }
 
 void MainCharacter::ReceiveDamage( irr::f32 value )
@@ -467,8 +440,10 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 
 	if( health <= 0 )
 	{
-		moveState = state_PLAYER_MOVE_DEAD;
-		rotationState = state_PLAYER_ROTATE_IDLE;
+		//moveState = EMCMS_DEAD;
+		action = EMCAS_DEAD;
+		moveState = EMCMS_IDLE;
+		rotationState = EMCRS_IDLE;
 
 		// turn player frozen
 		irr::scene::ISceneManager& smgr = world.GetSceneManager();
