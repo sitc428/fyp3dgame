@@ -47,7 +47,7 @@ struct Name_test
 {
 	virtual std::string GetName() const = 0;
 	virtual void test(int, int, int) const =0;
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player& ) const = 0;
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player&,irr::core::vector3df ) const = 0;
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode*,Player&,irr::core::vector3df) const = 0;
 };
 
@@ -82,8 +82,8 @@ struct FiniteStateMachine : sc::state_machine<FiniteStateMachine, NotDeath >{
 	{
 		state_cast<const Name_test & >().test(a,s,q);
 	}
-	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player ){
-		state_cast< const Name_test & >().reaction(_mon,_player);
+	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ){
+		state_cast< const Name_test & >().reaction(_mon,_player, target);
 	}
 	void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df pos){
 		state_cast< const Name_test & >().IdleTooLong(_mon,_player, pos);
@@ -104,7 +104,7 @@ struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
     {
       std::cout<<-a+s+q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df target ) const{
 		_mon->setLoopMode(true);
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df pos) const{
@@ -123,7 +123,7 @@ struct NotDeath :Name_test, sc::simple_state<NotDeath, FiniteStateMachine, Idle 
     {
       std::cout<<"a-s-q"<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
 	
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
@@ -148,7 +148,7 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
     {
       std::cout<<a-s+q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
 		//_player->reduceHealth(1);
 		_player.ReceiveDamage(10);
 	}
@@ -175,7 +175,7 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
     {
       std::cout<<a+s-q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
 		_mon->setLoopMode(false);
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
@@ -204,7 +204,7 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 };
 struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 		Tracing(){ 
-			//std::cout<<"Tracing\n";
+			std::cout<<"Tracing\n";
 		};
 		virtual ~Tracing() {};
 	//	virtual const std::string name () const { return "Tracing"; };
@@ -216,7 +216,7 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 		{
 			std::cout<<a+s+q<<"\n";
 		}
-		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player) const{
+		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
 			//_mon->setLoopMode(true);
 			irr::core::matrix4 m;
 			irr::core::vector3df targetPos = _player.GetNodePosition();
@@ -225,7 +225,7 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 			float y = _mon->getPosition().Y;
 			targetPos = _mon->getPosition()+((_player.GetNodePosition() - _mon->getPosition())/42.5f); 
 			targetPos.Y = y;
-			
+			targetPos = target;
 			irr::core::vector3df direction = _mon->getPosition()-targetPos;
 			_mon->setRotation(direction.getHorizontalAngle());
 			//std::cout<<targetPos<<"\n";
@@ -268,7 +268,7 @@ class Monster: public Actor{
 		void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
 		virtual void ReSetPosition(irr::core::vector3df);
 		//int GetHealth();
-		void CheckActorPosition(irr::core::vector3df);
+		void CheckActorPosition(irr::core::vector3df&,Player&);
 			
 	private:
 		FiniteStateMachine FSM;
