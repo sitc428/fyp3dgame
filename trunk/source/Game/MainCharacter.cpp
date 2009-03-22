@@ -18,6 +18,8 @@ static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 90,
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Final_testing.x";
 static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/MainTexutre1.png";
+static const irr::c8*		MAIN_CHARACTER_vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
+static const irr::c8*		MAIN_CHARACTER_psFileName = "model/shader/trial.frag"; // filename for the pixel shader
 
 static const irr::c8*		defaultTexture = "media/model/MainTexutre1.png";
 static const irr::f32		ANIMATION_SPEED = 45; // 45 FPS
@@ -227,6 +229,26 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 	}
 
 	action = (EMainCharacterActionState) ( (int)action & ! (int)EMCAS_ROTATE );
+}
+
+void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
+{
+	irr::s32 newMaterialType = 0;
+
+	irr::video::IGPUProgrammingServices* gpuServices = GEngine->GetDriver().getGPUProgrammingServices();
+	if(gpuServices)
+	{
+		MyMainCharacterShaderCallBack *mc = new MyMainCharacterShaderCallBack(&GEngine->GetDevice(), lightPosition);
+
+		newMaterialType = gpuServices->addHighLevelShaderMaterialFromFiles(
+			MAIN_CHARACTER_vsFileName, "main", irr::video::EVST_VS_1_1,
+			MAIN_CHARACTER_psFileName, "main", irr::video::EPST_PS_1_1,
+			mc, irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+
+		mc->drop();
+	}
+
+	node->setMaterialType( (irr::video::E_MATERIAL_TYPE) newMaterialType );
 }
 
 // updates the player every fram with the elapsed time since last frame

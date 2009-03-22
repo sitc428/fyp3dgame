@@ -8,6 +8,7 @@
 class Actor;
 class Camera;
 class Player;
+class MainCharacter;
 class GameEngine;
 //class DynamiteProjectile;
 //class SnowballProjectile;
@@ -87,6 +88,7 @@ class GameWorld
 		void InitEffects();
 		void InitPickups();
 		void InitHUD();
+		void InitShader();
 
 		// do the actual gameplay
 		void DoGameplay( irr::f32 delta );
@@ -119,10 +121,11 @@ class GameWorld
 		EGameState gameState; // current state of the game
 
 		irr::scene::ISceneManager& smgr; // scene manager from the engine
-		Player* mainCharacter; // player on foot actor
+		MainCharacter* mainCharacter; // player on foot actor
 		bool bUseOnFootPlayer; // which player model are we currently using
 		bool bSwitchPlayers;   // whether we should perform the player switch after all players have been ticked
 		Camera* camera; // camera object
+		irr::scene::ILightSceneNode* light;
 
 		irr::core::array<Actor*> actors; // all the actors that are currently in the world, includes the player and the camera
 
