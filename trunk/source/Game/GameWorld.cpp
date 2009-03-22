@@ -706,6 +706,8 @@ void GameWorld::DoInput()
 		playerRotation.Y = -15;
 	}
 
+	((MainCharacter*)&GetCurrentPlayer())->SetDefending( receiver.keyDown(irr::KEY_KEY_M) );
+
 	if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
 	{
 		for( irr::u32 i=0; i < actors.size(); ++i )
