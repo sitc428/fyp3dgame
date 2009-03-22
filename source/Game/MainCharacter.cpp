@@ -338,17 +338,14 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 		case EMCMS_BACK_RIGHT:
 		{
 			// setup animation for this state
-			if( prevMoveState != EMCMS_BACK
-			&&	prevMoveState != EMCMS_BACK_LEFT
-			&&	prevMoveState != EMCMS_BACK_RIGHT )
+			if( prevMoveState != EMCMS_BACK )
 			{
-				//node->setFrameLoop(MAIN_CHARACTER_ANIMATION_WALK_BACK_START,MAIN_CHARACTER_ANIMATION_WALK_BACK_END);
-				if( prevMoveState == EMCMS_IDLE 
-				&&	(walkStopState == EMCMS_BACK || walkStopState == EMCMS_BACK_LEFT || EMCMS_BACK_RIGHT))
-				{
-					//node->setCurrentFrame(walkStopFrameNumber);
-				}
+				// setup animation for this state
+				node->setLoopMode( true );
+				node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_BACK_START,
+					MAIN_CHARACTER_ANIMATION_WALK_BACK_END );
 			}
+
 			UpdatePosition( delta );
 			break;
 		}
@@ -433,6 +430,12 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 {
 	if( godMode )
 		return;
+
+	if( action & EMCAS_DEFEND )
+	{
+		std::cout<<"defending"<<std::endl;
+		value = value / 4;
+	}
 
 	health -= value;
 
