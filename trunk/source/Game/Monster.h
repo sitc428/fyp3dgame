@@ -268,6 +268,7 @@ class Monster: public Actor{
 		void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
 		virtual void ReSetPosition(irr::core::vector3df);
 		//int GetHealth();
+		void CheckActorPosition(irr::core::vector3df);
 			
 	private:
 		FiniteStateMachine FSM;
