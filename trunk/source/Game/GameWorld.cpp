@@ -640,13 +640,11 @@ void GameWorld::DoGameplay( irr::f32 delta )
 
 		// perform an input update
 		DoInput();
-		camera->Tick( delta );
+		//camera->Tick( delta );
 
 		// tick all actors
 		for( irr::u32 i=0; i < actors.size(); ++i )
-		{
 			actors[i]->Tick( delta );
-		}
 
 		// update 3d audio information
 		DoAudio(); 
@@ -707,8 +705,6 @@ void GameWorld::DoInput()
 		{
 			if( actors[i]->GetActorType() != ACTOR_ENEMY)
 				continue;
-
-			std::cout << "!!!"<< std::endl;
 			
 			if(
 				CollisionHelper::CheckProximity2D(

@@ -17,57 +17,37 @@ static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 90, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Final_testing.x";
-//static const irr::c8*		CHARACTER_ARMS_MODEL = "../art/characters/Fatty/ArmSplit.ms3d";
 static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/MainTexutre1.png";
-//static const irr::c8*		CHARACTER_LEFT_FOOTSTEP_TEXTURE = "../art/sfx/Flats/FootPrintLeft.png";
-//static const irr::c8*		CHARACTER_RIGHT_FOOTSTEP_TEXTURE = "../art/sfx/Flats/FootPrintRight.png";
-//static const irr::c8*		ARMS_TORSO_COMMON_JOINT_NAME = "LeftShoulder";
-//static const irr::c8*		TORSO_ATTACH_JOINT = "Back";
 
 static const irr::c8*		defaultTexture = "media/model/MainTexutre1.png";
-static const irr::f32			ANIMATION_SPEED = 45; // 45 FPS
-static const irr::f32			ANIMATION_TRANSITION_BLEND_TIME = 0.2f;
+static const irr::f32		ANIMATION_SPEED = 45; // 45 FPS
+static const irr::f32		ANIMATION_TRANSITION_BLEND_TIME = 0.2f;
 
-static const irr::s32			MIN_TIME_BETWEEN_THROWS = 500; // 500 milliseconds 
-static const irr::f32			MIN_THROW_POWER = 80.0f;
-static const irr::f32			MAX_THROW_POWER = 200.0f;
-static const irr::f32			THROW_METER_FILLUP_TIME = 1.5f;
-
-//static const irr::core::vector3df		PROJECTILE_START_OFFSET = irr::core::vector3df( 0.0f, 15.0f, 0.0f ); // the offset from the player position where the snowball is thrown from
-
-// player animation information
-static const irr::u32			PLAYER_ANIM_IDLE_START = 2;
-static const irr::u32			PLAYER_ANIM_IDLE_END = 2;
-static const irr::u32			PLAYER_ANIM_WALK_FORWARD_START = 2;
-static const irr::u32			PLAYER_ANIM_WALK_FORWARD_END = 31;
-static const irr::u32			PLAYER_ANIM_WALK_BACK_START = 32;
-static const irr::u32			PLAYER_ANIM_WALK_BACK_END = 61;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_LEFT_START = 92;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_LEFT_END = 121;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_RIGHT_START = 62;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_RIGHT_END = 91;
-
-//static const irr::u32			PLAYER_ANIM_ARMS_WALK_START = 2;
-//static const irr::u32			PLAYER_ANIM_ARMS_WALK_END = 31;
-//static const irr::u32			PLAYER_ANIM_ARMS_THROW_START = 122;
-//static const irr::u32			PLAYER_ANIM_ARMS_THROW_END = 136;
+// main character's animation information
+static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_START = 2;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_END = 2;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START = 2;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END = 31;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_START = 32;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_END = 61;
+//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_START = 92;
+//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_END = 121;
+//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_START = 62;
+//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_END = 91;
 
 // frame numbers for footsteps
-static const irr::u32			PLAYER_ANIM_WALK_FORWARD_LEFT_FOOTSTEP_FRAME = 2;
-static const irr::u32			PLAYER_ANIM_WALK_FORWARD_RIGHT_FOOTSTEP_FRAME = 17;
-static const irr::u32			PLAYER_ANIM_WALK_BACK_LEFT_FOOTSTEP_FRAME = 32;
-static const irr::u32			PLAYER_ANIM_WALK_BACK_RIGHT_FOOTSTEP_FRAME = 40;
-static const irr::u32			PLAYER_ANIM_WALK_BACK_LEFT_FOOTSTEP2_FRAME = 48;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_LEFT_LEFT_FOOTSTEP_FRAME = 120;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_LEFT_RIGHT_FOOTSTEP_FRAME = 107;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_RIGHT_LEFT_FOOTSTEP_FRAME = 90;
-static const irr::u32			PLAYER_ANIM_WALK_SIDESTEP_RIGHT_RIGHT_FOOTSTEP_FRAME = 75;
+/*
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_FORWARD_LEFT_FOOTSTEP_FRAME = 2;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_FORWARD_RIGHT_FOOTSTEP_FRAME = 17;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_BACK_LEFT_FOOTSTEP_FRAME = 32;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_BACK_RIGHT_FOOTSTEP_FRAME = 40;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_BACK_LEFT_FOOTSTEP2_FRAME = 48;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_LEFT_FOOTSTEP_FRAME = 120;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_RIGHT_FOOTSTEP_FRAME = 107;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_LEFT_FOOTSTEP_FRAME = 90;
+static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_RIGHT_FOOTSTEP_FRAME = 75;
 static const irr::u32			FOOTSTEP_DURATION = 6000;
-
-// angle in degrees of rotation on the x-axis for player/aiming
-static const irr::f32			MIN_XROT_ANGLE = -13.0f;
-static const irr::f32			MAX_XROT_ANGLE = 15.0f;
-
+*/
 
 extern GameEngine* GEngine;
 
@@ -146,12 +126,12 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setJointMode(EJUOR_CONTROL); //To write positions to the mesh on render
 	node->setAnimationSpeed(ANIMATION_SPEED);
 	node->setTransitionTime(ANIMATION_TRANSITION_BLEND_TIME);
-	node->setFrameLoop(PLAYER_ANIM_IDLE_START,PLAYER_ANIM_IDLE_END);
+	node->setFrameLoop(MAIN_CHARACTER_ANIMATION_IDLE_START,MAIN_CHARACTER_ANIMATION_IDLE_END);
 
 	arms->setJointMode(EJUOR_CONTROL); //To write positions to the mesh on render
 	arms->setAnimationSpeed(ANIMATION_SPEED);
 	arms->setTransitionTime(ANIMATION_TRANSITION_BLEND_TIME);
-	arms->setFrameLoop(PLAYER_ANIM_IDLE_START,PLAYER_ANIM_IDLE_END);*/
+	arms->setFrameLoop(MAIN_CHARACTER_ANIMATION_IDLE_START,MAIN_CHARACTER_ANIMATION_IDLE_END);*/
 
 	// change mesh color's back in case they were changed from freezing
 	//IMeshManipulator* meshMan = smgr.getMeshManipulator();
@@ -239,12 +219,12 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 	else
 	{
 		rotationState = EMCRS_IDLE;
-		action |= EMCAS_ROTATE;
+		action =  (EMainCharacterActionState) ( (int)action | (int)EMCAS_ROTATE );
 
 		return;
 	}
 
-	action &= !EMCAS_ROTATE;
+	action = (EMainCharacterActionState) ( (int)action & ! (int)EMCAS_ROTATE );
 }
 
 // updates the player every fram with the elapsed time since last frame
@@ -280,18 +260,16 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			// setup animation
 			if( prevMoveState != EMCMS_IDLE )
 			{
-				walkStopState = prevMoveState;
-				//walkStopFrameNumber = node->getFrameNr();
-				//node->setFrameLoop((irr::s32)walkStopFrameNumber,(irr::s32)walkStopFrameNumber);
+				node->setLoopMode( false );
+				node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
+				node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
 			}	
 			break;
 		}
 		case EMCMS_LEFT:
 		{
-			// setup animation for this state
 			if( prevMoveState != EMCMS_LEFT )
 			{
-				//node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_LEFT_START,PLAYER_ANIM_WALK_SIDESTEP_LEFT_END);
 				if( prevMoveState == EMCMS_IDLE 
 				&&	walkStopState == EMCMS_LEFT )
 				{
@@ -306,7 +284,7 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			// setup animation for this state
 			if( prevMoveState != EMCMS_RIGHT )
 			{
-				//node->setFrameLoop(PLAYER_ANIM_WALK_SIDESTEP_RIGHT_START,PLAYER_ANIM_WALK_SIDESTEP_RIGHT_END);
+				//node->setFrameLoop(MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_START,MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_END);
 				if( prevMoveState == EMCMS_IDLE 
 				&&	walkStopState == EMCMS_RIGHT )
 				{
@@ -320,18 +298,14 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 		case EMCMS_FORWARD_LEFT:
 		case EMCMS_FORWARD_RIGHT:
 		{
-			// setup animation for this state
-			if( prevMoveState != EMCMS_FORWARD
-			&&	prevMoveState != EMCMS_FORWARD_LEFT
-			&&	prevMoveState != EMCMS_FORWARD_RIGHT )
+			if( prevMoveState != EMCMS_FORWARD )
 			{
-				//node->setFrameLoop(PLAYER_ANIM_WALK_FORWARD_START,PLAYER_ANIM_WALK_FORWARD_END);
-				if( prevMoveState == EMCMS_IDLE 
-				&&	(walkStopState == EMCMS_FORWARD || walkStopState == EMCMS_FORWARD_LEFT || EMCMS_FORWARD_RIGHT))
-				{
-					//node->setCurrentFrame(walkStopFrameNumber);
-				}
+				// setup animation for this state
+				node->setLoopMode( true );
+				node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START,
+					MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END );
 			}
+
 			UpdatePosition( delta );
 			break;
 		}
@@ -344,7 +318,7 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			&&	prevMoveState != EMCMS_BACK_LEFT
 			&&	prevMoveState != EMCMS_BACK_RIGHT )
 			{
-				//node->setFrameLoop(PLAYER_ANIM_WALK_BACK_START,PLAYER_ANIM_WALK_BACK_END);
+				//node->setFrameLoop(MAIN_CHARACTER_ANIMATION_WALK_BACK_START,MAIN_CHARACTER_ANIMATION_WALK_BACK_END);
 				if( prevMoveState == EMCMS_IDLE 
 				&&	(walkStopState == EMCMS_BACK || walkStopState == EMCMS_BACK_LEFT || EMCMS_BACK_RIGHT))
 				{
@@ -389,10 +363,12 @@ void MainCharacter::UpdateThrowMeter( irr::f32 delta )
 		throwFillupTimer += delta;
 
 		// stop updating if we've reached the maximum fillup
+		/*
 		if( throwFillupTimer > THROW_METER_FILLUP_TIME )
 		{
 			throwFillupTimer = THROW_METER_FILLUP_TIME;
 		}
+		*/
 	}
 }
 
@@ -400,7 +376,7 @@ void MainCharacter::UpdateThrowMeter( irr::f32 delta )
 void MainCharacter::SetMoveState( )
 {
 	// set the player move state based on the received translation
-	if( translation.Z > 0.0f )
+	if( translation.Z < 0.0f )
 	{
 		if( translation.X > 0.0f )
 			moveState = EMCMS_FORWARD_LEFT;
@@ -409,7 +385,7 @@ void MainCharacter::SetMoveState( )
 		else
 			moveState = EMCMS_FORWARD;
 	}
-	else if( translation.Z < 0.0f )
+	else if( translation.Z > 0.0f )
 	{
 		if( translation.X > 0.0f )
 			moveState = EMCMS_BACK_LEFT;
