@@ -128,22 +128,22 @@ void Monster::update(Player& _player)
 	{
 		//Death
 		FSM.process_event( EvDie());
-		FSM.reaction(_monster, _player);
-	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 38.0f)
+		FSM.reaction(_monster, _player,target);
+	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 32.0f)
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM.GetName() != "Attacking"){
 			FSM.process_event( EvWithinAttackRange());
 			if(attack_timer->elapsed() > timeout){
 				attack_timer->restart();
-				FSM.reaction(_monster, _player);
+				FSM.reaction(_monster, _player,target);
 			}
 		}else{
 			
 			if(attack_timer->elapsed() > timeout){
 			//	std::cout<<"Mon_timer:------------"<<"\n";
 				attack_timer->restart();
-				FSM.reaction(_monster, _player);			
+				FSM.reaction(_monster, _player,target);			
 			}
 		}
 	}
@@ -161,8 +161,11 @@ void Monster::update(Player& _player)
 				FSM.process_event(EvFiniteStateMachineOutOfRange());
 				FSM.process_event( EvPlayerWithinRange());
 				irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
-				CheckActorPosition(targetPos);
-				FSM.reaction(_monster, _player);
+				CheckActorPosition(targetPos, _player);
+				if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
+					target = targetPos;
+				
+				FSM.reaction(_monster, _player,target);
 				pos = _monster->getPosition();
 				target = pos;
 			
@@ -170,7 +173,7 @@ void Monster::update(Player& _player)
 		else
 		{
 			FSM.process_event( EvFiniteStateMachineOutOfRange());
-			FSM.reaction(_monster, _player);
+			FSM.reaction(_monster, _player,target);
 		}
 	}
 	else
@@ -184,7 +187,7 @@ void Monster::update(Player& _player)
 			//std::cout<<"Mon_timer:Restart "<<"\n";
 			
 			FSM.process_event( EvFiniteStateMachineOutOfRange());
-			FSM.reaction(_monster, _player);
+			FSM.reaction(_monster, _player,target);
 
 		}
 		else
@@ -278,7 +281,7 @@ void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 }
 
 
-void Monster::CheckActorPosition(irr::core::vector3df target){
+void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 //	for(irr::u32 i =0; i<world.GetActors().size();i++){
 //		
 //		if(world.GetActors()[i]->GetNode())
@@ -290,24 +293,57 @@ void Monster::CheckActorPosition(irr::core::vector3df target){
 	irr::core::array<irr::scene::ISceneNode*> outNodes;
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
-//float min = 9999.99;
+float min = 9999.99;
+	irr::core::vector3df next_pos = target;
 	for(irr::u32 i = 0; i< outNodes.size();i++){
 		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
 		if(meshNode->getMesh()){
 			if(meshNode->getID() == -1 || meshNode->getID() == 2 )
-				
-				if(pos.getDistanceFrom(meshNode->getPosition() ) < 40.0){
+				//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
+				if(pos.getDistanceFrom(meshNode->getPosition() ) < 50.0){
+					irr::core::vector3df directionM = meshNode->getPosition()-_player.GetNodePosition();
+					irr::core::vector3df directionT = meshNode->getPosition() - _monster->getPosition();
+					float angle = directionM.dotProduct(directionT);
+					angle = angle/(directionM.getLength() * directionT.getLength());
+					//バガヤロ　
+					if(angle<0.25){
+						
+						float mov_x, mov_z;
+						if(_player.GetNodePosition().X > _monster->getPosition().X)
+							mov_x = 15.0;
+						else  mov_x = -15.0;
+						if(_player.GetNodePosition().Z > _monster->getPosition().Z)
+							mov_z = 15.0;
+						else  mov_z = -15.0;
+						next_pos = target;
+						next_pos.X+=mov_x;
+						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
+							std::cout<<"PATH FOUND_X\n";
+						next_pos = target;
+						next_pos.Z +=mov_z;
+						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
+							std::cout<<"PATH FOUND_Z\n";
+						
+						
 					
+					}
+										
+				//	std::cout<<angle<<"\n";
+					//if( target.getDistanceFrom(meshNode->getPosition() ) < 40.0)
+					//	std::cout<<"GOING TO BE BLOACKED \n";
 					//std::cout<<"BLOCKED\n";
-					//if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
-					//	min = pos.getDistanceFrom(meshNode->getPosition() );
+					if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
+							min = pos.getDistanceFrom(meshNode->getPosition() );
 					//std::cout<<pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
+					
+					
 				}
 					
 		}
 	}
-	//std::cout<<min<<"\n";
-
+	std::cout<<min<<"\n";
+	next_pos.Y = _monster->getPosition().Y;
+	target = next_pos;
 }
 
 /*
