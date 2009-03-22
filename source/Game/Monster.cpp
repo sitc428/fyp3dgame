@@ -250,19 +250,20 @@ void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 }
 
 
+
 void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
-//	for(irr::u32 i =0; i<world.GetActors().size();i++){
-//		
-//		if(world.GetActors()[i]->GetNode())
-//		for(irr::u32 j=0; j<world.GetActors()[i]->attachActorChildren.size();j++)
-			//std::cout<<i<<" : "<<world.GetActors()[i].attachActorChildren[j]->GetNode().getPosition().X<<"\n";
-			//std::cout<<i<<" : "<<world.GetActors()[i].attachActorChildren[j]->GetNode().getPosition().X<<"\n";
+	//	for(irr::u32 i =0; i<world.GetActors().size();i++){
+	//		
+	//		if(world.GetActors()[i]->GetNode())
+	//		for(irr::u32 j=0; j<world.GetActors()[i]->attachActorChildren.size();j++)
+	//std::cout<<i<<" : "<<world.GetActors()[i].attachActorChildren[j]->GetNode().getPosition().X<<"\n";
+	//std::cout<<i<<" : "<<world.GetActors()[i].attachActorChildren[j]->GetNode().getPosition().X<<"\n";
 	//}
 	
 	irr::core::array<irr::scene::ISceneNode*> outNodes;
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
-float min = 9999.99;
+	float min = 9999.99;
 	irr::core::vector3df next_pos = target;
 	for(irr::u32 i = 0; i< outNodes.size();i++){
 		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
@@ -274,39 +275,63 @@ float min = 9999.99;
 					irr::core::vector3df directionT = meshNode->getPosition() - _monster->getPosition();
 					float angle = directionM.dotProduct(directionT);
 					angle = angle/(directionM.getLength() * directionT.getLength());
-					//?ê„‚\?§„É≠?Ä
+					
 					if(angle<0.25){
-						
+						bool found = false;
 						float mov_x, mov_z;
 						if(_player.GetNodePosition().X > _monster->getPosition().X)
-							mov_x = 15.0;
-						else  mov_x = -15.0;
+							mov_x = 20.0;
+						else  mov_x = -20.0;
 						if(_player.GetNodePosition().Z > _monster->getPosition().Z)
-							mov_z = 15.0;
-						else  mov_z = -15.0;
+							mov_z = 20.0;
+						else  mov_z = -20.0;
 						next_pos = target;
 						next_pos.X+=mov_x;
-						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
+						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+							found = true;
 							std::cout<<"PATH FOUND_X\n";
-						next_pos = target;
-						next_pos.Z +=mov_z;
-						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
+						}
+						irr::core::vector3df next_pos2 = target;
+						next_pos2.Z +=mov_z;
+						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+							found = true;
 							std::cout<<"PATH FOUND_Z\n";
+						}
+						if(! found ){
+							mov_x=-mov_x;
+							mov_z=-mov_z;
+							next_pos = target;
+							next_pos.X+=mov_x;
+							if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+								found = true;
+								std::cout<<"PATH FOUND_X2\n";
+							}else{
+								next_pos2 = target;
+								next_pos2.Z +=mov_z;
+								if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+									found = true;
+									std::cout<<"PATH FOUND_Z2\n";
+								}
+							}
+							
+						}
+						if(next_pos.getDistanceFrom(_player.GetNodePosition()) < next_pos2.getDistanceFrom(_player.GetNodePosition()))
+							next_pos = next_pos2;
 						
 						
-					
 					}
-										
-				//	std::cout<<angle<<"\n";
+					
+					//	std::cout<<angle<<"\n";
 					//if( target.getDistanceFrom(meshNode->getPosition() ) < 40.0)
 					//	std::cout<<"GOING TO BE BLOACKED \n";
 					//std::cout<<"BLOCKED\n";
 					if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
-							min = pos.getDistanceFrom(meshNode->getPosition() );
+						min = pos.getDistanceFrom(meshNode->getPosition() );
 					//std::cout<<pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
 					
 					
 				}
+			
 		}
 	}
 	std::cout<<min<<"\n";
