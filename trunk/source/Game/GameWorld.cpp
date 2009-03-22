@@ -97,33 +97,14 @@ void GameWorld::InitLevel()
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
-			// find the section of the fence we are supposed to bring down to transition to next level
-			//std::cout << meshNode->getID() << std::endl;
-			//printf("%s \n", meshNode->getName());
-			//printf("%s \n", NODE_ID_FENCE_TO_FALL);
-			//Check whether the ID is -1
-			if( meshNode->getID() == NODE_ID_FENCE_TO_FALL )
-			{
-				FenceToFall = meshNode;
-			}
-			else
-			{
-
-				//irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelectorFromBoundingBox( meshNode );
-				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
-				check(meshTriangleSelector);
-				meshNode->setTriangleSelector( meshTriangleSelector );
-				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-				meshTriangleSelector->drop();
-				meshTriangleSelector = NULL;
-			}
-		}
-		else
-		{
-			printf("GAME WARNING: level mesh node %s does not have a mesh assigned to it\n", meshNode->getName());
+			irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
+			check(meshTriangleSelector);
+			meshNode->setTriangleSelector( meshTriangleSelector );
+			levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+			meshTriangleSelector->drop();
+			meshTriangleSelector = NULL;
 		}
 	}
-	//system("pause"); 
 	outNodes.clear();
 
 	/*smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
@@ -165,9 +146,6 @@ void GameWorld::InitLevel()
 	// set game state
 	stateTimer = 0;
 	gameState = state_START_LEVEL;
-
-	// make sure we have found the falling fence
-	check(FenceToFall);
 
 	SetNumLives( 3 );
 }
@@ -285,26 +263,6 @@ void GameWorld::InitLight()
 // sets up the player model and player collisions with the world
 void GameWorld::InitPlayer()
 {
-	/* 
-	// create main player actor
-	playerOnFoot = new PlayerOnFoot( *this, GEngine->GetDriver() );
-	check( playerOnFoot );
-	actors.push_back( playerOnFoot );
-
-	// create player on snowplow actor
-	playerOnSnowplow = new PlayerOnSnowplow( *this, GEngine->GetDriver(), GEngine->GetParticleManager() );
-	check( playerOnSnowplow );
-	actors.push_back( playerOnSnowplow );
-
-	// only one of the players should be active
-	playerOnFoot->SetActive( true );
-	playerOnSnowplow->SetActive( false );
-	bUseOnFootPlayer = true;
-
-	// hide the current player to avoid the first frame pop
-	GetCurrentPlayer().GetNode().setVisible(false);
-	*/
-
 	mainCharacter = new MainCharacter( *this, GEngine->GetDriver() );
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
@@ -313,112 +271,6 @@ void GameWorld::InitPlayer()
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
-	/*
-	// hard-coded "file" for enemy waves
-	irr::s32 levelOneWaves[] = { 3, // total number of waves
-		3, 5, // number of spawns, time till next wave
-		ACTOR_ENEMY, 2, 6 , // (enemytype, amount, time till next spawn)
-		ACTOR_ENEMY, 2, 6 , 
-		ACTOR_ENEMY_TWO, 1, 0,
-
-		4, 5, 
-		ACTOR_ENEMY, 3, 5,
-		ACTOR_ENEMY_TWO, 2, 3,
-		ACTOR_ENEMY, 3, 3,
-		ACTOR_ENEMY, 3, 0,
-
-		4, 5, 
-		ACTOR_ENEMY, 3, 4 ,
-		ACTOR_ENEMY_TWO, 1, 4,
-		ACTOR_ENEMY, 3, 5,
-		ACTOR_ENEMY_TWO, 2, 0,
-	};
-
-	irr::s32 levelTwoWaves[] = { 5, // total number of waves
-		3, 5, // number of spawns, time till next wave
-		ACTOR_ENEMY, 3, 6 , // (enemytype, amount, time till next spawn)
-		ACTOR_ENEMY, 3, 6 , 
-		ACTOR_ENEMY_TWO, 2, 0, 
-
-		4, 5, 
-		ACTOR_ENEMY, 3, 5,
-		ACTOR_ENEMY_TWO, 2, 3,
-		ACTOR_ENEMY, 5, 3,
-		ACTOR_ENEMY, 5, 0,
-
-		4, 5, 
-		ACTOR_ENEMY, 3, 4 ,
-		ACTOR_ENEMY_TWO, 1, 4,
-		ACTOR_ENEMY, 3, 5,
-		ACTOR_ENEMY_TWO, 2, 0,
-
-		8, 5, 
-		ACTOR_ENEMY, 3, 4 ,
-		ACTOR_ENEMY_TWO, 1, 4,
-		ACTOR_ENEMY, 3, 5,
-		ACTOR_ENEMY_TWO, 2, 0,
-		ACTOR_ENEMY, 3, 3 ,
-		ACTOR_ENEMY, 3, 3 ,
-		ACTOR_ENEMY, 3, 3 ,
-		ACTOR_ENEMY, 3, 3 ,
-
-		1, 5,
-		ACTOR_ENEMY_BOSS, 1, 0,
-	};
-	/*
-	// clean up enemy waves
-	for( irr::u32 i=0; i < enemyWaves.size(); i++ )
-	{
-	delete enemyWaves[i];
-	enemyWaves[i] = 0;
-	}
-	enemyWaves.clear();
-	
-	// load in waves depending on the level
-	irr::s32 index = 0;
-	irr::s32 numSpawns;
-	irr::s32 timeTillNextWave;
-	irr::s32* waves = NULL;
-	irr::s32 spawnNodeID;
-
-	switch( curLevel )
-	{
-		case 0:
-			waves = levelOneWaves;
-			spawnNodeID = NODE_ID_ENEMYSPAWNER;
-			break;
-		case 1:
-			waves = levelTwoWaves;
-			spawnNodeID = NODE_ID_ENEMYSPAWNER2;
-			break;
-		default:
-			check(false);
-	}
-
-	irr::s32 totalWaves = waves[index++];
-	for(int i=0; i<totalWaves; i++)
-	{
-		numSpawns = waves[index++];
-		timeTillNextWave = waves[index++];
-
-		// enemyWaves.push_back( new EnemyWave( &waves[index],  numSpawns, timeTillNextWave ) );
-		index += 3 * numSpawns;
-	}
-
-	curEnemyWave = 0;
-	spawnTimer = 6;
-
-	// clean up spawn nodes
-	spawnNodes.clear();
-
-	// get spawn nodes
-	irr::core::array<irr::scene::ISceneNode*> nodes;
-	smgr.getSceneNodesFromType(irr::scene::ESNT_EMPTY, nodes, smgr.getRootSceneNode());
-	for( irr::u32 i = 0; i < nodes.size(); ++i )
-		if( nodes[i]->getID() == spawnNodeID )
-			spawnNodes.push_back( nodes[i] );
-			*/
-
 	Monster * m1 = new Monster( *this, GEngine->GetDriver());
 	actors.push_back(m1);
 	m1->ReSetPosition(irr::core::vector3df(70,0,80));
@@ -519,15 +371,7 @@ void GameWorld::Exit()
 {
 	// clean up spawn nodes
 	spawnNodes.clear();
-	/*
-	// clean up enemy waves
-	for( irr::u32 i=0; i < enemyWaves.size(); i++ )
-	{
-	delete enemyWaves[i];
-	enemyWaves[i] = 0;
-	}
-	enemyWaves.clear();
-	*/
+
 	// clean up all the actors
 	for( irr::u32 i=0; i < actors.size(); ++i )
 	{
@@ -869,15 +713,7 @@ void GameWorld::DoInput()
 					25.0f
 				)
 			)
-			{
-				std::cout<<"Y"<<std::endl;
-				//mainCharacter->ReceiveDamage( 10 );
 				actors[i]->ReceiveDamage(10);
-			}
-			else
-			{
-				std::cout<<"N"<<std::endl;
-			}
 		}
 	}
 
