@@ -15,39 +15,14 @@
 static const irr::c8* MONSTER_MODEL = "media/model/dwarf.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(50,0,80);
 
-Monster::Monster(GameWorld& gameWorld, irr::scene::IAnimatedMeshSceneNode* source, irr::core::vector3df position, irr::core::vector3df scale, float speed)
+Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	:Actor(gameWorld),
-	_monster(source),
-	_speed(speed),
 	world(gameWorld),
 	collisionAnimator(NULL)
 {
-	//_monster->setLoopMode(false);
-	//SetNodePosition(position);
-	//_monster->setScale(scale);
-	//_monster->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-	FSM.initiate();
-	original = position; 
-	pos = position;
-	target=pos;
-	moved = false;
-	health = 100;
-	timeout = 5.0;
-	mon_timer = new boost::timer();
-	mon_timer->restart();
-	//mon_timer->stop();
-	//FSM.test() = "TEST";
-	
-	
-	
-}
-
-Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
-	:Actor(gameWorld),
-	world(gameWorld)
-{
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
+	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
+	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
 	_monster->setPosition( defaultPosition );
 	FSM.initiate();
 	original = defaultPosition;
@@ -62,12 +37,11 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	attack_timer->restart();
 	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
 	_monster->setLoopMode(false);
-	
+
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
 	
 	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
-	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh()->getMesh(0), node );
 	_monster->setTriangleSelector( triangleSelector );
 	triangleSelector->drop();
 	triangleSelector = NULL;
@@ -230,15 +204,13 @@ void Monster::update(Player& _player)
 			}
 		}
 	}
-	
-	
 }
 
 
 void Monster::RecreateCollisionResponseAnimator()
 {
 	// drop the current collision response animator
-	if( collisionAnimator )  // soft fail which allows us to call RecreateCollisionResponseAnimator to first initialize the non-existing animator
+	if( collisionAnimator )
 	{
 		_monster->removeAnimator( collisionAnimator );
 		collisionAnimator->drop();
@@ -246,38 +218,35 @@ void Monster::RecreateCollisionResponseAnimator()
 	}
 	
 	// setup torso collision with the world
-	//irr::core::aabbox3df box = node->getBoundingBox();
 	irr::core::aabbox3df box = _monster->getMesh()->getMesh(0)->getBoundingBox();
-	//irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 	irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 	
 	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
-				&world.GetLevelTriangleSelector(), _monster, radius,irr::core::vector3df(0,-.08f,0), // gravity
+				&world.GetLevelTriangleSelector(), _monster, radius, irr::core::vector3df(0,-.08f,0), // gravity
 				irr::core::vector3df(0, 0, 0), // ellipsoid translation
 			    0.0001f); // sliding value
+
 	_monster->addAnimator(collisionAnimator);
 }
 
 
-void Monster::ReceiveDamage(irr::f32  damage)
+void Monster::ReceiveDamage(irr::f32 damage)
 {
-	health-=damage;
+	health -= damage;
 //	std::cout<<"Health: "<<health<<std::endl;
 }
 
 void  Monster::Tick(irr::f32 delta)
 {
 	update(world.GetCurrentPlayer());
-
 }
 
 void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 	original = NewPosition;
 	pos = NewPosition;
 	target = NewPosition;
-	 _monster->setPosition(NewPosition); 
+	_monster->setPosition(NewPosition); 
 	_monster->updateAbsolutePosition();
-
 }
 
 
@@ -305,7 +274,7 @@ float min = 9999.99;
 					irr::core::vector3df directionT = meshNode->getPosition() - _monster->getPosition();
 					float angle = directionM.dotProduct(directionT);
 					angle = angle/(directionM.getLength() * directionT.getLength());
-					//„Éê„Ç¨„É§„É≠„ÄÄ
+					//?ê„‚\?§„É≠?Ä
 					if(angle<0.25){
 						
 						float mov_x, mov_z;
@@ -338,22 +307,9 @@ float min = 9999.99;
 					
 					
 				}
-					
 		}
 	}
 	std::cout<<min<<"\n";
 	next_pos.Y = _monster->getPosition().Y;
 	target = next_pos;
 }
-
-/*
-
-   irr::scene::ISceneNode& Monster::GetNode(){}
-
-   void Monster::AttachActor(Actor& actorToAttach, const irr::c8* nodeName=NULL ){}
-
-   void Monster::DetachActor(Actor& actorToDetach){}
-   */
-
-
-

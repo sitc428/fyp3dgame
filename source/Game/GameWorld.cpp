@@ -271,10 +271,14 @@ void GameWorld::InitPlayer()
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
-	Monster * m1 = new Monster( *this, GEngine->GetDriver());
+	std::cout<<"!"<<std::endl;
+	Monster* m1 = new Monster( *this, GEngine->GetDriver());
+	std::cout<<"!!"<<std::endl;
 	actors.push_back(m1);
+	std::cout<<"!!!"<<std::endl;
 	m1->ReSetPosition(irr::core::vector3df(70,0,80));
-	Monster * m2 = new Monster( *this, GEngine->GetDriver());
+	std::cout<<"!!!!"<<std::endl;
+	Monster* m2 = new Monster( *this, GEngine->GetDriver());
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(50,0,200));
 }
