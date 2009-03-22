@@ -76,6 +76,8 @@ public:
 	virtual void SetNodePosition( const irr::core::vector3df& vect ) { node->setPosition(vect); node->updateAbsolutePosition(); }
 	virtual void SetNodeRotation( const irr::core::vector3df& vect ) { node->setRotation(vect); }
 
+	void InitShader(irr::core::vector3df* lightPosition);
+
 	// sets the player into firing state
 	//void DoLaunchProjectile();
 	
@@ -153,6 +155,24 @@ private:
 	ProgressCircle* _healthBar;
 
 	GameWorld& world;
+
+	class MyMainCharacterShaderCallBack : public irr::video::IShaderConstantSetCallBack
+	{
+		public:
+			MyMainCharacterShaderCallBack(irr::IrrlichtDevice* device, irr::core::vector3df* lightPos) : _device(device), _lightPos(lightPos)
+			{
+			}
+
+			virtual void OnSetConstants(irr::video::IMaterialRendererServices* services, irr::s32 userData)
+			{
+				irr::core::vector3df camPos = _device->getSceneManager()->getActiveCamera()->getAbsolutePosition();
+				services->setVertexShaderConstant("view_position", reinterpret_cast<irr::f32*>(&camPos), 3);
+				services->setVertexShaderConstant("LightPosition", reinterpret_cast<irr::f32*>(_lightPos), 3);
+			}
+		private:
+			irr::IrrlichtDevice* _device;
+			irr::core::vector3df* _lightPos;
+	};
 };
 
 #endif //__MAIN_CHARACTER_HPP__

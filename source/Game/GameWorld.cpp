@@ -75,6 +75,13 @@ void GameWorld::Init()
 	InitEffects();
 	InitPickups();
 	InitMusic();
+
+	InitShader();
+}
+
+void GameWorld::InitShader()
+{
+	mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 }
 
 // loads us the level and sets up the triangle selector used for collision checks with the level
@@ -254,7 +261,7 @@ void GameWorld::InitLight()
 	lightInfo.DiffuseColor = irr::video::SColorf(0.5f,0.5f,0.5f);
 
 	// Add a single directional light in the level
-	irr::scene::ILightSceneNode* light = smgr.addLightSceneNode();
+	light = smgr.addLightSceneNode();
 	check(light);
 	light->setLightData( lightInfo );
 	light->setRotation( DIRECTIONAL_LIGHT_ROTATION );
