@@ -138,7 +138,7 @@ struct Attacking;
 
 struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 	Attacking(){ 
-		//std::cout<<"Attacking\n";
+		std::cout<<"Attacking\n";
 	};
 	virtual std::string GetName() const
     {

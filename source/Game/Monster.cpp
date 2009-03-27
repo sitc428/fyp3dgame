@@ -13,7 +13,7 @@
 #include "NodeID.h"
 
 static const irr::c8* MONSTER_MODEL = "media/model/dwarf.x";
-static const irr::core::vector3df defaultPosition = irr::core::vector3df(50,0,80);
+static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
 Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	:Actor(gameWorld),
@@ -35,16 +35,7 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	attack_timer = new boost::timer();
 	mon_timer->restart();
 	attack_timer->restart();
-	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
-	_monster->setLoopMode(false);
-
-	// setup player collision with the world
-	RecreateCollisionResponseAnimator();
 	
-	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
-	_monster->setTriangleSelector( triangleSelector );
-	triangleSelector->drop();
-	triangleSelector = NULL;
 }
 
 /*
@@ -96,14 +87,16 @@ void Monster::update(Player& _player)
 	//CheckActorPosition();
 	//std::cout<<world.GetActors().size()<<" size \n";
 	pos= _monster->getAbsolutePosition();
-	//std::cout<<_player.GetNodePosition().getDistanceFrom(original)<<"\n";
-	//std::cout<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
+	std::cout<<"origin: "<<_player.GetNodePosition().getDistanceFrom(original)<<"\n";
+	std::cout<<"pos : "<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
+	//std::cout<<_player.GetNodePosition().X<<" "<<_player.GetNodePosition().Y<<" "<<_player.GetNodePosition().Z<<"\n";
+	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 	if(health <= 0)
 	{
 		//Death
 		FSM.process_event( EvDie());
 		FSM.reaction(_monster, _player,target);
-	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 32.0f)
+	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 50.0f)
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM.GetName() != "Attacking"){
@@ -121,27 +114,27 @@ void Monster::update(Player& _player)
 			}
 		}
 	}
-	else if( _player.GetNodePosition().getDistanceFrom(original)< 80.0f
-		|| _player.GetNodePosition().getDistanceFrom(pos)< 30.0f )
+	else if( _player.GetNodePosition().getDistanceFrom(original)< 120.0f
+		|| _player.GetNodePosition().getDistanceFrom(pos)< 80.0f )
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
-
-		if( targetPos.getDistanceFrom(original) < 80.0f )
+		
+		if( targetPos.getDistanceFrom(original) < 120.0f )
 		{
 			//Tracing mode
 			//if(FSM.GetName() != "Tracing"){
 			if(FSM.GetName() == "Attacking")
 				FSM.process_event(EvFiniteStateMachineOutOfRange());
-				FSM.process_event( EvPlayerWithinRange());
-				irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
-				CheckActorPosition(targetPos, _player);
-				if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
-					target = targetPos;
+			FSM.process_event( EvPlayerWithinRange());
+			irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
+			CheckActorPosition(targetPos, _player);
+			if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
+				target = targetPos;
 				
-				FSM.reaction(_monster, _player,target);
-				pos = _monster->getPosition();
-				target = pos;
+			FSM.reaction(_monster, _player,target);
+			pos = _monster->getPosition();
+			target = pos;
 			
 		}
 		else
@@ -247,6 +240,21 @@ void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 	target = NewPosition;
 	_monster->setPosition(NewPosition); 
 	_monster->updateAbsolutePosition();
+	std::cout<<original.X<<" "<<original.Y<<" "<<original.Z<<"\n";
+	pos = _monster->getAbsolutePosition();
+	std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
+	
+	
+	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
+	_monster->setLoopMode(false);
+	
+	// setup player collision with the world
+	RecreateCollisionResponseAnimator();
+	
+	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
+	_monster->setTriangleSelector( triangleSelector );
+	triangleSelector->drop();
+	triangleSelector = NULL;
 }
 
 
@@ -275,7 +283,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 					irr::core::vector3df directionT = meshNode->getPosition() - _monster->getPosition();
 					float angle = directionM.dotProduct(directionT);
 					angle = angle/(directionM.getLength() * directionT.getLength());
-					
+					std::cout<<angle<<"\n";
 					if(angle<0.25){
 						bool found = false;
 						float mov_x, mov_z;
@@ -315,7 +323,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 							}
 							
 						}
-						if(next_pos.getDistanceFrom(_player.GetNodePosition()) < next_pos2.getDistanceFrom(_player.GetNodePosition()))
+						if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos2.getDistanceFrom(_player.GetNodePosition()))
 							next_pos = next_pos2;
 						
 						
