@@ -12,6 +12,8 @@
 #include "GameWorld.h"
 #include "NodeID.h"
 
+#define PI 3.14159265
+
 static const irr::c8* MONSTER_MODEL = "media/model/dwarf.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
@@ -96,7 +98,7 @@ void Monster::update(Player& _player)
 		//Death
 		FSM.process_event( EvDie());
 		FSM.reaction(_monster, _player,target);
-	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 50.0f)
+	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM.GetName() != "Attacking"){
@@ -127,9 +129,9 @@ void Monster::update(Player& _player)
 			if(FSM.GetName() == "Attacking")
 				FSM.process_event(EvFiniteStateMachineOutOfRange());
 			FSM.process_event( EvPlayerWithinRange());
-			irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
+			//irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
 			CheckActorPosition(targetPos, _player);
-			if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
+			//if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
 				target = targetPos;
 				
 			FSM.reaction(_monster, _player,target);
@@ -142,9 +144,11 @@ void Monster::update(Player& _player)
 			FSM.process_event( EvFiniteStateMachineOutOfRange());
 			FSM.reaction(_monster, _player,target);
 		}
-	}
-	else
-	{
+	}else if ( pos.getDistanceFrom(original) > 120.0f){
+		std::cout<<"Out of range !!\n";
+	
+		
+	}else{
 		//Idle	
 		//std::cout<<"Mon_timer: "<<mon_timer->elapsed()<<"\n";
 		//irr::u32 current = mon_timer->getTime();
@@ -260,14 +264,8 @@ void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 
 
 void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
-	//	for(irr::u32 i =0; i<world.GetActors().size();i++){
-	//		
-	//		if(world.GetActors()[i]->GetNode())
-	//		for(irr::u32 j=0; j<world.GetActors()[i]->attachActorChildren.size();j++)
-	//std::cout<<i<<" : "<<world.GetActors()[i].attachActorChildren[j]->GetNode().getPosition().X<<"\n";
-	//std::cout<<i<<" : "<<world.GetActors()[i].attachActorChildren[j]->GetNode().getPosition().X<<"\n";
-	//}
-	
+	static int last_move = 0;
+
 	irr::core::array<irr::scene::ISceneNode*> outNodes;
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
@@ -277,14 +275,21 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
 		if(meshNode->getMesh()){
 			if(meshNode->getID() == -1 || meshNode->getID() == 2 )
+				if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
+					min = pos.getDistanceFrom(meshNode->getPosition() );
 				//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
 				if(pos.getDistanceFrom(meshNode->getPosition() ) < 50.0){
+					//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
+					
 					irr::core::vector3df directionM = meshNode->getPosition()-_player.GetNodePosition();
 					irr::core::vector3df directionT = meshNode->getPosition() - _monster->getPosition();
 					float angle = directionM.dotProduct(directionT);
 					angle = angle/(directionM.getLength() * directionT.getLength());
-					std::cout<<angle<<"\n";
-					if(angle<0.25){
+					angle = acos(angle)*180.0/ PI;
+					std::cout<<"angle: "<<floor(angle)<<"\n";
+					
+					if(floor(angle) > 60 ){
+						std::cout<<"-------------------------\n";
 						bool found = false;
 						float mov_x, mov_z;
 						if(_player.GetNodePosition().X > _monster->getPosition().X)
@@ -294,47 +299,102 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 							mov_z = 20.0;
 						else  mov_z = -20.0;
 						next_pos = target;
-						next_pos.X+=mov_x;
-						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
-							found = true;
-							std::cout<<"PATH FOUND_X\n";
-						}
-						irr::core::vector3df next_pos2 = target;
-						next_pos2.Z +=mov_z;
-						if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
-							found = true;
-							std::cout<<"PATH FOUND_Z\n";
-						}
-						if(! found ){
-							mov_x=-mov_x;
-							mov_z=-mov_z;
-							next_pos = target;
-							next_pos.X+=mov_x;
+						if(last_move != 0){
+							switch (last_move){
+								case 1 : 
+									if(meshNode->getPosition().Z > next_pos.Z)
+										next_pos.Z-=mov_z;
+									else next_pos.Z+=mov_z;
+									last_move = 0;
+											break;
+								case 2 : if(meshNode->getPosition().X > next_pos.X)
+											next_pos.X-=mov_x;
+										else next_pos.X+=mov_x;
+									last_move = 0;
+											break;
+								case 3 : if(meshNode->getPosition().Z > next_pos.Z)
+												next_pos.Z-=mov_z;
+											else next_pos.Z+=mov_z;
+									last_move = 0;
+									 		break;
+								case 4 : if(meshNode->getPosition().X > next_pos.X)
+											next_pos.X-=mov_x;
+											else next_pos.X+=mov_x;
+									last_move = 0;
+											break;
+							}
+						}else{
+							
+							irr::core::vector3df next_pos1 = target;
+							next_pos1.X+=mov_x;
 							if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
 								found = true;
-								std::cout<<"PATH FOUND_X2\n";
-							}else{
-								next_pos2 = target;
-								next_pos2.Z +=mov_z;
-								if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
-									found = true;
-									std::cout<<"PATH FOUND_Z2\n";
-								}
+								
+								
+							}
+							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos1.getDistanceFrom(_player.GetNodePosition())){
+								next_pos = next_pos1;
+								last_move = 1;
+								std::cout<<"PATH FOUND_X\n";
 							}
 							
+							irr::core::vector3df next_pos2 = target;
+							next_pos2.Z +=mov_z;
+							if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+								found = true;
+								
+								
+							}
+							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos2.getDistanceFrom(_player.GetNodePosition())){
+								next_pos = next_pos2;
+								last_move = 2;
+								std::cout<<"PATH FOUND_Z\n";
+							}
+							
+							irr::core::vector3df next_pos3 = target;
+							mov_x=-mov_x;
+							mov_z=-mov_z;
+							next_pos3 = target;
+							next_pos3.X+=mov_x;
+							if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+									found = true;
+									
+									
+								}
+							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos3.getDistanceFrom(_player.GetNodePosition())){
+								next_pos = next_pos3;
+								last_move = 3;
+								std::cout<<"PATH FOUND_X2\n";
+							}
+							
+							irr::core::vector3df next_pos4 = target;
+						
+								next_pos4.Z +=mov_z;
+								if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+									found = true;
+									
+									
+								}
+							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos4.getDistanceFrom(_player.GetNodePosition())){
+								next_pos = next_pos4;
+								last_move = 4;
+								std::cout<<"PATH FOUND_Z2\n";
+							//
+							}
+								
+
+						
 						}
-						if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos2.getDistanceFrom(_player.GetNodePosition()))
-							next_pos = next_pos2;
 						
+												
 						
-					}
+					}else last_move=0;
 					
 					//	std::cout<<angle<<"\n";
 					//if( target.getDistanceFrom(meshNode->getPosition() ) < 40.0)
 					//	std::cout<<"GOING TO BE BLOACKED \n";
 					//std::cout<<"BLOCKED\n";
-					if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
-						min = pos.getDistanceFrom(meshNode->getPosition() );
+					
 					//std::cout<<pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
 					
 					
@@ -342,7 +402,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 			
 		}
 	}
-	std::cout<<min<<"\n";
+	std::cout<<"min: "<<min<<"\n";
 	next_pos.Y = _monster->getPosition().Y;
 	target = next_pos;
 }

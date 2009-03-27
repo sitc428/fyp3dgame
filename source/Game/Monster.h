@@ -23,6 +23,7 @@
 #include <irrlicht/irrlicht.h>
 #include <boost/timer.hpp>
 #include "Player.h"
+#include <math.h>
 
 namespace sc = boost::statechart;
 namespace mpl = boost::mpl;
@@ -223,8 +224,8 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 			m.setRotationDegrees(_mon->getRotation());
 			m.transformVect(targetPos);
 			float y = _mon->getPosition().Y;
-			targetPos = _mon->getPosition()+((_player.GetNodePosition() - _mon->getPosition())/42.5f); 
-			targetPos.Y = y;
+			//targetPos = _mon->getPosition()+((_player.GetNodePosition() - _mon->getPosition())/42.5f); 
+			//targetPos.Y = y;
 			targetPos = target;
 			irr::core::vector3df direction = _mon->getPosition()-targetPos;
 			_mon->setRotation(direction.getHorizontalAngle());
