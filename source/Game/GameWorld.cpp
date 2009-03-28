@@ -104,12 +104,15 @@ void GameWorld::InitLevel()
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
-			irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
-			check(meshTriangleSelector);
-			meshNode->setTriangleSelector( meshTriangleSelector );
-			levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-			meshTriangleSelector->drop();
-			meshTriangleSelector = NULL;
+			if (meshNode->getID() == NODE_ID_TRI_NEEDED)
+			{
+				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
+				check(meshTriangleSelector);
+				meshNode->setTriangleSelector( meshTriangleSelector );
+				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+				meshTriangleSelector->drop();
+				meshTriangleSelector = NULL;
+			}
 		}
 	}
 	outNodes.clear();
