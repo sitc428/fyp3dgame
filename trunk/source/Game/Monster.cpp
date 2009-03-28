@@ -37,7 +37,6 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	attack_timer = new boost::timer();
 	mon_timer->restart();
 	attack_timer->restart();
-	
 }
 
 /*
@@ -244,21 +243,21 @@ void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 	target = NewPosition;
 	_monster->setPosition(NewPosition); 
 	_monster->updateAbsolutePosition();
-	std::cout<<original.X<<" "<<original.Y<<" "<<original.Z<<"\n";
+	//std::cout<<original.X<<" "<<original.Y<<" "<<original.Z<<"\n";
 	pos = _monster->getAbsolutePosition();
-	std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
+	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 	
 	
 	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
 	_monster->setLoopMode(false);
 	
 	// setup player collision with the world
-	RecreateCollisionResponseAnimator();
+	//RecreateCollisionResponseAnimator();
 	
-	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
-	_monster->setTriangleSelector( triangleSelector );
-	triangleSelector->drop();
-	triangleSelector = NULL;
+	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
+	//_monster->setTriangleSelector( triangleSelector );
+	//triangleSelector->drop();
+	//triangleSelector = NULL;
 }
 
 
@@ -286,7 +285,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 					float angle = directionM.dotProduct(directionT);
 					angle = angle/(directionM.getLength() * directionT.getLength());
 					angle = acos(angle)*180.0/ PI;
-					std::cout<<"angle: "<<floor(angle)<<"\n";
+					//std::cout<<"angle: "<<floor(angle)<<"\n";
 					
 					if(floor(angle) > 60 ){
 						std::cout<<"-------------------------\n";
@@ -335,7 +334,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos1.getDistanceFrom(_player.GetNodePosition())){
 								next_pos = next_pos1;
 								last_move = 1;
-								std::cout<<"PATH FOUND_X\n";
+								//std::cout<<"PATH FOUND_X\n";
 							}
 							
 							irr::core::vector3df next_pos2 = target;
@@ -348,7 +347,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos2.getDistanceFrom(_player.GetNodePosition())){
 								next_pos = next_pos2;
 								last_move = 2;
-								std::cout<<"PATH FOUND_Z\n";
+								//std::cout<<"PATH FOUND_Z\n";
 							}
 							
 							irr::core::vector3df next_pos3 = target;
@@ -364,7 +363,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos3.getDistanceFrom(_player.GetNodePosition())){
 								next_pos = next_pos3;
 								last_move = 3;
-								std::cout<<"PATH FOUND_X2\n";
+								//std::cout<<"PATH FOUND_X2\n";
 							}
 							
 							irr::core::vector3df next_pos4 = target;
@@ -378,7 +377,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 							if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos4.getDistanceFrom(_player.GetNodePosition())){
 								next_pos = next_pos4;
 								last_move = 4;
-								std::cout<<"PATH FOUND_Z2\n";
+								//std::cout<<"PATH FOUND_Z2\n";
 							//
 							}
 								
@@ -402,7 +401,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 			
 		}
 	}
-	std::cout<<"min: "<<min<<"\n";
+	//std::cout<<"min: "<<min<<"\n";
 	next_pos.Y = _monster->getPosition().Y;
 	target = next_pos;
 }
