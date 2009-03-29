@@ -22,18 +22,24 @@ static const irr::c8*		MAIN_CHARACTER_vsFileName = "model/shader/trial.vert"; //
 static const irr::c8*		MAIN_CHARACTER_psFileName = "model/shader/trial.frag"; // filename for the pixel shader
 
 static const irr::c8*		defaultTexture = "media/model/MainTexutre1.png";
-static const irr::f32		ANIMATION_SPEED = 45; // 45 FPS
+static const irr::f32		ANIMATION_SPEED = 24;
 static const irr::f32		ANIMATION_TRANSITION_BLEND_TIME = 0.2f;
 
 // main character's animation information
-static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_START = 0;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_END = 0;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_START = 1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_END = 1;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START = 4;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END = 30;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_START = 38;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_END = 63;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_RUN_START = 72;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_RUN_END = 95;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_JUMP_START = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_JUMP_END = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_ATTACK_START = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_ATTACK_END = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_DEAD_START = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_DEAD_END = -1;
 //static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_START = 92;
 //static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_END = 121;
 //static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_START = 62;
@@ -83,17 +89,19 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
-	node->setDebugDataVisible( irr::scene::EDS_BBOX);
+	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
 
 	// create a triangle selector for player
-	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( node );
-	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh()->getMesh(0), node );
+	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh(), node );
 	node->setTriangleSelector( triangleSelector );
 	triangleSelector->drop();
 	triangleSelector = NULL;
+
+	node->setAnimationSpeed( ANIMATION_SPEED );
+	node->setLoopMode( false );
 
 	// setup player shadow
 	shadowNode = GEngine->addFloorDecalSceneNode(node, irr::core::dimension2d<irr::f32>(0, 0));
@@ -105,42 +113,8 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_healthBar = new ProgressCircle(node, & (world.GetSceneManager()), 2222, world.GetSceneManager().getSceneCollisionManager());
 
 	// setup snow steps sound effect
-//	sfxFootstep = GEngine->GetSoundEngine().play2D( "../audio/sfx/snowstepsrun.mp3", true, false, true );
-//	sfxFootstep->setVolume( 0 );
-
-	// load up the player's arms model
-	/*ISkinnedMesh* armsMesh = dynamic_cast<ISkinnedMesh*>(smgr.getMesh( CHARACTER_ARMS_MODEL ));
-	check( armsMesh );
-	arms = smgr.addAnimatedMeshSceneNode( armsMesh );
-	check( arms );
-	arms->setID(66);
-	arms->setMaterialFlag(video::EMF_LIGHTING, true);
-	arms->setMaterialTexture(0, driver.getTexture( defaultTexture ));
-
-	// attach the arms to the torso mesh
-	irr::s32 jointIdx = armsMesh->getJointNumber( ARMS_TORSO_COMMON_JOINT_NAME );
-	check( jointIdx != -1 );
-	const ISkinnedMesh::SJoint* pJoint = armsMesh->getAllJoints()[jointIdx];
-	irr::core::vector3df jointPos = pJoint->GlobalAnimatedMatrix.getTranslation();
-	arms->setPosition( arms->getPosition() - irr::core::vector3df( 0.0f, jointPos.Y, 0.0f) );
-	IBoneSceneNode* jointBone = node->getJointNode( TORSO_ATTACH_JOINT );
-	jointBone->addChild(arms);
-
-	// setup animations
-	node->setJointMode(EJUOR_CONTROL); //To write positions to the mesh on render
-	node->setAnimationSpeed(ANIMATION_SPEED);
-	node->setTransitionTime(ANIMATION_TRANSITION_BLEND_TIME);
-	node->setFrameLoop(MAIN_CHARACTER_ANIMATION_IDLE_START,MAIN_CHARACTER_ANIMATION_IDLE_END);
-
-	arms->setJointMode(EJUOR_CONTROL); //To write positions to the mesh on render
-	arms->setAnimationSpeed(ANIMATION_SPEED);
-	arms->setTransitionTime(ANIMATION_TRANSITION_BLEND_TIME);
-	arms->setFrameLoop(MAIN_CHARACTER_ANIMATION_IDLE_START,MAIN_CHARACTER_ANIMATION_IDLE_END);*/
-
-	// change mesh color's back in case they were changed from freezing
-	//IMeshManipulator* meshMan = smgr.getMeshManipulator();
-	//meshMan->setVertexColors( smgr.getMesh( CHARACTER_TORSO_MODEL ), SColor(255,255,255,255) );
-	//meshMan->setVertexColors( smgr.getMesh( CHARACTER_ARMS_MODEL ), SColor(255,255,255,255) );
+	//	sfxFootstep = GEngine->GetSoundEngine().play2D( "../audio/sfx/snowstepsrun.mp3", true, false, true );
+	//	sfxFootstep->setVolume( 0 );
 }
 
 // we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
@@ -155,9 +129,7 @@ void MainCharacter::RecreateCollisionResponseAnimator()
 	}
 
 	// setup torso collision with the world
-	//irr::core::aabbox3df box = node->getBoundingBox();
-	irr::core::aabbox3df box = node->getMesh()->getMesh(0)->getBoundingBox();
-	//irr::core::vector3df radius = box.MaxEdge - box.getCenter();
+	irr::core::aabbox3df box = node->getMesh()->getBoundingBox();
 	irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 
 	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
@@ -185,18 +157,6 @@ MainCharacter::~MainCharacter()
 	smgr.addToDeletionQueue( node );
 	smgr.addToDeletionQueue( shadowNode );
 }
-
-/*
-// interface for turning player on/off
-void MainCharacter::SetActive( bool bValue )
-{
-	// call super's implementation
-	Player::SetActive( bValue );
-
-	// hide all the player nodes when its turned off
-	node->setVisible( bValue );
-}
-*/
 
 // set the translation vector for player
 void MainCharacter::SetTranslation( const irr::core::vector3df& trans )
@@ -238,7 +198,7 @@ void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
 	irr::video::IGPUProgrammingServices* gpuServices = GEngine->GetDriver().getGPUProgrammingServices();
 	if(gpuServices)
 	{
-		MyMainCharacterShaderCallBack *mc = new MyMainCharacterShaderCallBack(&GEngine->GetDevice(), lightPosition);
+		MyMainCharacterShaderCallBack *mc = new MyMainCharacterShaderCallBack(&(GEngine->GetDevice()), lightPosition);
 
 		newMaterialType = gpuServices->addHighLevelShaderMaterialFromFiles(
 			MAIN_CHARACTER_vsFileName, "main", irr::video::EVST_VS_1_1,
@@ -286,7 +246,7 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			{
 				node->setLoopMode( false );
 				node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
-				node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+				node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_END );
 			}	
 			break;
 		}
@@ -447,22 +407,6 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 		action = EMCAS_DEAD;
 		moveState = EMCMS_IDLE;
 		rotationState = EMCRS_IDLE;
-
-		// turn player frozen
-		irr::scene::ISceneManager& smgr = world.GetSceneManager();
-		irr::scene::IMeshManipulator* meshMan = smgr.getMeshManipulator();
-		meshMan->setVertexColors( smgr.getMesh( MAIN_CHARACTER_MODEL ), irr::video::SColor(255,70,70,255) );
-		//meshMan->setVertexColors( smgr.getMesh( CHARACTER_ARMS_MODEL ), SColor(255,70,70,255) );
-
-//		sfxFootstep->setVolume( 0 );
-
-//		if( sfxTimer > 10 )
-//		{
-//			GEngine->GetSoundEngine().play2D("../audio/sfx/playerdeath.mp3");
-//			GEngine->GetSoundEngine().play2D("../audio/sfx/freeze.mp3");
-//			sfxTimer = 0;
-//		}
-
 	}
 	else
 	{
@@ -597,25 +541,6 @@ void MainCharacter::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
 		bDoFillup = false;
 		throwFillupTimer = 0.0f;
 	}
-
-	// disabling this, we're not going to support mines in our final demo
-	//// place a mine with right mouse button click
-	//if( mouseEvent.Event == EMIE_RMOUSE_PRESSED_DOWN )
-	//{
-	//	// get the first available projectile
-	//	LandMine* mine = world.GetFirstAvailableLandMine();
-	//	if( mine )
-	//	{
-	//		// check if we're not throwing too soon
-	//		static irr::u32 lastMinePlaceTime = 0;
-	//		irr::u32 currTime = GEngine->GetRealTime();
-	//		if( currTime - lastMinePlaceTime > MIN_TIME_BETWEEN_THROWS )
-	//		{
-	//			PlaceMine( *mine );
-	//			lastMinePlaceTime = currTime;
-	//		}
-	//	}
-	//}
 }
 
 /*

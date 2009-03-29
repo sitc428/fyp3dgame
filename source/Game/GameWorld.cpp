@@ -81,7 +81,7 @@ void GameWorld::Init()
 
 void GameWorld::InitShader()
 {
-	mainCharacter->InitShader( & (light->getAbsolutePosition()) );
+	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 }
 
 // loads us the level and sets up the triangle selector used for collision checks with the level
@@ -288,12 +288,11 @@ void GameWorld::InitEnemies()
 	
 	std::cout<<"!!!"<<std::endl;
 	m1->ReSetPosition(irr::core::vector3df(-40,0,180));
-	/*
+	
 	std::cout<<"!!!!"<<std::endl;
 	Monster* m2 = new Monster( *this, GEngine->GetDriver());
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(50,0,200));
-*/
 }
 
 // sets up the camera to be able to look at the scene
