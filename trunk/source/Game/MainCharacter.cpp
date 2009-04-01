@@ -16,7 +16,7 @@ extern GameEngine* GEngine;
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(10,50,10);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 90, 0);
 
-static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Final_testing.x";
+static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
 static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/MainTexutre1.png";
 static const irr::c8*		MAIN_CHARACTER_vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
 static const irr::c8*		MAIN_CHARACTER_psFileName = "model/shader/trial.frag"; // filename for the pixel shader
@@ -58,8 +58,6 @@ static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_LEFT_FOOTST
 static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_RIGHT_FOOTSTEP_FRAME = 75;
 static const irr::u32			FOOTSTEP_DURATION = 6000;
 */
-
-extern GameEngine* GEngine;
 
 // constructor
 MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
@@ -150,8 +148,11 @@ MainCharacter::~MainCharacter()
 		sfxFootstep = NULL;
 	}
 */
-	collisionAnimator->drop();
-	collisionAnimator = NULL;
+	if(collisionAnimator)
+	{
+		collisionAnimator->drop();
+		collisionAnimator = NULL;
+	}
 	
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	smgr.addToDeletionQueue( node );
