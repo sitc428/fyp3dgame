@@ -9,6 +9,7 @@ class Actor;
 class Camera;
 class Player;
 class MainCharacter;
+class Robot;
 class GameEngine;
 //class DynamiteProjectile;
 //class SnowballProjectile;
@@ -82,6 +83,7 @@ class GameWorld
 		void InitMusic();
 		void InitLight();
 		void InitPlayer();
+		void InitRobot();
 		void InitEnemies();
 		void InitCamera();
 		void InitWeapons();
@@ -122,6 +124,7 @@ class GameWorld
 
 		irr::scene::ISceneManager& smgr; // scene manager from the engine
 		MainCharacter* mainCharacter; // player on foot actor
+		Robot* robot; // the robot following the main character
 		bool bUseOnFootPlayer; // which player model are we currently using
 		bool bSwitchPlayers;   // whether we should perform the player switch after all players have been ticked
 		Camera* camera; // camera object

@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "MainCharacter.hpp"
+#include "Robot.hpp"
 //#include "SnowballProjectile.h"
 //#include "DynamiteProjectile.h"
 //#include "LandMine.h"
@@ -42,6 +43,7 @@ extern GameEngine* GEngine;
 GameWorld::GameWorld( const GameEngine& Engine ):
 	smgr(Engine.GetSceneManager()),
 	mainCharacter(NULL),
+	robot(NULL),
 	bUseOnFootPlayer(true),
 	bSwitchPlayers(false),
 	camera(NULL),
@@ -68,6 +70,7 @@ void GameWorld::Init()
 	InitLevel();
 	InitLight();
 	InitPlayer();
+	InitRobot();
 	InitCamera();
 	InitEnemies();
 	InitHUD();
@@ -276,6 +279,12 @@ void GameWorld::InitPlayer()
 	mainCharacter = new MainCharacter( *this, GEngine->GetDriver() );
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
+}
+
+void GameWorld::InitRobot()
+{
+	robot = new Robot( *this, GEngine->GetDriver() );
+	actors.push_back( robot );
 }
 
 // sets up the enemies in the world

@@ -269,6 +269,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\Robot.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\engine\StartupScreen.h"
 				>
 			</File>
@@ -354,6 +358,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\ProgressCircle.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\Robot.cpp"
 				>
 			</File>
 			<File
