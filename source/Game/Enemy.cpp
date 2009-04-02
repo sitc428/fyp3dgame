@@ -208,7 +208,7 @@ void Enemy::ReceiveDamage( irr::f32 value )
 			//world.GetCurrentPlayer().AddScore(1);
 
 			// start off the enemy death effect if the player was killed with a dynamite
-			if( world.GetCurrentPlayer().GetActorType() != ACTOR_PLAYER_ON_SNOWPLOW )
+			if( world.GetCurrentPlayer().GetActorType() != ACTOR_ROBOT )
 			{
 				/* ExplosionEffect* pEffect = world.GetFirstAvailableEnemyDeathEffect();
 				   if( pEffect )

@@ -3,6 +3,7 @@
 #include "GameEngine.h"
 #include "GameWorld.h"
 #include "MainCharacter.hpp"
+#include <ctime>
 
 extern GameEngine* GEngine;
 
@@ -47,6 +48,7 @@ Robot::Robot( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setScale(defaultScale);
+	srand( time(0) );
 }
 
 Robot::~Robot()
@@ -61,7 +63,13 @@ Robot::~Robot()
 	smgr.addToDeletionQueue( node );
 }
 
+static irr::f32 floating( irr::f32 delta, irr::s32 range )
+{
+	return range * sin(delta / 100);
+}
+
 void Robot::Tick( irr::f32 delta )
 {
-	node->setPosition(world.GetCurrentPlayer().GetNodePosition() + irr::core::vector3df(5, 10, 5));
+	irr::core::vector3df offset = irr::core::vector3df( 10, floating( delta, 20), 10);
+	node->setPosition(world.GetCurrentPlayer().GetNodePosition() + offset);
 }

@@ -16,7 +16,7 @@ public:
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; }
 	// interface for identifying the type of actor
-	virtual EActorType GetActorType() const { return ACTOR_PLAYER; }
+	virtual EActorType GetActorType() const { return ACTOR_ROBOT; }
 
 
 protected:
