@@ -4,6 +4,7 @@
 #include "GameWorld.h"
 #include "MainCharacter.hpp"
 #include <ctime>
+#include <iostream>
 
 extern GameEngine* GEngine;
 
@@ -65,7 +66,8 @@ Robot::~Robot()
 
 static irr::f32 floating( irr::f32 delta, irr::s32 range )
 {
-	return range * sin(delta / 100);
+	std::cout << "delta:          " << delta << std::endl;
+	return range * sin(delta * 10);
 }
 
 void Robot::Tick( irr::f32 delta )
