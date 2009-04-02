@@ -66,12 +66,21 @@ Robot::~Robot()
 
 static irr::f32 floating( irr::f32 delta, irr::s32 range )
 {
-	std::cout << "delta:          " << delta << std::endl;
-	return range * sin(delta * 10);
+	static irr::f32 total_delta = 0;
+	total_delta += delta;
+	//std::cout << "delta:                " << delta << std::endl;
+	//std::cout << "total_delta:                " << total_delta << std::endl;
+	return range * sin(total_delta*2);
 }
 
 void Robot::Tick( irr::f32 delta )
 {
-	irr::core::vector3df offset = irr::core::vector3df( 10, floating( delta, 20), 10);
+	std::cout << "Xdeg: " << world.GetCurrentPlayer().GetNodeRotation().X << "   X: " << world.GetCurrentPlayer().GetNodePosition().X << std::endl;
+	std::cout << "Ydeg: " << world.GetCurrentPlayer().GetNodeRotation().Y << "   Y: " << world.GetCurrentPlayer().GetNodePosition().Y << std::endl;
+	std::cout << "Zdeg: " << world.GetCurrentPlayer().GetNodeRotation().Z << "   Z: " << world.GetCurrentPlayer().GetNodePosition().Z << std::endl;
+	std::cout << std::endl;
+	irr::core::vector3df offset = irr::core::vector3df( 10, floating( delta, 5), 10);
 	node->setPosition(world.GetCurrentPlayer().GetNodePosition() + offset);
+	node->setRotation(world.GetCurrentPlayer().GetNodeRotation());
+	
 }
