@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\InteractiveActor.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Game\MainCharacter.hpp"
 				>
 			</File>
@@ -266,6 +270,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\Robot.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\SellingMachine.hpp"
 				>
 			</File>
 			<File
@@ -329,6 +337,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\InteractiveActor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -354,6 +366,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\Robot.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\SellingMachine.cpp"
 				>
 			</File>
 			<File

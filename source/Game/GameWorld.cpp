@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "MainCharacter.hpp"
 #include "Robot.hpp"
+#include "SellingMachine.hpp"
 //#include "SnowballProjectile.h"
 //#include "DynamiteProjectile.h"
 //#include "LandMine.h"
@@ -115,41 +116,14 @@ void GameWorld::InitLevel()
 				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
 				meshTriangleSelector->drop();
 				meshTriangleSelector = NULL;
+
+				blocks.push_back( meshNode );
 			}
 		}
 	}
 	outNodes.clear();
 
-	/*smgr.getSceneNodesFromType( irr::scene::ESNT_ANIMATED_MESH, outNodes );
-	irr::u32 TreePoseCounter = 1;
-	for( irr::u32 i = 0; i < outNodes.size(); ++i )
-	{
-		//irr::scene::IAnimatedMeshSceneNode* meshNode = dynamic_cast<irr::scene::IAnimatedMeshSceneNode*>(outNodes[i]);
-		irr::scene::IAnimatedMeshSceneNode* meshNode = (irr::scene::IAnimatedMeshSceneNode*)(outNodes[i]);
-
-		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
-		if( meshNode->getMesh() )
-		{
-			irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelectorFromBoundingBox( meshNode );
-			check(meshTriangleSelector);
-			meshNode->setTriangleSelector( meshTriangleSelector );
-			levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-			meshTriangleSelector->drop();
-			meshTriangleSelector = NULL;
-		}
-		else
-		{
-			printf("GAME WARNING: level mesh node %s does not have a mesh assigned to it\n", meshNode->getName());
-		}
-
-		// pick a pose if the node is a tree
-		if( meshNode->getID() == NODE_ID_TREE )
-		{
-			meshNode->setFrameLoop( TreePoseCounter, TreePoseCounter );
-			meshNode->setLoopMode(false);
-			TreePoseCounter = TreePoseCounter++ % 8;
-		}
-	}*/
+	SellingMachine* sellingMachine1 = new SellingMachine( *this, GEngine->GetDriver() );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 
