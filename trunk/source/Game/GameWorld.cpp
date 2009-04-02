@@ -182,7 +182,7 @@ void GameWorld::RestartLevel()
 			//playerOnFoot = NULL;
 		}
 		// delete player on snowplow
-		else if( actors[i]->GetActorType() == ACTOR_PLAYER_ON_SNOWPLOW )
+		else if( actors[i]->GetActorType() == ACTOR_ROBOT )
 		{
 			Actor::DestroyActor(actors[i]);
 			actors.erase( i );
