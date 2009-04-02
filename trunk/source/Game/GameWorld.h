@@ -64,6 +64,8 @@ class GameWorld
 		// returns the player actor which is currently used
 		Player& GetCurrentPlayer() const;
 
+		(irr::core::array<irr::scene::IMeshSceneNode*>)& GetBlocking() { return blocks; }
+
 		// unbuffered mouse input 
 		void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
 
@@ -131,6 +133,7 @@ class GameWorld
 		irr::scene::ILightSceneNode* light;
 
 		irr::core::array<Actor*> actors; // all the actors that are currently in the world, includes the player and the camera
+		irr::core::array<irr::scene::IMeshSceneNode*> blocks; // all the objects that are blocking the movement, includes the monsters
 
 		irr::scene::IMetaTriangleSelector* levelTriangleSelector;  // triangle selector for doing collision checks with the level 
 		GameHUD* gameHUD; // HUD object

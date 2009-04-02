@@ -32,14 +32,14 @@ static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START = 4;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END = 30;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_START = 38;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_END = 63;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_RUN_START = 72;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_RUN_END = 95;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_JUMP_START = -1;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_JUMP_END = -1;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_ATTACK_START = -1;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_ATTACK_END = -1;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_DEAD_START = -1;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_DEAD_END = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 72;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_END = 95;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_START = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_END = -1;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_START = 125;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_END = 139;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_START = 104;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_END = 124;
 //static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_START = 92;
 //static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_END = 121;
 //static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_START = 62;
@@ -100,6 +100,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 
 	node->setAnimationSpeed( ANIMATION_SPEED );
 	node->setLoopMode( false );
+	node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
 
 	// setup player shadow
 	shadowNode = GEngine->addFloorDecalSceneNode(node, irr::core::dimension2d<irr::f32>(0, 0));
