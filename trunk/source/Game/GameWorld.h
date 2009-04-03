@@ -64,7 +64,7 @@ class GameWorld
 		// returns the player actor which is currently used
 		Player& GetCurrentPlayer() const;
 
-		(irr::core::array<irr::scene::IMeshSceneNode*>)& GetBlocking() { return blocks; }
+	irr::core::array<irr::scene::IMeshSceneNode*>& GetBlocking() { return blocks; }
 
 		// unbuffered mouse input 
 		void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
