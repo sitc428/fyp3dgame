@@ -83,11 +83,10 @@ void Robot::Tick( irr::f32 delta )
 	std::cout << "AimVecrot.Z : " << world.GetCurrentPlayer().GetAimVector().Z << std::endl;
 
 	irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 5), 0);
-	//world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-15
-	node->setPosition(world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-offset);//-20);// * -5.0f);
+	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-offset);//-20);// * -5.0f);
 	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() + offset);
-	//irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-15;
-	irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition();
+	irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-15;
+	//irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition();
 	irr::core::vector3df aimVec = world.GetCurrentPlayer().GetAimVector();
 	aimVec.rotateXZBy(world.GetCurrentPlayer().GetNodeRotation().Y, world.GetCurrentPlayer().GetNodePosition());
 	//std::cout << "Player.Postition.X  : " << world.GetCurrentPlayer().GetNodePosition().X << std::endl;
