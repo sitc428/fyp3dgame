@@ -23,6 +23,9 @@
 		9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7AB0F50645B008E3E5B /* libirrKlang.a */; };
 		9807F7BB0F506674008E3E5B /* libikpMP3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7BA0F506674008E3E5B /* libikpMP3.dylib */; };
 		9807F8570F51550E008E3E5B /* InputEventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */; };
+		9814CB7D0F84A21D004C1A92 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9814CB7B0F84A21D004C1A92 /* Robot.cpp */; };
+		983D0C350F860903008C0D5F /* InteractiveActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C310F860903008C0D5F /* InteractiveActor.cpp */; };
+		983D0C360F860903008C0D5F /* SellingMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C330F860903008C0D5F /* SellingMachine.cpp */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
 		98563E770F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */; };
 		98563E780F1A46370050410E /* libboost_date_time-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */; };
@@ -72,6 +75,12 @@
 		9807F7BA0F506674008E3E5B /* libikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libikpMP3.dylib; path = ../../lib/libikpMP3.dylib; sourceTree = SOURCE_ROOT; };
 		9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputEventReceiver.cpp; sourceTree = "<group>"; };
 		9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputEventReceiver.hpp; sourceTree = "<group>"; };
+		9814CB7B0F84A21D004C1A92 /* Robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robot.cpp; sourceTree = "<group>"; };
+		9814CB7C0F84A21D004C1A92 /* Robot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robot.hpp; sourceTree = "<group>"; };
+		983D0C310F860903008C0D5F /* InteractiveActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteractiveActor.cpp; sourceTree = "<group>"; };
+		983D0C320F860903008C0D5F /* InteractiveActor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InteractiveActor.hpp; sourceTree = "<group>"; };
+		983D0C330F860903008C0D5F /* SellingMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SellingMachine.cpp; sourceTree = "<group>"; };
+		983D0C340F860903008C0D5F /* SellingMachine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SellingMachine.hpp; sourceTree = "<group>"; };
 		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
 		98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
 		98563E730F1A46370050410E /* libboost_date_time-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s.a"; path = "../../lib/libboost_date_time-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
@@ -152,6 +161,10 @@
 		9807F4D60F4FF003008E3E5B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				983D0C310F860903008C0D5F /* InteractiveActor.cpp */,
+				983D0C320F860903008C0D5F /* InteractiveActor.hpp */,
+				983D0C330F860903008C0D5F /* SellingMachine.cpp */,
+				983D0C340F860903008C0D5F /* SellingMachine.hpp */,
 				989C3A060F64056F0082CD29 /* Monster.h */,
 				989C3A070F64056F0082CD29 /* Monster.cpp */,
 				98F7F9BC0F5B00010060BD7D /* ProgressCircle.cpp */,
@@ -171,6 +184,8 @@
 				9807F4EF0F4FF003008E3E5B /* GameWorld.cpp */,
 				9807F4F00F4FF003008E3E5B /* GameWorld.h */,
 				9807F4F30F4FF003008E3E5B /* NodeID.h */,
+				9814CB7B0F84A21D004C1A92 /* Robot.cpp */,
+				9814CB7C0F84A21D004C1A92 /* Robot.hpp */,
 				9807F4F40F4FF003008E3E5B /* ParticleManager.cpp */,
 				9807F4F50F4FF003008E3E5B /* ParticleManager.h */,
 				9807F4F60F4FF003008E3E5B /* Player.cpp */,
@@ -291,6 +306,9 @@
 				98F7F7840F5A8BFD0060BD7D /* GameHUD.cpp in Sources */,
 				98F7F9BE0F5B00010060BD7D /* ProgressCircle.cpp in Sources */,
 				989C3A080F64056F0082CD29 /* Monster.cpp in Sources */,
+				9814CB7D0F84A21D004C1A92 /* Robot.cpp in Sources */,
+				983D0C350F860903008C0D5F /* InteractiveActor.cpp in Sources */,
+				983D0C360F860903008C0D5F /* SellingMachine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
