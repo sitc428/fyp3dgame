@@ -88,17 +88,22 @@ void Robot::Tick( irr::f32 delta )
 	irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-15;
 	//irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition();
 	irr::core::vector3df aimVec = world.GetCurrentPlayer().GetAimVector();
-	aimVec.rotateXZBy(world.GetCurrentPlayer().GetNodeRotation().Y, world.GetCurrentPlayer().GetNodePosition());
+
+	std::cout << "GetRotation" << world.GetCurrentPlayer().GetRotation().Y << std::endl;
+	std::cout << "GetNodeRotation" << world.GetCurrentPlayer().GetNodeRotation().Y << std::endl;
+
+	aimVec.rotateXZBy(world.GetCurrentPlayer().GetRotation().Y, world.GetCurrentPlayer().GetNodePosition());
 	//std::cout << "Player.Postition.X  : " << world.GetCurrentPlayer().GetNodePosition().X << std::endl;
 	//std::cout << "Player.Postition.Y  : " << world.GetCurrentPlayer().GetNodePosition().Y << std::endl;
 	//std::cout << "Player.Postition.Z  : " << world.GetCurrentPlayer().GetNodePosition().Z << std::endl;
+	aimVec.normalize();
 	std::cout << "Rotated AimVector.X : " << aimVec.X << std::endl;
 	std::cout << "Rotated AimVector.Y : " << aimVec.Y << std::endl;
 	std::cout << "Rotated AimVector.Z : " << aimVec.Z << std::endl;
 	std::cout << std::endl;
-	//tmp.X -= aimVec.X*-13;//(world.GetCurrentPlayer().GetAimVector().X *-13);
+	//tmp.X -= aimVec.X*13;//(world.GetCurrentPlayer().GetAimVector().X *-13);
 	//tmp.Y -= (world.GetCurrentPlayer().GetAimVector().Y *-20);
-	//tmp.Z -= aimVec.Z*-13;//(world.GetCurrentPlayer().GetAimVector().Z *-13);
+	//tmp.Z -= aimVec.Z*13;//(world.GetCurrentPlayer().GetAimVector().Z *-13);
 	//tmp.X -= 13;
 	//tmp.Z -= 13;
 	//aimVec.Z += 13;
