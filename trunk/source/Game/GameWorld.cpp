@@ -687,11 +687,11 @@ void GameWorld::DoInput()
 	}
 	if(receiver.keyDown(irr::KEY_KEY_A))
 	{
-		playerRotation.Y = 15;
+		playerRotation.Y = 3;
 	}
 	else if(receiver.keyDown(irr::KEY_KEY_D))
 	{
-		playerRotation.Y = -15;
+		playerRotation.Y = -3;
 	}
 
 	((MainCharacter*)&GetCurrentPlayer())->SetDefending( receiver.keyDown(irr::KEY_KEY_M) );

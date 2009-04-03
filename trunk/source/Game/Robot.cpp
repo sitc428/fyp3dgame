@@ -75,12 +75,22 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 
 void Robot::Tick( irr::f32 delta )
 {
-	std::cout << "Xdeg: " << world.GetCurrentPlayer().GetNodeRotation().X << "   X: " << world.GetCurrentPlayer().GetNodePosition().X << std::endl;
-	std::cout << "Ydeg: " << world.GetCurrentPlayer().GetNodeRotation().Y << "   Y: " << world.GetCurrentPlayer().GetNodePosition().Y << std::endl;
-	std::cout << "Zdeg: " << world.GetCurrentPlayer().GetNodeRotation().Z << "   Z: " << world.GetCurrentPlayer().GetNodePosition().Z << std::endl;
+	//std::cout << "Xdeg: " << world.GetCurrentPlayer().GetNodeRotation().X << "   X: " << world.GetCurrentPlayer().GetNodePosition().X << std::endl;
+	//std::cout << "Ydeg: " << world.GetCurrentPlayer().GetNodeRotation().Y << "   Y: " << world.GetCurrentPlayer().GetNodePosition().Y << std::endl;
+	//std::cout << "Zdeg: " << world.GetCurrentPlayer().GetNodeRotation().Z << "   Z: " << world.GetCurrentPlayer().GetNodePosition().Z << std::endl;
+	std::cout << "AimVecrot.X : " << world.GetCurrentPlayer().GetAimVector().X << std::endl;
+	std::cout << "AimVecrot.Y : " << world.GetCurrentPlayer().GetAimVector().Y << std::endl;
+	std::cout << "AimVecrot.Z : " << world.GetCurrentPlayer().GetAimVector().Z << std::endl;
+	world.
 	std::cout << std::endl;
+	
 	irr::core::vector3df offset = irr::core::vector3df( 10, floating( delta, 5), 10);
-	node->setPosition(world.GetCurrentPlayer().GetNodePosition() + offset);
+	//world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-15
+	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-offset);//-20);// * -5.0f);
+	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() + offset);
+	irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-10;
+	//tmp.X += 10;
+	node->setPosition(tmp);
 	node->setRotation(world.GetCurrentPlayer().GetNodeRotation());
 	
 }
