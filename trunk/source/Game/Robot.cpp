@@ -78,29 +78,29 @@ void Robot::Tick( irr::f32 delta )
 	//std::cout << "Xdeg: " << world.GetCurrentPlayer().GetNodeRotation().X << "   X: " << world.GetCurrentPlayer().GetNodePosition().X << std::endl;
 	//std::cout << "Ydeg: " << world.GetCurrentPlayer().GetNodeRotation().Y << "   Y: " << world.GetCurrentPlayer().GetNodePosition().Y << std::endl;
 	//std::cout << "Zdeg: " << world.GetCurrentPlayer().GetNodeRotation().Z << "   Z: " << world.GetCurrentPlayer().GetNodePosition().Z << std::endl;
-	std::cout << "AimVecrot.X : " << world.GetCurrentPlayer().GetAimVector().X << std::endl;
-	std::cout << "AimVecrot.Y : " << world.GetCurrentPlayer().GetAimVector().Y << std::endl;
-	std::cout << "AimVecrot.Z : " << world.GetCurrentPlayer().GetAimVector().Z << std::endl;
+	//std::cout << "AimVecrot.X : " << world.GetCurrentPlayer().GetAimVector().X << std::endl;
+	//std::cout << "AimVecrot.Y : " << world.GetCurrentPlayer().GetAimVector().Y << std::endl;
+	//std::cout << "AimVecrot.Z : " << world.GetCurrentPlayer().GetAimVector().Z << std::endl;
 
 	irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 5), 0);
 	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-offset);//-20);// * -5.0f);
 	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() + offset);
 	irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-15;
 	//irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition();
-	irr::core::vector3df aimVec = world.GetCurrentPlayer().GetAimVector();
+	//irr::core::vector3df aimVec = world.GetCurrentPlayer().GetAimVector();
 
-	std::cout << "GetRotation" << world.GetCurrentPlayer().GetRotation().Y << std::endl;
-	std::cout << "GetNodeRotation" << world.GetCurrentPlayer().GetNodeRotation().Y << std::endl;
+	//std::cout << "GetRotation" << world.GetCurrentPlayer().GetRotation().Y << std::endl;
+	//std::cout << "GetNodeRotation" << world.GetCurrentPlayer().GetNodeRotation().Y << std::endl;
 
-	aimVec.rotateXZBy(world.GetCurrentPlayer().GetRotation().Y, world.GetCurrentPlayer().GetNodePosition());
+	//aimVec.rotateXZBy(world.GetCurrentPlayer().GetRotation().Y, world.GetCurrentPlayer().GetNodePosition());
 	//std::cout << "Player.Postition.X  : " << world.GetCurrentPlayer().GetNodePosition().X << std::endl;
 	//std::cout << "Player.Postition.Y  : " << world.GetCurrentPlayer().GetNodePosition().Y << std::endl;
 	//std::cout << "Player.Postition.Z  : " << world.GetCurrentPlayer().GetNodePosition().Z << std::endl;
-	aimVec.normalize();
-	std::cout << "Rotated AimVector.X : " << aimVec.X << std::endl;
-	std::cout << "Rotated AimVector.Y : " << aimVec.Y << std::endl;
-	std::cout << "Rotated AimVector.Z : " << aimVec.Z << std::endl;
-	std::cout << std::endl;
+	//aimVec.normalize();
+	//std::cout << "Rotated AimVector.X : " << aimVec.X << std::endl;
+	//std::cout << "Rotated AimVector.Y : " << aimVec.Y << std::endl;
+	//std::cout << "Rotated AimVector.Z : " << aimVec.Z << std::endl;
+	//std::cout << std::endl;
 	//tmp.X -= aimVec.X*13;//(world.GetCurrentPlayer().GetAimVector().X *-13);
 	//tmp.Y -= (world.GetCurrentPlayer().GetAimVector().Y *-20);
 	//tmp.Z -= aimVec.Z*13;//(world.GetCurrentPlayer().GetAimVector().Z *-13);
@@ -108,6 +108,20 @@ void Robot::Tick( irr::f32 delta )
 	//tmp.Z -= 13;
 	//aimVec.Z += 13;
 	//aimVec.Z -= 13;
+	//irr::f32 xc = world.GetCurrentPlayer().GetNodePosition().X - world.GetCurrentPlayer().GetAimVector().X*-30;
+	//irr::f32 yc = world.GetCurrentPlayer().GetNodePosition().Y - world.GetCurrentPlayer().GetAimVector().Y*-30;
+	//irr::f32 xp = world.GetCurrentPlayer().GetNodePosition().X;
+	//irr::f32 yp = world.GetCurrentPlayer().GetNodePosition().Z;;
+
+	//irr::f32 a = 4*(yp-yc)*(yp-yc) + 4*yc*yc;
+	//irr::f32 b = 4*(yp-yc)*(xc*xc+yc*yc-yp*yp) - 8*yc*yc*yp;
+	//irr::f32 c = xc*xc*xc*xc + 2*xc*xc*yc*yc + yc*yc*yc*yc - 2*yp*(xc*xc+yc*yc) + yp*yp*yp*yp - 4*149*yc*yc + 4*yc*yc*yp*yp;
+
+	//irr::f32 yr = (-b + sqrt(b*b-4*a*c))/(2*a);
+	//irr::f32 xr = sqrt(149 - (yr-yp)*(yr-yp)) + xp;
+	//tmp.X = xr;
+	//tmp.Z = yr;
+
 	node->setPosition(tmp+offset);
 	node->setRotation(world.GetCurrentPlayer().GetNodeRotation());
 	
