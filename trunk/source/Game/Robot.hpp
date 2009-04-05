@@ -17,7 +17,7 @@ public:
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; }
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_ROBOT; }
-
+	virtual void RecreateCollisionResponseAnimator();
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
