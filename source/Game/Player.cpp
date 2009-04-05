@@ -14,6 +14,7 @@ Player::Player( GameWorld& gameWorld )
 	rotation( irr::core::vector3df(0.0f, 0.0f, 0.0f) ),
 	velApprox(0,0,0),
 	health( 100 ),
+	max_health(100),
 	godMode( false )
 {
 }
