@@ -253,13 +253,13 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 				bool found = false;
 				float mov_x, mov_z;
 				if(_player.GetNodePosition().X > _monster->getPosition().X)
-					mov_x = 20.0;
+					mov_x = 5.0;
 				else
-					mov_x = -20.0;
+					mov_x = -5.0;
 				if(_player.GetNodePosition().Z > _monster->getPosition().Z)
-					mov_z = 20.0;
+					mov_z = 5.0;
 				else
-					mov_z = -20.0;
+					mov_z = -5.0;
 				next_pos = target;
 				if(last_move != 0){
 					switch (last_move){
