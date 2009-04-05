@@ -11,6 +11,8 @@ static const c8*	PLAYER_HEALTH_FILL_TEXTURE = "model/HUD/frame_hud.png";
 static const c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
 static const c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
 static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
+static const c8*	HP_TEXTURE = "media/HUD/hp.png";
+
 
 
 static const SColor		HUD_FONT_OVERRIDE_COLOR =  SColor(255,14,0,89);
@@ -20,39 +22,32 @@ static u32			HEALTH_BAR_FRAME_WIDTH = 349;
 static u32			HEALTH_BAR_FRAME_HEIGHT = 134;
 static u32			MAGIC_CHARGE_WIDTH = 133;
 static u32			MAGIC_CHARGE_HEIGHT = 134;
+static u32			HP_WIDTH = 225;
+static u32			HP_HEIGHT = 10;
+static u32			HP_START_X = 105;
 
 
 extern GameEngine* GEngine;
 
 // constructor
 GameHUD::GameHUD( IrrlichtDevice& device )
-: HealthBarFrame(NULL)
-, HealthBarFrameTexture(NULL)
-, MagicCharge(NULL)
+: HealthBarFrameTexture(NULL)
 , MagicChargeTexture(NULL)
-, MagicLevel(NULL)
 , MagicLevelTexture(NULL)
-, CD(NULL)
 , CDTexture(NULL)
+, HP(NULL)
 {	
-	
-	
-	
-	// init the ammo display
-	gui::IGUIEnvironment* env = device.getGUIEnvironment();
+	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
-	check(env);
 
-	IGUISkin* skin = env->getSkin();
-	
-	
 	HealthBarFrameTexture = driver.getTexture(HEALTH_BAR_FRAME_TEXTURE);
 	MagicChargeTexture = driver.getTexture(MAGIC_CHARGE_TEXTURE);
 	MagicLevelTexture = driver.getTexture(MAGIC_LEVEL_TEXTURE);
+	HP = driver.getTexture(HP_TEXTURE);
 	check(HealthBarFrameTexture);
 	check(MagicChargeTexture);
 	check(MagicLevelTexture); 
-	
+	check(HPTexture);
 }
 
 // destructor
@@ -64,6 +59,8 @@ GameHUD::~GameHUD()
 	MagicChargeTexture = NULL;
 	GEngine->GetDriver().removeTexture( MagicLevelTexture );
 	MagicLevelTexture = NULL;
+	GEngine->GetDriver().removeTexture( HP);
+	HP = NULL;
 }
 
 void GameHUD::Init()
@@ -78,13 +75,12 @@ void GameHUD::Init()
 	
 	
 	//health bar main frame
-	irr::core::rect<irr::s32> rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), irr::core::position2d<irr::s32>(HEALTH_BAR_FRAME_WIDTH,scrSize.Height));
+	HPRec = irr::core::rect<irr::s32>(0,0, HEALTH_BAR_FRAME_WIDTH,HEALTH_BAR_FRAME_HEIGHT);
 	
-	
-	irr::core::rect<irr::s32> rectangle1 = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
-	
-	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), rectangle, 0, video::SColor(255,255,255,255), true);
-	
+	MagicChargeRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
+	MagicLevelRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
+	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
+		
 	
 	
 	/*
@@ -120,16 +116,26 @@ void GameHUD::Init()
 	
 }
 
-void GameHUD::Update()
+void GameHUD::Update( irr::f32 delta , Player& player)
 {
 	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
 	IVideoDriver& driver = GEngine->GetDriver();
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
-	irr::core::rect<irr::s32> HPframe = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(0, 0), irr::core::position2d<irr::s32>(HEALTH_BAR_FRAME_WIDTH,HEALTH_BAR_FRAME_HEIGHT));
 	
-
-	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPframe, 0, video::SColor(255,255,255,255), true);
+	MagicChargeRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH, 0, MAGIC_CHARGE_WIDTH*2,  MAGIC_CHARGE_HEIGHT);
+	MagicLevelRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH, 0, MAGIC_CHARGE_WIDTH*2,  MAGIC_CHARGE_HEIGHT);
+	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH, HP_HEIGHT);
+	
+	
+	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPRec, 0, video::SColor(255,255,255,255), true);
+	driver.draw2DImage(MagicChargeTexture, irr::core::position2d<irr::s32>(0, 0), MagicChargeRec, 0, video::SColor(255,255,255,255), true);
+	driver.draw2DImage(MagicLevelTexture, irr::core::position2d<irr::s32>(0, 0), MagicLevelRec, 0, video::SColor(255,255,255,255), true);
+	driver.draw2DImage(HP, irr::core::position2d<irr::s32>(HP_START_X, (MAGIC_CHARGE_WIDTH-HP_HEIGHT)/2), HPBar, 0, video::SColor(255,255,255,255), true);
+	
+	
+	
+	
 	/*
 	wchar_t buffer[32];
 	//swprintf(buffer,L"AMMO: %i", Ammo);
@@ -187,14 +193,9 @@ void GameHUD::Update()
 
 void GameHUD::Exit()
 {
-	//HealthBarFrame->drop();
-	HealthBarFrame = NULL;
+
 	HealthBarFrameTexture = NULL;
-	//MagicCharge->remove();
-	MagicCharge = NULL;
 	MagicChargeTexture = NULL;
-	//MagicLevel->remove();
-	MagicLevel = NULL;
 	MagicLevelTexture = NULL;
 	
 	/*
