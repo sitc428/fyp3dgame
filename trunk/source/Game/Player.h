@@ -56,8 +56,9 @@ class Player: public Actor
 		virtual void PlayRandomCheer();
 
 		virtual void SetHealth( irr::f32 pHealth ) { health = pHealth; }
-		irr::f32 GetHealth() const { return health; }
-
+		irr::u32 GetHealth() const { return health; }
+		irr::u32 GetMaxHealth() const { return max_health;}
+	
 		// god mode
 		virtual void SetGodMode( bool enable=true ) { godMode=enable; }
 		virtual bool HasGodMode() { return godMode; }
@@ -83,7 +84,9 @@ class Player: public Actor
 
 		// approximation of movement velocity used by AI
 		irr::core::vector3df velApprox;
-		irr::f32 health;
+		irr::u32 health;
+		irr::u32 max_health;
+	
 		// god mode
 		bool godMode;
 };
