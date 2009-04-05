@@ -26,13 +26,20 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
 	_monster->setPosition( defaultPosition );
+	//_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
+	
+	//RecreateCollisionResponseAnimator();
+	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
+	//_monster->setTriangleSelector( triangleSelector );
+	//triangleSelector->drop();
+	//triangleSelector = NULL;
 
-	/*RecreateCollisionResponseAnimator();
-	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createOctTreeTriangleSelectorFromBoundingBox( _monster );
-	_monster->setTriangleSelector( triangleSelector );
-	triangleSelector->drop();
-	triangleSelector = NULL;*/
-
+	irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( _monster->getMesh(), _monster );
+	check(meshTriangleSelector);
+	_monster->setTriangleSelector( meshTriangleSelector );
+	world.GetLevelTriangleSelector().addTriangleSelector(meshTriangleSelector);
+	meshTriangleSelector->drop();
+	meshTriangleSelector = NULL;
 
 	FSM.initiate();
 	original = defaultPosition;
