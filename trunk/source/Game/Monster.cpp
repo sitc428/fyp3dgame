@@ -47,49 +47,7 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	attack_timer->restart();
 }
 
-/*
-   void Monster::change(Player& _player)
-   {
-   int num =1;
-   std::cout<<"testing\n";
-   switch (c){
-   case 't':
-   {
-   FSM.process_event ( EvDie() );
-   FSM.reaction(_monster, _player);
-   break;
-   }
-   case 'w':
-   {
-   FSM.process_event ( EvPlayerWithinRange() );
-   FSM.reaction(_monster,_player);
-   break;
-   }
-   case 'a':
-   {
-   FSM.process_event ( EvWithinAttackRange() );
-   FSM.reaction(_monster, _player);
-   break;
-   }
-   case 'o':
-   {
-   FSM.process_event ( EvOutOfAttackRange() );
-   FSM.reaction(_monster, _player);
-   break;
-   }
-   case 'm':
-   {
-   std::cout<<"Here1\n";
-//FSM.test(1,2,3);
 
-std::cout<<FSM.GetName()<<"\n";
-std::cout<<num<<std::endl;
-break;
-}
-} 
-
-}
-*/
 
 void Monster::update(Player& _player)
 {
@@ -127,7 +85,7 @@ void Monster::update(Player& _player)
 			|| _player.GetNodePosition().getDistanceFrom(pos)< 80.0f )
 	{
 		mon_timer->restart();
-		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
+		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/100.0f);
 
 		if( targetPos.getDistanceFrom(original) < 120.0f )
 		{
@@ -232,14 +190,12 @@ void Monster::RecreateCollisionResponseAnimator()
 	_monster->addAnimator(collisionAnimator);
 }
 
-void Monster::ReceiveDamage(irr::f32 damage)
-{
+void Monster::ReceiveDamage(irr::f32 damage){
 	health -= damage;
 	//	std::cout<<"Health: "<<health<<std::endl;
 }
 
-void  Monster::Tick(irr::f32 delta)
-{
+void  Monster::Tick(irr::f32 delta){
 	update(world.GetCurrentPlayer());
 }
 
@@ -278,14 +234,12 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 	irr::core::array<irr::scene::IMeshSceneNode*>& blocks = world.GetBlocking();
 	irr::u32 blocking_size = blocks.size();
 
-	for(irr::u32 i = 0; i < blocking_size; ++i)
-	{
+	for(irr::u32 i = 0; i < blocking_size; ++i){
 		irr::scene::IMeshSceneNode* meshNode = blocks[i];
 		if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
 			min = pos.getDistanceFrom(meshNode->getPosition() );
 		//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
-		if(pos.getDistanceFrom(meshNode->getPosition() ) < 50.0)
-		{
+		if(pos.getDistanceFrom(meshNode->getPosition() ) < 50.0){
 			//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
 			irr::core::vector3df directionM = meshNode->getPosition()-_player.GetNodePosition();
 			irr::core::vector3df directionT = meshNode->getPosition() - _monster->getPosition();
@@ -294,8 +248,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 			angle = acos(angle)*180.0/ PI;
 			//std::cout<<"angle: "<<floor(angle)<<"\n";
 
-			if(floor(angle) > 60 )
-			{
+			if(floor(angle) > 60 ){
 				//std::cout<<"-------------------------\n";
 				bool found = false;
 				float mov_x, mov_z;
@@ -308,10 +261,8 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 				else
 					mov_z = -20.0;
 				next_pos = target;
-				if(last_move != 0)
-				{
-					switch (last_move)
-					{
+				if(last_move != 0){
+					switch (last_move){
 						case 1 : 
 							if(meshNode->getPosition().Z > next_pos.Z)
 								next_pos.Z-=mov_z;
@@ -335,17 +286,14 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 							 break;
 					}
 				}
-				else
-				{
+				else{
 
 					irr::core::vector3df next_pos1 = target;
 					next_pos1.X+=mov_x;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
-					{
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
 						found = true;
 					}
-					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos1.getDistanceFrom(_player.GetNodePosition()))
-					{
+					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos1.getDistanceFrom(_player.GetNodePosition())){
 						next_pos = next_pos1;
 						last_move = 1;
 						//std::cout<<"PATH FOUND_X\n";
@@ -353,12 +301,10 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 
 					irr::core::vector3df next_pos2 = target;
 					next_pos2.Z +=mov_z;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
-					{
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
 						found = true;
 					}
-					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos2.getDistanceFrom(_player.GetNodePosition()))
-					{
+					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos2.getDistanceFrom(_player.GetNodePosition())){
 						next_pos = next_pos2;
 						last_move = 2;
 						//std::cout<<"PATH FOUND_Z\n";
@@ -369,14 +315,12 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 					mov_z=-mov_z;
 					next_pos3 = target;
 					next_pos3.X+=mov_x;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
-					{
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
 						found = true;
 
 
 					}
-					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos3.getDistanceFrom(_player.GetNodePosition()))
-					{
+					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos3.getDistanceFrom(_player.GetNodePosition())){
 						next_pos = next_pos3;
 						last_move = 3;
 						//std::cout<<"PATH FOUND_X2\n";
@@ -385,12 +329,10 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 					irr::core::vector3df next_pos4 = target;
 
 					next_pos4.Z +=mov_z;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0)
-					{
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
 						found = true;
 					}
-					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos4.getDistanceFrom(_player.GetNodePosition()))
-					{
+					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos4.getDistanceFrom(_player.GetNodePosition())){
 						next_pos = next_pos4;
 						last_move = 4;
 						//std::cout<<"PATH FOUND_Z2\n";
