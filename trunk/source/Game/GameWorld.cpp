@@ -110,7 +110,7 @@ void GameWorld::InitLevel()
 		{
 			if (meshNode->getID() == NODE_ID_TRI_NEEDED)
 			{
-				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createTriangleSelector( meshNode->getMesh(), meshNode );
+				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
 				check(meshTriangleSelector);
 				meshNode->setTriangleSelector( meshTriangleSelector );
 				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
