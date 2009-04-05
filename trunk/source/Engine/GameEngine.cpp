@@ -252,13 +252,16 @@ void GameEngine::Run()
 
 		// perform the main tick update for the current state
 		TickCurrentState( frameDelta );
-
+		
 		// draw the 3d scene
 		smgr->drawAll(); 
 
 		// draw all UI elements after the 3d scene
+		
 		device->getGUIEnvironment()->drawAll();
-
+		
+		TickHUD(frameDelta);
+		
 		driver->endScene();
 
 		receiver->enable();
@@ -281,6 +284,25 @@ void GameEngine::Run()
 		GoToExit();
 	}
 }
+
+void GameEngine::TickHUD(irr::f32 delta)
+{
+	switch( state )
+	{
+		case state_GAME:
+		{
+			check( world );
+			world->UpdateHUD( delta );
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+	
+}
+
 
 // perform the main tick update for the current state
 void GameEngine::TickCurrentState( irr::f32 delta )

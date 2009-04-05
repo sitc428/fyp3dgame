@@ -115,6 +115,7 @@ class GameEngine
 	private:
 		// perform the main tick update for the current state
 		void TickCurrentState( irr::f32 delta );
+		void TickHUD( irr::f32 delta);
 
 		// private helpers used in state transitions
 		void CleanupCurrentState();
