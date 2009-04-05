@@ -106,7 +106,7 @@ class GameWorld
 		// update AI calculations
 		void DoAI( irr::f32 delta );
 		// updates the Heads Up Display
-		void DoHUD();
+		void DoHUD(irr::f32 delta );
 		// deletes all the dead actors
 		void DoCleanup();
 
