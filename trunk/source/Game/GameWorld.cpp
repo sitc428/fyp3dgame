@@ -405,6 +405,21 @@ void GameWorld::Exit()
 	GEngine->InitGlobalWeatherEffect();
 }
 
+
+void GameWorld::UpdateHUD( irr::f32 delta){
+	switch( gameState ){
+			
+	
+		case state_GAMEPLAY:
+			{
+				DoHUD();
+			}break;
+		default:
+			break;
+	}
+}
+
+
 // called every frame with the frame's elapsed time
 void GameWorld::Tick( irr::f32 delta )
 {
@@ -649,7 +664,7 @@ void GameWorld::DoGameplay( irr::f32 delta )
 		DoPhysics();
 
 		// update the HUD
-		DoHUD();
+		//DoHUD();
 
 		// deletes all the dead actors
 		DoCleanup();
@@ -984,7 +999,7 @@ void GameWorld::DoHUD()
 {
 	// Player& p = GetCurrentPlayer();
 	// gameHUD->Update( p.GetAmmo(), p.GetScore(), numLives, curEnemyWave+1, enemyWaves.size(), GetCurrentPlayer().GetHealth(), GetCurrentPlayer().HasGodMode() );
-
+	gameHUD->Update();
 	/* Do the pause here! */
 }
 

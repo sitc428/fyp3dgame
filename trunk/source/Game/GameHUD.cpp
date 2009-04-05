@@ -8,7 +8,7 @@ static const c8*	PLAYER_LIFE_TEXTURE = "model/HUD/frame_hud.png";  // icon indic
 static const c8*	PLAYER_HEALTH_BAR_TEXTURE = "model/HUD/frame_hud.png";
 static const c8*	PLAYER_HEALTH_FILL_TEXTURE = "model/HUD/frame_hud.png";
  */
-static const c8*	HEALTH_BAR_FRANE_TEXTURE = "media/HUD/frame_hud.png";
+static const c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
 static const c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
 static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
 
@@ -26,20 +26,7 @@ extern GameEngine* GEngine;
 
 // constructor
 GameHUD::GameHUD( IrrlichtDevice& device )
-: /*AmmoDisplay(NULL)
-, ScoreDisplay(NULL)
-, WaveDisplay(NULL)
-, PlayerLives(NULL)
-, PlayerLifeTexture(NULL)
-, PlayerLife1(NULL)
-, PlayerLife2(NULL)
-, PlayerLife3(NULL)
-, PlayerHealth(NULL)
-, PlayerHealthBarTexture(NULL)	
-, PlayerHealthFillTexture(NULL)
-, PlayerHealthBar(NULL)
-, PlayerHealthFill(NULL)
-,*/ HealthBarFrame(NULL)
+: HealthBarFrame(NULL)
 , HealthBarFrameTexture(NULL)
 , MagicCharge(NULL)
 , MagicChargeTexture(NULL)
@@ -47,7 +34,6 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , MagicLevelTexture(NULL)
 , CD(NULL)
 , CDTexture(NULL)
-//, GodModeDisplay(NULL)
 {	
 	
 	
@@ -58,94 +44,15 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	check(env);
 
 	IGUISkin* skin = env->getSkin();
-
-	/*
-	
-	IGUIFont* font = env->getFont(FONT_FILE);
-	if (font)
-	{
-		skin->setFont(font);
-	}
-
-	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
-
-	
-	WaveDisplay =  env->addStaticText(
-		L"",
-		core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -5 -ELEMENT_HEIGHT, scrSize.Width -5,scrSize.Height -5),
-		false, true,0, -1, false);
-	 
-	check(WaveDisplay);
-	WaveDisplay->setTextAlignment( EGUIA_CENTER, EGUIA_CENTER );
-	WaveDisplay->setOverrideColor( HUD_FONT_OVERRIDE_COLOR );
 	
 	
-	ScoreDisplay = env->addStaticText(
-		L"",
-		core::rect<irr::s32>(scrSize.Width -155,scrSize.Height -42 -ELEMENT_HEIGHT ,scrSize.Width -5,scrSize.Height -42),
-		false, true,	0, -1, false);
-
-	check(ScoreDisplay);
-	ScoreDisplay->setTextAlignment( EGUIA_CENTER, EGUIA_CENTER );
-	ScoreDisplay->setOverrideColor( HUD_FONT_OVERRIDE_COLOR );
-	 
-	AmmoDisplay = env->addStaticText(
-		L"",
-		core::rect<irr::s32>(5,scrSize.Height -42 -ELEMENT_HEIGHT, 155,scrSize.Height -42),
-		false, true,	0, -1, false);
-
-	check(AmmoDisplay);
-	AmmoDisplay->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
-	AmmoDisplay->setOverrideColor( HUD_FONT_OVERRIDE_COLOR );
-	
-	PlayerLives = env->addStaticText(
-		L"",
-		core::rect<irr::s32>(5,scrSize.Height -5 -ELEMENT_HEIGHT , 250,scrSize.Height -5),
-		false, true,	0, -1, false);
-	 
-	check(PlayerLives);
-	PlayerLives->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
-	PlayerLives->setOverrideColor( HUD_FONT_OVERRIDE_COLOR );
-	 
-	
-	PlayerLifeTexture = driver.getTexture( PLAYER_LIFE_TEXTURE );
-	check(PlayerLifeTexture);
-	
-	
-	PlayerHealth = env->addStaticText(
-		L"",
-		irr::core::rect<irr::s32>(scrSize.Width/2 - 120,scrSize.Height -5 -ELEMENT_HEIGHT , scrSize.Width/2 + 100,scrSize.Height -5),
-		false, true,	0, -1, false);
-	check(PlayerHealth);
-	PlayerHealth->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
-	PlayerHealth->setOverrideColor( HUD_FONT_OVERRIDE_COLOR );
-	PlayerHealth->setVisible(false);
-	 
-	
-	PlayerHealthBarTexture = driver.getTexture( PLAYER_HEALTH_BAR_TEXTURE );	
-	PlayerHealthFillTexture = driver.getTexture( PLAYER_HEALTH_FILL_TEXTURE );
-	check(PlayerHealthBarTexture);
-	check(PlayerHealthFillTexture);
-	
-	*/
-	
-	HealthBarFrameTexture = driver.getTexture(HEALTH_BAR_FRANE_TEXTURE);
+	HealthBarFrameTexture = driver.getTexture(HEALTH_BAR_FRAME_TEXTURE);
 	MagicChargeTexture = driver.getTexture(MAGIC_CHARGE_TEXTURE);
 	MagicLevelTexture = driver.getTexture(MAGIC_LEVEL_TEXTURE);
 	check(HealthBarFrameTexture);
 	check(MagicChargeTexture);
 	check(MagicLevelTexture); 
-	 
-	/*
-	GodModeDisplay = env->addStaticText(
-		L"GOD MODE ENABLED",
-		irr::core::rect<irr::s32>(16,0,512,32),
-		false, true,	0, -1, false);
-	check(GodModeDisplay);
-	GodModeDisplay->setTextAlignment( EGUIA_UPPERLEFT, EGUIA_CENTER );
-	GodModeDisplay->setOverrideColor( SColor( 255, 255, 64, 64 ) );
-	GodModeDisplay->setVisible(false);
-	 */
+	
 }
 
 // destructor
@@ -153,102 +60,76 @@ GameHUD::~GameHUD()
 {
 	GEngine->GetDriver().removeTexture( HealthBarFrameTexture );
 	HealthBarFrameTexture = NULL;
-	GEngine->GetDriver().removeTexture( HealthBarFrameTexture );
-	HealthBarFrameTexture = NULL;
-	GEngine->GetDriver().removeTexture( HealthBarFrameTexture );
-	HealthBarFrameTexture = NULL;
-	/*
-	check(AmmoDisplay == NULL);
-
-	// clear all the HUD resoruces
-	GEngine->GetDriver().removeTexture( PlayerLifeTexture );
-	PlayerLifeTexture = NULL;
-	
-	GEngine->GetDriver().removeTexture( PlayerHealthBarTexture );
-	PlayerHealthBarTexture = NULL;
-	GEngine->GetDriver().removeTexture( PlayerHealthFillTexture );
-	PlayerHealthFillTexture = NULL;
-	 */
+	GEngine->GetDriver().removeTexture( MagicChargeTexture );
+	MagicChargeTexture = NULL;
+	GEngine->GetDriver().removeTexture( MagicLevelTexture );
+	MagicLevelTexture = NULL;
 }
 
 void GameHUD::Init()
 {
-		
 	
 	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
 	
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
+	IVideoDriver& driver = GEngine->GetDriver();
+	
 	
 	//health bar main frame
-	irr::core::rect<irr::s32> rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), 
-																	irr::core::position2d<irr::s32>(HEALTH_BAR_FRAME_WIDTH,scrSize.Height));
-	HealthBarFrame = env->addImage(rectangle);
-	HealthBarFrame->setImage( HealthBarFrameTexture );
-	HealthBarFrame->setUseAlphaChannel(true);
-	HealthBarFrame->setVisible(true);
+	irr::core::rect<irr::s32> rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), irr::core::position2d<irr::s32>(HEALTH_BAR_FRAME_WIDTH,scrSize.Height));
 	
-	//Magic Charge
+	
+	irr::core::rect<irr::s32> rectangle1 = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
+	
+	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), rectangle, 0, video::SColor(255,255,255,255), true);
+	
+	
+	
+	/*
+	HealthBarFrame = env -> addEmptySpriteBank(HEALTH_BAR_FRAME_TEXTURE);
+	HealthBarFrame->addTexture(HealthBarFrameTexture);
+	HealthBarFrame->setTexture(0, HealthBarFrameTexture);
+	HealthBarFrame->draw2DSprite(0, irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), &rectangle, video::SColor(255, 255, 255, 255), 0, 0, false, false);
+	*/
+	//HealthBarFrame->setImage( HealthBarFrameTexture );
+	//HealthBarFrame->setUseAlphaChannel(true);
+	//HealthBarFrame->setVisible(true);
+	//driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), rectangle1);
+	
+	
+	/*Magic Charge
 	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(0, scrSize.Height - MAGIC_CHARGE_HEIGHT), 
 																	irr::core::position2d<irr::s32>(MAGIC_CHARGE_WIDTH,scrSize.Height));
 	MagicCharge = env->addImage(rectangle);
 	MagicCharge->setImage( MagicChargeTexture );
 	MagicCharge->setUseAlphaChannel(true);
 	MagicCharge->setVisible(true);
+	*/
 	
-	//Magic Level
+	
+	
+	
+	/*Magic Level
 	MagicLevel = env->addImage(rectangle);
 	MagicLevel->setImage( MagicLevelTexture );
 	MagicLevel->setUseAlphaChannel(true);
 	MagicLevel->setVisible(true);
+	 */
 	
-	
-	/*
-	
-	irr::core::rect<irr::s32> rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(100, 0), irr::core::position2d<irr::s32>(132,32));
-	PlayerLife1 = env->addImage( rectangle, PlayerLives );
-	PlayerLife1->setImage( PlayerLifeTexture );
-	//PlayerLife1->setScaleImage(true);
-	PlayerLife1->setUseAlphaChannel(true);
-	PlayerLife1->setVisible(true);
-
-	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(137, 0), irr::core::position2d<irr::s32>(169,32));
-	PlayerLife2 = env->addImage( rectangle, PlayerLives );
-	PlayerLife2->setImage( PlayerLifeTexture );
-	//PlayerLife2->setScaleImage(true);
-	PlayerLife2->setUseAlphaChannel(true);
-	PlayerLife2->setVisible(true);
-
-	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(174, 0), irr::core::position2d<irr::s32>(206,32));
-	PlayerLife3 = env->addImage( rectangle, PlayerLives );
-	PlayerLife3->setImage( PlayerLifeTexture );
-	//PlayerLife3->setScaleImage(true);
-	PlayerLife3->setUseAlphaChannel(true);
-	PlayerLife3->setVisible(true);
-
-	check(PlayerLife1);
-	check(PlayerLife2);
-	check(PlayerLife3);
-	
-	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(120, 0), irr::core::position2d<irr::s32>(120 + HEALTH_BAR_WIDTH,ELEMENT_HEIGHT));
-	PlayerHealthBar = env->addImage( rectangle, PlayerHealth );
-	PlayerHealthBar->setImage( PlayerHealthBarTexture );
-	PlayerHealthBar->setScaleImage(true);
-	PlayerHealthBar->setUseAlphaChannel(true);
-	check(PlayerHealthBar);
-
-	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(2, 2), irr::core::position2d<irr::s32>(HEALTH_BAR_FILL_WIDTH,ELEMENT_HEIGHT - 2));
-	PlayerHealthFill = env->addImage( rectangle, PlayerHealthBar );
-	PlayerHealthFill->setImage( PlayerHealthFillTexture );
-	PlayerHealthFill->setScaleImage(true);
-	PlayerHealthFill->setUseAlphaChannel(true);
-	check(PlayerHealthFill);
-	*/
 }
 
-void GameHUD::Update( irr::s32 Ammo, irr::s32 Score, irr::s32 Lives, irr::s32 CurrWave, irr::s32 TotalWaves, irr::f32 Health, bool godMode )
+void GameHUD::Update()
 {
+	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+	check(env);
+	IVideoDriver& driver = GEngine->GetDriver();
+	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+	irr::core::rect<irr::s32> HPframe = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(0, 0), irr::core::position2d<irr::s32>(HEALTH_BAR_FRAME_WIDTH,HEALTH_BAR_FRAME_HEIGHT));
+	
+
+	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPframe, 0, video::SColor(255,255,255,255), true);
 	/*
 	wchar_t buffer[32];
 	//swprintf(buffer,L"AMMO: %i", Ammo);
@@ -306,13 +187,13 @@ void GameHUD::Update( irr::s32 Ammo, irr::s32 Score, irr::s32 Lives, irr::s32 Cu
 
 void GameHUD::Exit()
 {
-	HealthBarFrame->remove();
+	//HealthBarFrame->drop();
 	HealthBarFrame = NULL;
 	HealthBarFrameTexture = NULL;
-	MagicCharge->remove();
+	//MagicCharge->remove();
 	MagicCharge = NULL;
 	MagicChargeTexture = NULL;
-	MagicLevel->remove();
+	//MagicLevel->remove();
 	MagicLevel = NULL;
 	MagicLevelTexture = NULL;
 	
