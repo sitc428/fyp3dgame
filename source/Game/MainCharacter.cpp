@@ -93,7 +93,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	RecreateCollisionResponseAnimator();
 
 	// create a triangle selector for player
-	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelector( node->getMesh(), node );
+	irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createOctTreeTriangleSelector( node->getMesh(), node );
 	node->setTriangleSelector( triangleSelector );
 	triangleSelector->drop();
 	triangleSelector = NULL;

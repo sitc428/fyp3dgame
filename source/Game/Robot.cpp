@@ -50,6 +50,13 @@ Robot::Robot( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setScale(defaultScale);
 	srand( time(0) );
+
+	//node->setDebugDataVisible(irr::scene::EDS_BBOX);
+	//RecreateCollisionResponseAnimator();
+	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createOctTreeTriangleSelectorFromBoundingBox( node );
+	//node->setTriangleSelector( triangleSelector );
+	//triangleSelector->drop();
+	//triangleSelector = NULL;
 }
 
 Robot::~Robot()
@@ -62,6 +69,28 @@ Robot::~Robot()
 	
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	smgr.addToDeletionQueue( node );
+}
+
+void Robot::RecreateCollisionResponseAnimator()
+{
+	// drop the current collision response animator
+	if( collisionAnimator )
+	{
+		node->removeAnimator( collisionAnimator );
+		collisionAnimator->drop();
+		collisionAnimator = NULL;
+	}
+
+	// setup torso collision with the world
+	irr::core::aabbox3df box = node->getMesh()->getMesh(0)->getBoundingBox();
+	irr::core::vector3df radius = box.MaxEdge - box.getCenter();
+
+	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
+			&world.GetLevelTriangleSelector(), node, radius, irr::core::vector3df(0,-0.8,0), // gravity
+			irr::core::vector3df(0, 0, 0), // ellipsoid translation
+			0); // sliding value
+
+	node->addAnimator(collisionAnimator);
 }
 
 static irr::f32 floating( irr::f32 delta, irr::s32 range )
@@ -88,14 +117,14 @@ void Robot::Tick( irr::f32 delta )
 	//aimVec.rotateXZBy(60, aimPos);//world.GetCurrentPlayer().GetNodePosition());
 	//aimVec.normalize();
 	
-	std::cout << "AimVecrot.X : " << aimVec.X << std::endl;
-	std::cout << "AimVecrot.Y : " << aimVec.Y << std::endl;
-	std::cout << "AimVecrot.Z : " << aimVec.Z << std::endl;
+	//std::cout << "AimVecrot.X : " << aimVec.X << std::endl;
+	//std::cout << "AimVecrot.Y : " << aimVec.Y << std::endl;
+	//std::cout << "AimVecrot.Z : " << aimVec.Z << std::endl;
 	
 	irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition() - aimVec*-15;//world.GetCurrentPlayer().GetAimVector()*-15;
 	//irr::core::vector3df tmp = world.GetCurrentPlayer().GetNodePosition();
 	//irr::core::vector3df aimVec = world.GetCurrentPlayer().GetAimVector();
-	tmp.rotateXZBy(60, world.GetCurrentPlayer().GetNodePosition());
+	tmp.rotateXZBy(45, world.GetCurrentPlayer().GetNodePosition());
 
 	//std::cout << "GetRotation" << world.GetCurrentPlayer().GetRotation().Y << std::endl;
 	//std::cout << "GetNodeRotation" << world.GetCurrentPlayer().GetNodeRotation().Y << std::endl;
@@ -132,5 +161,12 @@ void Robot::Tick( irr::f32 delta )
 
 	node->setPosition(tmp+offset);
 	node->setRotation(world.GetCurrentPlayer().GetNodeRotation());
+	
+	//RecreateCollisionResponseAnimator();
+	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createOctTreeTriangleSelectorFromBoundingBox( node );
+	//node->setTriangleSelector( triangleSelector );
+	//triangleSelector->drop();
+	//triangleSelector = NULL;
+
 	
 }
