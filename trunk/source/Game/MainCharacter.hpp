@@ -82,6 +82,7 @@ public:
 	// sets the player into firing state
 	//void DoLaunchProjectile();
 	
+	
 	// damage done to player
 	virtual void ReceiveDamage( irr::f32 value );
 	// check if the player is dead
