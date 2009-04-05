@@ -118,6 +118,7 @@ void GameWorld::InitLevel()
 				meshTriangleSelector = NULL;
 
 				blocks.push_back( meshNode );
+				//meshNode->setDebugDataVisible( irr::scene::EDS_BBOX);
 			}
 		}
 	}
