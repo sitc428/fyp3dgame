@@ -19,7 +19,7 @@ public:
 	~GameHUD();
 
 	void Init();
-	void Update( irr::s32 Ammo, irr::s32 Score, irr::s32 Lives, irr::s32 CurrWave, irr::s32 TotalWaves, irr::f32 Health, bool godMode );
+	void Update();
 	void Exit();
 
 private:
@@ -40,14 +40,18 @@ private:
 	IGUIImage*		PlayerHealthBar;
 	IGUIImage*		PlayerHealthFill;
 	*/
-	IGUIImage*		HealthBarFrame;
-	ITexture*		HealthBarFrameTexture;
-	IGUIImage*		MagicCharge;
-	ITexture*		MagicChargeTexture;
-	IGUIImage*		MagicLevel;
-	ITexture*		MagicLevelTexture;
-	IGUIImage*		CD;
-	ITexture*		CDTexture;
+	//IGUISpriteBank*			HealthBarFrame;
+	irr::core::rect<irr::s32>	HPRec;
+	ITexture*			HealthBarFrameTexture;
+	//IGUISpriteBank*		MagicCharge;
+	irr::core::rect<irr::s32>	MagicChargeRec;
+	ITexture*			MagicChargeTexture;
+	//IGUISpriteBank*			MagicLevel;
+	irr::core::rect<irr::s32>	MagicLevelRec;
+	ITexture*			MagicLevelTexture;
+	//IGUISpriteBank*			CD;
+	irr::core::rect<irr::s32>	CDRec;
+	ITexture*			CDTexture;
 	
 	
 

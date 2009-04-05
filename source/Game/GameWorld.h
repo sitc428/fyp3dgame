@@ -38,6 +38,7 @@ class GameWorld
 		void Init();
 		// called every frame with the frame's elapsed time
 		void Tick( irr::f32 delta );
+		void UpdateHUD( irr::f32 delta);
 		void Exit();
 
 		irr::scene::ISceneManager& GetSceneManager() { return smgr; }
