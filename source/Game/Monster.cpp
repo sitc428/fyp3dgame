@@ -86,7 +86,8 @@ void Monster::update(Player& _player)
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/100.0f);
-
+		CheckActorPosition(targetPos, _player);
+		
 		if( targetPos.getDistanceFrom(original) < 120.0f )
 		{
 			//Tracing mode
@@ -95,7 +96,6 @@ void Monster::update(Player& _player)
 				FSM.process_event(EvFiniteStateMachineOutOfRange());
 			FSM.process_event( EvPlayerWithinRange());
 			//irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
-			CheckActorPosition(targetPos, _player);
 			//if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
 			target = targetPos;
 
