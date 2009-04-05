@@ -420,6 +420,13 @@ void GameWorld::UpdateHUD( irr::f32 delta){
 	}
 }
 
+void GameWorld::requireInteracting(bool on)
+{
+	if(on)
+		gameState = state_INTERACTING;
+	else
+		gameState = state_GAMEPLAY;
+}
 
 // called every frame with the frame's elapsed time
 void GameWorld::Tick( irr::f32 delta )
@@ -427,6 +434,7 @@ void GameWorld::Tick( irr::f32 delta )
 	switch( gameState )
 	{
 		case state_GAMEPLAY:
+		case state_INTERACTING:
 			{
 				DoGameplay( delta );
 			}break;
@@ -643,20 +651,25 @@ void GameWorld::DoGameplay( irr::f32 delta )
 {
 	if(!paused)
 	{
-		// update AI calculations
-		DoAI( delta );
-
 		// check for early exit
 		if( gameState == state_RESTART_LEVEL )
 			return;
 
 		// perform an input update
 		DoInput();
-		//camera->Tick( delta );
 
+		if(gameState != state_INTERACTING)
+		{
 		// tick all actors
 		for( irr::u32 i=0; i < actors.size(); ++i )
 			actors[i]->Tick( delta );
+		}
+		else
+		{
+			for( irr::u32 i=0; i < actors.size(); ++i )
+				if(actors[i]->GetActorType() == ACTOR_INTERACTIVE)
+					actors[i]->Tick( delta );
+		}
 
 		// update 3d audio information
 		DoAudio(); 
