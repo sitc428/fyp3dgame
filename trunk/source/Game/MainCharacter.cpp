@@ -87,7 +87,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
-	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
+	node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
