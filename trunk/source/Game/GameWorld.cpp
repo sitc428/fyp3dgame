@@ -124,6 +124,7 @@ void GameWorld::InitLevel()
 	outNodes.clear();
 
 	SellingMachine* sellingMachine1 = new SellingMachine( *this, GEngine->GetDriver() );
+	actors.push_back( sellingMachine1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 

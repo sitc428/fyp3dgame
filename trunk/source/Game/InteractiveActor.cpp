@@ -10,7 +10,8 @@ extern GameEngine* GEngine;
 
 InteractiveActor::InteractiveActor( GameWorld& gameWorld )
 	:Actor(gameWorld),
-	world(gameWorld)
+	world(gameWorld),
+	interacting(false)
 {
 }
 
@@ -22,8 +23,16 @@ void InteractiveActor::Tick( irr::f32 delta )
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 	
-	if( receiver.keyDown(irr::KEY_SPACE) )
+	if(!interacting)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		if( receiver.keyDown(irr::KEY_KEY_P) )
+		{
+			interacting = true;
+			interaction();
+		}
+	}
+	else if(interacting)
+	{
+		interaction();
 	}
 }

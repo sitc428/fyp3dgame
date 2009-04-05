@@ -12,6 +12,7 @@ public:
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_INTERACTIVE; }
+	void interaction();
 
 
 protected:
