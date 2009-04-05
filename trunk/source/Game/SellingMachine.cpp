@@ -45,7 +45,7 @@ void SellingMachine::interaction()
 	else
 	{
 		std::cout << "Finish!" << std::endl;
-		state == 0;
+		state = 0;
 		finishAction();
 	}
 }

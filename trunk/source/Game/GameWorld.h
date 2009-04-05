@@ -6,6 +6,7 @@
 
 // forward declares
 class Actor;
+class InteractiveActor;
 class Camera;
 class Player;
 class MainCharacter;
@@ -78,7 +79,8 @@ class GameWorld
 
 		EGameState GetGameState() { return gameState; }
 
-		void requireInteracting(bool);
+		void requireInteracting(bool, InteractiveActor*);
+		bool isInteracting() const { return gameState == state_INTERACTING; };
 
 		irr::core::vector3df GetPlayerSpawn();
 
@@ -141,6 +143,8 @@ class GameWorld
 
 		irr::scene::IMetaTriangleSelector* levelTriangleSelector;  // triangle selector for doing collision checks with the level 
 		GameHUD* gameHUD; // HUD object
+
+		InteractiveActor* interactingActor;
 
 		irr::f32 lastEnemySpawn; // last time an enemy was spawned
 		irr::f32 spawnTimer; // time till next spawn
