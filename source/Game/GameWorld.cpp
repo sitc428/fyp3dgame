@@ -50,6 +50,7 @@ GameWorld::GameWorld( const GameEngine& Engine ):
 	camera(NULL),
 	levelTriangleSelector(NULL),
 	gameHUD(NULL),
+	interactingActor(NULL),
 	lastEnemySpawn(0),
 	totalEnemyOne(0),
 	totalEnemyTwo(0),
@@ -406,12 +407,10 @@ void GameWorld::Exit()
 	GEngine->InitGlobalWeatherEffect();
 }
 
-
-void GameWorld::UpdateHUD( irr::f32 delta){
+void GameWorld::UpdateHUD( irr::f32 delta ){
 	switch( gameState ){
-			
-	
 		case state_GAMEPLAY:
+		case state_INTERACTING:
 			{
 				DoHUD(delta);
 			}break;
@@ -420,12 +419,18 @@ void GameWorld::UpdateHUD( irr::f32 delta){
 	}
 }
 
-void GameWorld::requireInteracting(bool on)
+void GameWorld::requireInteracting(bool on, InteractiveActor* currentInteractingActor = NULL)
 {
-	if(on)
+	if(on && currentInteractingActor != NULL)
+	{
 		gameState = state_INTERACTING;
+		interactingActor = currentInteractingActor;
+	}
 	else
+	{
 		gameState = state_GAMEPLAY;
+		interactingActor = NULL;
+	}
 }
 
 // called every frame with the frame's elapsed time
@@ -660,9 +665,9 @@ void GameWorld::DoGameplay( irr::f32 delta )
 
 		if(gameState != state_INTERACTING)
 		{
-		// tick all actors
-		for( irr::u32 i=0; i < actors.size(); ++i )
-			actors[i]->Tick( delta );
+			// tick all actors
+			for( irr::u32 i=0; i < actors.size(); ++i )
+				actors[i]->Tick( delta );
 		}
 		else
 		{
@@ -673,12 +678,6 @@ void GameWorld::DoGameplay( irr::f32 delta )
 
 		// update 3d audio information
 		DoAudio(); 
-
-		// perform a physics update
-		DoPhysics();
-
-		// update the HUD
-		//DoHUD();
 
 		// deletes all the dead actors
 		DoCleanup();
@@ -701,7 +700,7 @@ void GameWorld::DoInput()
 		return;
 	}
 
-	if( paused )
+	if( paused || gameState == state_INTERACTING)
 		return;
 
 	irr::core::vector3df playerTranslation(0, 0, 0);

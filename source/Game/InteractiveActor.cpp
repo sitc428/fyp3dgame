@@ -22,6 +22,9 @@ InteractiveActor::~InteractiveActor()
 
 void InteractiveActor::Tick( irr::f32 delta )
 {
+	if(world.isInteracting() && !interacting)
+		return;
+
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 	
 	if(!interacting)
@@ -31,7 +34,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 			{
 				interacting = true;
-				world.requireInteracting(true);
+				world.requireInteracting(true, this);
 				interaction();
 			}
 		}
@@ -44,6 +47,6 @@ void InteractiveActor::Tick( irr::f32 delta )
 
 void InteractiveActor::finishAction()
 {
-	world.requireInteracting(false);
+	world.requireInteracting(false, NULL);
 	interacting = false;
 }

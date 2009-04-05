@@ -82,6 +82,12 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	// load the animated mesh, and add a new scene graph node for it
 	irr::scene::ISkinnedMesh* mainCharacterMesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( MAIN_CHARACTER_MODEL ));
 	node = smgr.addAnimatedMeshSceneNode( mainCharacterMesh, smgr.getRootSceneNode() );
+
+	node->setAnimationSpeed( ANIMATION_SPEED );
+	node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
+	node->setLoopMode( false );
+	node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
@@ -97,10 +103,6 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setTriangleSelector( triangleSelector );
 	triangleSelector->drop();
 	triangleSelector = NULL;
-
-	node->setAnimationSpeed( ANIMATION_SPEED );
-	node->setLoopMode( false );
-	node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
 
 	// setup player shadow
 	shadowNode = GEngine->addFloorDecalSceneNode(node, irr::core::dimension2d<irr::f32>(0, 0));
