@@ -413,7 +413,7 @@ void GameWorld::UpdateHUD( irr::f32 delta){
 	
 		case state_GAMEPLAY:
 			{
-				DoHUD();
+				DoHUD(delta);
 			}break;
 		default:
 			break;
@@ -995,12 +995,13 @@ void GameWorld::DoAudio()
 
 }
 
+
 // draws the HUD, called after the 3d scene has been rendered
-void GameWorld::DoHUD()
+void GameWorld::DoHUD(irr::f32 delta)
 {
 	// Player& p = GetCurrentPlayer();
 	// gameHUD->Update( p.GetAmmo(), p.GetScore(), numLives, curEnemyWave+1, enemyWaves.size(), GetCurrentPlayer().GetHealth(), GetCurrentPlayer().HasGodMode() );
-	gameHUD->Update();
+	gameHUD->Update(delta, GetCurrentPlayer());
 	/* Do the pause here! */
 }
 
