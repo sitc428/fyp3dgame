@@ -3,9 +3,12 @@
 
 #include <irrlicht/irrlicht.h>
 
+
 using namespace irr;
 using namespace irr::gui;
 using namespace irr::video;
+
+class Player;
 
 /**
 *	Class which is responsible for drawing the Heads Up Display
@@ -19,7 +22,7 @@ public:
 	~GameHUD();
 
 	void Init();
-	void Update();
+	void Update(irr::f32 delta, Player& player );
 	void Exit();
 
 private:
@@ -40,22 +43,23 @@ private:
 	IGUIImage*		PlayerHealthBar;
 	IGUIImage*		PlayerHealthFill;
 	*/
-	//IGUISpriteBank*			HealthBarFrame;
+	
+	
 	irr::core::rect<irr::s32>	HPRec;
 	ITexture*			HealthBarFrameTexture;
-	//IGUISpriteBank*		MagicCharge;
+	
 	irr::core::rect<irr::s32>	MagicChargeRec;
 	ITexture*			MagicChargeTexture;
-	//IGUISpriteBank*			MagicLevel;
+	
 	irr::core::rect<irr::s32>	MagicLevelRec;
 	ITexture*			MagicLevelTexture;
-	//IGUISpriteBank*			CD;
+	
 	irr::core::rect<irr::s32>	CDRec;
 	ITexture*			CDTexture;
 	
-	
+	irr::core::rect<irr::s32>	HPBar;
+	ITexture*			HP;
 
-	//IGUIStaticText* GodModeDisplay;
 };
 
 #endif //GameHUD_h
