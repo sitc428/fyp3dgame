@@ -2,10 +2,11 @@
 #include "Check.h"
 #include "GameEngine.h"
 #include "GameWorld.h"
+#include <iostream>
 
 extern GameEngine* GEngine;
 
-static const irr::core::vector3df	defaultPosition = irr::core::vector3df(10,50,10);
+static const irr::core::vector3df	defaultPosition = irr::core::vector3df(0,10,0);
 static const irr::core::vector3df	defaultRotation = irr::core::vector3df(0, 90, 0);
 static const irr::core::vector3df	defaultScale = irr::core::vector3df(0.1, 0.1, 0.1);
 
@@ -24,4 +25,25 @@ SellingMachine::SellingMachine( GameWorld& gameWorld, irr::video::IVideoDriver& 
 SellingMachine::~SellingMachine()
 {
 	world.GetSceneManager().addToDeletionQueue( node );
+}
+
+void SellingMachine::interaction()
+{
+	static int state = 0;
+	
+	if(state == 0)
+	{
+		std::cout << "Activated" << std::endl;
+		++state;
+	}
+	else if(state >= 1 && state <= 100)
+	{
+		std::cout << "Processing" << std::endl;
+		++state;
+	}
+	else
+	{
+		std::cout << "Finish!" << std::endl;
+		state == 0;
+	}
 }
