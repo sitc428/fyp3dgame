@@ -20,7 +20,7 @@ public:
 	virtual void interaction() = 0;
 	virtual irr::f32 acceptableDistance() = 0;
 	
-	void finishAction() { interacting = false; }
+	void finishAction();
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor

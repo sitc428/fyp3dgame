@@ -31,6 +31,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 			{
 				interacting = true;
+				world.requireInteracting(true);
 				interaction();
 			}
 		}
@@ -39,4 +40,10 @@ void InteractiveActor::Tick( irr::f32 delta )
 	{
 		interaction();
 	}
+}
+
+void InteractiveActor::finishAction()
+{
+	world.requireInteracting(false);
+	interacting = false;
 }

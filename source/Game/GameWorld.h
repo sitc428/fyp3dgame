@@ -27,7 +27,8 @@ enum EGameState
 	state_GAMEPLAY, // game is actively playing
 	state_PLAYER_DEAD, // player has died
 	state_WAVE_FINISHED, // a wave was completed
-	state_GAME_VICTORY // player has finished game
+	state_GAME_VICTORY, // player has finished game
+	state_INTERACTING
 };
 
 class GameWorld
@@ -65,7 +66,7 @@ class GameWorld
 		// returns the player actor which is currently used
 		Player& GetCurrentPlayer() const;
 
-	irr::core::array<irr::scene::IMeshSceneNode*>& GetBlocking() { return blocks; }
+		irr::core::array<irr::scene::IMeshSceneNode*>& GetBlocking() { return blocks; }
 
 		// unbuffered mouse input 
 		void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
@@ -76,6 +77,8 @@ class GameWorld
 		void AdvanceLevel();
 
 		EGameState GetGameState() { return gameState; }
+
+		void requireInteracting(bool);
 
 		irr::core::vector3df GetPlayerSpawn();
 
