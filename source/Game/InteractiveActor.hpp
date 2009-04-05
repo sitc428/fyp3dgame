@@ -18,12 +18,15 @@ public:
 	virtual EActorType GetActorType() const { return ACTOR_INTERACTIVE; }
 	// reaction of interactive objects
 	virtual void interaction() = 0;
+	virtual irr::f32 acceptableDistance() = 0;
 	
 	void finishAction() { interacting = false; }
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
 	virtual ~InteractiveActor();
+	
+	irr::scene::ISceneNode* node;
 
 private:
 	bool interacting;

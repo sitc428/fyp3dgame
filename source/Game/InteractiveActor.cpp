@@ -2,6 +2,7 @@
 #include "Check.h"
 #include "GameEngine.h"
 #include "GameWorld.h"
+#include "Player.h"
 #include "InputEventReceiver.hpp"
 
 #include <iostream>
@@ -27,8 +28,11 @@ void InteractiveActor::Tick( irr::f32 delta )
 	{
 		if( receiver.keyDown(irr::KEY_KEY_P) )
 		{
-			interacting = true;
-			interaction();
+			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
+			{
+				interacting = true;
+				interaction();
+			}
 		}
 	}
 	else if(interacting)

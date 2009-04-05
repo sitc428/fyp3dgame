@@ -8,7 +8,8 @@ extern GameEngine* GEngine;
 
 static const irr::core::vector3df	defaultPosition = irr::core::vector3df(0,10,0);
 static const irr::core::vector3df	defaultRotation = irr::core::vector3df(0, 90, 0);
-static const irr::core::vector3df	defaultScale = irr::core::vector3df(0.1, 0.1, 0.1);
+static const irr::core::vector3df	defaultScale = irr::core::vector3df(1, 5, 1);
+static const irr::f32 acceptable_Distance = 20.0;
 
 static const irr::c8*		SELLING_MACHINE_MODEL  = "media/model/robot2.x";
 
@@ -45,5 +46,11 @@ void SellingMachine::interaction()
 	{
 		std::cout << "Finish!" << std::endl;
 		state == 0;
+		finishAction();
 	}
+}
+
+irr::f32 SellingMachine::acceptableDistance()
+{
+	return acceptable_Distance;
 }
