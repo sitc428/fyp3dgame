@@ -13,6 +13,7 @@ public:
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_INTERACTIVE; }
 	void interaction();
+	irr::f32 acceptableDistance();
 
 
 protected:
@@ -20,9 +21,6 @@ protected:
 	virtual ~SellingMachine();
 
 private:
-	// scene graph node for robot
-	irr::scene::ISceneNode* node;
-
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
 

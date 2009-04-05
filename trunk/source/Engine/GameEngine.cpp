@@ -254,7 +254,7 @@ void GameEngine::Run()
 		TickCurrentState( frameDelta );
 		
 		// draw the 3d scene
-		smgr->drawAll(); 
+		smgr->drawAll();
 
 		// draw all UI elements after the 3d scene
 		
