@@ -203,8 +203,21 @@ void Monster::ReceiveDamage(irr::f32 damage){
 	//	std::cout<<"Health: "<<health<<std::endl;
 }
 
+//for jumping
+/*static irr::f32 floating( irr::f32 delta, irr::s32 range )
+{
+	static irr::f32 total_delta = 0;
+	total_delta += delta;
+	//std::cout << "delta:                " << delta << std::endl;
+	//std::cout << "total_delta:                " << total_delta << std::endl;
+	//return range * sin(total_delta) + 1;
+	return sin(total_delta);
+}*/
+
 void  Monster::Tick(irr::f32 delta){
 	update(world.GetCurrentPlayer());
+	//irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 1), 0);
+	//_monster->setPosition(_monster->getPosition()+offset);
 }
 
 void Monster::ReSetPosition(irr::core::vector3df NewPosition){
@@ -220,7 +233,7 @@ void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 
 	//_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
 	_monster->setLoopMode(false);
-
+	
 	// setup player collision with the world
 	/*RecreateCollisionResponseAnimator();
 
