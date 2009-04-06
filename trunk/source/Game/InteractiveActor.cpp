@@ -12,12 +12,15 @@ extern GameEngine* GEngine;
 InteractiveActor::InteractiveActor( GameWorld& gameWorld )
 	:Actor(gameWorld),
 	world(gameWorld),
-	interacting(false)
+	interacting(false),
+	node(NULL),
+	collisionAnimator(NULL)
 {
 }
 
 InteractiveActor::~InteractiveActor()
 {
+	world.GetSceneManager().addToDeletionQueue( node );
 }
 
 void InteractiveActor::Tick( irr::f32 delta )
