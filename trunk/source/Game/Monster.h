@@ -257,7 +257,7 @@ class Monster: public Actor{
 		virtual void RecreateCollisionResponseAnimator();
 
 		//void change(Player&);
-		void update(Player&);
+		void update(Player&, irr::f32 delta);
 		void Tick( irr::f32 delta );
 		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
 		EActorType GetActorType() const { return ACTOR_ENEMY; }
