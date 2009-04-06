@@ -14,7 +14,7 @@
 
 static const irr::f64 PI = 3.14159265;
 
-static const irr::c8* MONSTER_MODEL = "media/model/dwarf.x";
+static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";//dwarf.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
 Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
@@ -26,7 +26,8 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
 	_monster->setPosition( defaultPosition );
-	//_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
+	_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
+	//_monster->setScale(irr::core::vector3df(1,1,1));
 	
 	//RecreateCollisionResponseAnimator();
 	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
@@ -217,7 +218,7 @@ void Monster::ReSetPosition(irr::core::vector3df NewPosition){
 	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 
 
-	_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
+	//_monster->setScale(irr::core::vector3df(0.5,0.5,0.5));
 	_monster->setLoopMode(false);
 
 	// setup player collision with the world
