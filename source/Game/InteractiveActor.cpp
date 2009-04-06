@@ -35,13 +35,13 @@ void InteractiveActor::Tick( irr::f32 delta )
 			{
 				interacting = true;
 				world.requireInteracting(true, this);
-				interaction();
+				interaction( delta );
 			}
 		}
 	}
 	else if(interacting)
 	{
-		interaction();
+		interaction( delta);
 	}
 }
 

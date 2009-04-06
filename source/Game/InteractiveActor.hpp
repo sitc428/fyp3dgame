@@ -17,7 +17,7 @@ public:
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_INTERACTIVE; }
 	// reaction of interactive objects
-	virtual void interaction() = 0;
+	virtual void interaction(irr::f32) = 0;
 	virtual irr::f32 acceptableDistance() = 0;
 	
 	void finishAction();
