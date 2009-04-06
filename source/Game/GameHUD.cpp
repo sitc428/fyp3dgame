@@ -123,14 +123,33 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	IVideoDriver& driver = GEngine->GetDriver();
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
-	MagicChargeRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH, 0, MAGIC_CHARGE_WIDTH*2,  MAGIC_CHARGE_HEIGHT);
-	MagicLevelRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH, 0, MAGIC_CHARGE_WIDTH*2,  MAGIC_CHARGE_HEIGHT);
-	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH, HP_HEIGHT);
-	
+	int magic_charge = 50/5;	//magic charge % is divided into 20 stages
+	int magic_level = 3;
 	
 	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPRec, 0, video::SColor(255,255,255,255), true);
-	driver.draw2DImage(MagicChargeTexture, irr::core::position2d<irr::s32>(0, 0), MagicChargeRec, 0, video::SColor(255,255,255,255), true);
-	driver.draw2DImage(MagicLevelTexture, irr::core::position2d<irr::s32>(0, 0), MagicLevelRec, 0, video::SColor(255,255,255,255), true);
+	
+	if(magic_charge != 0){
+		if(magic_charge%5 == 0){
+			MagicChargeRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * 4, MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5), MAGIC_CHARGE_WIDTH * 5,  MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5+1));
+
+		}
+		else{
+			MagicChargeRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (magic_charge%5-1), MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5), MAGIC_CHARGE_WIDTH * (magic_charge%5),  MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5+1));
+
+		}
+		
+		driver.draw2DImage(MagicChargeTexture, irr::core::position2d<irr::s32>(0, 0), MagicChargeRec, 0, video::SColor(255,255,255,255), true);
+
+	}
+		
+	if(magic_level != 0){
+		MagicLevelRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (magic_level-1), 0, MAGIC_CHARGE_WIDTH * magic_level,  MAGIC_CHARGE_HEIGHT);
+		driver.draw2DImage(MagicLevelTexture, irr::core::position2d<irr::s32>(0, 0), MagicLevelRec, 0, video::SColor(255,255,255,255), true);
+	}
+		
+	
+	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH, HP_HEIGHT);
+	
 	driver.draw2DImage(HP, irr::core::position2d<irr::s32>(HP_START_X, (MAGIC_CHARGE_WIDTH-HP_HEIGHT)/2), HPBar, 0, video::SColor(255,255,255,255), true);
 	
 	
