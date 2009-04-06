@@ -22,8 +22,8 @@ static u32			HEALTH_BAR_FRAME_WIDTH = 349;
 static u32			HEALTH_BAR_FRAME_HEIGHT = 134;
 static u32			MAGIC_CHARGE_WIDTH = 133;
 static u32			MAGIC_CHARGE_HEIGHT = 134;
-static u32			HP_WIDTH = 225;
-static u32			HP_HEIGHT = 10;
+static u32			HP_WIDTH = 226;
+static u32			HP_HEIGHT = 14;
 static u32			HP_START_X = 105;
 
 

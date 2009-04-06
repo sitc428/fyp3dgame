@@ -28,7 +28,7 @@ SellingMachine::~SellingMachine()
 	world.GetSceneManager().addToDeletionQueue( node );
 }
 
-void SellingMachine::interaction()
+void SellingMachine::interaction(irr::f32 delta)
 {
 	static int state = 0;
 	
