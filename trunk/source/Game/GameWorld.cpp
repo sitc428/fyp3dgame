@@ -126,7 +126,7 @@ void GameWorld::InitLevel()
 	}
 	outNodes.clear();
 
-	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(1, 10, 1) );
+	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(5, 10, 2.5) );
 	actors.push_back( sellingMachine1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
