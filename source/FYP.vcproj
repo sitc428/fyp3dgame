@@ -280,6 +280,10 @@
 				RelativePath=".\engine\StartupScreen.h"
 				>
 			</File>
+			<File
+				RelativePath=".\Game\TalkativeNPC.hpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -374,6 +378,10 @@
 			</File>
 			<File
 				RelativePath=".\engine\StartupScreen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\TalkativeNPC.cpp"
 				>
 			</File>
 		</Filter>

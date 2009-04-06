@@ -19,14 +19,15 @@ public:
 	// reaction of interactive objects
 	virtual void interaction(irr::f32) = 0;
 	virtual irr::f32 acceptableDistance() = 0;
-	
+	// terminate the interactive action
 	void finishAction();
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
 	virtual ~InteractiveActor();
-	
 	irr::scene::ISceneNode* node;
+	// cached collision response animator
+	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
 
 private:
 	bool interacting;

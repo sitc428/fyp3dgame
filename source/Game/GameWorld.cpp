@@ -2,6 +2,7 @@
 #include "GameWorld.h"
 #include "GameEngine.h"
 #include "Monster.h"
+#include "TalkativeNPC.hpp"
 //#include "Enemy.h"
 //#include "EnemyTwo.h"
 //#include "EnemyBoss.h"
@@ -125,7 +126,7 @@ void GameWorld::InitLevel()
 	}
 	outNodes.clear();
 
-	SellingMachine* sellingMachine1 = new SellingMachine( *this, GEngine->GetDriver() );
+	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(1, 10, 1) );
 	actors.push_back( sellingMachine1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
@@ -256,6 +257,8 @@ void GameWorld::InitPlayer()
 	mainCharacter = new MainCharacter( *this, GEngine->GetDriver() );
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
+
+	//TalkativeNPC* npc1 = new TalkativeNPC( *this, GEngine->GetDriver() );
 }
 
 void GameWorld::InitRobot()
@@ -672,7 +675,7 @@ void GameWorld::DoGameplay( irr::f32 delta )
 		else
 		{
 			for( irr::u32 i=0; i < actors.size(); ++i )
-				if(actors[i]->GetActorType() == ACTOR_INTERACTIVE)
+				if(actors[i]->GetActorType() & ACTOR_INTERACTIVE)
 					actors[i]->Tick( delta );
 		}
 

@@ -6,12 +6,12 @@
 class SellingMachine: public InteractiveActor
 {
 public:
-	SellingMachine( GameWorld& gameWorld, irr::video::IVideoDriver& driver );
+	SellingMachine( GameWorld& gameWorld, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df );
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
 	// interface for identifying the type of actor
-	virtual EActorType GetActorType() const { return ACTOR_INTERACTIVE; }
+	virtual EActorType GetActorType() const { return (EActorType) (ACTOR_INTERACTIVE | ACTOR_SELLING_MACHINE); }
 	void interaction( irr::f32 );
 	irr::f32 acceptableDistance();
 
@@ -21,9 +21,6 @@ protected:
 	virtual ~SellingMachine();
 
 private:
-	// cached collision response animator
-	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
-
 	GameWorld& world;
 };
 
