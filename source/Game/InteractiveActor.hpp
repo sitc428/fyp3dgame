@@ -1,6 +1,8 @@
 #ifndef __INTERACTIVE_ACTOR_HPP__
 #define __INTERACTIVE_ACTOR_HPP__
+
 #include "Actor.h"
+#include "InputEventReceiver.hpp"
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>

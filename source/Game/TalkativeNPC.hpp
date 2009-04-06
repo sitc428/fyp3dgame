@@ -3,11 +3,12 @@
 
 #include "InteractiveActor.hpp"
 #include <string>
+#include <vector>
 
 class TalkativeNPC: public InteractiveActor
 {
 public:
-	TalkativeNPC( GameWorld& gameWorld, const std::string, const irr::c8*, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df);
+	TalkativeNPC( GameWorld& gameWorld, std::vector<std::string>, const irr::c8*, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df);
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
@@ -22,7 +23,7 @@ protected:
 
 private:
 	GameWorld& world;
-	std::string _dialogs;
+	std::vector<std::string> _dialogs;
 };
 
 #endif // __TALKATIVE_NPC_HPP__

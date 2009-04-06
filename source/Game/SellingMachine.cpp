@@ -7,14 +7,25 @@
 extern GameEngine* GEngine;
 
 static const irr::f32 acceptable_Distance = 20.0;
-static const irr::c8*		SELLING_MACHINE_MODEL  = "media/model/robot2.x";
+static const irr::c8*		SELLING_MACHINE_MODEL  = "media/model/sellingmachine08.x";
+//static const irr::c8*		SELLING_MACHINE_TEXTURE = "media/model/sellingmachine.png";
 
 SellingMachine::SellingMachine( GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale )
 	:InteractiveActor(gameWorld),
 	world(gameWorld)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-	node = smgr.addMeshSceneNode(smgr.getMeshCache()->getMeshByFilename(SELLING_MACHINE_MODEL), smgr.getRootSceneNode(), -1, defaultPosition, defaultRotation, defaultScale );
+	node = smgr.addMeshSceneNode(smgr.getMesh(SELLING_MACHINE_MODEL), smgr.getRootSceneNode());
+	node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	node->setPosition(defaultPosition);
+	node->setRotation(defaultRotation);
+	node->setScale(defaultScale);
+
+	irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( ((irr::scene::IMeshSceneNode*)node)->getMesh(), node );
+	node->setTriangleSelector( meshTriangleSelector );
+	world.GetLevelTriangleSelector().addTriangleSelector( meshTriangleSelector );
+	meshTriangleSelector->drop();
+	meshTriangleSelector = NULL;
 }
 
 SellingMachine::~SellingMachine()

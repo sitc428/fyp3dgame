@@ -3,7 +3,6 @@
 #include "GameEngine.h"
 #include "GameWorld.h"
 #include "Player.h"
-#include "InputEventReceiver.hpp"
 
 #include <iostream>
 
@@ -44,7 +43,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 	}
 	else if(interacting)
 	{
-		interaction( delta);
+		interaction( delta );
 	}
 }
 
