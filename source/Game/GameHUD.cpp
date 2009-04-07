@@ -2,6 +2,7 @@
 #include "GameEngine.h"
 #include "Check.h"
 #include "Player.h"
+#include "CGUITTFont.h"
 
 /*
 static const c8*	FONT_FILE = "../art/fonts/HUDfont.png";  // default font for the HUD
@@ -22,14 +23,18 @@ static const irr::s32 HP_Y_OFFSET = 150;
 
 static const SColor		HUD_FONT_OVERRIDE_COLOR =  SColor(255,14,0,89);
 
-static u32			ELEMENT_HEIGHT = 32;
-static u32			HEALTH_BAR_FRAME_WIDTH = 349;
-static u32			HEALTH_BAR_FRAME_HEIGHT = 134;
-static u32			MAGIC_CHARGE_WIDTH = 133;
-static u32			MAGIC_CHARGE_HEIGHT = 134;
-static u32			HP_WIDTH = 226;
-static u32			HP_HEIGHT = 14;
-static u32			HP_START_X = 105;
+static const irr::u32			ELEMENT_HEIGHT = 32;
+static const irr::u32			HEALTH_BAR_FRAME_WIDTH = 349;
+static const irr::u32			HEALTH_BAR_FRAME_HEIGHT = 134;
+static const irr::u32			MAGIC_CHARGE_WIDTH = 133;
+static const irr::u32			MAGIC_CHARGE_HEIGHT = 134;
+static const irr::u32			HP_WIDTH = 226;
+static const irr::u32			HP_HEIGHT = 14;
+static const irr::u32			HP_START_X = 105;
+static const irr::u32			HP_TEXT_X1 = 170;
+static const irr::u32			HP_TEXT_Y1 = 85;
+static const irr::u32			HP_TEXT_X2 = 280;
+static const irr::u32			HP_TEXT_Y2 = 100;
 
 
 extern GameEngine* GEngine;
@@ -41,6 +46,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , MagicLevelTexture(NULL)
 , CDTexture(NULL)
 , HP(NULL)
+//, HPText(NULL)
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -59,6 +65,9 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	//initialize the value of time_elapsed
 	timeElapsed = 0;
 	modTime = 0;
+	
+	HPText = GEngine->GetFont("media/font/impact.ttf", 24);
+	HPText->AntiAlias = true;
 }
 
 // destructor
@@ -96,17 +105,8 @@ void GameHUD::Init()
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
 	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
 	
+	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
 	
-	//Text for HP display
-	/*
-	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("media/font/impact.ttf", 24));
-	
-	HPText = env->addStaticText(
-								L"1000/1000",
-								irr::core::rect<irr::s32>(0, 0, HEALTH_BAR_FRAME_WIDTH,HEALTH_BAR_FRAME_HEIGHT),						 
-								false, false, 0, -1, false);
-	check(HPText);
-	*/
 	
 	
 	/*
@@ -201,8 +201,11 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	/*******
 	 DRAWING TEXT
 	 *******/
+	// setup the true type fonts
+	HPText->draw(L"1000/1000", HPTextRec, video::SColor(255,255,255,255), true, false, 0);
 	
 	
+	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
 	
 	
