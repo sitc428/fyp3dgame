@@ -1,6 +1,7 @@
 #include "GameHUD.h"
 #include "GameEngine.h"
 #include "Check.h"
+#include "Player.h"
 
 /*
 static const c8*	FONT_FILE = "../art/fonts/HUDfont.png";  // default font for the HUD
@@ -135,7 +136,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	
 	int magic_charge = 100/5;	//magic charge % is divided into 20 stages
 	int magic_level = 3;		//magic level
-	float hp_level = 0.5;		//hp/max hp
+	irr::f32 hp_level = float(player.GetHealth())/float(player.GetMaxHealth());		//hp/max hp
 	
 	if(magic_charge != 0){
 		if(magic_charge%5 == 0){

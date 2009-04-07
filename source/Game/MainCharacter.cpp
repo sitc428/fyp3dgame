@@ -74,8 +74,6 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	bDoFillup( false ),
 	world(gameWorld),
 	sfxTimer(12),
-	_health(100),
-	_maxHealth(100),
 	_healthBar(NULL)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
