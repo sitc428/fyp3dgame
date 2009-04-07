@@ -61,13 +61,16 @@ public:
 
 	// called every frame to update player
 	virtual void Tick(irr::f32 delta);
+	
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; }
+	
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_PLAYER; }
 
 	// set the movement translation vector for player
 	virtual void SetTranslation( const irr::core::vector3df& trans );
+	
 	// set the movement rotation vector for player
 	virtual void SetRotation( const irr::core::vector3df& rot );
 
@@ -86,12 +89,25 @@ public:
 	
 	// damage done to player
 	virtual void ReceiveDamage( irr::f32 value );
+	
 	// check if the player is dead
 	bool IsDead() const { return action == EMCAS_DEAD; }	
 
 	// unbuffered mouse input 
 	virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
-
+	
+	/********************
+	 Player Attribute GET FUNCTIONS
+	 *******************/
+	irr::s32 GetLevel() const {return _level;};
+	irr::s32 GetAttackPoint() const {return _attack;};
+	irr::s32 GetDefencePoint() const {return _defence;};
+	irr::s32 GetMagicAttackPoint() const {return _magicattack;};
+	irr::s32 GetMagicDefencePoint() const {return _magicdefence;};
+	irr::s32 GetMagicLevel() const {return _magiclevel;}; 
+	bool GetCharging() const {return _charging;};		//to get whether the player is charging for Magic
+	
+	
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
 	virtual ~MainCharacter();
@@ -152,8 +168,21 @@ private:
 	ISound* sfxFootstep;
 	irr::f32 sfxTimer;
 
-	irr::s32 _health;
-	irr::s32 _maxHealth;
+	
+	/*********************
+	 Player Attributes
+	 **********************/
+	
+	irr::s32 _level;
+	irr::s32 _attack;
+	irr::s32 _defence;
+	irr::s32 _magicattack;
+	irr::s32 _magicdefence;
+	irr::s32 _magiclevel;
+	bool _charging;
+	
+	/************
+	 ************/
 
 	ProgressCircle* _healthBar;
 
