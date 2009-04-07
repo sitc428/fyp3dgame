@@ -126,8 +126,8 @@ void GameWorld::InitLevel()
 	}
 	outNodes.clear();
 
-	//SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	//actors.push_back( sellingMachine1 );
+	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	actors.push_back( sellingMachine1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 
@@ -262,7 +262,7 @@ void GameWorld::InitPlayer()
 	npc1dialogs.push_back("Testing line 1");
 	npc1dialogs.push_back("My testing 2");
 	npc1dialogs.push_back("Ha ha ha ~");
-	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/char1.x", 20.0, irr::core::vector3df(0, 20, 0), irr::core::vector3df(0, 60, 0), irr::core::vector3df(5, 5, 5));
+	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/char1.x", 20.0, irr::core::vector3df(20, 10, 20), irr::core::vector3df(0, 60, 0), irr::core::vector3df(5, 5, 5));
 	
 	actors.push_back(npc1);
 }
@@ -711,6 +711,8 @@ void GameWorld::DoInput()
 
 	if( paused || gameState == state_INTERACTING)
 		return;
+	
+	((MainCharacter*)&GetCurrentPlayer())->SetDefending( receiver.keyDown(irr::KEY_KEY_M) );
 
 	irr::core::vector3df playerTranslation(0, 0, 0);
 	irr::core::vector3df playerRotation(0, 0, 0);
@@ -731,8 +733,11 @@ void GameWorld::DoInput()
 	{
 		playerRotation.Y = -3;
 	}
-
-	((MainCharacter*)&GetCurrentPlayer())->SetDefending( receiver.keyDown(irr::KEY_KEY_M) );
+	
+	if(receiver.keyDown(irr::KEY_SHIFT))
+	{
+		playerTranslation *= 2;
+	}
 
 	if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
 	{

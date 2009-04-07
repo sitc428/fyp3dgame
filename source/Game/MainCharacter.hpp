@@ -25,6 +25,7 @@ enum EMainCharacterActionState
 	EMCAS_JUMP = 4,
 	EMCAS_ATTACK = 8,
 	EMCAS_DEFEND = 16,
+	EMCAS_RUNNING = 32,
 	EMCAS_DEAD = 1 << 31
 };
 
