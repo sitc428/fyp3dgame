@@ -126,8 +126,8 @@ void GameWorld::InitLevel()
 	}
 	outNodes.clear();
 
-	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(5, 10, 2.5) );
-	actors.push_back( sellingMachine1 );
+	//SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	//actors.push_back( sellingMachine1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 
@@ -257,8 +257,14 @@ void GameWorld::InitPlayer()
 	mainCharacter = new MainCharacter( *this, GEngine->GetDriver() );
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
-
-	//TalkativeNPC* npc1 = new TalkativeNPC( *this, GEngine->GetDriver() );
+	
+	std::vector<std::string> npc1dialogs;
+	npc1dialogs.push_back("Testing line 1");
+	npc1dialogs.push_back("My testing 2");
+	npc1dialogs.push_back("Ha ha ha ~");
+	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/char1.x", 20.0, irr::core::vector3df(0, 20, 0), irr::core::vector3df(0, 60, 0), irr::core::vector3df(5, 5, 5));
+	
+	actors.push_back(npc1);
 }
 
 void GameWorld::InitRobot()

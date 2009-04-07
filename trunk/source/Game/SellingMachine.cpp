@@ -6,7 +6,7 @@
 
 extern GameEngine* GEngine;
 
-static const irr::f32 acceptable_Distance = 20.0;
+static const irr::f32		acceptable_Distance = 20.0;
 static const irr::c8*		SELLING_MACHINE_MODEL  = "media/model/sellingmachine08.x";
 //static const irr::c8*		SELLING_MACHINE_TEXTURE = "media/model/sellingmachine.png";
 
