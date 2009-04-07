@@ -31,7 +31,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 	
 	if(!interacting)
 	{
-		if( receiver.keyDown(irr::KEY_KEY_P) )
+		if( receiver.keyReleased(irr::KEY_KEY_P) )
 		{
 			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 			{
