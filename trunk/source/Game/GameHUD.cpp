@@ -34,7 +34,7 @@ static const irr::u32			HP_START_X = 105;
 static const irr::u32			HP_TEXT_X1 = 170;
 static const irr::u32			HP_TEXT_Y1 = 85;
 static const irr::u32			HP_TEXT_X2 = 280;
-static const irr::u32			HP_TEXT_Y2 = 100;
+static const irr::u32			HP_TEXT_Y2 = 110;
 
 
 extern GameEngine* GEngine;
@@ -46,7 +46,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , MagicLevelTexture(NULL)
 , CDTexture(NULL)
 , HP(NULL)
-//, HPText(NULL)
+, HPText(NULL)
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -202,9 +202,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	 DRAWING TEXT
 	 *******/
 	// setup the true type fonts
-	HPText->draw(L"1000/1000", HPTextRec, video::SColor(255,255,255,255), true, false, 0);
-	
-	
+	HPText->draw(L"1000/1000", HPTextRec, video::SColor(255,255,255,255), true, true, 0);
 	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
 	
