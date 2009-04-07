@@ -15,6 +15,9 @@ static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
 static const c8*	CD_TEXTURE = "media/HUD/cd_spinning.png";
 static const c8*	HP_TEXTURE = "media/HUD/hp.png";
 
+static const irr::s32 HP_TEXT_WIDTH = 200;
+static const irr::s32 HP_TEXT_HEIGHT = 24;
+static const irr::s32 HP_Y_OFFSET = 150;
 
 
 static const SColor		HUD_FONT_OVERRIDE_COLOR =  SColor(255,14,0,89);
@@ -91,7 +94,19 @@ void GameHUD::Init()
 	MagicLevelRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	CDRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
-		
+	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
+	
+	
+	//Text for HP display
+	/*
+	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("media/font/impact.ttf", 24));
+	
+	HPText = env->addStaticText(
+								L"1000/1000",
+								irr::core::rect<irr::s32>(0, 0, HEALTH_BAR_FRAME_WIDTH,HEALTH_BAR_FRAME_HEIGHT),						 
+								false, false, 0, -1, false);
+	check(HPText);
+	*/
 	
 	
 	/*
@@ -114,9 +129,7 @@ void GameHUD::Init()
 	MagicCharge->setUseAlphaChannel(true);
 	MagicCharge->setVisible(true);
 	*/
-	
-	
-	
+		
 	
 	/*Magic Level
 	MagicLevel = env->addImage(rectangle);
@@ -134,6 +147,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	IVideoDriver& driver = GEngine->GetDriver();
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
+	//updating the rectangle for different HUD objects
 	int magic_charge = 100/5;	//magic charge % is divided into 20 stages
 	int magic_level = 3;		//magic level
 	irr::f32 hp_level = float(player.GetHealth())/float(player.GetMaxHealth());		//hp/max hp
@@ -180,6 +194,16 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	//reseting the modtime
 	if (modTime >= 20)
 		modTime = 0;
+	
+	
+	
+	
+	/*******
+	 DRAWING TEXT
+	 *******/
+	
+	
+	
 	
 	
 	/*
