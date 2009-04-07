@@ -218,13 +218,18 @@ void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
-	// player's rotation update, must happen before the position updates
-	UpdateRotationState();
+	/*if(action & EMCAS_DEFEND)
+	{
+	}
+	else if(action & EMCAS_MOVE)
+	{*/
+		// player's rotation update, must happen before the position updates
+		UpdateRotationState();
 
-	// player's movement
-	UpdateMoveState( delta );
-
-	sfxTimer++;
+		// player's movement
+		UpdateMoveState( delta );
+	//}
+	//sfxTimer++;
 }
 
 void MainCharacter::UpdateRotationState()

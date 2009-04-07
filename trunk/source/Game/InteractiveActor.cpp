@@ -12,7 +12,6 @@ InteractiveActor::InteractiveActor( GameWorld& gameWorld )
 	:Actor(gameWorld),
 	world(gameWorld),
 	interacting(false),
-	node(NULL),
 	collisionAnimator(NULL)
 {
 }
@@ -35,9 +34,17 @@ void InteractiveActor::Tick( irr::f32 delta )
 		{
 			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 			{
-				interacting = true;
-				world.requireInteracting(true, this);
-				interaction( delta );
+				irr::core::line3df line;
+				line.start = world.GetCurrentPlayer().GetNodePosition();
+				line.end = line.start + world.GetCurrentPlayer().GetAimVector() * 1000;
+				std::cout<<"node"<<std::endl;
+				if(world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line) == node)
+				{
+					std::cout<<"node matched"<<std::endl;
+					interacting = true;
+					world.requireInteracting(true, this);
+					interaction( delta );
+				}
 			}
 		}
 	}
