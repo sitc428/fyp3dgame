@@ -423,6 +423,7 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 			{
 				DoHUD(delta);
 			}break;
+		case state_PAUSED:
 		default:
 			break;
 	}
@@ -1030,6 +1031,13 @@ void GameWorld::DoHUD(irr::f32 delta)
 	gameHUD->Update(delta, GetCurrentPlayer());
 	/* Do the pause here! */
 }
+
+
+void GameWorld::DoConversation(irr::c8 conversation_string){
+	
+	gameHUD->DisplayConversation(conversation_string);
+}
+
 
 // return the first available dynamite projectile for throwing, NULL if none are available
 /*

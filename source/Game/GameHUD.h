@@ -23,43 +23,28 @@ public:
 
 	void Init();
 	void Update(irr::f32 delta, Player& player );
+	void DisplayConversation(irr::c8 conversation_string);
 	void Exit();
 
 private:
-	/*
-	IGUIStaticText* AmmoDisplay;
-	IGUIStaticText* ScoreDisplay;
-	IGUIStaticText* WaveDisplay;
-
-	IGUIStaticText* PlayerLives;
-	ITexture*		PlayerLifeTexture;		// texture with the player face
-	IGUIImage*		PlayerLife1;
-	IGUIImage*		PlayerLife2;
-	IGUIImage*		PlayerLife3;
-
-	IGUIStaticText* PlayerHealth;
-	ITexture*		PlayerHealthBarTexture;
-	ITexture*		PlayerHealthFillTexture;
-	IGUIImage*		PlayerHealthBar;
-	IGUIImage*		PlayerHealthFill;
-	*/
-	
-	
+	//HP, Magic Frame
 	irr::core::rect<irr::s32>	HPRec;
 	ITexture*			HealthBarFrameTexture;
-	
+	//MagicCharge
 	irr::core::rect<irr::s32>	MagicChargeRec;
 	ITexture*			MagicChargeTexture;
-	
+	//MagicLevel
 	irr::core::rect<irr::s32>	MagicLevelRec;
 	ITexture*			MagicLevelTexture;
-	
+	//CDImage
 	irr::core::rect<irr::s32>	CDRec;
 	ITexture*			CDTexture;
-	
+	//HPbar
 	irr::core::rect<irr::s32>	HPBar;
 	ITexture*			HP;
-
+	
+	double				timeElapsed;
+	int					modTime;
 };
 
 #endif //GameHUD_h
