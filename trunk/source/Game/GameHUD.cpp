@@ -11,6 +11,7 @@ static const c8*	PLAYER_HEALTH_FILL_TEXTURE = "model/HUD/frame_hud.png";
 static const c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
 static const c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
 static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
+static const c8*	CD_TEXTURE = "media/HUD/cd_spinning.png";
 static const c8*	HP_TEXTURE = "media/HUD/hp.png";
 
 
@@ -43,11 +44,17 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	HealthBarFrameTexture = driver.getTexture(HEALTH_BAR_FRAME_TEXTURE);
 	MagicChargeTexture = driver.getTexture(MAGIC_CHARGE_TEXTURE);
 	MagicLevelTexture = driver.getTexture(MAGIC_LEVEL_TEXTURE);
+	CDTexture = driver.getTexture(CD_TEXTURE);
 	HP = driver.getTexture(HP_TEXTURE);
 	check(HealthBarFrameTexture);
 	check(MagicChargeTexture);
 	check(MagicLevelTexture); 
+	check(CDTexture);
 	check(HPTexture);
+	
+	//initialize the value of time_elapsed
+	timeElapsed = 0;
+	modTime = 0;
 }
 
 // destructor
@@ -59,6 +66,8 @@ GameHUD::~GameHUD()
 	MagicChargeTexture = NULL;
 	GEngine->GetDriver().removeTexture( MagicLevelTexture );
 	MagicLevelTexture = NULL;
+	GEngine->GetDriver().removeTexture(CDTexture);
+	CDTexture = NULL;
 	GEngine->GetDriver().removeTexture( HP);
 	HP = NULL;
 }
@@ -79,6 +88,7 @@ void GameHUD::Init()
 	
 	MagicChargeRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	MagicLevelRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
+	CDRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
 		
 	
@@ -123,10 +133,9 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	IVideoDriver& driver = GEngine->GetDriver();
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
-	int magic_charge = 50/5;	//magic charge % is divided into 20 stages
-	int magic_level = 3;
-	
-	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPRec, 0, video::SColor(255,255,255,255), true);
+	int magic_charge = 100/5;	//magic charge % is divided into 20 stages
+	int magic_level = 3;		//magic level
+	float hp_level = 0.5;		//hp/max hp
 	
 	if(magic_charge != 0){
 		if(magic_charge%5 == 0){
@@ -137,9 +146,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 			MagicChargeRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (magic_charge%5-1), MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5), MAGIC_CHARGE_WIDTH * (magic_charge%5),  MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5+1));
 
 		}
-		
 		driver.draw2DImage(MagicChargeTexture, irr::core::position2d<irr::s32>(0, 0), MagicChargeRec, 0, video::SColor(255,255,255,255), true);
-
 	}
 		
 	if(magic_level != 0){
@@ -148,11 +155,30 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	}
 		
 	
-	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH, HP_HEIGHT);
-	
+	//draw HP
+	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH*hp_level, HP_HEIGHT);
 	driver.draw2DImage(HP, irr::core::position2d<irr::s32>(HP_START_X, (MAGIC_CHARGE_WIDTH-HP_HEIGHT)/2), HPBar, 0, video::SColor(255,255,255,255), true);
 	
+	//the frame draw last
+	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPRec, 0, video::SColor(255,255,255,255), true);
 	
+	
+	//spinning CD
+	
+	timeElapsed += delta;
+	if(timeElapsed > 0.01){
+		modTime ++;
+		//reseting timeElapsed
+		timeElapsed = 0;
+	}
+	int stage = modTime % 20;
+	CDRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (stage%5), MAGIC_CHARGE_HEIGHT * ((stage)/5), MAGIC_CHARGE_WIDTH * (stage%5+1),  MAGIC_CHARGE_HEIGHT * ((stage)/5+1));
+		
+	driver.draw2DImage(CDTexture, irr::core::position2d<irr::s32>(0, 0), CDRec, 0, video::SColor(255,255,255,255), true);
+	
+	//reseting the modtime
+	if (modTime >= 20)
+		modTime = 0;
 	
 	
 	/*
@@ -210,12 +236,17 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	 */
 }
 
+void GameHUD::DisplayConversation(irr::c8 conversation_string){
+	;
+}
+
 void GameHUD::Exit()
 {
 
 	HealthBarFrameTexture = NULL;
 	MagicChargeTexture = NULL;
 	MagicLevelTexture = NULL;
+	CDTexture = NULL;
 	
 	/*
 	check(AmmoDisplay);

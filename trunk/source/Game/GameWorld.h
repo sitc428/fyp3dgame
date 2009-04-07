@@ -29,7 +29,8 @@ enum EGameState
 	state_PLAYER_DEAD, // player has died
 	state_WAVE_FINISHED, // a wave was completed
 	state_GAME_VICTORY, // player has finished game
-	state_INTERACTING
+	state_INTERACTING,
+	state_PAUSED
 };
 
 class GameWorld
@@ -41,6 +42,7 @@ class GameWorld
 		// called every frame with the frame's elapsed time
 		void Tick( irr::f32 delta );
 		void UpdateHUD( irr::f32 delta);
+		void DoConversation(irr::c8 conversation_string);
 		void Exit();
 
 		irr::scene::ISceneManager& GetSceneManager() { return smgr; }
