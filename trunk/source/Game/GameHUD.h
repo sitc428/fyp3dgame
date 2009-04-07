@@ -9,6 +9,13 @@ using namespace irr::gui;
 using namespace irr::video;
 
 class Player;
+namespace irr{
+	namespace gui{
+		class CGUITTFont;
+	}
+}
+
+
 
 /**
 *	Class which is responsible for drawing the Heads Up Display
@@ -29,28 +36,31 @@ public:
 private:
 	//HP, Magic Frame
 	irr::core::rect<irr::s32>	HPRec;
-	ITexture*			HealthBarFrameTexture;
+	ITexture*					HealthBarFrameTexture;
 	
 	//MagicCharge
 	irr::core::rect<irr::s32>	MagicChargeRec;
-	ITexture*			MagicChargeTexture;
+	ITexture*					MagicChargeTexture;
 	
 	//MagicLevel
 	irr::core::rect<irr::s32>	MagicLevelRec;
-	ITexture*			MagicLevelTexture;
+	ITexture*					MagicLevelTexture;
 	
 	//CDImage
 	irr::core::rect<irr::s32>	CDRec;
-	ITexture*			CDTexture;
+	ITexture*					CDTexture;
 	
 	//HPbar
 	irr::core::rect<irr::s32>	HPBar;
-	ITexture*			HP;
+	ITexture*					HP;
 	
-	irr::gui::IGUIStaticText* HPText;	//text for displaying the HP
+	//HP Text
+	irr::core::rect<irr::s32>	HPTextRec;
+	irr::gui::CGUITTFont*		HPText;	//text for displaying the HP
 	
-	double				timeElapsed;
-	int					modTime;
+	
+	double						timeElapsed;
+	int							modTime;
 };
 
 #endif //GameHUD_h
