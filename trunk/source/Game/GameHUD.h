@@ -30,18 +30,24 @@ private:
 	//HP, Magic Frame
 	irr::core::rect<irr::s32>	HPRec;
 	ITexture*			HealthBarFrameTexture;
+	
 	//MagicCharge
 	irr::core::rect<irr::s32>	MagicChargeRec;
 	ITexture*			MagicChargeTexture;
+	
 	//MagicLevel
 	irr::core::rect<irr::s32>	MagicLevelRec;
 	ITexture*			MagicLevelTexture;
+	
 	//CDImage
 	irr::core::rect<irr::s32>	CDRec;
 	ITexture*			CDTexture;
+	
 	//HPbar
 	irr::core::rect<irr::s32>	HPBar;
 	ITexture*			HP;
+	
+	irr::gui::IGUIStaticText* HPText;	//text for displaying the HP
 	
 	double				timeElapsed;
 	int					modTime;
