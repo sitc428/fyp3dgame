@@ -25,6 +25,7 @@
 #include "NodeID.h"
 //#include "EnemyWave.h"
 #include <cmath>  // for tan(x) function
+#include "ParticleSystemEngine.h"
 
 
 static const irr::c8* LEVEL_FILE = "media/model/scene1.irr";
@@ -280,18 +281,48 @@ void GameWorld::InitRobot()
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
-	std::cout<<"!"<<std::endl;
+
 	Monster* m1 = new Monster( *this, GEngine->GetDriver());
-	std::cout<<"!!"<<std::endl;
 	actors.push_back(m1);
-	
-	std::cout<<"!!!"<<std::endl;
 	m1->ReSetPosition(irr::core::vector3df(-40,0,180));
 	
-	std::cout<<"!!!!"<<std::endl;
+	
 	Monster* m2 = new Monster( *this, GEngine->GetDriver());
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(50,0,200));
+	/*
+	irr::scene::IParticleSystemSceneNode* ps =0;
+	ps = smgr.addParticleSystemSceneNode(false);
+	ps->setPosition(core::vector3df(-100,0,0));
+	ps->setScale(core::vector3df(2,2,2));
+	ps->setParticleSize(core::dimension2d<f32>(20.0f, 20.0f));
+	
+	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
+		core::aabbox3d<f32>(-7,0,-7,7,1,7),
+		core::vector3df(0.0f,0.06f,0.0f),
+		80,100,
+		video::SColor(0,255,255,255), video::SColor(0,255,255,255),
+		800,2000);
+	ps->setEmitter(em);
+	em->drop();
+	
+	scene::IParticleAffector* paf =
+	ps->createFadeOutParticleAffector();
+	
+	ps->addAffector(paf);
+	paf->drop();
+	
+	ps->setMaterialFlag(video::EMF_LIGHTING, false);
+	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	ps->setMaterialTexture(0,GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
+	*/
+	ParticleSystemEngine* p = new ParticleSystemEngine(&smgr, core::vector3df(-100,0,0), core::vector3df(2,2,2),
+													  core::aabbox3d<f32>(-7,0,-7,7,1,7), core::vector3df(0.0f,0.06f,0.0f),
+													  80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	
+	
+	
 }
 
 // sets up the camera to be able to look at the scene
