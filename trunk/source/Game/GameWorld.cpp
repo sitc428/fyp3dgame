@@ -92,14 +92,65 @@ void GameWorld::InitShader()
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 	
 	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, core::vector3df(-100,0,0), core::vector3df(2,2,2),
-													   core::aabbox3d<f32>(-7,0,-7,7,1,7), core::vector3df(0.0f,0.06f,0.0f),
-													   80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+													   core::aabbox3d<f32>(-7,0,-7,7,1,7));
+	fire->CreateBoxEmitter(core::vector3df(0.0f,0.06f,0.0f),
+						   80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
 	
 	ParticleSystemEngine* fire2 = new ParticleSystemEngine(&smgr, core::vector3df(0,20,-100), core::vector3df(2,2,2),
-													   core::aabbox3d<f32>(-7,0,-7,7,1,7), core::vector3df(0.0f,0.06f,0.0f),
-													   80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+													   core::aabbox3d<f32>(-7,0,-7,7,1,7) );
+	fire2->CreateBoxEmitter(core::vector3df(0.0f,0.06f,0.0f),
+							80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	 
+	ParticleSystemEngine* fire3 = new ParticleSystemEngine(&smgr, core::vector3df(40,20,0), core::vector3df(2,2,2),
+															core::aabbox3d<f32>(-7,0,-7,7,1,7) );
+	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),core::vector3df(0.0f,0.06f,0.0f),
+							10,20,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	 
+	 
 	
 	
+	
+	
+	
+/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
+															core::aabbox3d<f32>(-7,0,-7,7,1,7),
+															core::vector3df(0.0f,0.06f,0.0f),
+															80,100,
+															video::SColor(0,255,255,255), video::SColor(0,255,255,255),
+															800,2000);
+*/	
+	/*irr::scene::IParticleEmitter* em = ps->createCylinderEmitter(core::vector3df(-100,0,0),5.0f, core::vector3df(-100,0,0),
+																 10,false,core::vector3df(0.0f,0.06f,0.0f));
+ 	*/
+	//irr::scene::IParticleEmitter* em = ps->createPointEmitter(core::vector3df(0.0f,0.06f,0.0f));
+	
+/*	
+	irr::scene::IParticleSystemSceneNode* ps =0;
+	ps = smgr.addParticleSystemSceneNode(false);
+	ps->setPosition(core::vector3df(40,20,0));
+	ps->setScale(core::vector3df(2,2,2));
+	ps->setParticleSize(core::dimension2d<f32>(20.0f, 20.0f));
+	
+	irr::scene::IParticleEmitter* em = ps->createMeshEmitter(smgr.getMesh("media/model/slime08.x"),true,
+															 core::vector3df(0.0f,0.06f,0.0f),100.0f,-1,false,10,20,
+															 video::SColor(0,255,255,255), video::SColor(0,255,255,255),
+															 800,2000);
+	
+	
+	ps->setEmitter(em);
+	em->drop();
+	
+	scene::IParticleAffector* paf =
+	ps->createFadeOutParticleAffector();
+	
+	ps->addAffector(paf);
+	paf->drop();
+	
+	ps->setMaterialFlag(video::EMF_LIGHTING, false);
+	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	ps->setMaterialTexture(0,GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
+	*/
 }
 
 // loads us the level and sets up the triangle selector used for collision checks with the level
@@ -281,6 +332,10 @@ void GameWorld::InitPlayer()
 	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
 	actors.push_back(npc1);
+	
+
+	
+	
 }
 
 void GameWorld::InitRobot()
@@ -301,6 +356,8 @@ void GameWorld::InitEnemies()
 	Monster* m2 = new Monster( *this, GEngine->GetDriver());
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(50,0,200));
+	
+	
 	/*
 	irr::scene::IParticleSystemSceneNode* ps =0;
 	ps = smgr.addParticleSystemSceneNode(false);
