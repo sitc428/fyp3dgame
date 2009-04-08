@@ -4,6 +4,10 @@
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
 #include "Player.h"
+#include <vector>
+#include <utility>
+#include "Item.hpp"
+
 
 class ProgressCircle;
 
@@ -106,7 +110,19 @@ public:
 	irr::s32 GetMagicDefencePoint() const {return _magicdefence;};
 	irr::s32 GetMagicLevel() const {return _magiclevel;}; 
 	bool GetCharging() const {return _charging;};		//to get whether the player is charging for Magic
+	(std::vector< std::pair<Item*, int> >) GetItemBox() {return _itemBox;};
 	
+	/********************
+	 Player Attribute SET FUNCTIONS
+	 *******************/
+	irr::s32 SetLevel(irr::s32 level) {_level = level;};
+	irr::s32 SetAttackPoint(irr::s32 attack) { _attack = attack;};
+	irr::s32 SetDefencePoint(irr::s32 defence) { _defence = defence;};
+	irr::s32 SetMagicAttackPoint(irr::s32 magicattack) { _magicattack = magicattack;};
+	irr::s32 SetMagicDefencePoint(irr::s32 magicdefence) { _magicdefence = magicdefence;};
+	irr::s32 SetMagicLevel(irr::s32 magiclevel) { _magiclevel = magiclevel;}; 
+	bool SetCharging(bool charging) { _charging = charging;};		//to get whether the player is charging for Magic
+	void SetItemBox(std::vector< std::pair<Item*, int> > itemBox) { _itemBox = itemBox;};
 	
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
@@ -180,7 +196,8 @@ private:
 	irr::s32 _magicdefence;
 	irr::s32 _magiclevel;
 	bool _charging;
-//	std::vector< std::pair<Item*, int> > ItemBox;
+	(std::vector< std::pair<Item*, int> >) _itemBox;
+	
 	
 	/************
 	 ************/
