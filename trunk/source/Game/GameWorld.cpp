@@ -11,6 +11,7 @@
 #include "MainCharacter.hpp"
 #include "Robot.hpp"
 #include "SellingMachine.hpp"
+#include "TriggerEventItem.hpp"
 //#include "SnowballProjectile.h"
 //#include "DynamiteProjectile.h"
 //#include "LandMine.h"
@@ -128,6 +129,9 @@ void GameWorld::InitLevel()
 
 	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	actors.push_back( sellingMachine1 );
+
+	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	actors.push_back( TriggerEventItem1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 
