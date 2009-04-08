@@ -90,6 +90,16 @@ void GameWorld::Init()
 void GameWorld::InitShader()
 {
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
+	
+	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, core::vector3df(-100,0,0), core::vector3df(2,2,2),
+													   core::aabbox3d<f32>(-7,0,-7,7,1,7), core::vector3df(0.0f,0.06f,0.0f),
+													   80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	
+	ParticleSystemEngine* fire2 = new ParticleSystemEngine(&smgr, core::vector3df(0,20,-100), core::vector3df(2,2,2),
+													   core::aabbox3d<f32>(-7,0,-7,7,1,7), core::vector3df(0.0f,0.06f,0.0f),
+													   80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	
+	
 }
 
 // loads us the level and sets up the triangle selector used for collision checks with the level
@@ -317,9 +327,6 @@ void GameWorld::InitEnemies()
 	ps->setMaterialTexture(0,GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
 	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
 	*/
-	ParticleSystemEngine* p = new ParticleSystemEngine(&smgr, core::vector3df(-100,0,0), core::vector3df(2,2,2),
-													  core::aabbox3d<f32>(-7,0,-7,7,1,7), core::vector3df(0.0f,0.06f,0.0f),
-													  80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
 	
 	
 	
