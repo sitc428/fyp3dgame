@@ -24,6 +24,15 @@
 		9807F7BB0F506674008E3E5B /* libikpMP3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7BA0F506674008E3E5B /* libikpMP3.dylib */; };
 		9807F8570F51550E008E3E5B /* InputEventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */; };
 		9814CB7D0F84A21D004C1A92 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9814CB7B0F84A21D004C1A92 /* Robot.cpp */; };
+		982DB7280F8A42F1009D3FDC /* TalkativeNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982DB7260F8A42F1009D3FDC /* TalkativeNPC.cpp */; };
+		9830F3A60F8C919A009055BC /* TriggerEventItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A10F8C919A009055BC /* TriggerEventItem.cpp */; };
+		9830F3A70F8C919A009055BC /* Weapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A30F8C919A009055BC /* Weapon.cpp */; };
+		9830F3A80F8C919A009055BC /* XItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A50F8C919A009055BC /* XItem.cpp */; };
+		9830F3AB0F8C91AE009055BC /* MP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A90F8C91AE009055BC /* MP.cpp */; };
+		9830F3B40F8C91DE009055BC /* MDiscItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3AC0F8C91DE009055BC /* MDiscItem.cpp */; };
+		9830F3B50F8C91DE009055BC /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3AE0F8C91DE009055BC /* Item.cpp */; };
+		9830F3B60F8C91DE009055BC /* HP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3B00F8C91DE009055BC /* HP.cpp */; };
+		9830F3B70F8C91DE009055BC /* HPItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3B20F8C91DE009055BC /* HPItem.cpp */; };
 		983D0C350F860903008C0D5F /* InteractiveActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C310F860903008C0D5F /* InteractiveActor.cpp */; };
 		983D0C360F860903008C0D5F /* SellingMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C330F860903008C0D5F /* SellingMachine.cpp */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
@@ -77,6 +86,24 @@
 		9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputEventReceiver.hpp; sourceTree = "<group>"; };
 		9814CB7B0F84A21D004C1A92 /* Robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robot.cpp; sourceTree = "<group>"; };
 		9814CB7C0F84A21D004C1A92 /* Robot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robot.hpp; sourceTree = "<group>"; };
+		982DB7260F8A42F1009D3FDC /* TalkativeNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TalkativeNPC.cpp; sourceTree = "<group>"; };
+		982DB7270F8A42F1009D3FDC /* TalkativeNPC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TalkativeNPC.hpp; sourceTree = "<group>"; };
+		9830F3A00F8C919A009055BC /* XItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XItem.hpp; sourceTree = "<group>"; };
+		9830F3A10F8C919A009055BC /* TriggerEventItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerEventItem.cpp; sourceTree = "<group>"; };
+		9830F3A20F8C919A009055BC /* TriggerEventItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TriggerEventItem.hpp; sourceTree = "<group>"; };
+		9830F3A30F8C919A009055BC /* Weapon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Weapon.cpp; sourceTree = "<group>"; };
+		9830F3A40F8C919A009055BC /* Weapon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Weapon.hpp; sourceTree = "<group>"; };
+		9830F3A50F8C919A009055BC /* XItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XItem.cpp; sourceTree = "<group>"; };
+		9830F3A90F8C91AE009055BC /* MP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MP.cpp; sourceTree = "<group>"; };
+		9830F3AA0F8C91AE009055BC /* MP.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MP.hpp; sourceTree = "<group>"; };
+		9830F3AC0F8C91DE009055BC /* MDiscItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MDiscItem.cpp; sourceTree = "<group>"; };
+		9830F3AD0F8C91DE009055BC /* MDiscItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MDiscItem.hpp; sourceTree = "<group>"; };
+		9830F3AE0F8C91DE009055BC /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
+		9830F3AF0F8C91DE009055BC /* Item.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Item.hpp; sourceTree = "<group>"; };
+		9830F3B00F8C91DE009055BC /* HP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HP.cpp; sourceTree = "<group>"; };
+		9830F3B10F8C91DE009055BC /* HP.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HP.hpp; sourceTree = "<group>"; };
+		9830F3B20F8C91DE009055BC /* HPItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HPItem.cpp; sourceTree = "<group>"; };
+		9830F3B30F8C91DE009055BC /* HPItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HPItem.hpp; sourceTree = "<group>"; };
 		983D0C310F860903008C0D5F /* InteractiveActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteractiveActor.cpp; sourceTree = "<group>"; };
 		983D0C320F860903008C0D5F /* InteractiveActor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InteractiveActor.hpp; sourceTree = "<group>"; };
 		983D0C330F860903008C0D5F /* SellingMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SellingMachine.cpp; sourceTree = "<group>"; };
@@ -161,6 +188,22 @@
 		9807F4D60F4FF003008E3E5B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				9830F3AC0F8C91DE009055BC /* MDiscItem.cpp */,
+				9830F3AD0F8C91DE009055BC /* MDiscItem.hpp */,
+				9830F3AE0F8C91DE009055BC /* Item.cpp */,
+				9830F3AF0F8C91DE009055BC /* Item.hpp */,
+				9830F3B00F8C91DE009055BC /* HP.cpp */,
+				9830F3B10F8C91DE009055BC /* HP.hpp */,
+				9830F3B20F8C91DE009055BC /* HPItem.cpp */,
+				9830F3B30F8C91DE009055BC /* HPItem.hpp */,
+				9830F3A90F8C91AE009055BC /* MP.cpp */,
+				9830F3AA0F8C91AE009055BC /* MP.hpp */,
+				9830F3A00F8C919A009055BC /* XItem.hpp */,
+				9830F3A10F8C919A009055BC /* TriggerEventItem.cpp */,
+				9830F3A20F8C919A009055BC /* TriggerEventItem.hpp */,
+				9830F3A30F8C919A009055BC /* Weapon.cpp */,
+				9830F3A40F8C919A009055BC /* Weapon.hpp */,
+				9830F3A50F8C919A009055BC /* XItem.cpp */,
 				983D0C310F860903008C0D5F /* InteractiveActor.cpp */,
 				983D0C320F860903008C0D5F /* InteractiveActor.hpp */,
 				983D0C330F860903008C0D5F /* SellingMachine.cpp */,
@@ -169,8 +212,8 @@
 				989C3A070F64056F0082CD29 /* Monster.cpp */,
 				98F7F9BC0F5B00010060BD7D /* ProgressCircle.cpp */,
 				98F7F9BD0F5B00010060BD7D /* ProgressCircle.hpp */,
-				98F7F7820F5A8BFD0060BD7D /* GameHUD.h */,
 				98F7F7830F5A8BFD0060BD7D /* GameHUD.cpp */,
+				98F7F7820F5A8BFD0060BD7D /* GameHUD.h */,
 				9807F4D70F4FF003008E3E5B /* Actor.cpp */,
 				9807F4D80F4FF003008E3E5B /* Actor.h */,
 				98F7F6900F59BAF80060BD7D /* MainCharacter.cpp */,
@@ -190,6 +233,8 @@
 				9807F4F50F4FF003008E3E5B /* ParticleManager.h */,
 				9807F4F60F4FF003008E3E5B /* Player.cpp */,
 				9807F4F70F4FF003008E3E5B /* Player.h */,
+				982DB7260F8A42F1009D3FDC /* TalkativeNPC.cpp */,
+				982DB7270F8A42F1009D3FDC /* TalkativeNPC.hpp */,
 			);
 			name = Game;
 			path = ../Game;
@@ -309,6 +354,15 @@
 				9814CB7D0F84A21D004C1A92 /* Robot.cpp in Sources */,
 				983D0C350F860903008C0D5F /* InteractiveActor.cpp in Sources */,
 				983D0C360F860903008C0D5F /* SellingMachine.cpp in Sources */,
+				982DB7280F8A42F1009D3FDC /* TalkativeNPC.cpp in Sources */,
+				9830F3A60F8C919A009055BC /* TriggerEventItem.cpp in Sources */,
+				9830F3A70F8C919A009055BC /* Weapon.cpp in Sources */,
+				9830F3A80F8C919A009055BC /* XItem.cpp in Sources */,
+				9830F3AB0F8C91AE009055BC /* MP.cpp in Sources */,
+				9830F3B40F8C91DE009055BC /* MDiscItem.cpp in Sources */,
+				9830F3B50F8C91DE009055BC /* Item.cpp in Sources */,
+				9830F3B60F8C91DE009055BC /* HP.cpp in Sources */,
+				9830F3B70F8C91DE009055BC /* HPItem.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
