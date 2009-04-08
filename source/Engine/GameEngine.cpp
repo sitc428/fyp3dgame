@@ -418,7 +418,7 @@ void GameEngine::DisplayFPS()
 	irr::s32 fps = driver->getFPS();
 	if (lastFPS != fps)
 	{
-		irr::core::stringw str = L"SnowballGame [";
+		irr::core::stringw str = L"RxW [";
 		str += driver->getName();
 		str += "] FPS:";
 		str += fps;
