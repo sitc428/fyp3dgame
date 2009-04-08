@@ -180,6 +180,7 @@ private:
 	irr::s32 _magicdefence;
 	irr::s32 _magiclevel;
 	bool _charging;
+//	std::vector< std::pair<Item*, int> > ItemBox;
 	
 	/************
 	 ************/

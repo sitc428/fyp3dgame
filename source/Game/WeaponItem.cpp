@@ -1,4 +1,4 @@
-#include "Weapon.hpp"
+#include "WeaponItem.hpp"
 #include "Player.h"
 //constructor
 Weapon::Weapon(GameWorld& gameWorld)

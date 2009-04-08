@@ -1,5 +1,5 @@
 #include "MDiscItem.hpp"
-
+#include "Player.h"
 //constructor
 MDiscItem::MDiscItem(GameWorld& gameWorld)
 	:Item(gameWorld),
