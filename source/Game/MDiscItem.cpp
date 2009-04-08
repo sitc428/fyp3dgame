@@ -17,7 +17,7 @@ MDiscItem::~MDiscItem()
 {
 }
 
-void MDiscItem::addDisc()
+void MDiscItem::use()
 {
 	irr::core::array< std::pair<Item*, int> > box = (((MainCharacter&)world.GetCurrentPlayer()).GetItemBox());
 	int count = 0;
@@ -32,6 +32,6 @@ void MDiscItem::addDisc()
 	}
 	if (count!=0)
 	{
-		box[tmp].second++;
+		box[tmp].second--;
 	}
 }

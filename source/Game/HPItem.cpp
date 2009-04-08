@@ -1,6 +1,7 @@
 #include "HPItem.hpp"
 #include "Player.h"
-
+#include "Item.hpp"
+#include "MainCharacter.hpp"
 //constructor
 HPItem::HPItem(GameWorld& gameWorld)
 	:Item(gameWorld),
@@ -22,9 +23,21 @@ void HPItem::use()
 	//else +HP
 		world.GetCurrentPlayer().SetHealth(world.GetCurrentPlayer().GetHealth()+this->getItemValue());
 	//need to remove the item from player
-
-
-
+	irr::core::array< std::pair<Item*, int> > box = (((MainCharacter&)world.GetCurrentPlayer()).GetItemBox());
+	int count = 0;
+	int tmp = 0;
+	for(int i = 0; i < box.size(); ++i)
+	{
+		if(box[i].first->getItemType() == HPITEM)
+		{
+			count++;
+			tmp = i;
+		}
+	}
+	if (count!=0)
+	{
+		box[tmp].second--;
+	}
 
 
 }
