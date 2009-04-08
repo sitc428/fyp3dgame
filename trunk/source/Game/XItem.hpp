@@ -6,6 +6,7 @@ class XItem : public Item
 {
 public:
 	XItem(GameWorld& gameWorld);
+	void use();
 protected:
 	~XItem();
 private:
