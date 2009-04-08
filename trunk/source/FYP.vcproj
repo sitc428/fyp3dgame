@@ -261,6 +261,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\ParticleSystemEngine.h"
+				>
+			</File>
+			<File
 				RelativePath=".\game\Player.h"
 				>
 			</File>
@@ -282,6 +286,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\TalkativeNPC.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\TriggerEventItem.hpp"
 				>
 			</File>
 		</Filter>
@@ -361,6 +369,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\ParticleSystemEngine.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\game\Player.cpp"
 				>
 			</File>
@@ -382,6 +394,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\TalkativeNPC.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\TriggerEventItem.cpp"
 				>
 			</File>
 		</Filter>

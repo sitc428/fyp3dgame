@@ -7,7 +7,6 @@
 #include "FloorDecalSceneNode.h"
 #include "ParticleManager.h"
 #include "CGUITTFont.h"
-//#include "CGUIStaticTTText.hpp"
 
 #ifdef _IRR_WINDOWS_
 #include <windows.h>
@@ -267,7 +266,7 @@ void GameEngine::Run()
 		receiver->enable();
 
 		// if ESCAPE was pressed, request a game exit
-		if( receiver->keyDown(irr::KEY_ESCAPE) )
+		if( receiver->keyDown(irr::KEY_F4) && receiver->keyDown(irr::KEY_ATTN))
 		{
 			RequestStateChange(state_EXIT);
 		}
@@ -290,6 +289,7 @@ void GameEngine::TickHUD(irr::f32 delta)
 	switch( state )
 	{
 		case state_GAME:
+		case state_PAUSED:
 		{
 			check( world );
 			world->UpdateHUD( delta );
