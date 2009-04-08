@@ -44,6 +44,7 @@ class GameWorld
 		void UpdateHUD( irr::f32 delta);
 		void DoConversation(irr::c8 conversation_string);
 		void Exit();
+		GameHUD* GetGameHUD() {return gameHUD;	};
 
 		irr::scene::ISceneManager& GetSceneManager() { return smgr; }
 		irr::scene::IMetaTriangleSelector& GetLevelTriangleSelector() { return *levelTriangleSelector; }
