@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 42;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,7 @@
 		9830F3B50F8C91DE009055BC /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3AE0F8C91DE009055BC /* Item.cpp */; };
 		9830F3B70F8C91DE009055BC /* HPItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3B20F8C91DE009055BC /* HPItem.cpp */; };
 		9830F4A50F8CAD95009055BC /* ParticleSystemEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F4A30F8CAD95009055BC /* ParticleSystemEngine.cpp */; };
+		9830F63E0F8CBAB5009055BC /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 9830F6390F8CBAB5009055BC /* MainMenu.nib */; };
 		983D0C350F860903008C0D5F /* InteractiveActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C310F860903008C0D5F /* InteractiveActor.cpp */; };
 		983D0C360F860903008C0D5F /* SellingMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C330F860903008C0D5F /* SellingMachine.cpp */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
@@ -94,6 +95,7 @@
 		9830F3B30F8C91DE009055BC /* HPItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HPItem.hpp; sourceTree = "<group>"; };
 		9830F4A30F8CAD95009055BC /* ParticleSystemEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystemEngine.cpp; sourceTree = "<group>"; };
 		9830F4A40F8CAD95009055BC /* ParticleSystemEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystemEngine.h; sourceTree = "<group>"; };
+		9830F6390F8CBAB5009055BC /* MainMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MainMenu.nib; sourceTree = "<group>"; };
 		983D0C310F860903008C0D5F /* InteractiveActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteractiveActor.cpp; sourceTree = "<group>"; };
 		983D0C320F860903008C0D5F /* InteractiveActor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InteractiveActor.hpp; sourceTree = "<group>"; };
 		983D0C330F860903008C0D5F /* SellingMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SellingMachine.cpp; sourceTree = "<group>"; };
@@ -224,9 +226,18 @@
 			path = ../Game;
 			sourceTree = SOURCE_ROOT;
 		};
+		9830F6300F8CBA8F009055BC /* MacOSX */ = {
+			isa = PBXGroup;
+			children = (
+				9830F6390F8CBAB5009055BC /* MainMenu.nib */,
+			);
+			name = MacOSX;
+			sourceTree = "<group>";
+		};
 		9868EF430F1303F4004AE96C = {
 			isa = PBXGroup;
 			children = (
+				9830F6300F8CBA8F009055BC /* MacOSX */,
 				9807F47C0F4FED16008E3E5B /* main.cpp */,
 				9807F4D60F4FF003008E3E5B /* Game */,
 				9807F48C0F4FEDBF008E3E5B /* Utils */,
@@ -288,7 +299,7 @@
 		9868EF450F1303F5004AE96C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
+				BuildIndependentTargetsInParallel = NO;
 			};
 			buildConfigurationList = 9868EF480F1303F5004AE96C /* Build configuration list for PBXProject "FYP" */;
 			compatibilityVersion = "Xcode 2.4";
@@ -308,6 +319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9830F63E0F8CBAB5009055BC /* MainMenu.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +369,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include\"";
-				SDKROOT = macosx10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Debug;
 		};
@@ -371,7 +383,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
-				SDKROOT = macosx10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
 		};
