@@ -2,13 +2,14 @@
 #define GameHUD_h
 
 #include <irrlicht/irrlicht.h>
-
+#include "ActorTypes.h"
 
 using namespace irr;
 using namespace irr::gui;
 using namespace irr::video;
 
 class Player;
+
 namespace irr{
 	namespace gui{
 		class CGUITTFont;
@@ -32,6 +33,7 @@ public:
 	void Update(irr::f32 delta, Player& player );
 	void DisplayConversation(irr::c8 conversation_string);
 	void Exit();
+	void GetConversation(c8* string, ITexture* actorTexture);
 
 private:
 	//HP, Magic Frame
@@ -60,6 +62,8 @@ private:
 	
 	//Conversation frame
 	ITexture*					ConversationTexture;
+	
+	c8*							ConversationString;
 	
 	
 	double						timeElapsed;
