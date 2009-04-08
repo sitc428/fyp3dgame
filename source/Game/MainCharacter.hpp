@@ -114,7 +114,7 @@ public:
 	irr::s32 GetMagicLevel() const {return _magiclevel;}; 
 	bool GetCharging() const {return _charging;};		//to get whether the player is charging for Magic
 	//(std::vector< std::pair<Item*, int> >) GetItemBox() {return _itemBox;};
-	(irr::core::array< std::pair<Item*,int> >)& GetItemBox() {return _itemBox;};
+	irr::core::array< std::pair<Item*,int> >& GetItemBox() {return _itemBox;};
 	
 	/********************
 	 Player Attribute SET FUNCTIONS
