@@ -6,7 +6,7 @@ class MDiscItem : public Item
 {
 public:
 	MDiscItem(GameWorld& gameWorld);
-	void addDisc();
+	void use();
 protected:
 	~MDiscItem();
 private:
