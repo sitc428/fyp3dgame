@@ -273,9 +273,9 @@ void GameWorld::InitPlayer()
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
 	
-	irr::core::array<irr::core::stringw> npc1dialogs;
-	npc1dialogs.push_back(L"Testing line 1");
-	npc1dialogs.push_back(L"My testing 2");
+	irr::core::array<irr::c8*> npc1dialogs;
+	npc1dialogs.push_back("Testing line 1");
+	npc1dialogs.push_back("My testing 2");
 	npc1dialogs.push_back("Ha ha ha ~");
 	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/slime08.x", 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
 	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
