@@ -2,6 +2,7 @@
 #define __WEAPON_HPP__
 #include "WeaponItem.hpp"
 #include "Player.h"
+#include "Item.hpp"
 class Weapon : public Item
 {
 public:
