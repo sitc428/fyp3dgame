@@ -47,6 +47,17 @@ void InteractiveActor::Tick( irr::f32 delta )
 				}
 			}
 		}
+		else
+		{
+			if (node->getID()== 10 && 
+				node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
+			{
+					std::cout<<"TriggerEventItem node matched"<<std::endl;
+					interacting = true;
+					world.requireInteracting(true, this);
+					interaction( delta );
+			}
+		}
 	}
 	else if(interacting)
 	{
