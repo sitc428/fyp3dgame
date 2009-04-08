@@ -2,7 +2,6 @@
 #define GameHUD_h
 
 #include <irrlicht/irrlicht.h>
-#include "ActorTypes.h"
 
 using namespace irr;
 using namespace irr::gui;
@@ -30,11 +29,16 @@ public:
 	~GameHUD();
 
 	void Init();
+	//drawing HUD elements
 	void Update(irr::f32 delta, Player& player );
+	//drawing conversation block
 	void DisplayConversation(irr::c8 conversation_string);
-	void Exit();
-	void GetConversation(c8* string, ITexture* actorTexture);
+	
+	
+	//for getting the words for conversation
+	void GetConversation(c8* string, ITexture* actorTexture = NULL);
 
+	void Exit();
 private:
 	//HP, Magic Frame
 	irr::core::rect<irr::s32>	HPRec;
