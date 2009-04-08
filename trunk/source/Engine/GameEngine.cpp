@@ -265,12 +265,6 @@ void GameEngine::Run()
 
 		receiver->enable();
 
-		// if ESCAPE was pressed, request a game exit
-		if( receiver->keyDown(irr::KEY_F4) && receiver->keyDown(irr::KEY_MENU))
-		{
-			RequestStateChange(state_EXIT);
-		}
-
 		// perform a state transition if one was requested
 		HandleRequestedStateChange();
 
