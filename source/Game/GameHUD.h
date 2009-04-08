@@ -58,6 +58,9 @@ private:
 	irr::core::rect<irr::s32>	HPTextRec;
 	irr::gui::CGUITTFont*		HPText;	//text for displaying the HP
 	
+	//Conversation frame
+	ITexture*					ConversationTexture;
+	
 	
 	double						timeElapsed;
 	int							modTime;

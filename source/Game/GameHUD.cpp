@@ -4,17 +4,13 @@
 #include "Player.h"
 #include "CGUITTFont.h"
 
-/*
-static const c8*	FONT_FILE = "../art/fonts/HUDfont.png";  // default font for the HUD
-static const c8*	PLAYER_LIFE_TEXTURE = "model/HUD/frame_hud.png";  // icon indicating player life
-static const c8*	PLAYER_HEALTH_BAR_TEXTURE = "model/HUD/frame_hud.png";
-static const c8*	PLAYER_HEALTH_FILL_TEXTURE = "model/HUD/frame_hud.png";
- */
+
 static const c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
 static const c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
 static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
 static const c8*	CD_TEXTURE = "media/HUD/cd_spinning.png";
 static const c8*	HP_TEXTURE = "media/HUD/hp.png";
+static const c8*	CONVERSATION_TEXTURE = "media/HUD/conversation.png";
 
 static const irr::s32 HP_TEXT_WIDTH = 200;
 static const irr::s32 HP_TEXT_HEIGHT = 24;
@@ -56,11 +52,13 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	MagicLevelTexture = driver.getTexture(MAGIC_LEVEL_TEXTURE);
 	CDTexture = driver.getTexture(CD_TEXTURE);
 	HP = driver.getTexture(HP_TEXTURE);
+	ConversationTexture = driver.getTexture(CONVERSATION_TEXTURE);
 	check(HealthBarFrameTexture);
 	check(MagicChargeTexture);
 	check(MagicLevelTexture); 
 	check(CDTexture);
-	check(HPTexture);
+	check(HP);
+	check(ConversationTexture);
 	
 	//initialize the value of time_elapsed
 	timeElapsed = 0;
@@ -83,6 +81,8 @@ GameHUD::~GameHUD()
 	CDTexture = NULL;
 	GEngine->GetDriver().removeTexture( HP);
 	HP = NULL;
+	GEngine->GetDriver().removeTexture( ConversationTexture);
+	ConversationTexture = NULL;
 }
 
 void GameHUD::Init()
@@ -205,6 +205,8 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	HPText->draw(L"1000/1000", HPTextRec, video::SColor(255,255,255,255), true, true, 0);
 	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
+	
+	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
 	
 	
 	/*
