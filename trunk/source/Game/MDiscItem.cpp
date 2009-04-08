@@ -6,10 +6,13 @@
 #include "MainCharacter.hpp"
 
 //constructor
-MDiscItem::MDiscItem(GameWorld& gameWorld)
+MDiscItem::MDiscItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value)
 	:Item(gameWorld),
 	world(gameWorld)
 {
+		this->setItemType(type);
+	this->setItemName(name);
+	this->setItemValue(value);
 }
 
 //destructor

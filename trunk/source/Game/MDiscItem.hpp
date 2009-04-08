@@ -5,7 +5,7 @@
 class MDiscItem : public Item
 {
 public:
-	MDiscItem(GameWorld& gameWorld);
+	MDiscItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value);
 	void use();
 protected:
 	~MDiscItem();

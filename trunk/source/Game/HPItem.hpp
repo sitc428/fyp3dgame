@@ -5,7 +5,7 @@
 class HPItem : public Item
 {
 public:
-	HPItem(GameWorld& gameWorld);
+	HPItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value);
 	void use();
 protected:
 	~HPItem();
