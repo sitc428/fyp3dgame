@@ -1,12 +1,12 @@
 #include "TalkativeNPC.hpp"
-#include "Check.h"
+#include "GameHUD.h"
 #include "GameEngine.h"
 #include "GameWorld.h"
 #include <iostream>
 
 extern GameEngine* GEngine;
 
-TalkativeNPC::TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::core::stringw>& dialogs, const irr::c8* mesh, irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
+TalkativeNPC::TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::c8*>& dialogs, const irr::c8* mesh, irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
 	:InteractiveActor(gameWorld),
 	world(gameWorld),
 	_dialogs(dialogs),
@@ -39,9 +39,9 @@ void TalkativeNPC::interaction(irr::f32 delta)
 	{
 		if(talking < _dialogs.size())
 		{
-			if(currentline <= _dialogs[talking].size())
+			if(currentline <= 0)//_dialogs[talking].size())
 			{
-				_dialogs[talking].subString(0, currentline);
+				//world.GetGameHUD()->DisplayConversation(subString(0, currentline));
 				++currentline;
 			}
 			else
