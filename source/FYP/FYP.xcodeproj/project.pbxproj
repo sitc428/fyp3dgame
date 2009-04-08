@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,20 +19,16 @@
 		9807F50D0F4FF003008E3E5B /* GameWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F4EF0F4FF003008E3E5B /* GameWorld.cpp */; };
 		9807F50F0F4FF003008E3E5B /* ParticleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F4F40F4FF003008E3E5B /* ParticleManager.cpp */; };
 		9807F5100F4FF003008E3E5B /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F4F60F4FF003008E3E5B /* Player.cpp */; };
-		9807F7360F505DE3008E3E5B /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7340F505DE3008E3E5B /* libirrklang.dylib */; };
 		9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7AB0F50645B008E3E5B /* libirrKlang.a */; };
-		9807F7BB0F506674008E3E5B /* libikpMP3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7BA0F506674008E3E5B /* libikpMP3.dylib */; };
 		9807F8570F51550E008E3E5B /* InputEventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */; };
 		9814CB7D0F84A21D004C1A92 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9814CB7B0F84A21D004C1A92 /* Robot.cpp */; };
 		982DB7280F8A42F1009D3FDC /* TalkativeNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 982DB7260F8A42F1009D3FDC /* TalkativeNPC.cpp */; };
 		9830F3A60F8C919A009055BC /* TriggerEventItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A10F8C919A009055BC /* TriggerEventItem.cpp */; };
-		9830F3A70F8C919A009055BC /* Weapon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A30F8C919A009055BC /* Weapon.cpp */; };
 		9830F3A80F8C919A009055BC /* XItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A50F8C919A009055BC /* XItem.cpp */; };
-		9830F3AB0F8C91AE009055BC /* MP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3A90F8C91AE009055BC /* MP.cpp */; };
 		9830F3B40F8C91DE009055BC /* MDiscItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3AC0F8C91DE009055BC /* MDiscItem.cpp */; };
 		9830F3B50F8C91DE009055BC /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3AE0F8C91DE009055BC /* Item.cpp */; };
-		9830F3B60F8C91DE009055BC /* HP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3B00F8C91DE009055BC /* HP.cpp */; };
 		9830F3B70F8C91DE009055BC /* HPItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F3B20F8C91DE009055BC /* HPItem.cpp */; };
+		9830F4A50F8CAD95009055BC /* ParticleSystemEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9830F4A30F8CAD95009055BC /* ParticleSystemEngine.cpp */; };
 		983D0C350F860903008C0D5F /* InteractiveActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C310F860903008C0D5F /* InteractiveActor.cpp */; };
 		983D0C360F860903008C0D5F /* SellingMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 983D0C330F860903008C0D5F /* SellingMachine.cpp */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
@@ -79,9 +75,7 @@
 		9807F4F50F4FF003008E3E5B /* ParticleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleManager.h; sourceTree = "<group>"; };
 		9807F4F60F4FF003008E3E5B /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		9807F4F70F4FF003008E3E5B /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		9807F7340F505DE3008E3E5B /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = ../../lib/libirrklang.dylib; sourceTree = SOURCE_ROOT; };
 		9807F7AB0F50645B008E3E5B /* libirrKlang.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libirrKlang.a; path = ../../lib/libirrKlang.a; sourceTree = SOURCE_ROOT; };
-		9807F7BA0F506674008E3E5B /* libikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libikpMP3.dylib; path = ../../lib/libikpMP3.dylib; sourceTree = SOURCE_ROOT; };
 		9807F8560F51550E008E3E5B /* InputEventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputEventReceiver.cpp; sourceTree = "<group>"; };
 		9807F8890F51584B008E3E5B /* InputEventReceiver.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputEventReceiver.hpp; sourceTree = "<group>"; };
 		9814CB7B0F84A21D004C1A92 /* Robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robot.cpp; sourceTree = "<group>"; };
@@ -91,19 +85,15 @@
 		9830F3A00F8C919A009055BC /* XItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XItem.hpp; sourceTree = "<group>"; };
 		9830F3A10F8C919A009055BC /* TriggerEventItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerEventItem.cpp; sourceTree = "<group>"; };
 		9830F3A20F8C919A009055BC /* TriggerEventItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TriggerEventItem.hpp; sourceTree = "<group>"; };
-		9830F3A30F8C919A009055BC /* Weapon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Weapon.cpp; sourceTree = "<group>"; };
-		9830F3A40F8C919A009055BC /* Weapon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Weapon.hpp; sourceTree = "<group>"; };
 		9830F3A50F8C919A009055BC /* XItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XItem.cpp; sourceTree = "<group>"; };
-		9830F3A90F8C91AE009055BC /* MP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MP.cpp; sourceTree = "<group>"; };
-		9830F3AA0F8C91AE009055BC /* MP.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MP.hpp; sourceTree = "<group>"; };
 		9830F3AC0F8C91DE009055BC /* MDiscItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MDiscItem.cpp; sourceTree = "<group>"; };
 		9830F3AD0F8C91DE009055BC /* MDiscItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MDiscItem.hpp; sourceTree = "<group>"; };
 		9830F3AE0F8C91DE009055BC /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
 		9830F3AF0F8C91DE009055BC /* Item.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Item.hpp; sourceTree = "<group>"; };
-		9830F3B00F8C91DE009055BC /* HP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HP.cpp; sourceTree = "<group>"; };
-		9830F3B10F8C91DE009055BC /* HP.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HP.hpp; sourceTree = "<group>"; };
 		9830F3B20F8C91DE009055BC /* HPItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HPItem.cpp; sourceTree = "<group>"; };
 		9830F3B30F8C91DE009055BC /* HPItem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HPItem.hpp; sourceTree = "<group>"; };
+		9830F4A30F8CAD95009055BC /* ParticleSystemEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystemEngine.cpp; sourceTree = "<group>"; };
+		9830F4A40F8CAD95009055BC /* ParticleSystemEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystemEngine.h; sourceTree = "<group>"; };
 		983D0C310F860903008C0D5F /* InteractiveActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InteractiveActor.cpp; sourceTree = "<group>"; };
 		983D0C320F860903008C0D5F /* InteractiveActor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InteractiveActor.hpp; sourceTree = "<group>"; };
 		983D0C330F860903008C0D5F /* SellingMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SellingMachine.cpp; sourceTree = "<group>"; };
@@ -145,9 +135,7 @@
 				98563E790F1A46380050410E /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */,
 				98563E7A0F1A46380050410E /* libfreetype.a in Frameworks */,
 				98563E7C0F1A46480050410E /* libIrrlicht.a in Frameworks */,
-				9807F7360F505DE3008E3E5B /* libirrklang.dylib in Frameworks */,
 				9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */,
-				9807F7BB0F506674008E3E5B /* libikpMP3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,17 +180,11 @@
 				9830F3AD0F8C91DE009055BC /* MDiscItem.hpp */,
 				9830F3AE0F8C91DE009055BC /* Item.cpp */,
 				9830F3AF0F8C91DE009055BC /* Item.hpp */,
-				9830F3B00F8C91DE009055BC /* HP.cpp */,
-				9830F3B10F8C91DE009055BC /* HP.hpp */,
 				9830F3B20F8C91DE009055BC /* HPItem.cpp */,
 				9830F3B30F8C91DE009055BC /* HPItem.hpp */,
-				9830F3A90F8C91AE009055BC /* MP.cpp */,
-				9830F3AA0F8C91AE009055BC /* MP.hpp */,
 				9830F3A00F8C919A009055BC /* XItem.hpp */,
 				9830F3A10F8C919A009055BC /* TriggerEventItem.cpp */,
 				9830F3A20F8C919A009055BC /* TriggerEventItem.hpp */,
-				9830F3A30F8C919A009055BC /* Weapon.cpp */,
-				9830F3A40F8C919A009055BC /* Weapon.hpp */,
 				9830F3A50F8C919A009055BC /* XItem.cpp */,
 				983D0C310F860903008C0D5F /* InteractiveActor.cpp */,
 				983D0C320F860903008C0D5F /* InteractiveActor.hpp */,
@@ -231,6 +213,8 @@
 				9814CB7C0F84A21D004C1A92 /* Robot.hpp */,
 				9807F4F40F4FF003008E3E5B /* ParticleManager.cpp */,
 				9807F4F50F4FF003008E3E5B /* ParticleManager.h */,
+				9830F4A30F8CAD95009055BC /* ParticleSystemEngine.cpp */,
+				9830F4A40F8CAD95009055BC /* ParticleSystemEngine.h */,
 				9807F4F60F4FF003008E3E5B /* Player.cpp */,
 				9807F4F70F4FF003008E3E5B /* Player.h */,
 				982DB7260F8A42F1009D3FDC /* TalkativeNPC.cpp */,
@@ -264,9 +248,7 @@
 		9868F12B0F1308BC004AE96C /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				9807F7BA0F506674008E3E5B /* libikpMP3.dylib */,
 				9807F7AB0F50645B008E3E5B /* libirrKlang.a */,
-				9807F7340F505DE3008E3E5B /* libirrklang.dylib */,
 				98563E7B0F1A46480050410E /* libIrrlicht.a */,
 				98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */,
 				98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */,
@@ -305,6 +287,9 @@
 /* Begin PBXProject section */
 		9868EF450F1303F5004AE96C /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
 			buildConfigurationList = 9868EF480F1303F5004AE96C /* Build configuration list for PBXProject "FYP" */;
 			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 0;
@@ -356,13 +341,11 @@
 				983D0C360F860903008C0D5F /* SellingMachine.cpp in Sources */,
 				982DB7280F8A42F1009D3FDC /* TalkativeNPC.cpp in Sources */,
 				9830F3A60F8C919A009055BC /* TriggerEventItem.cpp in Sources */,
-				9830F3A70F8C919A009055BC /* Weapon.cpp in Sources */,
 				9830F3A80F8C919A009055BC /* XItem.cpp in Sources */,
-				9830F3AB0F8C91AE009055BC /* MP.cpp in Sources */,
 				9830F3B40F8C91DE009055BC /* MDiscItem.cpp in Sources */,
 				9830F3B50F8C91DE009055BC /* Item.cpp in Sources */,
-				9830F3B60F8C91DE009055BC /* HP.cpp in Sources */,
 				9830F3B70F8C91DE009055BC /* HPItem.cpp in Sources */,
+				9830F4A50F8CAD95009055BC /* ParticleSystemEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +357,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include\"";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.4;
 			};
 			name = Debug;
 		};
@@ -385,9 +368,10 @@
 				COPY_PHASE_STRIP = YES;
 				HEADER_SEARCH_PATHS = ../../include;
 				MACH_O_TYPE = mh_execute;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = macosx10.4;
 			};
 			name = Release;
 		};
