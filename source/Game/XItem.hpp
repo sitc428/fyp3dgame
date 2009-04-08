@@ -5,7 +5,7 @@
 class XItem : public Item
 {
 public:
-	XItem(GameWorld& gameWorld);
+	XItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value);
 	void use();
 protected:
 	~XItem();
