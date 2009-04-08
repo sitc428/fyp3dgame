@@ -83,7 +83,10 @@ public:
 	virtual irr::core::vector3df GetNodeRotation() const { return node->getRotation(); }
 	virtual void SetNodePosition( const irr::core::vector3df& vect ) { node->setPosition(vect); node->updateAbsolutePosition(); }
 	virtual void SetNodeRotation( const irr::core::vector3df& vect ) { node->setRotation(vect); }
-	void SetDefending( bool defending ) { action = defending ? (EMainCharacterActionState) (action | EMCAS_DEFEND) : (EMainCharacterActionState) (action & !EMCAS_DEFEND); };
+	void setDefending( bool defending ) { action = defending ? EMCAS_DEFEND : EMCAS_IDLE; }
+	void setAttacking( bool attacking ) { action = attacking ? EMCAS_ATTACK : EMCAS_IDLE; }
+	void setRunning( bool running ) { action = running ? EMCAS_RUNNING : EMCAS_IDLE; action = (EMainCharacterActionState) (action | EMCAS_MOVE); }
+
 
 	void InitShader(irr::core::vector3df* lightPosition);
 

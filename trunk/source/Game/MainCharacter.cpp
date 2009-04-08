@@ -216,6 +216,9 @@ void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
+	if( action == EMCAS_DEFEND )
+	{
+	}
 	/*if(action & EMCAS_DEFEND)
 	{
 	}
@@ -398,7 +401,7 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	if( godMode )
 		return;
 
-	if( action & EMCAS_DEFEND )
+	if( action == EMCAS_DEFEND )
 	{
 		std::cout<<"defending"<<std::endl;
 		value = value / 4;
