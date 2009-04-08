@@ -43,6 +43,8 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , CDTexture(NULL)
 , HP(NULL)
 , HPText(NULL)
+, ConversationTexture(NULL)
+, ConversationString(NULL)
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -106,37 +108,6 @@ void GameHUD::Init()
 	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
 	
 	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
-	
-	
-	
-	/*
-	HealthBarFrame = env -> addEmptySpriteBank(HEALTH_BAR_FRAME_TEXTURE);
-	HealthBarFrame->addTexture(HealthBarFrameTexture);
-	HealthBarFrame->setTexture(0, HealthBarFrameTexture);
-	HealthBarFrame->draw2DSprite(0, irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), &rectangle, video::SColor(255, 255, 255, 255), 0, 0, false, false);
-	*/
-	//HealthBarFrame->setImage( HealthBarFrameTexture );
-	//HealthBarFrame->setUseAlphaChannel(true);
-	//HealthBarFrame->setVisible(true);
-	//driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, scrSize.Height - HEALTH_BAR_FRAME_HEIGHT), rectangle1);
-	
-	
-	/*Magic Charge
-	rectangle = irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(0, scrSize.Height - MAGIC_CHARGE_HEIGHT), 
-																	irr::core::position2d<irr::s32>(MAGIC_CHARGE_WIDTH,scrSize.Height));
-	MagicCharge = env->addImage(rectangle);
-	MagicCharge->setImage( MagicChargeTexture );
-	MagicCharge->setUseAlphaChannel(true);
-	MagicCharge->setVisible(true);
-	*/
-		
-	
-	/*Magic Level
-	MagicLevel = env->addImage(rectangle);
-	MagicLevel->setImage( MagicLevelTexture );
-	MagicLevel->setUseAlphaChannel(true);
-	MagicLevel->setVisible(true);
-	 */
 	
 }
 
@@ -207,65 +178,21 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	
 	
 	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
+
 	
-	
-	/*
-	wchar_t buffer[32];
-	//swprintf(buffer,L"AMMO: %i", Ammo);
-	AmmoDisplay->setText(buffer);
+}
 
-	//swprintf(buffer,L"SCORE: %i", Score);
-	ScoreDisplay->setText(buffer);
 
-	//swprintf(buffer,L"WAVE: %i/%i", CurrWave, TotalWaves);
-	WaveDisplay->setText(buffer);
-
-	//swprintf(buffer,L"LIVES:");
-	PlayerLives->setText(buffer);
-
-	// set visibility of icons based on the number of lives
-	if( Lives <= 0 )
-	{
-		PlayerLife1->setVisible(false);
-		PlayerLife2->setVisible(false);
-		PlayerLife3->setVisible(false);
-	}
-	else if( Lives == 1 )
-	{
-		PlayerLife1->setVisible(true);
-		PlayerLife2->setVisible(false);
-		PlayerLife3->setVisible(false);
-	}
-	else if ( Lives == 2 )
-	{
-		PlayerLife1->setVisible(true);
-		PlayerLife2->setVisible(true);
-		PlayerLife3->setVisible(false);
-	}
-	else if ( Lives == 3 )
-	{
-		PlayerLife1->setVisible(true);
-		PlayerLife2->setVisible(true);
-		PlayerLife3->setVisible(true);
-	}
-	else
-	{
-		check(false); // should not be here
-	}
-
-	//swprintf(buffer,L" HEALTH:");
-	PlayerHealth->setText(buffer);
-	PlayerHealth->setVisible(true);
-
-	//irr::s32 barWidth = irr::s32(HEALTH_BAR_FILL_WIDTH * Health/100);
-	//PlayerHealthFill->setRelativePosition( irr::core::rect<irr::s32>(irr::core::position2d<irr::s32>(2, 2), irr::core::position2d<irr::s32>(barWidth, ELEMENT_HEIGHT - 2)) );
-
-	//GodModeDisplay->setVisible(godMode);
-	 */
+void GameHUD::GetConversation(c8* string, ITexture* actorTexture){	
+	;
 }
 
 void GameHUD::DisplayConversation(irr::c8 conversation_string){
-	;
+	IVideoDriver& driver = GEngine->GetDriver();
+	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+	
+	//draw the frame for conversation
+	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
 }
 
 void GameHUD::Exit()
@@ -275,33 +202,6 @@ void GameHUD::Exit()
 	MagicChargeTexture = NULL;
 	MagicLevelTexture = NULL;
 	CDTexture = NULL;
-	
-	/*
-	check(AmmoDisplay);
-	AmmoDisplay->remove();
-	AmmoDisplay = NULL;
-	check(ScoreDisplay);
-	ScoreDisplay->remove();
-	ScoreDisplay = NULL;
-	check(WaveDisplay);
-	WaveDisplay->remove();
-	WaveDisplay = NULL;
-
-	PlayerLives->remove();
-	PlayerLives = NULL;
-	
-	PlayerLife1 = NULL;
-	PlayerLife2 = NULL;
-	PlayerLife3 = NULL;
-
-	
-	PlayerHealth->remove();
-	PlayerHealth = NULL;
-	 */
-	 
-	/*
-	check(GodModeDisplay);
-	GodModeDisplay->remove();
-	GodModeDisplay = NULL;
-	*/
+	HP = NULL;
+	ConversationTexture = NULL;
 }
