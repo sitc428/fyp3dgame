@@ -21,10 +21,18 @@ static const irr::video::E_MATERIAL_TYPE matrerialType= irr::video::EMT_TRANSPAR
 class ParticleSystemEngine{
 	
 	public:
+	
 	ParticleSystemEngine(irr::scene::ISceneManager*, irr::core::vector3df, irr::core::vector3df, 
-						 irr::core::aabbox3df, irr::core::vector3df,
-						 irr::u32, irr::u32, irr::u32, irr::u32, irr::video::ITexture*);
+						 irr::core::aabbox3df);
 	~ParticleSystemEngine();
+	
+	
+	void CreateBoxEmitter(irr::core::vector3df,
+						  irr::u32, irr::u32, irr::u32, irr::u32, 
+						  irr::video::ITexture*);
+	void CreateMeshEmitter(irr::scene::IMesh * , irr::core::vector3df,
+						   irr::u32, irr::u32, irr::u32, irr::u32, 
+						   irr::video::ITexture*);
 	
 	irr::scene::IParticleSystemSceneNode* GetParticleSystemNode();
 	irr::scene::IParticleEmitter* GetEmitter();
