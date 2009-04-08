@@ -670,9 +670,7 @@ void GameWorld::Tick( irr::f32 delta )
 					irr::core::stringw msgString;
 					msgString += "                      YOU WIN!\n";
 					msgString += "\n\nCREDITS:\n\n";
-					msgString += "Jaroslaw Gwarnicki          Programmer\n";
-					msgString += "John Min                         Programmer\n";
-					msgString += "David Mathews                Artist\n";
+
 
 					gameMessage = GEngine->GetDevice().getGUIEnvironment()->addStaticText( msgString.c_str(),
 							irr::core::rect<irr::s32>(scrSize.Width-256, scrSize.Height-128, scrSize.Width+256, scrSize.Height+128) );
