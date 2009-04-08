@@ -3,18 +3,18 @@
 #include "MainCharacter.hpp"
 
 //constructor
-Weapon::Weapon(GameWorld& gameWorld)
+WeaponItem::WeaponItem(GameWorld& gameWorld)
 	:Item(gameWorld),
 	world(gameWorld)
 {
 }
 
 //destructor
-Weapon::~Weapon()
+WeaponItem::~WeaponItem()
 {
 }
 
-void Weapon::equip()
+void WeaponItem::equip()
 {
 	if (!getEquipState())
 	{
@@ -25,7 +25,7 @@ void Weapon::equip()
 	}
 }
 
-void Weapon::unEquip()
+void WeaponItem::unEquip()
 {
 	if (getEquipState())
 	{

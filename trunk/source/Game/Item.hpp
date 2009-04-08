@@ -6,10 +6,11 @@
 #include "GameWorld.h"
 enum EItemType
 {
-	WEAPON,	//weapon
-	HP_ITEM,//HP Item
-	MP_ITEM,	//Magic Disc
-	X_ITEM	//itme for solving riddles
+	WEAPONITEM1,	//weapon1
+	WEAPONITEM2,	//weapon2
+	HPITEM,//HP Item
+	MDISCITEM,	//Magic Disc
+	XITEM	//itme for solving riddles
 };
 
 class Item

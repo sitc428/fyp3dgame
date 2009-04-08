@@ -16,8 +16,21 @@ MDiscItem::~MDiscItem()
 {
 }
 
-void MDiscItem::getDisc()
+void MDiscItem::addDisc()
 {
-	(std::vector< std::pair<Item*, int> >)& box = (((MainCharacter&)world.GetCurrentPlayer()).GetItemBox());
-
+	irr::core::array< std::pair<Item*, int> > box = (((MainCharacter&)world.GetCurrentPlayer()).GetItemBox());
+	int count = 0;
+	int tmp = 0;
+	for(int i = 0; i < box.size(); ++i)
+	{
+		if(box[i].first->getItemType() == MDISCITEM)
+		{
+			count++;
+			tmp = i;
+		}
+	}
+	if (count!=0)
+	{
+		box[tmp].second++;
+	}
 }
