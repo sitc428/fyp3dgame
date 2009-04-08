@@ -273,11 +273,12 @@ void GameWorld::InitPlayer()
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
 	
-	std::vector<std::string> npc1dialogs;
-	npc1dialogs.push_back("Testing line 1");
-	npc1dialogs.push_back("My testing 2");
+	irr::core::array<irr::core::stringw> npc1dialogs;
+	npc1dialogs.push_back(L"Testing line 1");
+	npc1dialogs.push_back(L"My testing 2");
 	npc1dialogs.push_back("Ha ha ha ~");
-	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/char1.x", 20.0, irr::core::vector3df(20, 10, 20), irr::core::vector3df(0, 60, 0), irr::core::vector3df(5, 5, 5));
+	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/slime08.x", 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
+	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
 	actors.push_back(npc1);
 }
@@ -492,6 +493,7 @@ void GameWorld::Tick( irr::f32 delta )
 	{
 		case state_GAMEPLAY:
 		case state_INTERACTING:
+		case state_PAUSED:
 			{
 				DoGameplay( delta );
 			}break;
@@ -706,7 +708,7 @@ void GameWorld::Tick( irr::f32 delta )
 // performs actual gameplay
 void GameWorld::DoGameplay( irr::f32 delta )
 {
-	if(!paused)
+	if(gameState != state_PAUSED)
 	{
 		// check for early exit
 		if( gameState == state_RESTART_LEVEL )
@@ -746,16 +748,41 @@ void GameWorld::DoInput()
 	// handle user input for player
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
-	if(receiver.keyDown(irr::KEY_SPACE))
+	if(receiver.keyReleased(irr::KEY_ESCAPE))
 	{
-		paused = !paused;
-		return;
+		if( gameState == state_PAUSED )
+		{
+			gameState = gameStateBeforePause;
+		}
+		else
+		{
+			gameStateBeforePause = gameState;
+			gameState = state_PAUSED;
+		}
 	}
 
-	if( paused || gameState == state_INTERACTING)
+	if( gameState == state_PAUSED || gameState == state_INTERACTING)
 		return;
 	
-	((MainCharacter*)&GetCurrentPlayer())->SetDefending( receiver.keyDown(irr::KEY_KEY_M) );
+	if(receiver.keyDown(irr::KEY_KEY_M))
+	{
+		((MainCharacter&)GetCurrentPlayer()).setDefending( true );
+		return;
+	}
+	else
+	{
+		((MainCharacter&)GetCurrentPlayer()).setDefending( false );
+	}
+
+	if(receiver.keyReleased(irr::KEY_SPACE) || receiver.mousePressed(InputEventReceiver::LEFT))
+	{
+		((MainCharacter&)GetCurrentPlayer()).setAttacking( true );
+		return;
+	}
+	else
+	{
+		((MainCharacter&)GetCurrentPlayer()).setAttacking( false );
+	}
 
 	irr::core::vector3df playerTranslation(0, 0, 0);
 	irr::core::vector3df playerRotation(0, 0, 0);
@@ -780,9 +807,17 @@ void GameWorld::DoInput()
 	if(receiver.keyDown(irr::KEY_SHIFT))
 	{
 		playerTranslation *= 2;
+		((MainCharacter&)GetCurrentPlayer()).setRunning( true );
+	}
+	else
+	{
+		((MainCharacter&)GetCurrentPlayer()).setRunning( false );
 	}
 
-	if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
+	GetCurrentPlayer().SetRotation( playerRotation );
+	GetCurrentPlayer().SetTranslation( playerTranslation );
+
+	/*if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
 	{
 		for( irr::u32 i=0; i < actors.size(); ++i )
 		{
@@ -798,40 +833,7 @@ void GameWorld::DoInput()
 			)
 				actors[i]->ReceiveDamage(10);
 		}
-	}
-
-	/*
-	static bool GKeyIsDown = false;
-	if( receiver.keyDown(irr::KEY_KEY_G) && !GKeyIsDown )
-	{
-		GKeyIsDown = true;
-		GetCurrentPlayer().SetGodMode( !GetCurrentPlayer().HasGodMode() );
-	}
-	if( !receiver.keyDown(irr::KEY_KEY_G) )
-		GKeyIsDown = false;
-
-	if(receiver.keyDown(irr::KEY_KEY_B))
-	{
-		BringDownDividerFence();
-	}
-
-	if(receiver.keyDown(irr::KEY_KEY_K))
-	{
-		KillAllEnemies();
-	}
-	*/
-
-	// set player translation
-	//irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
-	//irr::f32 mouseDX = mouseDelta.X * 0.2f;
-	//irr::f32 mouseDY = mouseDelta.Y * 0.075f;
-	//if( mouseDX || mouseDY)
-	//{
-	//	GetCurrentPlayer().SetRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
-	//}
-
-	GetCurrentPlayer().SetRotation( playerRotation );
-	GetCurrentPlayer().SetTranslation( playerTranslation );
+	}*/
 }
 
 // perform a physics update, includes collision detection
@@ -843,7 +845,7 @@ void GameWorld::DoPhysics()
 
 void GameWorld::AdvanceLevel()
 {
-	BringDownDividerFence();
+	//BringDownDividerFence();
 
 	// if we go past level 2, do game ending state
 	if( ++curLevel >= 2 )
@@ -1273,21 +1275,6 @@ void GameWorld::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
 	if( mainCharacter )
 	{
 		GetCurrentPlayer().OnMouseEvent( mouseEvent );
-	}
-}
-
-// brings the designated fence section down so player can proceed to the second level
-void GameWorld::BringDownDividerFence()
-{
-	check(FenceToFall);
-	FenceFallTime = FENCE_FALL_TIME;
-	// turn off collision detection with that section of the fence
-	irr::scene::ITriangleSelector* currSelector = FenceToFall->getTriangleSelector();
-	// if we call this function twice, the fence divider will not have the triangle selector the second time
-	if(currSelector)
-	{
-		FenceToFall->setTriangleSelector(NULL);
-		levelTriangleSelector->removeTriangleSelector( currSelector );
 	}
 }
 

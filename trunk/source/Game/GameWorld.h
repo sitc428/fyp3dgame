@@ -74,9 +74,6 @@ class GameWorld
 		// unbuffered mouse input 
 		void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
 
-		// brings the designated fence section down so player can proceed to the second level
-		void BringDownDividerFence();
-
 		void AdvanceLevel();
 
 		EGameState GetGameState() { return gameState; }
@@ -131,6 +128,7 @@ class GameWorld
 		virtual irr::s32 GetNumLives() { return numLives; }
 
 		EGameState gameState; // current state of the game
+		EGameState gameStateBeforePause; // the state right before pasued;
 
 		irr::scene::ISceneManager& smgr; // scene manager from the engine
 		MainCharacter* mainCharacter; // player on foot actor
