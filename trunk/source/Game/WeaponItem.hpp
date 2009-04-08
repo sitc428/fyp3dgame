@@ -9,10 +9,13 @@ public:
 	Weapon(GameWorld& gameWorld);
 	void equip();
 	void unEquip();
+	bool getEquipState(){return _equipState;};
+	bool setEquipState(bool equipState){_equipState = equipState;};
 protected:
 	~Weapon();
 private:
 	GameWorld& world;
+	bool _equipState;
 };
 
 #endif
