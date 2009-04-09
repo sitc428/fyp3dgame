@@ -31,7 +31,7 @@ static const irr::u32			HP_TEXT_X1 = 170;
 static const irr::u32			HP_TEXT_Y1 = 85;
 static const irr::u32			HP_TEXT_X2 = 280;
 static const irr::u32			HP_TEXT_Y2 = 110;
-static const irr::u32			CONVERSATION_X1 = 20;
+static const irr::u32			CONVERSATION_X1 = 25;
 static const irr::u32			CONVERSATION_Y1 = 445;
 static const irr::u32			CONVERSATION_X2 = 780;
 static const irr::u32			CONVERSATION_Y2 = 580;
@@ -48,7 +48,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , HP(NULL)
 , HPText(NULL)
 , ConversationTexture(NULL)
-, ConversationString(NULL)
+, ConversationString("")
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -201,7 +201,6 @@ void GameHUD::DisplayConversation(){
 	if(ConversationString != NULL){
 		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), false, false, 0);
 	}
-		
 
 }
 
