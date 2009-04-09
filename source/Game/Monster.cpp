@@ -72,7 +72,7 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 }
 void Monster::update(Player& _player, irr::f32 delta)
 {
-	health-=1;
+	
 	//CheckActorPosition();
 	//std::cout<<world.GetActors().size()<<" size \n";
 	pos= _monster->getAbsolutePosition();
