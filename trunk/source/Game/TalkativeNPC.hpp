@@ -8,7 +8,7 @@
 class TalkativeNPC: public InteractiveActor
 {
 public:
-	TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::c8*>&, const irr::c8*, irr::f32, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df);
+	TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::core::stringw>&, const irr::c8*, irr::f32, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df);
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
@@ -23,7 +23,7 @@ protected:
 
 private:
 	GameWorld& world;
-	irr::core::array<irr::c8*> _dialogs;
+	irr::core::array<irr::core::stringw> _dialogs;
 	irr::f32 acceptable_Distance;
 };
 

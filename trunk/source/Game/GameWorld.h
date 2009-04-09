@@ -42,7 +42,7 @@ class GameWorld
 		// called every frame with the frame's elapsed time
 		void Tick( irr::f32 delta );
 		void UpdateHUD( irr::f32 delta);
-		void DoConversation(irr::c8 conversation_string);
+		void DoConversation(irr::core::stringw conversation_string);
 		void Exit();
 		GameHUD* GetGameHUD() {return gameHUD;	};
 
