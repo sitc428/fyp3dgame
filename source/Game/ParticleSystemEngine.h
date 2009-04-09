@@ -38,6 +38,10 @@ class ParticleSystemEngine{
 	irr::scene::IParticleEmitter* GetEmitter();
 	
 	
+	void resetEmitter(){
+		ps->setEmitter(0);
+	}
+	
 	private:
 	
 	irr::scene::IParticleSystemSceneNode* ps;
