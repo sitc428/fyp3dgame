@@ -17,6 +17,8 @@ static const irr::f64 PI = 3.14159265;
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
+extern GameEngine* GEngine;
+
 Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	:Actor(gameWorld),
 	world(gameWorld),
@@ -51,6 +53,8 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
 	timeout = 5.0;
 	mon_timer = new boost::timer();
 	attack_timer = new boost::timer();
+	death_timer =  new boost::timer();
+	death_timer->restart();
 	mon_timer->restart();
 	attack_timer->restart();
 }
@@ -68,6 +72,7 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 }
 void Monster::update(Player& _player, irr::f32 delta)
 {
+	health-=1;
 	//CheckActorPosition();
 	//std::cout<<world.GetActors().size()<<" size \n";
 	pos= _monster->getAbsolutePosition();
@@ -78,8 +83,25 @@ void Monster::update(Player& _player, irr::f32 delta)
 	if(health <= 0)
 	{
 		//Death
-		FSM.process_event( EvDie());
-		FSM.reaction(_monster, _player,target);
+	
+		if(FSM.GetName()!="Death"){
+			FSM.process_event( EvDie());
+			FSM.reaction(_monster, _player,target);
+			irr::scene::ISceneManager& smgr = world.GetSceneManager();
+			
+			sparking= new ParticleSystemEngine(&smgr, pos, irr::core::vector3df(2,2,2),
+											   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+			sparking->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),irr::core::vector3df(0.0f,0.06f,0.0f),
+										20,50,200,700, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+			death_timer->restart();
+		}else if(death_timer->elapsed() > 2.0){
+		
+			sparking->resetEmitter();
+		}
+		
+		
+		
+		
 	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
@@ -217,7 +239,7 @@ void Monster::RecreateCollisionResponseAnimator()
 
 void Monster::ReceiveDamage(irr::f32 damage){
 	health -= damage;
-	//	std::cout<<"Health: "<<health<<std::endl;
+		std::cout<<"Health: "<<health<<std::endl;
 }
 
 

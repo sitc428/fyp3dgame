@@ -23,6 +23,7 @@
 #include <irrlicht/irrlicht.h>
 #include <boost/timer.hpp>
 #include "Player.h"
+#include "ParticleSystemEngine.h"
 #include <math.h>
 
 namespace sc = boost::statechart;
@@ -94,7 +95,7 @@ struct FiniteStateMachine : sc::state_machine<FiniteStateMachine, NotDeath >{
 
 struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
 	Death(){
-		//std::cout<<"Death\n";
+		std::cout<<"Death\n";
 	};
 	//virtual const std::string name () const { return "Death"; };
 	virtual std::string GetName() const
@@ -269,6 +270,9 @@ class Monster: public Actor{
 		virtual void ReSetPosition(irr::core::vector3df);
 		//int GetHealth();
 		void CheckActorPosition(irr::core::vector3df&,Player&);
+	
+	
+		irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
 			
 	private:
 		FiniteStateMachine FSM;
@@ -281,6 +285,7 @@ class Monster: public Actor{
 		irr::f32 health;
 		boost::timer* mon_timer;
 		boost::timer* attack_timer;
+		boost::timer* death_timer;
 		double timeout;
 		bool moved;
 		irr::core::vector3df target;
@@ -289,6 +294,8 @@ class Monster: public Actor{
 		//int  Health;
 		
 		GameWorld& world;
+	
+		ParticleSystemEngine* sparking;
 };
 
 #endif //__MONSTER_HPP__
