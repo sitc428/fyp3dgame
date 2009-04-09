@@ -23,6 +23,7 @@ public:
 	virtual irr::f32 acceptableDistance() = 0;
 	// terminate the interactive action
 	void finishAction();
+	void startAction();
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor

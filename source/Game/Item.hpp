@@ -20,9 +20,9 @@ public:
 	EItemType getItemType(){return type;};
 	irr::c8* getItemName(){return name;};
 	irr::u32 getItemValue(){return value;};
-	EItemType setItemType(EItemType t){type = t;};
-	irr::c8* setItemName(irr::c8* n){name = n;};
-	irr::u32 setItemValue(irr::u32 v){value = v;};
+	void setItemType(EItemType t){type = t;};
+	void setItemName(irr::c8* n){name = n;};
+	void setItemValue(irr::u32 v){value = v;};
 
 protected:
 	virtual ~Item();

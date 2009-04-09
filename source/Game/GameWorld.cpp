@@ -26,7 +26,11 @@
 //#include "EnemyWave.h"
 #include <cmath>  // for tan(x) function
 #include "ParticleSystemEngine.h"
-
+#include "HPItem.hpp"
+#include "MDiscItem.hpp"
+#include "XItem.hpp"
+#include "WeaponItem.hpp"
+#include "Item.hpp"
 
 static const irr::c8* LEVEL_FILE = "media/model/scene1.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
@@ -83,8 +87,17 @@ void GameWorld::Init()
 	InitEffects();
 	InitPickups();
 	InitMusic();
-
+	InitItems();
 	InitShader();
+}
+
+void GameWorld::InitItems()
+{
+	//Init different kind of items
+	Item* hp = new HPItem(*this, HPITEM, "HP Medicine", 50);
+	Item* md = new MDiscItem(*this, MDISCITEM, "Magic Disc", 1);	
+	Item* xItem = new XItem(*this, XITEM, "X Item", 1);
+	Item* weapon = new WeaponItem(*this, WEAPONITEM1, "Sword", 10);
 }
 
 void GameWorld::InitShader()

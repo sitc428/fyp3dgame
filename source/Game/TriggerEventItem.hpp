@@ -15,6 +15,9 @@ public:
 	void interaction( irr::f32 );
 	irr::f32 acceptableDistance();
 	void checkDistance();
+	bool getEnabled() {return enabled;};
+	void setEnabled(bool b) { enabled = b;};
+	void runGameOne();
 	
 
 protected:
@@ -23,6 +26,7 @@ protected:
 
 private:
 	GameWorld& world;
+	bool enabled;
 };
 
 #endif

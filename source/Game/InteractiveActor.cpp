@@ -29,7 +29,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 
 	if(!interacting)
 	{
-		if( receiver.keyReleased(irr::KEY_KEY_P) )
+		if( receiver.keyReleased(irr::KEY_KEY_P) && node->getID()!=10)
 		{
 			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 			{
@@ -46,16 +46,13 @@ void InteractiveActor::Tick( irr::f32 delta )
 				//}
 			}
 		}
-		else
-		{
-			if (node->getID()== 10 && 
+		else if (node->getID()== 10 && 
 				node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
-			{
-					std::cout<<"TriggerEventItem node matched"<<std::endl;
-					interacting = true;
-					world.requireInteracting(true, this);
-					interaction( delta );
-			}
+		{
+				//std::cout<<"TriggerEventItem node matched"<<std::endl;
+				//interacting = true;
+				//world.requireInteracting(true, this);
+				interaction( delta );
 		}
 	}
 	else if(interacting)
@@ -68,4 +65,10 @@ void InteractiveActor::finishAction()
 {
 	world.requireInteracting(false, NULL);
 	interacting = false;
+}
+
+void InteractiveActor::startAction()
+{
+	interacting = true;
+	world.requireInteracting(true, this);
 }
