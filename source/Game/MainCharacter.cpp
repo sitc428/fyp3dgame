@@ -224,11 +224,28 @@ void MainCharacter::Tick( irr::f32 delta )
 	}
 	else if(action & EMCAS_MOVE)
 	{*/
+
+	if( action == EMCAS_IDLE )
+	{
+		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
+		node->setLoopMode( false );
+		node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+	}
+
+	if( action & EMCAS_RUNNING )
+	{
+		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_RUN_START, MAIN_CHARACTER_ANIMATION_RUN_END );
+		node->setLoopMode( true );
+	}
+
+	if( action & EMCAS_MOVE )
+	{
 		// player's rotation update, must happen before the position updates
 		UpdateRotationState();
 
 		// player's movement
 		UpdateMoveState( delta );
+	}
 	//}
 	//sfxTimer++;
 }
