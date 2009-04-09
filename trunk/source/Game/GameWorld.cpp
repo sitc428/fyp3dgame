@@ -520,14 +520,17 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 	switch( gameState ){
 		case state_GAMEPLAY:
 			{
-				DoHUD(delta);
+				gameHUD->Update(delta, GetCurrentPlayer());;
 			}break;
 		case state_INTERACTING:
 			{
-				DoHUD(delta);
-				gameHUD->DisplayConversation();
+				gameHUD->Update(delta, GetCurrentPlayer());;
+				gameHUD->DrawConversation();
 			}break;
 		case state_PAUSED:
+			{
+				gameHUD->DrawPauseMenu();
+			}break;
 		default:
 			break;
 	}
@@ -1127,20 +1130,14 @@ void GameWorld::DoAudio()
 
 
 // draws the HUD, called after the 3d scene has been rendered
-void GameWorld::DoHUD(irr::f32 delta)
+/*void GameWorld::DoHUD(irr::f32 delta)
 {
 	// Player& p = GetCurrentPlayer();
 	// gameHUD->Update( p.GetAmmo(), p.GetScore(), numLives, curEnemyWave+1, enemyWaves.size(), GetCurrentPlayer().GetHealth(), GetCurrentPlayer().HasGodMode() );
 	gameHUD->Update(delta, GetCurrentPlayer());
-	/* Do the pause here! */
-}
-
-
-void GameWorld::DoConversation(irr::core::stringw conversation_string){
 	
-	gameHUD->DisplayConversation();
 }
-
+*/
 
 // return the first available dynamite projectile for throwing, NULL if none are available
 /*
