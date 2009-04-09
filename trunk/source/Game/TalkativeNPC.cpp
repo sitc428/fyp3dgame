@@ -50,7 +50,6 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				if(timeElapsed > 0.05)
 				{
 					irr::core::stringw temp  = _dialogs[talking].subString(0, currentline);
-					std::cout << temp.c_str() << std::endl;
 					world.GetGameHUD()->GetConversation(temp);
 					++currentline;
 					timeElapsed = 0;
@@ -65,6 +64,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 		}
 		else
 		{
+			world.GetGameHUD()->GetConversation("");
 			timeElapsed = 0;
 			finishAction();
 			talking = 0;
