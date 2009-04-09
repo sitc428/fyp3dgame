@@ -6,10 +6,9 @@
 
 extern GameEngine* GEngine;
 
-TalkativeNPC::TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::c8*>& dialogs, const irr::c8* mesh, irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
+TalkativeNPC::TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::core::stringw>& dialogs, const irr::c8* mesh, irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
 	:InteractiveActor(gameWorld),
 	world(gameWorld),
-	_dialogs(dialogs),
 	acceptable_Distance(acceptableDistance)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
@@ -23,6 +22,12 @@ TalkativeNPC::TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::c8*>& di
 	world.GetLevelTriangleSelector().addTriangleSelector( meshTriangleSelector );
 	meshTriangleSelector->drop();
 	meshTriangleSelector = NULL;
+
+	int noDialog = dialogs.size();
+	for(int i = 0; i < noDialog; ++i)
+	{
+		_dialogs.push_back(dialogs[i]);
+	}
 }
 
 TalkativeNPC::~TalkativeNPC()
@@ -42,7 +47,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			if(currentline <= 0)//_dialogs[talking].size())
 			{
 				//world.GetGameHUD()->DisplayConversation(subString(0, currentline));
-				world.GetGameHUD()->GetConversation(subString(0, currentline));
+				world.GetGameHUD()->GetConversation(_dialogs[talking].subString(0, currentline));
 				++currentline;
 			}
 			else

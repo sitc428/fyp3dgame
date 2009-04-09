@@ -36,7 +36,7 @@ public:
 	void DisplayConversation();	
 	
 	//for passing the words for conversation
-	void GetConversation(c8* string, ITexture* actorTexture = NULL);
+	void GetConversation(irr::core::stringw string, ITexture* actorTexture = NULL);
 
 	void Exit();
 private:
@@ -68,7 +68,7 @@ private:
 	ITexture*					ConversationTexture;
 	
 	//conversation string
-	c8*							ConversationString;
+	irr::core::stringw			ConversationString;
 	irr::gui::CGUITTFont*		ConversationFont;
 	irr::core::rect<irr::s32>	ConversationRec;
 	

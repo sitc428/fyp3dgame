@@ -324,7 +324,7 @@ void GameWorld::InitPlayer()
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
 	
-	irr::core::array<irr::c8*> npc1dialogs;
+	irr::core::array<irr::core::stringw> npc1dialogs;
 	npc1dialogs.push_back("Testing line 1");
 	npc1dialogs.push_back("My testing 2");
 	npc1dialogs.push_back("Ha ha ha ~");
@@ -1132,9 +1132,9 @@ void GameWorld::DoHUD(irr::f32 delta)
 }
 
 
-void GameWorld::DoConversation(irr::c8 conversation_string){
+void GameWorld::DoConversation(irr::core::stringw conversation_string){
 	
-	gameHUD->DisplayConversation(conversation_string);
+	gameHUD->DisplayConversation();
 }
 
 

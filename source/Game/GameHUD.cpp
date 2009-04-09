@@ -188,18 +188,18 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 }
 
 
-void GameHUD::GetConversation(c8* string, ITexture* actorTexture){	
+void GameHUD::GetConversation(irr::core::stringw string, ITexture* actorTexture){	
 	ConversationString = string;
 }
 
-void GameHUD::DisplayConversation(irr::c8 conversation_string){
+void GameHUD::DisplayConversation(){
 	IVideoDriver& driver = GEngine->GetDriver();
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
 	//draw the frame for conversation
 	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
 	if(ConversationString != NULL){
-		ConversationFont->draw((const wchar_t*)ConversationString, ConversationRec, video::SColor(255,255,255,255), true, true, 0);
+		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), true, true, 0);
 	}
 		
 

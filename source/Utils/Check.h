@@ -19,9 +19,6 @@
 #define ERROR_DISP(msg)                                                       \
 {                                                                             \
 	printf("ERROR: %s (file:%s line:%d)\n", #msg, __FILE__, __LINE__);      \
-	if( IsDebuggerPresent() )                                               \
-	__debugbreak();                                                       \
-	else                                                                    \
 	abort();                                                              \
 }
 
