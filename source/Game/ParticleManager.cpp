@@ -36,6 +36,7 @@ ParticleManager::~ParticleManager()
 	GEngine->GetDriver().removeTexture( ParticleWhiteTexture );
 	SnowExplosionTexture = NULL;
 }
+
 /*
 // creates a snowball explosion particle emmiter and sets it for the owningNode, duration must be in milliseconds
 irr::scene::IParticleEmitter* ParticleManager::CreateSnowballExplosion( irr::scene::IParticleSystemSceneNode& owningNode, const irr::u32 duration )

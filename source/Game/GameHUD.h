@@ -31,11 +31,11 @@ public:
 	void Init();
 	//drawing HUD elements
 	void Update(irr::f32 delta, Player& player );
-	//drawing conversation block
-	void DisplayConversation(irr::c8 conversation_string);
 	
+	//drawing conversation block, for gameworld to call drawing conversation during conversation state
+	void DisplayConversation();	
 	
-	//for getting the words for conversation
+	//for passing the words for conversation
 	void GetConversation(c8* string, ITexture* actorTexture = NULL);
 
 	void Exit();
@@ -67,11 +67,20 @@ private:
 	//Conversation frame
 	ITexture*					ConversationTexture;
 	
+	//conversation string
 	c8*							ConversationString;
+	irr::gui::CGUITTFont*		ConversationFont;
+	irr::core::rect<irr::s32>	ConversationRec;
+	
+	//NPC image
+	ITexture*					NPCTexture;
 	
 	
 	double						timeElapsed;
 	int							modTime;
+	
+
+	
 };
 
 #endif //GameHUD_h

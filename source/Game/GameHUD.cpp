@@ -31,6 +31,10 @@ static const irr::u32			HP_TEXT_X1 = 170;
 static const irr::u32			HP_TEXT_Y1 = 85;
 static const irr::u32			HP_TEXT_X2 = 280;
 static const irr::u32			HP_TEXT_Y2 = 110;
+static const irr::u32			CONVERSATION_X1 = 10;
+static const irr::u32			CONVERSATION_Y1 = 400;
+static const irr::u32			CONVERSATION_X2 = 790;
+static const irr::u32			CONVERSATION_Y2 = 590;
 
 
 extern GameEngine* GEngine;
@@ -68,6 +72,8 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	
 	HPText = GEngine->GetFont("media/font/impact.ttf", 24);
 	HPText->AntiAlias = true;
+	ConversationFont = GEngine->GetFont("media/font/impact.ttf", 24);
+	ConversationFont->AntiAlias = true;
 }
 
 // destructor
@@ -105,9 +111,8 @@ void GameHUD::Init()
 	MagicLevelRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	CDRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
-	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
-	
 	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
+	ConversationRec = irr::core::rect<irr::s32>(CONVERSATION_X1, CONVERSATION_Y1, CONVERSATION_X2, CONVERSATION_Y2);
 	
 }
 
@@ -184,7 +189,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 
 
 void GameHUD::GetConversation(c8* string, ITexture* actorTexture){	
-	;
+	ConversationString = string;
 }
 
 void GameHUD::DisplayConversation(irr::c8 conversation_string){
@@ -193,6 +198,11 @@ void GameHUD::DisplayConversation(irr::c8 conversation_string){
 	
 	//draw the frame for conversation
 	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
+	if(ConversationString != NULL){
+		ConversationFont->draw((const wchar_t*)ConversationString, ConversationRec, video::SColor(255,255,255,255), true, true, 0);
+	}
+		
+
 }
 
 void GameHUD::Exit()
