@@ -99,6 +99,7 @@ class GameWorld
 		void InitPickups();
 		void InitHUD();
 		void InitShader();
+		void InitItems();
 
 		// do the actual gameplay
 		void DoGameplay( irr::f32 delta );

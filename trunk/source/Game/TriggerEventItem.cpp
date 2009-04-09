@@ -11,7 +11,8 @@ static const irr::c8*		TRIGGER_EVENT_ITEM_MODEL  = "media/model/sellingmachine08
 
 TriggerEventItem::TriggerEventItem( GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale )
 	:InteractiveActor(gameWorld),
-	world(gameWorld)
+	world(gameWorld),
+	enabled(false)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	node = smgr.addMeshSceneNode(smgr.getMesh(TRIGGER_EVENT_ITEM_MODEL), smgr.getRootSceneNode());
@@ -21,6 +22,7 @@ TriggerEventItem::TriggerEventItem( GameWorld& gameWorld, const irr::core::vecto
 	node->setScale(defaultScale);
 	node->setName("TriggerEventItem");
 	node->setID(10);
+	//this->setEnable(false);
 
 	//irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( ((irr::scene::IMeshSceneNode*)node)->getMesh(), node );
 	//node->setTriangleSelector( meshTriangleSelector );
@@ -35,22 +37,14 @@ TriggerEventItem::~TriggerEventItem()
 
 void TriggerEventItem::interaction(irr::f32 delta)
 {
-	static int state = 0;
-	
-	if(state == 0)
+	if (!getEnabled())
 	{
-		std::cout << "Activated TriggerEventItem" << std::endl;
-		++state;
-	}
-	else if(state >= 1 && state <= 100)
-	{
-		std::cout << "Processing TriggerEventItem" << std::endl;
-		++state;
-	}
-	else
-	{
-		std::cout << "Finish TriggerEventItem!" << std::endl;
-		state = 0;
+		for (int i=0; i< 101; i++)
+			std::cout << "========== Processing ==========" << std::endl;
+		std::cout << "----- Mini Game Start -----" << std::endl;
+		startAction();
+		setEnabled(true);
+		runGameOne();
 		finishAction();
 	}
 }
@@ -58,4 +52,21 @@ void TriggerEventItem::interaction(irr::f32 delta)
 irr::f32 TriggerEventItem::acceptableDistance()
 {
 	return acceptable_Distance;
+}
+
+void TriggerEventItem::runGameOne()
+{
+	static bool finish = false;
+	std::cout << "========== Game One ==========" << std::endl;
+	do
+	{
+		/*int random = rand()%3+1;
+		std::cout << random << std::endl;
+		int input;
+		std::cin >> input;
+
+		if (input == random)*/
+			finish = true;
+	}while(!finish);
+	
 }
