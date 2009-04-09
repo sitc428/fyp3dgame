@@ -238,15 +238,11 @@ void MainCharacter::Tick( irr::f32 delta )
 		node->setLoopMode( true );
 	}
 
-	if( action & EMCAS_MOVE )
-	{
 		// player's rotation update, must happen before the position updates
 		UpdateRotationState();
 
 		// player's movement
 		UpdateMoveState( delta );
-	}
-	//}
 	//sfxTimer++;
 }
 
