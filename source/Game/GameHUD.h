@@ -58,6 +58,7 @@ private:
 	//CDImage
 	irr::core::rect<irr::s32>	CDRec;
 	ITexture*					CDTexture;
+	ITexture*					StaticCDTexture;
 	
 	//HPbar
 	irr::core::rect<irr::s32>	HPBar;
@@ -80,6 +81,8 @@ private:
 	
 	//PauseMenu Texture
 	ITexture*					PauseMenuTexture;
+	irr::gui::CGUITTFont*		MenuFont;
+	ITexture*					SelectIconTexture;
 	
 	
 	double						timeElapsed;

@@ -9,14 +9,14 @@ static const c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
 static const c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
 static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
 static const c8*	CD_TEXTURE = "media/HUD/cd_spinning.png";
+static const c8*	STATIC_CD_TEXTURE = "media/HUD/cd_static.png";
 static const c8*	HP_TEXTURE = "media/HUD/hp.png";
 static const c8*	CONVERSATION_TEXTURE = "media/HUD/conversation.png";
 static const c8*	PAUSE_MENU_TEXTURE = "media/HUD/pause_menu.png";
+static const c8*	SELECT_ICON_TEXTURE = "media/HUD/cd_icon.png";
 
 
-static const irr::s32 HP_TEXT_WIDTH = 200;
-static const irr::s32 HP_TEXT_HEIGHT = 24;
-static const irr::s32 HP_Y_OFFSET = 150;
+
 
 
 static const SColor		HUD_FONT_OVERRIDE_COLOR =  SColor(255,14,0,89);
@@ -33,10 +33,18 @@ static const irr::u32			HP_TEXT_X1 = 170;
 static const irr::u32			HP_TEXT_Y1 = 85;
 static const irr::u32			HP_TEXT_X2 = 280;
 static const irr::u32			HP_TEXT_Y2 = 110;
+static const irr::s32			HP_TEXT_WIDTH = 200;
+static const irr::s32			HP_TEXT_HEIGHT = 24;
+static const irr::s32			HP_Y_OFFSET = 150;
 static const irr::u32			CONVERSATION_X1 = 300;
 static const irr::u32			CONVERSATION_Y1 = 445;
 static const irr::u32			CONVERSATION_X2 = 780;
 static const irr::u32			CONVERSATION_Y2 = 575;
+static const irr::u32			MENU_ITEM_X1 = 160;
+static const irr::u32			MENU_ITEM_Y1 = 70;
+static const irr::u32			MENU_ITEM_YOFFSET = 50;
+static const irr::u32			CD_WIDTH = 30;
+static const irr::u32			CD_HEIGTH = 30;
 
 
 extern GameEngine* GEngine;
@@ -47,12 +55,15 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , MagicChargeTexture(NULL)
 , MagicLevelTexture(NULL)
 , CDTexture(NULL)
+, StaticCDTexture(NULL)
 , HP(NULL)
 , HPText(NULL)
 , ConversationTexture(NULL)
 , ConversationString("")
 , ConversationFont(NULL)
 , PauseMenuTexture(NULL)
+, MenuFont(NULL)
+, SelectIconTexture(NULL)
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -61,16 +72,20 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	MagicChargeTexture = driver.getTexture(MAGIC_CHARGE_TEXTURE);
 	MagicLevelTexture = driver.getTexture(MAGIC_LEVEL_TEXTURE);
 	CDTexture = driver.getTexture(CD_TEXTURE);
+	StaticCDTexture = driver.getTexture(STATIC_CD_TEXTURE);
 	HP = driver.getTexture(HP_TEXTURE);
 	ConversationTexture = driver.getTexture(CONVERSATION_TEXTURE);
 	PauseMenuTexture = driver.getTexture(PAUSE_MENU_TEXTURE);
+	SelectIconTexture = driver.getTexture(SELECT_ICON_TEXTURE);
 	check(HealthBarFrameTexture);
 	check(MagicChargeTexture);
 	check(MagicLevelTexture); 
 	check(CDTexture);
+	check(StaticCDTexture);
 	check(HP);
 	check(ConversationTexture);
 	check(PauseMenuTexture);
+	check(SelectIconTexture);
 	
 	//initialize the value of time_elapsed
 	timeElapsed = 0;
@@ -81,6 +96,8 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	HPText->AntiAlias = true;
 	ConversationFont = GEngine->GetFont("media/font/impact.ttf", 24);
 	ConversationFont->AntiAlias = true;
+	MenuFont = GEngine->GetFont("media/font/impact.ttf", 24);
+	MenuFont->AntiAlias = true;
 }
 
 // destructor
@@ -94,12 +111,16 @@ GameHUD::~GameHUD()
 	MagicLevelTexture = NULL;
 	GEngine->GetDriver().removeTexture(CDTexture);
 	CDTexture = NULL;
+	GEngine->GetDriver().removeTexture(StaticCDTexture);
+	StaticCDTexture = NULL;
 	GEngine->GetDriver().removeTexture( HP);
 	HP = NULL;
 	GEngine->GetDriver().removeTexture( ConversationTexture);
 	ConversationTexture = NULL;
 	GEngine->GetDriver().removeTexture( PauseMenuTexture);
 	PauseMenuTexture = NULL;
+	GEngine->GetDriver().removeTexture( SelectIconTexture);
+	SelectIconTexture = NULL;
 }
 
 void GameHUD::Init()
@@ -219,7 +240,11 @@ void GameHUD::DrawPauseMenu(){
 	
 	//draw the frame for conversation
 	driver.draw2DImage(PauseMenuTexture,irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
-
+	MenuFont->draw(L"Item", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Equip", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Magic", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*2, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Save", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*3, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
 }
 
 
@@ -230,6 +255,7 @@ void GameHUD::Exit()
 	MagicChargeTexture = NULL;
 	MagicLevelTexture = NULL;
 	CDTexture = NULL;
+	StaticCDTexture = NULL;
 	HP = NULL;
 	ConversationTexture = NULL;
 	PauseMenuTexture = NULL;
