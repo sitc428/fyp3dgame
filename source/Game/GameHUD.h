@@ -33,11 +33,14 @@ public:
 	void Update(irr::f32 delta, Player& player );
 	
 	//drawing conversation block, for gameworld to call drawing conversation during conversation state
-	void DisplayConversation();	
+	void DrawConversation();	
 	
 	//for passing the words for conversation
 	void GetConversation(irr::core::stringw string, ITexture* actorTexture = NULL);
-
+	
+	//drawing pause menu, for gameworld to call during pause state
+	void DrawPauseMenu();	
+	
 	void Exit();
 private:
 	//HP, Magic Frame
@@ -74,6 +77,9 @@ private:
 	
 	//NPC image
 	ITexture*					NPCTexture;
+	
+	//PauseMenu Texture
+	ITexture*					PauseMenuTexture;
 	
 	
 	double						timeElapsed;

@@ -11,6 +11,8 @@ static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
 static const c8*	CD_TEXTURE = "media/HUD/cd_spinning.png";
 static const c8*	HP_TEXTURE = "media/HUD/hp.png";
 static const c8*	CONVERSATION_TEXTURE = "media/HUD/conversation.png";
+static const c8*	PAUSE_MENU_TEXTURE = "media/HUD/pause_menu.png";
+
 
 static const irr::s32 HP_TEXT_WIDTH = 200;
 static const irr::s32 HP_TEXT_HEIGHT = 24;
@@ -31,10 +33,10 @@ static const irr::u32			HP_TEXT_X1 = 170;
 static const irr::u32			HP_TEXT_Y1 = 85;
 static const irr::u32			HP_TEXT_X2 = 280;
 static const irr::u32			HP_TEXT_Y2 = 110;
-static const irr::u32			CONVERSATION_X1 = 25;
+static const irr::u32			CONVERSATION_X1 = 300;
 static const irr::u32			CONVERSATION_Y1 = 445;
 static const irr::u32			CONVERSATION_X2 = 780;
-static const irr::u32			CONVERSATION_Y2 = 580;
+static const irr::u32			CONVERSATION_Y2 = 575;
 
 
 extern GameEngine* GEngine;
@@ -49,6 +51,8 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , HPText(NULL)
 , ConversationTexture(NULL)
 , ConversationString("")
+, ConversationFont(NULL)
+, PauseMenuTexture(NULL)
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -59,17 +63,20 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	CDTexture = driver.getTexture(CD_TEXTURE);
 	HP = driver.getTexture(HP_TEXTURE);
 	ConversationTexture = driver.getTexture(CONVERSATION_TEXTURE);
+	PauseMenuTexture = driver.getTexture(PAUSE_MENU_TEXTURE);
 	check(HealthBarFrameTexture);
 	check(MagicChargeTexture);
 	check(MagicLevelTexture); 
 	check(CDTexture);
 	check(HP);
 	check(ConversationTexture);
+	check(PauseMenuTexture);
 	
 	//initialize the value of time_elapsed
 	timeElapsed = 0;
 	modTime = 0;
 	
+	//loading the fonts
 	HPText = GEngine->GetFont("media/font/impact.ttf", 24);
 	HPText->AntiAlias = true;
 	ConversationFont = GEngine->GetFont("media/font/impact.ttf", 24);
@@ -91,6 +98,8 @@ GameHUD::~GameHUD()
 	HP = NULL;
 	GEngine->GetDriver().removeTexture( ConversationTexture);
 	ConversationTexture = NULL;
+	GEngine->GetDriver().removeTexture( PauseMenuTexture);
+	PauseMenuTexture = NULL;
 }
 
 void GameHUD::Init()
@@ -104,7 +113,7 @@ void GameHUD::Init()
 	IVideoDriver& driver = GEngine->GetDriver();
 	
 	
-	//health bar main frame
+	//Setting up Rectangles for displaying images
 	HPRec = irr::core::rect<irr::s32>(0,0, HEALTH_BAR_FRAME_WIDTH,HEALTH_BAR_FRAME_HEIGHT);
 	
 	MagicChargeRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
@@ -118,6 +127,7 @@ void GameHUD::Init()
 
 void GameHUD::Update( irr::f32 delta , Player& player)
 {
+
 	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -171,9 +181,6 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	if (modTime >= 20)
 		modTime = 0;
 	
-	
-	
-	
 	/*******
 	 DRAWING TEXT
 	 *******/
@@ -181,28 +188,40 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	HPText->draw(L"1000/1000", HPTextRec, video::SColor(255,255,255,255), true, true, 0);
 	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
-	
 	//driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
 
 	
 }
 
 
+
+//getting the string to be displayed from interactive actor 
 void GameHUD::GetConversation(irr::core::stringw string, ITexture* actorTexture){	
 	ConversationString = string;
 }
 
-void GameHUD::DisplayConversation(){
+void GameHUD::DrawConversation(){
 	IVideoDriver& driver = GEngine->GetDriver();
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
 	//draw the frame for conversation
 	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
 	if(ConversationString != ""){
-		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), false, false, 0);
+		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), false, true, 0);
 	}
 
 }
+
+
+void GameHUD::DrawPauseMenu(){
+	IVideoDriver& driver = GEngine->GetDriver();
+	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+	
+	//draw the frame for conversation
+	driver.draw2DImage(PauseMenuTexture,irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
+
+}
+
 
 void GameHUD::Exit()
 {
@@ -213,4 +232,5 @@ void GameHUD::Exit()
 	CDTexture = NULL;
 	HP = NULL;
 	ConversationTexture = NULL;
+	PauseMenuTexture = NULL;
 }
