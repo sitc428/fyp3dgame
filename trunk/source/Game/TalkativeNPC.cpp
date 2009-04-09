@@ -42,6 +42,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			if(currentline <= 0)//_dialogs[talking].size())
 			{
 				//world.GetGameHUD()->DisplayConversation(subString(0, currentline));
+				world.GetGameHUD()->GetConversation(subString(0, currentline));
 				++currentline;
 			}
 			else
