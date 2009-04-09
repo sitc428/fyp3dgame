@@ -198,7 +198,7 @@ void GameHUD::DisplayConversation(){
 	
 	//draw the frame for conversation
 	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
-	if(ConversationString != NULL){
+	if(ConversationString != ""){
 		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), false, false, 0);
 	}
 
