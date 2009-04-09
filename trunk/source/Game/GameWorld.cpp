@@ -519,9 +519,13 @@ void GameWorld::Exit()
 void GameWorld::UpdateHUD( irr::f32 delta ){
 	switch( gameState ){
 		case state_GAMEPLAY:
+			{
+				DoHUD(delta);
+			}break;
 		case state_INTERACTING:
 			{
 				DoHUD(delta);
+				gameHUD->DisplayConversation();
 			}break;
 		case state_PAUSED:
 		default:
