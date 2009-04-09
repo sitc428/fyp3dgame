@@ -39,10 +39,10 @@ void TriggerEventItem::interaction(irr::f32 delta)
 {
 	if (!getEnabled())
 	{
-		for (int i=0; i< 101; i++)
-			std::cout << "========== Processing ==========" << std::endl;
 		std::cout << "----- Mini Game Start -----" << std::endl;
-		startAction();
+		//for (int i=0; i< 101; i++)
+			//std::cout << "========== Processing ==========" << std::endl;
+		//startAction();
 		setEnabled(true);
 		runGameOne();
 		finishAction();
@@ -58,6 +58,7 @@ void TriggerEventItem::runGameOne()
 {
 	static bool finish = false;
 	std::cout << "========== Game One ==========" << std::endl;
+	int tmp = 0;
 	do
 	{
 		/*int random = rand()%3+1;
@@ -66,7 +67,9 @@ void TriggerEventItem::runGameOne()
 		std::cin >> input;
 
 		if (input == random)*/
+		//if (tmp > 200)
 			finish = true;
+		//tmp++;
 	}while(!finish);
 	
 }

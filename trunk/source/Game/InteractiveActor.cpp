@@ -40,6 +40,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 				if(world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line) == node)
 				{
 				*/
+					//startAction();
 					interacting = true;
 					world.requireInteracting(true, this);
 					interaction( delta );
@@ -49,10 +50,23 @@ void InteractiveActor::Tick( irr::f32 delta )
 		else if (node->getID()== 10 && 
 				node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 		{
-				//std::cout<<"TriggerEventItem node matched"<<std::endl;
-				//interacting = true;
-				//world.requireInteracting(true, this);
+			//std::cout<<"TriggerEventItem node matched"<<std::endl;
+			static bool firstTime = true;
+			if (firstTime)
+			{
+				interacting = true;
+				world.requireInteracting(true, this);
 				interaction( delta );
+				//firstTime = false;
+				//std::cout << firstTime << std::endl;
+				//if( receiver.keyReleased(irr::KEY_KEY_P))
+				//{
+					//std::cout << "???" << std::endl;
+					firstTime = false;
+				//}
+			}
+			//static bool tmpFirst = true;
+			//if (tmpFirst)
 		}
 	}
 	else if(interacting)
@@ -67,8 +81,7 @@ void InteractiveActor::finishAction()
 	interacting = false;
 }
 
-void InteractiveActor::startAction()
+/*void InteractiveActor::startAction()
 {
-	interacting = true;
-	world.requireInteracting(true, this);
-}
+
+}*/
