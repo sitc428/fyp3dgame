@@ -85,7 +85,7 @@ public:
 	virtual void SetNodeRotation( const irr::core::vector3df& vect ) { node->setRotation(vect); }
 	void setDefending( bool defending ) { action = defending ? EMCAS_DEFEND : EMCAS_IDLE; }
 	void setAttacking( bool attacking ) { action = attacking ? EMCAS_ATTACK : EMCAS_IDLE; }
-	void setRunning( bool running ) { action = running ? EMCAS_RUNNING : EMCAS_IDLE; action = (EMainCharacterActionState) (action | EMCAS_MOVE); }
+	void setRunning( bool running );
 
 
 	void InitShader(irr::core::vector3df* lightPosition);

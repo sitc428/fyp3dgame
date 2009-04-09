@@ -39,18 +39,22 @@ void TalkativeNPC::interaction(irr::f32 delta)
 	static int state = 0;
 	static int talking = 0;
 	static int currentline = 1;
+	static double timeElapsed = 0;
 	
 	if(state == 0)
 	{
 		if(talking < _dialogs.size())
 		{
-			if(currentline < _dialogs[talking].size())
+			if(currentline <= _dialogs[talking].size())
 			{
-				//world.GetGameHUD()->DisplayConversation(subString(0, currentline));
-				irr::core::stringw temp  = _dialogs[talking].subString(0, currentline);
-				std::cout << temp.c_str() << std::endl;
-				world.GetGameHUD()->GetConversation(temp);
-				++currentline;
+				if(timeElapsed > 0.05)
+				{
+					irr::core::stringw temp  = _dialogs[talking].subString(0, currentline);
+					std::cout << temp.c_str() << std::endl;
+					world.GetGameHUD()->GetConversation(temp);
+					++currentline;
+					timeElapsed = 0;
+				}
 			}
 			else
 			{
@@ -61,6 +65,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 		}
 		else
 		{
+			timeElapsed = 0;
 			finishAction();
 			talking = 0;
 		}
@@ -74,6 +79,8 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			state = 0;
 		}
 	}
+
+	timeElapsed += delta;
 }
 
 irr::f32 TalkativeNPC::acceptableDistance()

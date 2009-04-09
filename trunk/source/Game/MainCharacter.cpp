@@ -213,6 +213,13 @@ void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
 	node->setMaterialType( (irr::video::E_MATERIAL_TYPE) newMaterialType );
 }
 
+void MainCharacter::setRunning( bool running )
+{
+	action = running ? EMCAS_RUNNING : EMCAS_IDLE; action = (EMainCharacterActionState) (action | EMCAS_MOVE);
+	node->setFrameLoop( MAIN_CHARACTER_ANIMATION_RUN_START, MAIN_CHARACTER_ANIMATION_RUN_END );
+	node->setLoopMode( true );
+}
+
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
@@ -232,17 +239,11 @@ void MainCharacter::Tick( irr::f32 delta )
 		node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
 	}
 
-	if( action & EMCAS_RUNNING )
-	{
-		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_RUN_START, MAIN_CHARACTER_ANIMATION_RUN_END );
-		node->setLoopMode( true );
-	}
+	// player's rotation update, must happen before the position updates
+	UpdateRotationState();
 
-		// player's rotation update, must happen before the position updates
-		UpdateRotationState();
-
-		// player's movement
-		UpdateMoveState( delta );
+	// player's movement
+	UpdateMoveState( delta );
 	//sfxTimer++;
 }
 
