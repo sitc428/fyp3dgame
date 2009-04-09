@@ -31,10 +31,10 @@ static const irr::u32			HP_TEXT_X1 = 170;
 static const irr::u32			HP_TEXT_Y1 = 85;
 static const irr::u32			HP_TEXT_X2 = 280;
 static const irr::u32			HP_TEXT_Y2 = 110;
-static const irr::u32			CONVERSATION_X1 = 10;
-static const irr::u32			CONVERSATION_Y1 = 400;
-static const irr::u32			CONVERSATION_X2 = 790;
-static const irr::u32			CONVERSATION_Y2 = 590;
+static const irr::u32			CONVERSATION_X1 = 20;
+static const irr::u32			CONVERSATION_Y1 = 445;
+static const irr::u32			CONVERSATION_X2 = 780;
+static const irr::u32			CONVERSATION_Y2 = 580;
 
 
 extern GameEngine* GEngine;
@@ -182,7 +182,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
 	
-	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
+	//driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
 
 	
 }
@@ -199,7 +199,7 @@ void GameHUD::DisplayConversation(){
 	//draw the frame for conversation
 	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
 	if(ConversationString != NULL){
-		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), true, true, 0);
+		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), false, false, 0);
 	}
 		
 
