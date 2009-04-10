@@ -93,7 +93,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_charging(false),
 	_magiclevel(0)
 {
-	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2);
+	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, video::EMT_SOLID);
 
 	ItemCollection tmpBox;
 	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);

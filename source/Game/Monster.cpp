@@ -34,6 +34,7 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver, ir
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
 	_monster->setPosition( defaultPosition );
 	_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
+	_monster->setMaterialType(irr::video::EMT_TRANSPARENT_VERTEX_ALPHA  );
 	//_monster->setScale(irr::core::vector3df(1,1,1));
 	
 	//RecreateCollisionResponseAnimator();
