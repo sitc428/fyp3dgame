@@ -10,6 +10,11 @@
 #include "ProgressCircle.hpp"
 #include <cmath>
 #include <iostream>
+#include "Item.hpp"
+#include "HPItem.hpp"
+#include "MDiscItem.hpp"
+#include "XItem.hpp"
+#include "WeaponItem.hpp"
 
 extern GameEngine* GEngine;
 
@@ -81,6 +86,25 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_healthBar(NULL),
 	attackCallBack(NULL)
 {
+	this->SetLevel(0);
+	this->SetEXP(0);
+	this->SetHealth(100);
+	this->SetAttackPoint(10);
+	this->SetDefencePoint(5);
+	this->SetMagicAttackPoint(20);
+	this->SetMagicDefencePoint(5);
+	this->SetCharging(false);
+
+	irr::core::array<std::pair<Item*, int> > tmpBox;
+	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);
+	Item* md = new MDiscItem(world, MDISCITEM, "Magic Disc", 1);	
+	Item* xItem = new XItem(world, XITEM, "X Item", 1);
+	Item* weapon = new WeaponItem(world, WEAPONITEM1, "Sword", 10);
+	tmpBox.push_back(std::make_pair(hp, 2));
+	tmpBox.push_back(std::make_pair(md, 1));
+	tmpBox.push_back(std::make_pair(xItem, 0));
+	tmpBox.push_back(std::make_pair(weapon, 1));
+	this->SetItemBox(tmpBox);
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	// load the animated mesh, and add a new scene graph node for it
 	irr::scene::ISkinnedMesh* mainCharacterMesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( MAIN_CHARACTER_MODEL ));

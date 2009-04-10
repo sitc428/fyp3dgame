@@ -125,6 +125,7 @@ public:
 	bool GetCharging() const {return _charging;};		//to get whether the player is charging for Magic
 	//(std::vector< std::pair<Item*, int> >) GetItemBox() {return _itemBox;};
 	irr::core::array< std::pair<Item*,int> >& GetItemBox() {return _itemBox;};
+	irr::s32 GetEXP() const {return _exp;};
 	
 	/********************
 	 Player Attribute SET FUNCTIONS
@@ -135,9 +136,10 @@ public:
 	void SetMagicAttackPoint(irr::s32 magicattack) { _magicattack = magicattack;};
 	void SetMagicDefencePoint(irr::s32 magicdefence) { _magicdefence = magicdefence;};
 	void SetMagicLevel(irr::s32 magiclevel) { _magiclevel = magiclevel;}; 
-	bool SetCharging(bool charging) { _charging = charging;};		//to get whether the player is charging for Magic
+	void SetCharging(bool charging) { _charging = charging;};		//to get whether the player is charging for Magic
 	//void SetItemBox(std::vector< std::pair<Item*, int> > itemBox) { _itemBox = itemBox;};
 	void SetItemBox(irr::core::array< std::pair<Item*, int> > itemBox) {_itemBox = itemBox;};
+	void SetEXP(irr::s32 exp) {_exp = exp;};
 	
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
@@ -213,6 +215,7 @@ private:
 	bool _charging;
 	//(std::vector< std::pair<Item*, int> >) _itemBox;
 	irr::core::array< std::pair<Item*,int> > _itemBox;
+	irr::s32 _exp;
 	
 	
 	/************
