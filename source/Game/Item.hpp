@@ -18,10 +18,10 @@ class Item
 public:
 	Item(GameWorld& gameWorld);
 	EItemType getItemType(){return type;};
-	irr::c8* getItemName(){return name;};
+	irr::core::stringw getItemName(){return name;};
 	irr::u32 getItemValue(){return value;};
 	void setItemType(EItemType t){type = t;};
-	void setItemName(irr::c8* n){name = n;};
+	void setItemName(irr::core::stringw n){name = n;};
 	void setItemValue(irr::u32 v){value = v;};
 
 protected:
@@ -31,7 +31,7 @@ private:
 	//Item type
 	EItemType type;
 	//Item name
-	irr::c8* name;
+	irr::core::stringw name;
 	//item value, e.g. +10 HP, +20 M_DISC
 	irr::u32 value;
 

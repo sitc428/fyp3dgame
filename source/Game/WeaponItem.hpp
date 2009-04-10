@@ -6,7 +6,7 @@
 class WeaponItem : public Item
 {
 public:
-	WeaponItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value);
+	WeaponItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value);
 	void equip();
 	void unEquip();
 	bool getEquipState(){return _equipState;};

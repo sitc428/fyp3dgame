@@ -6,7 +6,7 @@
 #include "MainCharacter.hpp"
 
 //constructor
-MDiscItem::MDiscItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value)
+MDiscItem::MDiscItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value)
 	:Item(gameWorld),
 	world(gameWorld)
 {
