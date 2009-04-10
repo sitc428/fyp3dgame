@@ -681,6 +681,7 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 	{
 		theNode->setFrameLoop(MAIN_CHARACTER_ANIMATION_ATTACK_END - 1, MAIN_CHARACTER_ANIMATION_ATTACK_START);
 		theNode->setLoopMode( false );
+		state = 1;
 	}
 	else if( state == 1 )
 	{
