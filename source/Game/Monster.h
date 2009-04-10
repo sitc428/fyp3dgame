@@ -25,6 +25,7 @@
 #include "Player.h"
 #include "ParticleSystemEngine.h"
 #include <math.h>
+#include "MainCharacter.hpp"
 
 namespace sc = boost::statechart;
 namespace mpl = boost::mpl;
@@ -152,7 +153,14 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
     }
 	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
 		//_player->reduceHealth(1);
-		_player.ReceiveDamage(10);
+		//physical damage to player
+		//irr::s32 monAttk = _mon->GetAttk();
+		irr::s32 monAttk=10;
+		irr::s32 playerDef = ((MainCharacter&)_player).GetDefencePoint();
+		if (((MainCharacter&)_player).isDefending())
+			_player.ReceiveDamage(monAttk - (playerDef*2/3) * 2);
+		else
+			_player.ReceiveDamage(monAttk - playerDef*2/3);
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
 	}
@@ -246,7 +254,8 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 class Monster: public Actor{
 	public:
 	
-		Monster( GameWorld& gameWorld, irr::video::IVideoDriver&, irr::s32 exp );
+		Monster( GameWorld& gameWorld, irr::video::IVideoDriver&, irr::s32 exp, irr::s32 attk, 
+			irr::s32 def, irr::s32 mattk, irr::s32 mdef);
 		~Monster(){
 			//collisionAnimator->drop();
 			//collisionAnimator = NULL;
@@ -271,12 +280,19 @@ class Monster: public Actor{
 		//int GetHealth();
 		void CheckActorPosition(irr::core::vector3df&,Player&);
 		irr::s32 GetEXP() {return _exp;};
-	
-	
+		irr::s32 GetAttk() {return _attk;};
+		irr::s32 GetDef() {return _def;};
+		irr::s32 GetMAttk() {return _mattk;};
+		irr::s32 GetMDef() {return _mdef;};
+
 		irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
 			
 	private:
 		irr::s32 _exp;
+		irr::s32 _attk;
+		irr::s32 _def;
+		irr::s32 _mattk;
+		irr::s32 _mdef;
 		FiniteStateMachine FSM;
 		irr::scene::IAnimatedMeshSceneNode *_monster;
 	
