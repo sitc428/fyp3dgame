@@ -1,5 +1,6 @@
 #include "MainCharacter.hpp"
 #include "Check.h"
+#include "CollisionHelper.h"
 #include "GameEngine.h"
 #include "GameWorld.h"
 /*#include "DynamiteProjectile.h"
@@ -146,7 +147,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	shadowNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 	shadowNode->setMaterialTexture(0, driver.getTexture(MAIN_CHARACTER_SHADOWTEXTURE));
 
-	attackCallBack = new AttackAnimationEndCallBack( *this );
+	attackCallBack = new AttackAnimationEndCallBack( world, *this );
 
 	aimVector = defaultAimVector;
 
@@ -347,27 +348,27 @@ void MainCharacter::DoInput()
 	**/
 	irr::core::vector3df wp = weaponNode->getPosition();
 	irr::core::vector3df wr = weaponNode->getRotation();
-	if( receiver.keyDown(irr::KEY_F1) )
+	if( receiver.keyReleased(irr::KEY_F1) )
 	{
 		wp.X -= 1;
 	}
-	if( receiver.keyDown(irr::KEY_F2) )
+	if( receiver.keyReleased(irr::KEY_F2) )
 	{
 		wp.X += 1;
 	}
-	if( receiver.keyDown(irr::KEY_F3) )
+	if( receiver.keyReleased(irr::KEY_F3) )
 	{
 		wp.Y -= 1;
 	}
-	if( receiver.keyDown(irr::KEY_F4) )
+	if( receiver.keyReleased(irr::KEY_F4) )
 	{
 		wp.Y += 1;
 	}
-	if( receiver.keyDown(irr::KEY_F5) )
+	if( receiver.keyReleased(irr::KEY_F5) )
 	{
 		wp.Z -= 1;
 	}
-	if( receiver.keyDown(irr::KEY_F6) )
+	if( receiver.keyReleased(irr::KEY_F6) )
 	{
 		wp.Z += 1;
 	}
@@ -674,6 +675,34 @@ void MainCharacter::PlaceLeftFootPrint()
 
 void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
 {
-	theMainCharacter.setIdle();
-	theNode->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+	static int state = 0;
+
+	if( state == 0 )
+	{
+		theNode->setFrameLoop(MAIN_CHARACTER_ANIMATION_ATTACK_END - 1, MAIN_CHARACTER_ANIMATION_ATTACK_START);
+		theNode->setLoopMode( false );
+	}
+	else if( state == 1 )
+	{
+		irr::core::array<Actor*> actors = world.GetActors();
+		irr::u32 actorsNum = actors.size();
+		for( irr::u32 i=0; i < actorsNum; ++i )
+		{
+			if( actors[i]->GetActorType() != ACTOR_ENEMY)
+				continue;
+			
+			if(
+				CollisionHelper::CheckProximity2D(
+					theMainCharacter.GetNodePosition(),
+					actors[i]->GetNode().getPosition(),
+					25.0f
+				)
+			)
+				actors[i]->ReceiveDamage(10);
+		}
+
+		theMainCharacter.setIdle();
+		theNode->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+		state = 0;
+	}
 }
