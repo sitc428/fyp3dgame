@@ -162,8 +162,8 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
 	//updating the rectangle for different HUD objects
-	int magic_charge = 100/5;	//magic charge % is divided into 20 stages
-	int magic_level = 3;		//magic level
+	int magic_charge = ((MainCharacter&)player).GetChargingProgress()/5;	//magic charge % is divided into 20 stages
+	int magic_level = ((MainCharacter&)player).GetMagicLevel();		//magic level
 	irr::f32 hp_level = float(player.GetHealth())/float(player.GetMaxHealth());		//hp/max hp
 	
 	if(magic_charge != 0){
@@ -195,7 +195,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	//spinning CD
 	
 	if( ((MainCharacter&)player).GetCharging() ){
-		std::cout<<"TRUE"<<std::endl;
+		//std::cout<<"TRUE"<<std::endl;
 		timeElapsed += delta;
 		if(timeElapsed > 0.01){
 			modTime ++;
@@ -325,7 +325,7 @@ void GameHUD::DrawPauseMenu(Player& player){
 	
 	}
 	else if ( MenuSelected == ITEM){
-		
+		MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
 	}
 	else if ( MenuSelected == EQUIP){
 		
