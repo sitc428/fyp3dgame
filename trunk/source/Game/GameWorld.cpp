@@ -94,10 +94,10 @@ void GameWorld::Init()
 void GameWorld::InitItems()
 {
 	//Init different kind of items
-	Item* hp = new HPItem(*this, HPITEM, "HP Medicine", 50);
-	Item* md = new MDiscItem(*this, MDISCITEM, "Magic Disc", 1);	
-	Item* xItem = new XItem(*this, XITEM, "X Item", 1);
-	Item* weapon = new WeaponItem(*this, WEAPONITEM1, "Sword", 10);
+	//Item* hp = new HPItem(*this, HPITEM, "HP Medicine", 50);
+	//Item* md = new MDiscItem(*this, MDISCITEM, "Magic Disc", 1);	
+	//Item* xItem = new XItem(*this, XITEM, "X Item", 1);
+	//Item* weapon = new WeaponItem(*this, WEAPONITEM1, "Sword", 10);
 }
 
 void GameWorld::InitShader()
