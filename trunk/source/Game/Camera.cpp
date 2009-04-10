@@ -7,7 +7,7 @@
 #include <irrlicht/irrlicht.h>
 
 // Parameters specifying default parameters
-static const irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 50.0f, 100.0f);
+static irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 50.0f, 100.0f);
 
 extern GameEngine* GEngine;
 
@@ -56,8 +56,6 @@ void Camera::Tick( irr::f32 delta )
 	irr::core::vector3df position = target->GetNodePosition();
 	position -= aimVector * zoom * cameraOffset.Z;
 	position.Y += cameraOffset.Y;
-	//position += target->GetAimVector() * zoom * cameraOffset.Z;
-	//position.Y += zoom * cameraOffset.Y - rotation.X;
 
 	// update camera position
 	node->setPosition( position );
@@ -72,24 +70,14 @@ void Camera::DoInput( irr::f32 delta )
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
-	/*irr::core::vector3df cameraTranslation(0, 0, 0);
-
-	if(receiver.keyDown(irr::KEY_KEY_1))
+	if( receiver.keyDown( irr::KEY_KEY_W) )
 	{
-		cameraTranslation.Y = 20;
+		cameraOffset.Y += 5;
 	}
-	else if(receiver.keyDown(irr::KEY_KEY_2))
+	else if( receiver.keyDown( irr::KEY_KEY_S) )
 	{
-		cameraTranslation.Y = -20;
+		cameraOffset.Y -= 5;
 	}
-	else if(receiver.keyDown(irr::KEY_KEY_Q))
-	{
-		cameraTranslation.X = 20;
-	}
-	else if(receiver.keyDown(irr::KEY_KEY_E))
-	{
-		cameraTranslation.X = -20;
-	}*/
 
 	zoom = zoom - receiver.wheel() * delta;
 
