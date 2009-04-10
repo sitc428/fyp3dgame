@@ -15,7 +15,7 @@ s32 SHADER_MATERIAL_BASE = video::EMT_SOLID;
 s32 SHADER_MATERIAL_STANDARD = video::EMT_SOLID; 
 s32 SHADER_MATERIAL_ANOTHER_EXAMPLE = video::EMT_SOLID; 
 
-Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path, int Num) { 
+Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path, int Num, video::E_MATERIAL_TYPE type) { 
 
 	NumOfTexture  = Num;
 	driver = device->getVideoDriver(); 
@@ -34,7 +34,7 @@ Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path
         SHADER_MATERIAL_BASE = gpu->addHighLevelShaderMaterialFromFiles( 
 																		vert_path, "main", video::EVST_VS_1_1, 
 																		frag_path, "main", video::EPST_PS_1_1, 
-																		this, video::EMT_SOLID, 0); 
+																		this, type, 0); 
 		
 		SHADER_MATERIAL_STANDARD = driver->addMaterialRenderer(this, "SHADER_MATERIAL_STANDARD"); 
 		SHADER_MATERIAL_ANOTHER_EXAMPLE = driver->addMaterialRenderer(this, "SHADER MATERIAL EXAMPLE"); 

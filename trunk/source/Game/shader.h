@@ -23,10 +23,9 @@ extern s32 SHADER_MATERIAL_ANOTHER_EXAMPLE;
 class Shader : public video::IMaterialRenderer, public video::IShaderConstantSetCallBack 
 { 
 public: 
-    Shader(IrrlichtDevice *, const c8*, const c8*, int);
+    Shader(IrrlichtDevice *, const c8*, const c8*, int, video::E_MATERIAL_TYPE);
 	
-	void Shader_Constructor(IrrlichtDevice *);
-    
+	    
     // if shaders were successfully created 
     bool areAvailable(); 
     
