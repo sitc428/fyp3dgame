@@ -10,7 +10,7 @@ public:
 	void equip();
 	void unEquip();
 	bool getEquipState(){return _equipState;};
-	bool setEquipState(bool equipState){_equipState = equipState;};
+	void setEquipState(bool equipState){_equipState = equipState;};
 protected:
 	~WeaponItem();
 private:
