@@ -25,7 +25,7 @@ void main(void)
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 */	
 	
-	 gl_Position=gl_ModelViewProjectionMatrix * gl_Vertex;
+	gl_Position= ftransform();
 	vTexCoord = gl_MultiTexCoord0.st;
 	vNormal = gl_NormalMatrix * gl_Normal;
 	
