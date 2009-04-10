@@ -210,14 +210,16 @@ private:
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{
 	public:
-		explicit AttackAnimationEndCallBack( MainCharacter& m ) :
-		theMainCharacter(m)
+		explicit AttackAnimationEndCallBack( GameWorld& gameWorld, MainCharacter& m ) :
+		theMainCharacter(m),
+		world(gameWorld)
 		{
 		}
 
 		virtual void OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode);
 	private:
 		MainCharacter& theMainCharacter;
+		GameWorld& world;
 	};
 
 	AttackAnimationEndCallBack* attackCallBack;
