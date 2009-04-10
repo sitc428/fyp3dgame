@@ -226,10 +226,24 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 		//irr::s32 monAttk = _mon->GetAttk();
 		irr::s32 monAttk = _monster->GetAttk();
 		irr::s32 playerDef = ((MainCharacter&)_player).GetDefencePoint();
+		std::cout << "Monster Attk = " << monAttk << std::endl;
+		std::cout << "Player Defence = " << playerDef << std::endl;
+		irr::s32 damage = 1;
 		if (((MainCharacter&)_player).isDefending())
-			_player.ReceiveDamage(monAttk - (playerDef*2/3) * 2);
+		{
+			if (monAttk - playerDef*2/3 > 1)
+			{
+				damage = monAttk - (playerDef*2/3) * 2;
+			}
+		}
 		else
-			_player.ReceiveDamage(monAttk - playerDef*2/3);
+		{
+			if (monAttk - (playerDef*2/3)*2 >1 )
+			{
+				damage = monAttk - playerDef*2/3;
+			}
+		}
+		_player.ReceiveDamage(damage);
 	}
 	
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
