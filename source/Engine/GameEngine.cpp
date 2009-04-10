@@ -256,6 +256,8 @@ void GameEngine::Run()
 		smgr->drawAll();
 
 		// draw all UI elements after the 3d scene
+
+		smgr->getRootSceneNode()->setDebugDataVisible( irr::scene::EDS_BBOX );
 		
 		device->getGUIEnvironment()->drawAll();
 		

@@ -444,6 +444,7 @@ void MainCharacter::DoInput()
 	{
 		if( receiver.keyDown(irr::KEY_SHIFT) )
 		{
+			std::cout<< "Shifting!!!"<<std::endl;
 			playerTranslation.Z = 45;
 			setRunning( true );
 		}
