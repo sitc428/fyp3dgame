@@ -86,7 +86,12 @@ void Monster::update(Player& _player, irr::f32 delta)
 	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 	if(health <= 0)
 	{
-		std::cout << "Player Level: " << ((MainCharacter&)world.GetCurrentPlayer()).GetLevel() << std::endl;
+		
+		
+		//Death;
+		if( FSM->GetName() != "Death" )
+		{
+			std::cout << "Player Level: " << ((MainCharacter&)world.GetCurrentPlayer()).GetLevel() << std::endl;
 		//+ player exp
 		((MainCharacter&)world.GetCurrentPlayer()).SetEXP(
 			((MainCharacter&)world.GetCurrentPlayer()).GetEXP()+
@@ -94,20 +99,18 @@ void Monster::update(Player& _player, irr::f32 delta)
 		//+level
 		irr::s32 playerLevel = ((MainCharacter&)world.GetCurrentPlayer()).GetLevel();
 		irr::s32 playerEXP = ((MainCharacter&)world.GetCurrentPlayer()).GetEXP();
-		if ( playerEXP >= (playerLevel-1)*(playerLevel-1)*100)
+		if ( playerEXP >= (playerLevel)*(playerLevel)*100)
 		{
 			((MainCharacter&)world.GetCurrentPlayer()).SetLevel(playerLevel+1);
-			((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(80+(playerLevel-1)*9.2);
-			((MainCharacter&)world.GetCurrentPlayer()).SetDefencePoint(50+450*(playerLevel-1)/99);
-			((MainCharacter&)world.GetCurrentPlayer()).SetMagicAttackPoint(100+(playerLevel-1)*9);
-			((MainCharacter&)world.GetCurrentPlayer()).SetMagicDefencePoint(30+270*(playerLevel-1)/99);
-			((MainCharacter&)world.GetCurrentPlayer()).SetMaxHealth(1000+(playerLevel-1)*90);
-			((MainCharacter&)world.GetCurrentPlayer()).SetHealth(1000+(playerLevel-1)*90);
+			((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(80+(playerLevel)*9.2);
+			((MainCharacter&)world.GetCurrentPlayer()).SetDefencePoint(50+450*(playerLevel)/99);
+			((MainCharacter&)world.GetCurrentPlayer()).SetMagicAttackPoint(100+(playerLevel)*9);
+			((MainCharacter&)world.GetCurrentPlayer()).SetMagicDefencePoint(30+270*(playerLevel)/99);
+			((MainCharacter&)world.GetCurrentPlayer()).SetMaxHealth(1000+(playerLevel)*90);
+			((MainCharacter&)world.GetCurrentPlayer()).SetHealth(1000+(playerLevel)*90);
 		}
-		
-		//Death;
-		if( FSM->GetName() != "Death" )
-		{
+
+
 			FSM->process_event( EvDie() );
 			FSM->reaction(_monster, _player,target, this);
 			irr::scene::ISceneManager& smgr = world.GetSceneManager();
@@ -117,13 +120,15 @@ void Monster::update(Player& _player, irr::f32 delta)
 			sparking->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),irr::core::vector3df(0.0f,0.06f,0.0f),
 										20,50,200,700, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
 			death_timer->restart();
+
+			/*irr::core::array<Actor*> actors = world.GetActors();
+			int temp = actors.binary_search( this );
+				actors.erase(temp, 1);*/
+
 		}else if(death_timer->elapsed() > 2.0){
 		
 			sparking->resetEmitter();
-		}
-		
-		
-		
+		}	
 		
 	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
 	{
