@@ -537,12 +537,12 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 			}break;
 		case state_INTERACTING:
 			{
-				gameHUD->Update(delta, GetCurrentPlayer());;
+				gameHUD->Update(delta, GetCurrentPlayer());
 				gameHUD->DrawConversation();
 			}break;
 		case state_PAUSED:
 			{
-				gameHUD->DrawPauseMenu();
+				gameHUD->DrawPauseMenu(GetCurrentPlayer());
 			}break;
 		default:
 			break;
