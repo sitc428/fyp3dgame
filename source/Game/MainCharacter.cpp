@@ -86,6 +86,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_healthBar(NULL),
 	attackCallBack(NULL)
 {
+	test1 = new Shader(&(GEngine->GetDevice()));
 	this->SetLevel(0);
 	this->SetEXP(0);
 	this->SetHealth(100);
@@ -114,12 +115,14 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
 	node->setLoopMode( false );
 	node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
-
+	
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+	node->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
+	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.jpg" ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	// setup player collision with the world
