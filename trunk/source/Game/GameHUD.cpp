@@ -45,7 +45,7 @@ static const irr::u32			CONVERSATION_Y2 = 575;
 static const irr::u32			MENU_ITEM_X1 = 160;
 static const irr::u32			MENU_ITEM_Y1 = 70;
 static const irr::u32			MENU_ITEM_YOFFSET = 40;
-static const irr::u32			MENU_WINDOW_X1 = 360;
+static const irr::u32			MENU_WINDOW_X1 = 340;
 static const irr::u32			MENU_WINDOW_Y1 = 70;
 static const irr::u32			MENU_WINDOW_YOFFSET = 40;
 static const irr::u32			CD_WIDTH = 30;
@@ -268,7 +268,28 @@ void GameHUD::DrawPauseMenu(Player& player){
 	//draw the right hand side of the menu according to the selection
 	
 	if( MenuSelected == STATUS){
-		MenuFont->draw(L"Status", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		
+		
+		//LEVEL
+		MenuFont->draw(L"Level: ", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		
+		//EXP
+		MenuFont->draw(L"EXP: ", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		
+		//HP
+		MenuFont->draw(L"HP: ", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*2, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		
+		//Attack
+		MenuFont->draw(L"Attack: ", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*3, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		
+		//Defence
+		MenuFont->draw(L"Defence: ", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*4, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		
+		//Magic Attack
+		MenuFont->draw(L"Magic Attack: ", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*5, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		
+		//Magic Defence
+		MenuFont->draw(L"Magic Defence: ", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*6, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 	}
 	else if ( MenuSelected == ITEM){
 		
