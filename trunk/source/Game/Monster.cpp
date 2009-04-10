@@ -18,11 +18,16 @@ static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,1
 
 extern GameEngine* GEngine;
 
-Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver, irr::s32 exp)
+Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver, irr::s32 exp, 
+				 irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef)
 	:Actor(gameWorld),
 	world(gameWorld),
 	collisionAnimator(NULL),
-	_exp(exp)
+	_exp(exp),
+	_attk(attk),
+	_def(def),
+	_mattk(mattk),
+	_mdef(mdef)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
@@ -72,7 +77,6 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 }
 void Monster::update(Player& _player, irr::f32 delta)
 {
-	
 	pos= _monster->getAbsolutePosition();
 	//std::cout<<"origin: "<<_player.GetNodePosition().getDistanceFrom(original)<<"\n";
 	//std::cout<<"pos : "<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
@@ -80,13 +84,20 @@ void Monster::update(Player& _player, irr::f32 delta)
 	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 	if(health <= 0)
 	{
-		std::cout << ((MainCharacter&)world.GetCurrentPlayer()).GetLevel() << std::endl;
+		std::cout << "Player Level: " << ((MainCharacter&)world.GetCurrentPlayer()).GetLevel() << std::endl;
 		//+ player exp
 		((MainCharacter&)world.GetCurrentPlayer()).SetEXP(((MainCharacter&)world.GetCurrentPlayer()).GetEXP());
 		//+level
-		if ( ((MainCharacter&)world.GetCurrentPlayer()).GetEXP()%50 == 0 )
-			((MainCharacter&)world.GetCurrentPlayer()).SetLevel(
-				((MainCharacter&)world.GetCurrentPlayer()).GetLevel()+1);
+		irr::s32 playerLevel = ((MainCharacter&)world.GetCurrentPlayer()).GetLevel();
+		irr::s32 playerEXP = ((MainCharacter&)world.GetCurrentPlayer()).GetEXP();
+		if ( playerEXP >= (playerLevel-1)*(playerLevel-1)*100)
+		{
+			((MainCharacter&)world.GetCurrentPlayer()).SetLevel(playerLevel+1);
+			((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(80+(playerLevel-1)*9.2);
+			((MainCharacter&)world.GetCurrentPlayer()).SetDefencePoint(50+450*(playerLevel-1)/99);
+			((MainCharacter&)world.GetCurrentPlayer()).SetMagicAttackPoint(100+(playerLevel-1)*9);
+			((MainCharacter&)world.GetCurrentPlayer()).SetMagicDefencePoint(30+270*(playerLevel-1)/99);
+		}
 		
 		//Death;
 		if( FSM.GetName() != "Death" )
@@ -245,7 +256,7 @@ void Monster::RecreateCollisionResponseAnimator()
 
 void Monster::ReceiveDamage(irr::f32 damage){
 	health -= damage;
-		std::cout<<"Health: "<<health<<std::endl;
+	std::cout<<"Health: "<<health<<std::endl;
 }
 
 
