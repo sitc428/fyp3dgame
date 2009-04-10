@@ -45,15 +45,12 @@ class Player: public Actor
 		const irr::core::vector3df& GetTranslation() const { return translation; }
 		const irr::core::vector3df& GetRotation() const { return rotation; }
 		const irr::core::vector3df& GetAimVector() const { return aimVector; } 
-
-		void CopyStateFrom( const Player& other );
+		const irr::core::vector3df& GetFaceVector() const { return faceVector; } 
 
 		irr::core::vector3df GetVelApprox() { return velApprox; }
 
 		// unbuffered mouse input 
 		virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent ) {};
-
-		virtual void PlayRandomCheer();
 
 		virtual void SetHealth( irr::f32 pHealth ) { health = pHealth; }
 		irr::u32 GetHealth() const { return health; }
@@ -74,8 +71,11 @@ class Player: public Actor
 		// tracks whether this player is currently active
 		EPlayerState playerState;
 
-		// target player is aiming at
+		// player is aiming at
 		irr::core::vector3df aimVector;
+
+		// player is facing at
+		irr::core::vector3df faceVector;
 
 		// player translation
 		irr::core::vector3df translation;
@@ -84,6 +84,7 @@ class Player: public Actor
 
 		// approximation of movement velocity used by AI
 		irr::core::vector3df velApprox;
+
 		irr::u32 health;
 		irr::u32 max_health;
 	

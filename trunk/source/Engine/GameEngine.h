@@ -7,6 +7,8 @@
 #include <string>
 #include "Check.h"
 
+const irr::f64 PI = 3.14159265;
+
 class InputEventReceiver;
 class StartupScreen;
 class FrontEnd;

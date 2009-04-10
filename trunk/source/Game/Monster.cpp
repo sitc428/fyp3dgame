@@ -12,8 +12,6 @@
 #include "GameWorld.h"
 #include "NodeID.h"
 
-static const irr::f64 PI = 3.14159265;
-
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 

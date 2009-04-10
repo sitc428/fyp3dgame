@@ -111,7 +111,7 @@ void Robot::Tick( irr::f32 delta )
 	irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 5), 0);
 	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() - world.GetCurrentPlayer().GetAimVector()*-offset);//-20);// * -5.0f);
 	//node->setPosition(world.GetCurrentPlayer().GetNodePosition() + offset);
-	irr::core::vector3df aimVec = world.GetCurrentPlayer().GetAimVector();
+	irr::core::vector3df aimVec = world.GetCurrentPlayer().GetFaceVector();
 	//aimVec.normalize();
 	//irr::core::vector3df aimPos = irr::core::vector3df(aimVec.X, aimVec.Y, aimVec.Z);
 	//aimVec.rotateXZBy(60, aimPos);//world.GetCurrentPlayer().GetNodePosition());

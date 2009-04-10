@@ -236,7 +236,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\engine\GameEngine.h"
+				RelativePath=".\Engine\GameEngine.h"
 				>
 			</File>
 			<File
@@ -248,6 +248,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\HPItem.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Engine\InputEventReceiver.hpp"
 				>
 			</File>
@@ -256,7 +260,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\Item.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Game\MainCharacter.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\MDiscItem.hpp"
 				>
 			</File>
 			<File
@@ -301,6 +313,14 @@
 			</File>
 			<File
 				RelativePath=".\Game\TriggerEventItem.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\WeaponItem.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\XItem.hpp"
 				>
 			</File>
 		</Filter>
@@ -356,6 +376,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\HPItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Engine\InputEventReceiver.cpp"
 				>
 			</File>
@@ -364,11 +388,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\Item.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Game\MainCharacter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\MDiscItem.cpp"
 				>
 			</File>
 			<File
@@ -409,6 +441,14 @@
 			</File>
 			<File
 				RelativePath=".\Game\TriggerEventItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\WeaponItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\XItem.cpp"
 				>
 			</File>
 		</Filter>

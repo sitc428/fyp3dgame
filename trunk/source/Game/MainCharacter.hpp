@@ -72,6 +72,9 @@ public:
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_PLAYER; }
 
+	// get the user input for the player
+	void DoInput();
+
 	// set the movement translation vector for player
 	virtual void SetTranslation( const irr::core::vector3df& trans );
 	
@@ -83,9 +86,16 @@ public:
 	virtual irr::core::vector3df GetNodeRotation() const { return node->getRotation(); }
 	virtual void SetNodePosition( const irr::core::vector3df& vect ) { node->setPosition(vect); node->updateAbsolutePosition(); }
 	virtual void SetNodeRotation( const irr::core::vector3df& vect ) { node->setRotation(vect); }
-	void setDefending( bool defending ) { action = defending ? EMCAS_DEFEND : EMCAS_IDLE; }
-	void setAttacking( bool attacking ) { action = attacking ? EMCAS_ATTACK : EMCAS_IDLE; }
+	void setIdle();
+	void setDefending( bool defending );
+	void setAttacking( bool attacking );
+	void setMoving( bool moving );
 	void setRunning( bool running );
+	bool isIdle() const;
+	bool isDefending() const;
+	bool isAttacking() const;
+	bool isMoving() const;
+	bool isRunning() const;
 
 
 	void InitShader(irr::core::vector3df* lightPosition);
@@ -229,6 +239,21 @@ private:
 			irr::IrrlichtDevice* _device;
 			irr::core::vector3df* _lightPos;
 	};
+
+	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
+	{
+	public:
+		explicit AttackAnimationEndCallBack( MainCharacter& m ) :
+		theMainCharacter(m)
+		{
+		}
+
+		virtual void OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode);
+	private:
+		MainCharacter& theMainCharacter;
+	};
+
+	AttackAnimationEndCallBack* attackCallBack;
 };
 
 #endif //__MAIN_CHARACTER_HPP__
