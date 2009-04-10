@@ -46,8 +46,10 @@ static const irr::u32			CONVERSATION_Y2 = 575;
 static const irr::u32			MENU_ITEM_X1 = 160;
 static const irr::u32			MENU_ITEM_Y1 = 70;
 static const irr::u32			MENU_ITEM_YOFFSET = 40;
-static const irr::u32			MENU_WINDOW_X1 = 340;
+static const irr::u32			MENU_WINDOW_X1 = 360;
 static const irr::u32			MENU_WINDOW_Y1 = 70;
+static const irr::u32			ITEM_QUANTITY_X1 = 700;
+static const irr::u32			ITEM_QUANTITY_Y1 = 70;
 static const irr::u32			MENU_WINDOW_YOFFSET = 40;
 static const irr::u32			CD_WIDTH = 30;
 static const irr::u32			CD_HEIGTH = 30;
@@ -325,13 +327,64 @@ void GameHUD::DrawPauseMenu(Player& player){
 	
 	}
 	else if ( MenuSelected == ITEM){
+		irr::core::stringw outputString = L"";
 		MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+		for (int i = 0, j = 0; i < ItemBox.size() ; i++){
+				//ItemBox[i].first = item
+				//ItemBox[i].second = quantity
+				//ItemBox[i].first->GetItemType = get the item type
+			//std::cout<<i<<std::endl;
+			if(ItemBox[i].first->getItemType() == HPITEM || ItemBox[i].first->getItemType() == XITEM){
+				
+				//output item name
+				outputString = ItemBox[i].first->getItemName();
+				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				
+				//output quantity
+				outputString = ItemBox[i].second;
+				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				j++;
+			}
+				
+		}
+			
+		
 	}
 	else if ( MenuSelected == EQUIP){
-		
+		irr::core::stringw outputString = L"";
+		MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+		for (int i = 0, j = 0; i < ItemBox.size() ; i++){
+			if(ItemBox[i].first->getItemType() == WEAPONITEM1){
+				
+				//output item name
+				outputString = ItemBox[i].first->getItemName();
+				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				
+				//output quantity
+				outputString = ItemBox[i].second;
+				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				j++;
+			}
+			
+		}
 	}
 	else if ( MenuSelected == MAGIC){
-		
+		irr::core::stringw outputString = L"";
+		MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+		for (int i = 0, j = 0; i < ItemBox.size() ; i++){
+			if(ItemBox[i].first->getItemType() == MDISCITEM){
+				
+				//output item name
+				outputString = ItemBox[i].first->getItemName();
+				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				
+				//output quantity
+				outputString = ItemBox[i].second;
+				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				j++;
+			}
+			
+		}
 	}
 	else if ( MenuSelected == SAVE){
 		
