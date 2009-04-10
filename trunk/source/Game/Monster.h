@@ -228,17 +228,17 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 		irr::s32 playerDef = ((MainCharacter&)_player).GetDefencePoint();
 		std::cout << "Monster Attk = " << monAttk << std::endl;
 		std::cout << "Player Defence = " << playerDef << std::endl;
-		irr::s32 damage = 1;
+		irr::s32 damage = 0;
 		if (((MainCharacter&)_player).isDefending())
 		{
-			if (monAttk - playerDef*2/3 > 1)
+			if (monAttk - playerDef*2/3 > 0)
 			{
 				damage = monAttk - (playerDef*2/3) * 2;
 			}
 		}
 		else
 		{
-			if (monAttk - (playerDef*2/3)*2 >1 )
+			if (monAttk - (playerDef*2/3)*2 >0 )
 			{
 				damage = monAttk - playerDef*2/3;
 			}

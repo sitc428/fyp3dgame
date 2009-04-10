@@ -16,6 +16,7 @@
 #include "MDiscItem.hpp"
 #include "XItem.hpp"
 #include "WeaponItem.hpp"
+#include "Monster.h"
 
 extern GameEngine* GEngine;
 
@@ -514,11 +515,11 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	if( godMode )
 		return;
 
-	if( action == EMCAS_DEFEND )
+	/*if( action == EMCAS_DEFEND )
 	{
 		std::cout<<"defending"<<std::endl;
 		value = value / 4;
-	}
+	}*/
 
 	health -= value;
 
@@ -699,7 +700,20 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 					25.0f
 				)
 			)
-				actors[i]->ReceiveDamage(10);
+			{
+				irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
+				irr::s32 monDef = ((Monster*)actors[i])->GetDef();
+				std::cout << "Player Attk = " << playerAttk << std::endl;
+				std::cout << "Monster Defence = " << monDef << std::endl;
+				irr::s32 damage = 0;
+				if (playerAttk - monDef > 0 )
+				{
+					damage = playerAttk - monDef;
+				}
+				irr::s32 offset = damage/5 * (rand()%601)/300;
+				std::cout << "Damage = " << damage-offset << std::endl;
+				actors[i]->ReceiveDamage(damage-offset);
+			}
 		}
 
 		theMainCharacter.setIdle();
