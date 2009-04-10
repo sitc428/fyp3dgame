@@ -246,7 +246,7 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 class Monster: public Actor{
 	public:
 	
-		Monster( GameWorld& gameWorld, irr::video::IVideoDriver& );
+		Monster( GameWorld& gameWorld, irr::video::IVideoDriver&, irr::s32 exp );
 		~Monster(){
 			//collisionAnimator->drop();
 			//collisionAnimator = NULL;
@@ -270,11 +270,13 @@ class Monster: public Actor{
 		virtual void ReSetPosition(irr::core::vector3df);
 		//int GetHealth();
 		void CheckActorPosition(irr::core::vector3df&,Player&);
+		irr::s32 GetEXP() {return _exp;};
 	
 	
 		irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
 			
 	private:
+		irr::s32 _exp;
 		FiniteStateMachine FSM;
 		irr::scene::IAnimatedMeshSceneNode *_monster;
 	
