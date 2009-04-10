@@ -72,11 +72,13 @@ void Camera::DoInput( irr::f32 delta )
 
 	if( receiver.keyDown( irr::KEY_KEY_W) )
 	{
-		cameraOffset.Y += 5;
+		if(cameraOffset.Y < 80)
+			cameraOffset.Y += 5;
 	}
 	else if( receiver.keyDown( irr::KEY_KEY_S) )
 	{
-		cameraOffset.Y -= 5;
+		if(cameraOffset.Y > 20)
+			cameraOffset.Y -= 5;
 	}
 
 	zoom = zoom - receiver.wheel() * delta;

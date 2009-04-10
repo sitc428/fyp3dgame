@@ -83,7 +83,6 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	bDoFillup( false ),
 	world(gameWorld),
 	sfxTimer(12),
-	_healthBar(NULL),
 	attackCallBack(NULL)
 {
 	test1 = new Shader(&(GEngine->GetDevice()));
@@ -139,9 +138,6 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	shadowNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	shadowNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 	shadowNode->setMaterialTexture(0, driver.getTexture(MAIN_CHARACTER_SHADOWTEXTURE));
-
-	// setup the player health bar
-	_healthBar = new ProgressCircle(node, & (world.GetSceneManager()), 2222, world.GetSceneManager().getSceneCollisionManager());
 
 	attackCallBack = new AttackAnimationEndCallBack( *this );
 
@@ -273,6 +269,9 @@ void MainCharacter::setMoving( bool moving )
 
 void MainCharacter::setAttacking( bool attacking )
 {
+	if( isAttacking())
+		return;
+
 	if( attacking )
 	{
 		action = EMCAS_ATTACK;
@@ -326,63 +325,13 @@ bool MainCharacter::isRunning() const
 void MainCharacter::Tick( irr::f32 delta )
 {
 	DoInput();
+	UpdateThrowMeter( delta );
 
 	node->setRotation( rotation );
 	irr::core::vector3df playerPos = node->getPosition();
 	playerPos += faceVector * delta * translation.Z;
 	node->setPosition( playerPos );
-
-	/*if( isDefending() )
-		return;
-
-	if( isRunning() )
-		std::cout << "Still running" << std::endl;
-
-	// player's rotation update, must happen before the position updates
-	aimVector.set( 1, 0, 0 );
-	aimVector.rotateXZBy( -rotation.Y, irr::core::vector3df( 0, 0, 0 ) );
-	aimVector.normalize();
-
-	// player's movement
-	switch(moveState)
-	{
-		case EMCMS_IDLE:
-		{
-			velApprox.set( 0, 0, 0 );
-
-			// setup animation
-			if( prevMoveState != EMCMS_IDLE )
-			{
-				setIdle();
-			}	
-			break;
-		}
-		case EMCMS_FORWARD:
-		case EMCMS_BACK:
-		{
-			irr::core::vector3df playerPos = node->getPosition();
-
-			// calculate "right" vector
-			irr::core::vector3df rightVector = aimVector.crossProduct(irr::core::vector3df(0,1,0));
-			rightVector.normalize();
-
-			irr::core::vector3df savePos = playerPos;
-
-			// translate player
-			playerPos += rightVector * delta * translation.X;
-			playerPos += aimVector * delta * translation.Z;
-			node->setPosition( playerPos );
-
-			velApprox = playerPos - savePos;
-
-			break;
-		}
-
-		default:
-			break;
-	}*/
-
-	//sfxTimer++;
+	translation.Z = 0;
 }
 
 void MainCharacter::DoInput()
@@ -397,6 +346,7 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyReleased(irr::KEY_KEY_Z) )
 	{
+		setAttacking( true );
 		return;
 	}
 
@@ -455,23 +405,25 @@ void MainCharacter::DoInput()
 		move = true;
 	}
 
-	if( receiver.keyDown(irr::KEY_KEY_E) )
+	if( receiver.keyDown(irr::KEY_KEY_D) )
 	{
 		aimVector.rotateXZBy(-5, irr::core::vector3df(0, 0, 0) );
 		aimVector.normalize();
 	}
 
-	if( receiver.keyDown(irr::KEY_KEY_Q) )
+	if( receiver.keyDown(irr::KEY_KEY_A) )
 	{
 		aimVector.rotateXZBy(5, irr::core::vector3df(0, 0, 0) );
 		aimVector.normalize();
 	}
 
+	playerRotation.Y = floor( faceVector.getHorizontalAngle().Y - defaultAimVector.getHorizontalAngle().Y );
+	SetRotation( playerRotation );
+
 	if(move)
 	{
 		if( receiver.keyDown(irr::KEY_SHIFT) )
 		{
-			std::cout<< "Shifting!!!"<<std::endl;
 			playerTranslation.Z = 45;
 			setRunning( true );
 		}
@@ -480,64 +432,13 @@ void MainCharacter::DoInput()
 			playerTranslation.Z = 15;
 			setMoving( true );
 		}
-	}
-	else
-	{
-		setIdle();
-	}
-	
-	playerRotation.Y = floor( faceVector.getHorizontalAngle().Y - defaultAimVector.getHorizontalAngle().Y );
 
-	SetRotation( playerRotation );
-	SetTranslation( playerTranslation );
+		SetTranslation( playerTranslation );
 
-	/*if(receiver.keyDown(irr::KEY_KEY_M))
-	{
-		setDefending( true );
 		return;
 	}
 
-	if(receiver.keyReleased(irr::KEY_SPACE) || receiver.mousePressed(InputEventReceiver::LEFT))
-	{
-		setAttacking( true );
-		return;
-	}
-
-	irr::core::vector3df playerTranslation(0, 0, 0);
-	irr::core::vector3df playerRotation(0, 0, 0);
-
-	if(receiver.keyDown(irr::KEY_KEY_W))
-	{ 
-		playerTranslation.Z = -20;
-		if( !isMoving())
-			setMoving( true );
-	}
-	else if(receiver.keyDown(irr::KEY_KEY_S))
-	{
-		playerTranslation.Z = 20;
-		if( !isMoving())
-			setMoving( true );
-	}
-	if(receiver.keyDown(irr::KEY_KEY_A))
-	{
-		playerRotation.Y = 3;
-	}
-	else if(receiver.keyDown(irr::KEY_KEY_D))
-	{
-		playerRotation.Y = -3;
-	}
-	
-	if(receiver.keyDown(irr::KEY_SHIFT))
-	{
-		playerTranslation *= 2;
-		if( !isRunning() )
-			setRunning( true );
-	}
-
-	if( receiver.keyReleased( irr::KEY_SHIFT ) )
-	{
-		setRunning( false );
-	}*/
+	setIdle();
 }
 
 // updates the power of the throw meter
@@ -545,7 +446,9 @@ void MainCharacter::UpdateThrowMeter( irr::f32 delta )
 {
 	if( bDoFillup )
 	{
-		throwFillupTimer += delta;
+		//throwFillupTimer += delta;
+		_charging = true;
+		_magiclevel += delta;
 	}
 }
 
@@ -561,8 +464,6 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	}
 
 	health -= value;
-
-	_healthBar->setProgress( health );
 
 	if( health <= 0 )
 	{
