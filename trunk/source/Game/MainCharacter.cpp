@@ -81,7 +81,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	sfxTimer(12),
 	attackCallBack(NULL)
 {
-	test1 = new Shader(&(GEngine->GetDevice()));
+	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2);
 	this->SetLevel(0);
 	this->SetEXP(0);
 	this->SetHealth(100);
