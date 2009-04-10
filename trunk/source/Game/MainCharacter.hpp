@@ -85,7 +85,6 @@ public:
 	// sets the player into firing state
 	//void DoLaunchProjectile();
 	
-	
 	// damage done to player
 	virtual void ReceiveDamage( irr::f32 value );
 	
@@ -146,7 +145,7 @@ private:
 
 	// scene graph node for player
 	irr::scene::IAnimatedMeshSceneNode* node;
-	irr::scene::IMeshSceneNode* weapon;
+	irr::scene::ISceneNode* weaponNode;
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
@@ -184,8 +183,7 @@ private:
 	bool _charging;
 	ItemCollection _itemBox;
 	irr::s32 _exp;
-	
-	
+
 	/************
 	 ************/
 
