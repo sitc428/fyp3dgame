@@ -89,7 +89,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_magicattack(100),
 	_magicdefence(80),
 	_charging(false),
-	_magiclevel(0)
+	_magiclevel(0),
 {
 	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2);
 
@@ -122,7 +122,14 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.jpg" ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
-	weaponNode = smgr.addCubeSceneNode(1, node->getJointNode("RightFingerBase"), -1, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(.5, 10, .5));
+	weaponNode = smgr.addMeshSceneNode(
+		smgr.getMesh("media/model/sword.x"),
+		node->getJointNode("RightFingerBase"),
+		-1,
+		irr::core::vector3df(0, 0, 0),
+		irr::core::vector3df(0, 0, 0),
+		irr::core::vector3df(0.05, 0.05, 0.05)
+	);
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
@@ -334,6 +341,64 @@ void MainCharacter::Tick( irr::f32 delta )
 void MainCharacter::DoInput()
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
+
+	/**
+	weapon position and rotation tuning
+	**/
+	irr::core::vector3df wp = weaponNode->getPosition();
+	irr::core::vector3df wr = weaponNode->getRotation();
+	if( receiver.keyDown(irr::KEY_F1) )
+	{
+		wp.X -= 1;
+	}
+	if( receiver.keyDown(irr::KEY_F2) )
+	{
+		wp.X += 1;
+	}
+	if( receiver.keyDown(irr::KEY_F3) )
+	{
+		wp.Y -= 1;
+	}
+	if( receiver.keyDown(irr::KEY_F4) )
+	{
+		wp.Y += 1;
+	}
+	if( receiver.keyDown(irr::KEY_F5) )
+	{
+		wp.Z -= 1;
+	}
+	if( receiver.keyDown(irr::KEY_F6) )
+	{
+		wp.Z += 1;
+	}
+	if( receiver.keyDown(irr::KEY_F7) )
+	{
+		wr.X -= 1;
+	}
+	if( receiver.keyDown(irr::KEY_F8) )
+	{
+		wr.X += 1;
+	}
+	if( receiver.keyDown(irr::KEY_F9) )
+	{
+		wr.Y -= 1;
+	}
+	if( receiver.keyDown(irr::KEY_F10) )
+	{
+		wr.Y += 1;
+	}
+	if( receiver.keyDown(irr::KEY_F11) )
+	{
+		wr.Z -= 1;
+	}
+	if( receiver.keyDown(irr::KEY_F12) )
+	{
+		wr.Z += 1;
+	}
+	std::cout<<"P:"<<wp.X<<","<<wp.Y<<","<<wp.Z<<std::endl;
+	std::cout<<"R:"<<wr.X<<","<<wr.Y<<","<<wr.Z<<std::endl;
+	weaponNode->setRotation(wr);
+	weaponNode->setPosition(wp);
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
