@@ -3,6 +3,8 @@
 #include "Check.h"
 #include "Player.h"
 #include "CGUITTFont.h"
+#include "InputEventReceiver.hpp"
+#include <iostream>
 
 
 static const c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
@@ -42,7 +44,10 @@ static const irr::u32			CONVERSATION_X2 = 780;
 static const irr::u32			CONVERSATION_Y2 = 575;
 static const irr::u32			MENU_ITEM_X1 = 160;
 static const irr::u32			MENU_ITEM_Y1 = 70;
-static const irr::u32			MENU_ITEM_YOFFSET = 50;
+static const irr::u32			MENU_ITEM_YOFFSET = 40;
+static const irr::u32			MENU_WINDOW_X1 = 360;
+static const irr::u32			MENU_WINDOW_Y1 = 70;
+static const irr::u32			MENU_WINDOW_YOFFSET = 40;
 static const irr::u32			CD_WIDTH = 30;
 static const irr::u32			CD_HEIGTH = 30;
 
@@ -64,6 +69,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , PauseMenuTexture(NULL)
 , MenuFont(NULL)
 , SelectIconTexture(NULL)
+, MenuSelected(STATUS)
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -234,22 +240,48 @@ void GameHUD::DrawConversation(){
 }
 
 
-void GameHUD::DrawPauseMenu(){
+void GameHUD::DrawPauseMenu(Player& player){
 	IVideoDriver& driver = GEngine->GetDriver();
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+	InputEventReceiver& receiver = GEngine->GetReceiver();
 	
-	//draw the frame for conversation
 	driver.draw2DImage(PauseMenuTexture,irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
-	MenuFont->draw(L"Item", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Equip", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Magic", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*2, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Save", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*3, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Status", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Item", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Equip", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*2, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Magic", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*3, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Save", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*4, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 	
-	//change the position according to the selection
-	driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
-
+	if( receiver.keyReleased( irr::KEY_UP) )
+	{
+		MenuSelected == STATUS? MenuSelected = SAVE : MenuSelected = MENU_SELECTED(MenuSelected - 1);
+	}
+	else if( receiver.keyReleased( irr::KEY_DOWN) )
+	{
+		MenuSelected == SAVE? MenuSelected = STATUS : MenuSelected = MENU_SELECTED(MenuSelected + 1);
+	}
+	
+	//change the position of the icon according to the selection
+	driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*int(MenuSelected)), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
+	
 
 	//draw the right hand side of the menu according to the selection
+	
+	if( MenuSelected == STATUS){
+		MenuFont->draw(L"Status", irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	}
+	else if ( MenuSelected == ITEM){
+		
+	}
+	else if ( MenuSelected == EQUIP){
+		
+	}
+	else if ( MenuSelected == MAGIC){
+		
+	}
+	else if ( MenuSelected == SAVE){
+		
+	}
 }
 
 

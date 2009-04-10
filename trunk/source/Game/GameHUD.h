@@ -15,7 +15,13 @@ namespace irr{
 	}
 }
 
-
+enum MENU_SELECTED{
+	STATUS = 0,
+	ITEM = 1,
+	EQUIP = 2,
+	MAGIC = 3,
+	SAVE = 4
+};
 
 /**
 *	Class which is responsible for drawing the Heads Up Display
@@ -39,7 +45,7 @@ public:
 	void GetConversation(irr::core::stringw string, ITexture* actorTexture = NULL);
 	
 	//drawing pause menu, for gameworld to call during pause state
-	void DrawPauseMenu();	
+	void DrawPauseMenu(Player& player);	
 	
 	void Exit();
 private:
@@ -79,10 +85,14 @@ private:
 	//NPC image
 	ITexture*					NPCTexture;
 	
-	//PauseMenu Texture
+	//PauseMenu Attributes
+	//Texture and font
 	ITexture*					PauseMenuTexture;
 	irr::gui::CGUITTFont*		MenuFont;
 	ITexture*					SelectIconTexture;
+	//Menu attributes
+	MENU_SELECTED				MenuSelected;
+	
 	
 	
 	double						timeElapsed;
