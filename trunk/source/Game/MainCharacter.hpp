@@ -7,6 +7,7 @@
 #include <vector>
 #include <utility>
 #include "Item.hpp"
+#include "shader.h"
 
 
 class ProgressCircle;
@@ -201,7 +202,7 @@ private:
 	ISound* sfxFootstep;
 	irr::f32 sfxTimer;
 
-	
+	Shader* test1;
 	/*********************
 	 Player Attributes
 	 **********************/
