@@ -88,10 +88,11 @@ void Monster::update(Player& _player, irr::f32 delta)
 	{
 		std::cout << "Player Level: " << ((MainCharacter&)world.GetCurrentPlayer()).GetLevel() << std::endl;
 		//+ player exp
-		((MainCharacter&)world.GetCurrentPlayer()).SetEXP(((MainCharacter&)world.GetCurrentPlayer()).GetEXP());
+		((MainCharacter&)world.GetCurrentPlayer()).SetEXP(
+			((MainCharacter&)world.GetCurrentPlayer()).GetEXP()+
+			_exp);
 		//+level
 		irr::s32 playerLevel = ((MainCharacter&)world.GetCurrentPlayer()).GetLevel();
-		((MainCharacter&)world.GetCurrentPlayer()).SetEXP(_exp);
 		irr::s32 playerEXP = ((MainCharacter&)world.GetCurrentPlayer()).GetEXP();
 		if ( playerEXP >= (playerLevel-1)*(playerLevel-1)*100)
 		{
