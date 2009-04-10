@@ -738,7 +738,6 @@ void GameWorld::Tick( irr::f32 delta )
 
 
 					irr::scene::ISceneNode* rootNode = smgr.getRootSceneNode();
-					GetCurrentPlayer().PlayRandomCheer();
 					// GEngine->ChangeMusic( "../audio/music/plowmusic.mp3" );
 
 					scrSize.Width /= 2;
@@ -838,59 +837,9 @@ void GameWorld::DoInput()
 
 	if( gameState == state_PAUSED || gameState == state_INTERACTING)
 		return;
-	
-	if(receiver.keyDown(irr::KEY_KEY_M))
-	{
-		((MainCharacter&)GetCurrentPlayer()).setDefending( true );
-		return;
-	}
-	else
-	{
-		((MainCharacter&)GetCurrentPlayer()).setDefending( false );
-	}
 
-	if(receiver.keyReleased(irr::KEY_SPACE) || receiver.mousePressed(InputEventReceiver::LEFT))
-	{
-		((MainCharacter&)GetCurrentPlayer()).setAttacking( true );
-		return;
-	}
-	else
-	{
-		((MainCharacter&)GetCurrentPlayer()).setAttacking( false );
-	}
-
-	irr::core::vector3df playerTranslation(0, 0, 0);
-	irr::core::vector3df playerRotation(0, 0, 0);
-
-	if(receiver.keyDown(irr::KEY_KEY_W))
-	{ 
-		playerTranslation.Z = -20;
-	}
-	else if(receiver.keyDown(irr::KEY_KEY_S))
-	{
-		playerTranslation.Z = 20;
-	}
-	if(receiver.keyDown(irr::KEY_KEY_A))
-	{
-		playerRotation.Y = 3;
-	}
-	else if(receiver.keyDown(irr::KEY_KEY_D))
-	{
-		playerRotation.Y = -3;
-	}
-	
-	if(receiver.keyDown(irr::KEY_SHIFT))
-	{
-		playerTranslation *= 2;
-		((MainCharacter&)GetCurrentPlayer()).setRunning( true );
-	}
-	else
-	{
-		((MainCharacter&)GetCurrentPlayer()).setRunning( false );
-	}
-
-	GetCurrentPlayer().SetRotation( playerRotation );
-	GetCurrentPlayer().SetTranslation( playerTranslation );
+	/*GetCurrentPlayer().SetRotation( playerRotation );
+	GetCurrentPlayer().SetTranslation( playerTranslation );*/
 
 	/*if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
 	{
@@ -955,7 +904,6 @@ void GameWorld::DoAI( irr::f32 delta )
 			waveTimer = 0;
 			GetCurrentPlayer().SetHealth( 100.0f );
 			spawnsDone = false;
-			GetCurrentPlayer().PlayRandomCheer();
 			return;
 		}
 	}

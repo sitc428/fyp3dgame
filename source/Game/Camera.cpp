@@ -7,9 +7,7 @@
 #include <irrlicht/irrlicht.h>
 
 // Parameters specifying default parameters
-static const irr::core::vector3df defaultPosition = irr::core::vector3df(0, 60, 10);
-static const irr::core::vector3df defaultRotation = irr::core::vector3df(0, 0, 0);
-static const irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 30.0f, 60.0f);
+static const irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 50.0f, 50.0f);
 
 extern GameEngine* GEngine;
 
@@ -26,23 +24,9 @@ Camera::Camera( GameWorld& gameWorld,
 	zoom(1)
 {
 	//node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
-	node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, irr::core::vector3df(0, 0, 0) );
-
-	node->setPosition( defaultPosition );
-	node->setRotation( defaultRotation );
-
+	node = world.GetSceneManager().addCameraSceneNode(0);
 	node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX );
-	node->setFarValue( 500 );
-
-	// setup camera collision with the world
-	/* irr::scene::ISceneNodeAnimator* anim = world.GetSceneManager().createCollisionResponseAnimator(
-	   &levelTriangleSelector, node, irr::core::vector3df( 5, 5, 5 ),
-	   irr::core::vector3df(0, 0, 0 ), // gravity
-	   irr::core::vector3df( 0, 0, 0 ), // ellipsoid translation
-	   0.0001f ); // sliding value
-	   node->addAnimator(anim);
-	   anim->drop();
-	   */
+	node->setFarValue( 2000 );
 }
 
 // destructor, protected to force user to call Actor::DestroyActor
@@ -68,31 +52,21 @@ void Camera::Tick( irr::f32 delta )
 {
 	DoInput( delta );
 
-	/*node->setPosition( target->GetNode().getAbsolutePosition() + zoom * cameraOffset + translation);
+	Player* player = target;
+	//irr::core::vector3df rotation = player->GetRotation();
 
-	node->setTarget( target->GetNodePosition() + translation );
-
-	irr::core::position2d<irr::s32> mouseDelta = GEngine->GetMouseDelta();
-	irr::f32 mouseDX = mouseDelta.X * 0.2f;
-	irr::f32 mouseDY = mouseDelta.Y * 0.075f;
-	if( mouseDX || mouseDY)
-	{
-		node->setRotation( irr::core::vector3df( -mouseDY, mouseDX, 0.0f) );
-	}*/
-
-	Player* player = (Player *)target;
-	irr::core::vector3df rotation = player->GetRotation();
-
-	irr::core::vector3df aimVector = target->GetAimVector();
+	//irr::core::vector3df aimVector = target->GetAimVector();
 	irr::core::vector3df position = target->GetNodePosition();
-	position += target->GetAimVector() * zoom * cameraOffset.Z;
-	position.Y += zoom * cameraOffset.Y - rotation.X;
+	position += cameraOffset;
+	//position += target->GetAimVector() * zoom * cameraOffset.Z;
+	//position.Y += zoom * cameraOffset.Y - rotation.X;
 
 	// update camera position
 	node->setPosition( position );
+	node->setTarget( target->GetNodePosition() );
 
 	// update target position
-	node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
+	//node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
 
 }
 
@@ -124,7 +98,7 @@ void Camera::DoInput( irr::f32 delta )
 	if( zoom < 0.5 )
 		zoom = 0.5;
 	if( zoom > 3.0 )
-		zoom = 2.0;
+		zoom = 3.0;
 
 	//translation += cameraTranslation * delta;
 }

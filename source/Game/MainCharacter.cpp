@@ -5,6 +5,7 @@
 /*#include "DynamiteProjectile.h"
 #include "SnowballProjectile.h"
 #include "LandMine.h"*/
+#include "InputEventReceiver.hpp"
 #include "FloorDecalSceneNode.h"
 #include "ProgressCircle.hpp"
 #include <cmath>
@@ -14,7 +15,7 @@ extern GameEngine* GEngine;
 
 // Parameters specifying default parameters
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(150,50,20);
-static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 90, 0);
+static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
 static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/MainTexutre1.png";
@@ -25,6 +26,8 @@ static const irr::c8*		defaultTexture = "media/model/MainTexutre1.png";
 static const irr::f32		ANIMATION_SPEED = 24;
 static const irr::f32		ANIMATION_TRANSITION_BLEND_TIME = 0.2f;
 
+static irr::core::vector3df defaultAimVector = irr::core::vector3df(0, 0, -1.0);
+
 // main character's animation information
 static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_START = 1;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_IDLE_END = 1;
@@ -32,8 +35,9 @@ static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START = 4;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END = 30;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_START = 38;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_END = 63;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 72;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_END = 95;
+//static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 72;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 80;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_END = 97;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_START = -1;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_END = -1;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_START = 125;
@@ -74,7 +78,8 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	bDoFillup( false ),
 	world(gameWorld),
 	sfxTimer(12),
-	_healthBar(NULL)
+	_healthBar(NULL),
+	attackCallBack(NULL)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	// load the animated mesh, and add a new scene graph node for it
@@ -110,6 +115,10 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 
 	// setup the player health bar
 	_healthBar = new ProgressCircle(node, & (world.GetSceneManager()), 2222, world.GetSceneManager().getSceneCollisionManager());
+
+	attackCallBack = new AttackAnimationEndCallBack( *this );
+
+	aimVector = defaultAimVector;
 
 	// setup snow steps sound effect
 	//	sfxFootstep = GEngine->GetSoundEngine().play2D( "../audio/sfx/snowstepsrun.mp3", true, false, true );
@@ -158,15 +167,16 @@ MainCharacter::~MainCharacter()
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	smgr.addToDeletionQueue( node );
 	smgr.addToDeletionQueue( shadowNode );
+
+	node->setAnimationEndCallback( NULL );
+
+	attackCallBack->drop();
 }
 
 // set the translation vector for player
 void MainCharacter::SetTranslation( const irr::core::vector3df& trans )
 {
 	Player::SetTranslation( trans );
-//	sfxFootstep->setVolume( 0.65f );
-	SetMoveState();
-//	SetArmsState();
 }
 
 // set the rotation vector for player
@@ -183,14 +193,7 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 	else if(rot.Y < 0.0f)
 		rotationState = EMCRS_LEFT;
 	else
-	{
 		rotationState = EMCRS_IDLE;
-		action =  (EMainCharacterActionState) ( (int)action | (int)EMCAS_ROTATE );
-
-		return;
-	}
-
-	action = (EMainCharacterActionState) ( (int)action & ! (int)EMCAS_ROTATE );
 }
 
 void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
@@ -213,52 +216,107 @@ void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
 	node->setMaterialType( (irr::video::E_MATERIAL_TYPE) newMaterialType );
 }
 
+void MainCharacter::setIdle()
+{
+	node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+	node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
+	node->setLoopMode( false );
+
+	action = EMCAS_IDLE;
+}
+
+void MainCharacter::setDefending( bool defending )
+{
+	action = defending ? EMCAS_DEFEND : EMCAS_IDLE;
+}
+
+void MainCharacter::setMoving( bool moving )
+{
+	if( isMoving() )
+		return;
+
+	if( moving )
+	{
+		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START, MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END );
+		node->setLoopMode( true );
+
+		action = EMCAS_MOVE;
+	}
+}
+
+void MainCharacter::setAttacking( bool attacking )
+{
+	if( attacking )
+	{
+		action = EMCAS_ATTACK;
+		node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_ATTACK_START );
+		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_ATTACK_START, MAIN_CHARACTER_ANIMATION_ATTACK_END );
+		node->setLoopMode( false );
+		//node->setAnimationEndCallback( attackCallBack );
+	}
+}
+
 void MainCharacter::setRunning( bool running )
 {
-	action = running ? EMCAS_RUNNING : EMCAS_IDLE; action = (EMainCharacterActionState) (action | EMCAS_MOVE);
-	node->setFrameLoop( MAIN_CHARACTER_ANIMATION_RUN_START, MAIN_CHARACTER_ANIMATION_RUN_END );
-	node->setLoopMode( true );
+	if( isRunning() )
+		return;
+
+	if( running )
+	{
+		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_RUN_START, MAIN_CHARACTER_ANIMATION_RUN_END );
+		node->setLoopMode( true );
+
+		action = EMCAS_RUNNING;
+	}
+}
+
+bool MainCharacter::isIdle() const
+{
+	return action == EMCAS_IDLE;
+}
+
+bool MainCharacter::isDefending() const
+{
+	return action == EMCAS_DEFEND;
+}
+
+bool MainCharacter::isAttacking() const
+{
+	return action == EMCAS_ATTACK;
+}
+
+bool MainCharacter::isMoving() const
+{
+	return action == EMCAS_MOVE || action == EMCAS_RUNNING;
+}
+
+bool MainCharacter::isRunning() const
+{
+	return action == EMCAS_RUNNING;
 }
 
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
-	if( action == EMCAS_DEFEND )
-	{
-	}
-	/*if(action & EMCAS_DEFEND)
-	{
-	}
-	else if(action & EMCAS_MOVE)
-	{*/
+	DoInput();
 
-	if( action == EMCAS_IDLE )
-	{
-		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
-		node->setLoopMode( false );
-		node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
-	}
+	node->setRotation( rotation );
+	irr::core::vector3df playerPos = node->getPosition();
+	playerPos += faceVector * delta * translation.Z;
+	node->setPosition( playerPos );
+
+	/*if( isDefending() )
+		return;
+
+	if( isRunning() )
+		std::cout << "Still running" << std::endl;
 
 	// player's rotation update, must happen before the position updates
-	UpdateRotationState();
-
-	// player's movement
-	UpdateMoveState( delta );
-	//sfxTimer++;
-}
-
-void MainCharacter::UpdateRotationState()
-{
-	// rotate aim vector
 	aimVector.set( 1, 0, 0 );
 	aimVector.rotateXZBy( -rotation.Y, irr::core::vector3df( 0, 0, 0 ) );
 	aimVector.normalize();
 
-	rotationState = EMCRS_IDLE;
-}
-
-void MainCharacter::UpdateMoveState( irr::f32 delta )
-{
+	// player's movement
 	switch(moveState)
 	{
 		case EMCMS_IDLE:
@@ -268,96 +326,179 @@ void MainCharacter::UpdateMoveState( irr::f32 delta )
 			// setup animation
 			if( prevMoveState != EMCMS_IDLE )
 			{
-				node->setLoopMode( false );
-				node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
-				node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_END );
+				setIdle();
 			}	
 			break;
 		}
-		case EMCMS_LEFT:
-		{
-			if( prevMoveState != EMCMS_LEFT )
-			{
-				if( prevMoveState == EMCMS_IDLE 
-				&&	walkStopState == EMCMS_LEFT )
-				{
-					//node->setCurrentFrame(walkStopFrameNumber);
-				}
-			}
-			UpdatePosition( delta );
-			break;
-		}
-		case EMCMS_RIGHT:
-		{
-			// setup animation for this state
-			if( prevMoveState != EMCMS_RIGHT )
-			{
-				//node->setFrameLoop(MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_START,MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_END);
-				if( prevMoveState == EMCMS_IDLE 
-				&&	walkStopState == EMCMS_RIGHT )
-				{
-					//node->setCurrentFrame(walkStopFrameNumber);
-				}
-			}
-			UpdatePosition( delta );
-			break;
-		}		
 		case EMCMS_FORWARD:
-		case EMCMS_FORWARD_LEFT:
-		case EMCMS_FORWARD_RIGHT:
-		{
-			if( prevMoveState != EMCMS_FORWARD )
-			{
-				// setup animation for this state
-				node->setLoopMode( true );
-				node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START,
-					MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END );
-			}
-
-			UpdatePosition( delta );
-			break;
-		}
 		case EMCMS_BACK:
-		case EMCMS_BACK_LEFT:
-		case EMCMS_BACK_RIGHT:
 		{
-			// setup animation for this state
-			if( prevMoveState != EMCMS_BACK )
-			{
-				// setup animation for this state
-				node->setLoopMode( true );
-				node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_BACK_START,
-					MAIN_CHARACTER_ANIMATION_WALK_BACK_END );
-			}
+			irr::core::vector3df playerPos = node->getPosition();
 
-			UpdatePosition( delta );
+			// calculate "right" vector
+			irr::core::vector3df rightVector = aimVector.crossProduct(irr::core::vector3df(0,1,0));
+			rightVector.normalize();
+
+			irr::core::vector3df savePos = playerPos;
+
+			// translate player
+			playerPos += rightVector * delta * translation.X;
+			playerPos += aimVector * delta * translation.Z;
+			node->setPosition( playerPos );
+
+			velApprox = playerPos - savePos;
+
 			break;
 		}
 
 		default:
 			break;
-	}
+	}*/
 
-	prevMoveState = moveState;
+	//sfxTimer++;
 }
 
-// updated the player position based on the value of translation set
-void MainCharacter::UpdatePosition( irr::f32 delta )
+void MainCharacter::DoInput()
 {
-	irr::core::vector3df playerPos = node->getPosition();
+	InputEventReceiver& receiver = GEngine->GetReceiver();
 
-	// calculate "right" vector
-	irr::core::vector3df rightVector = aimVector.crossProduct(irr::core::vector3df(0,1,0));
-	rightVector.normalize();
+	irr::core::vector3df playerTranslation(0, 0, 0);
+	irr::core::vector3df playerRotation(0, 0, 0);
 
-	irr::core::vector3df savePos = playerPos;
+	bool move = false;
 
-	// translate player
-	playerPos += rightVector * delta * translation.X;
-	playerPos += aimVector * delta * translation.Z;
-	node->setPosition( playerPos );
+	if( receiver.keyDown(irr::KEY_KEY_W) )
+	{
+		if(faceVector != aimVector)
+		{
+			//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
+			faceVector = aimVector;
+			faceVector.normalize();
+		}
 
-	velApprox = playerPos - savePos;
+		move = true;
+	}
+	if( receiver.keyDown(irr::KEY_KEY_S) )
+	{
+		if(faceVector != -aimVector)
+		{
+			//Player::SetTranslation( irr::core::vector3df(0, 0, -20) );
+			faceVector = aimVector;
+			faceVector.rotateXZBy( 180, irr::core::vector3df(0, 0, 0) );
+			faceVector.normalize();
+		}
+
+		move = true;
+	}
+
+	if( receiver.keyDown(irr::KEY_KEY_A) )
+	{
+		//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
+		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != 90 )
+		{
+			faceVector = aimVector;
+			faceVector.rotateXZBy( 90, irr::core::vector3df(0, 0, 0) );
+			faceVector.normalize();
+		}
+
+		move = true;
+	}
+
+	if( receiver.keyDown(irr::KEY_KEY_D) )
+	{
+		//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
+		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != -90 )
+		{
+			faceVector = aimVector;
+			faceVector.rotateXZBy( -90, irr::core::vector3df(0, 0, 0) );
+			faceVector.normalize();
+		}
+
+		move = true;
+	}
+
+	if( receiver.keyDown(irr::KEY_KEY_E) )
+	{
+		aimVector.rotateXZBy(-5, irr::core::vector3df(0, 0, 0) );
+		aimVector.normalize();
+	}
+
+	if( receiver.keyDown(irr::KEY_KEY_Q) )
+	{
+		aimVector.rotateXZBy(5, irr::core::vector3df(0, 0, 0) );
+		aimVector.normalize();
+	}
+
+	if(move)
+	{
+		if( receiver.keyDown(irr::KEY_SHIFT) )
+		{
+			playerTranslation.Z = 45;
+			setRunning( true );
+		}
+		else
+		{
+			playerTranslation.Z = 15;
+			setMoving( true );
+		}
+	}
+	else
+	{
+		setIdle();
+	}
+	
+	playerRotation.Y = floor( faceVector.getHorizontalAngle().Y - defaultAimVector.getHorizontalAngle().Y );
+
+	SetRotation( playerRotation );
+	SetTranslation( playerTranslation );
+
+	/*if(receiver.keyDown(irr::KEY_KEY_M))
+	{
+		setDefending( true );
+		return;
+	}
+
+	if(receiver.keyReleased(irr::KEY_SPACE) || receiver.mousePressed(InputEventReceiver::LEFT))
+	{
+		setAttacking( true );
+		return;
+	}
+
+	irr::core::vector3df playerTranslation(0, 0, 0);
+	irr::core::vector3df playerRotation(0, 0, 0);
+
+	if(receiver.keyDown(irr::KEY_KEY_W))
+	{ 
+		playerTranslation.Z = -20;
+		if( !isMoving())
+			setMoving( true );
+	}
+	else if(receiver.keyDown(irr::KEY_KEY_S))
+	{
+		playerTranslation.Z = 20;
+		if( !isMoving())
+			setMoving( true );
+	}
+	if(receiver.keyDown(irr::KEY_KEY_A))
+	{
+		playerRotation.Y = 3;
+	}
+	else if(receiver.keyDown(irr::KEY_KEY_D))
+	{
+		playerRotation.Y = -3;
+	}
+	
+	if(receiver.keyDown(irr::KEY_SHIFT))
+	{
+		playerTranslation *= 2;
+		if( !isRunning() )
+			setRunning( true );
+	}
+
+	if( receiver.keyReleased( irr::KEY_SHIFT ) )
+	{
+		setRunning( false );
+	}*/
 }
 
 // updates the power of the throw meter
@@ -366,47 +507,6 @@ void MainCharacter::UpdateThrowMeter( irr::f32 delta )
 	if( bDoFillup )
 	{
 		throwFillupTimer += delta;
-
-		// stop updating if we've reached the maximum fillup
-		/*
-		if( throwFillupTimer > THROW_METER_FILLUP_TIME )
-		{
-			throwFillupTimer = THROW_METER_FILLUP_TIME;
-		}
-		*/
-	}
-}
-
-// updates the move state based on the current value of player translation
-void MainCharacter::SetMoveState( )
-{
-	// set the player move state based on the received translation
-	if( translation.Z < 0.0f )
-	{
-		if( translation.X > 0.0f )
-			moveState = EMCMS_FORWARD_LEFT;
-		else if( translation.X < 0.0f )
-			moveState = EMCMS_FORWARD_RIGHT;
-		else
-			moveState = EMCMS_FORWARD;
-	}
-	else if( translation.Z > 0.0f )
-	{
-		if( translation.X > 0.0f )
-			moveState = EMCMS_BACK_LEFT;
-		else if( translation.X < 0.0f )
-			moveState = EMCMS_BACK_RIGHT;
-		else
-			moveState = EMCMS_BACK;
-	}
-	else	// trans.Z == 0
-	{
-		if( translation.X > 0.0f )
-			moveState = EMCMS_LEFT;
-		else if( translation.X < 0.0f )
-			moveState = EMCMS_RIGHT;
-		else
-			moveState = EMCMS_IDLE;
 	}
 }
 
@@ -615,3 +715,9 @@ void MainCharacter::PlaceLeftFootPrint()
 	footStepNode->addAnimator( anim );
 }
 */
+
+void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
+{
+	theMainCharacter.setIdle();
+	theNode->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+}

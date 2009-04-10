@@ -260,7 +260,7 @@ void GameEngine::Run()
 		device->getGUIEnvironment()->drawAll();
 		
 		TickHUD(frameDelta);
-		
+
 		driver->endScene();
 
 		receiver->enable();
