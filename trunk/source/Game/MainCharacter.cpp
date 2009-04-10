@@ -362,12 +362,23 @@ void MainCharacter::DoInput()
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
+	if( receiver.keyDown(irr::KEY_KEY_X) )
+	{
+		setDefending( true );
+		return;
+	}
+
+	if( receiver.keyReleased(irr::KEY_KEY_Z) )
+	{
+		return;
+	}
+
 	irr::core::vector3df playerTranslation(0, 0, 0);
 	irr::core::vector3df playerRotation(0, 0, 0);
 
 	bool move = false;
 
-	if( receiver.keyDown(irr::KEY_KEY_W) )
+	if( receiver.keyDown(irr::KEY_UP) )
 	{
 		if(faceVector != aimVector)
 		{
@@ -378,7 +389,7 @@ void MainCharacter::DoInput()
 
 		move = true;
 	}
-	if( receiver.keyDown(irr::KEY_KEY_S) )
+	if( receiver.keyDown(irr::KEY_DOWN) )
 	{
 		if(faceVector != -aimVector)
 		{
@@ -391,7 +402,7 @@ void MainCharacter::DoInput()
 		move = true;
 	}
 
-	if( receiver.keyDown(irr::KEY_KEY_A) )
+	if( receiver.keyDown(irr::KEY_LEFT) )
 	{
 		//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != 90 )
@@ -404,7 +415,7 @@ void MainCharacter::DoInput()
 		move = true;
 	}
 
-	if( receiver.keyDown(irr::KEY_KEY_D) )
+	if( receiver.keyDown(irr::KEY_RIGHT) )
 	{
 		//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != -90 )

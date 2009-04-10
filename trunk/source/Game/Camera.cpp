@@ -7,7 +7,7 @@
 #include <irrlicht/irrlicht.h>
 
 // Parameters specifying default parameters
-static const irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 50.0f, 50.0f);
+static const irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 50.0f, 100.0f);
 
 extern GameEngine* GEngine;
 
@@ -26,7 +26,7 @@ Camera::Camera( GameWorld& gameWorld,
 	//node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
 	node = world.GetSceneManager().addCameraSceneNode(0);
 	node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX );
-	node->setFarValue( 2000 );
+	node->setFarValue( 1000 );
 }
 
 // destructor, protected to force user to call Actor::DestroyActor
@@ -52,21 +52,19 @@ void Camera::Tick( irr::f32 delta )
 {
 	DoInput( delta );
 
-	Player* player = target;
-	//irr::core::vector3df rotation = player->GetRotation();
-
-	//irr::core::vector3df aimVector = target->GetAimVector();
+	irr::core::vector3df aimVector = target->GetAimVector();
 	irr::core::vector3df position = target->GetNodePosition();
-	position += cameraOffset;
+	position -= aimVector * zoom * cameraOffset.Z;
+	position.Y += cameraOffset.Y;
 	//position += target->GetAimVector() * zoom * cameraOffset.Z;
 	//position.Y += zoom * cameraOffset.Y - rotation.X;
 
 	// update camera position
 	node->setPosition( position );
-	node->setTarget( target->GetNodePosition() );
 
 	// update target position
 	//node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
+	node->setTarget( target->GetNodePosition() + aimVector * 50 );
 
 }
 
