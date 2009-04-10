@@ -361,12 +361,12 @@ void GameWorld::InitRobot()
 void GameWorld::InitEnemies()
 {
 
-	Monster* m1 = new Monster( *this, GEngine->GetDriver());
+	Monster* m1 = new Monster( *this, GEngine->GetDriver(), 50);
 	actors.push_back(m1);
 	m1->ReSetPosition(irr::core::vector3df(-40,0,180));
 	
 	
-	Monster* m2 = new Monster( *this, GEngine->GetDriver());
+	Monster* m2 = new Monster( *this, GEngine->GetDriver(), 50);
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(50,0,200));
 	
