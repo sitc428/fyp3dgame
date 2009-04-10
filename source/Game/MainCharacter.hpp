@@ -34,27 +34,6 @@ enum EMainCharacterActionState
 	EMCAS_DEAD = 1 << 31
 };
 
-// player states 
-enum EMainCharacterMoveState
-{
-	EMCMS_IDLE,			// player is not moving
-	EMCMS_FORWARD,
-	EMCMS_BACK,
-	EMCMS_LEFT,
-	EMCMS_RIGHT,
-	EMCMS_FORWARD_LEFT,
-	EMCMS_FORWARD_RIGHT,
-	EMCMS_BACK_LEFT,
-	EMCMS_BACK_RIGHT
-};
-
-enum EMainCharacterRotateState
-{
-	EMCRS_IDLE,		// player is not rotating
-	EMCRS_LEFT,
-	EMCRS_RIGHT
-};
-
 class MainCharacter: public Player
 {
 public:
@@ -112,7 +91,7 @@ public:
 	bool IsDead() const { return action == EMCAS_DEAD; }	
 
 	// unbuffered mouse input 
-	virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
+	virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent ) {}
 	
 	/********************
 	 Player Attribute GET FUNCTIONS
@@ -182,16 +161,6 @@ private:
 
 	EMainCharacterActionState action;
 
-	// player's move direction
-	EMainCharacterMoveState moveState;
-	EMainCharacterMoveState prevMoveState;
-	// player's rotation direction
-	EMainCharacterRotateState rotationState;
-
-	// the frame number where the walking animation was stopped last, used for restarting it from the right spot
-	EMainCharacterMoveState walkStopState;
-	irr::f32 walkStopFrameNumber;
-
 	// the meter which tracks how long the player is holding the throw button;
 	irr::f32 throwFillupTimer;
 	
@@ -214,7 +183,6 @@ private:
 	irr::s32 _magicdefence;
 	irr::s32 _magiclevel;
 	bool _charging;
-	//(std::vector< std::pair<Item*, int> >) _itemBox;
 	irr::core::array< std::pair<Item*,int> > _itemBox;
 	irr::s32 _exp;
 	
