@@ -45,7 +45,7 @@ static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 80;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_END = 97;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_START = -1;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_END = -1;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_START = 125;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_START = 126;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_END = 139;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_START = 104;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_END = 124;
@@ -74,11 +74,6 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	collisionAnimator(NULL),
 	shadowNode(NULL),
 	action(EMCAS_IDLE),
-	moveState(EMCMS_IDLE),
-	prevMoveState(EMCMS_IDLE),
-	rotationState(EMCRS_IDLE),
-	walkStopState(EMCMS_IDLE),
-	walkStopFrameNumber(0.0f),
 	throwFillupTimer( 0.0f ),
 	bDoFillup( false ),
 	world(gameWorld),
@@ -209,14 +204,6 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 
 	// rotate player
 	node->setRotation( irr::core::vector3df( 0, rotation.Y + defaultRotation.Y, 0 ) );
-
-	// set the rotation state
-	if(rot.Y > 0.0f)
-		rotationState = EMCRS_RIGHT;
-	else if(rot.Y < 0.0f)
-		rotationState = EMCRS_LEFT;
-	else
-		rotationState = EMCRS_IDLE;
 }
 
 void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
@@ -250,7 +237,13 @@ void MainCharacter::setIdle()
 
 void MainCharacter::setDefending( bool defending )
 {
-	action = defending ? EMCAS_DEFEND : EMCAS_IDLE;
+	if( isDefending() )
+		return;
+	
+	if( defending )
+	{
+		action = EMCAS_DEFEND;
+	}
 }
 
 void MainCharacter::setMoving( bool moving )
@@ -260,10 +253,9 @@ void MainCharacter::setMoving( bool moving )
 
 	if( moving )
 	{
+		action = EMCAS_MOVE;
 		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START, MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END );
 		node->setLoopMode( true );
-
-		action = EMCAS_MOVE;
 	}
 }
 
@@ -278,7 +270,7 @@ void MainCharacter::setAttacking( bool attacking )
 		node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_ATTACK_START );
 		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_ATTACK_START, MAIN_CHARACTER_ANIMATION_ATTACK_END );
 		node->setLoopMode( false );
-		//node->setAnimationEndCallback( attackCallBack );
+		node->setAnimationEndCallback( attackCallBack );
 	}
 }
 
@@ -324,7 +316,9 @@ bool MainCharacter::isRunning() const
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
-	DoInput();
+	if( !(isAttacking() || IsDead()) )
+		DoInput();
+
 	UpdateThrowMeter( delta );
 
 	node->setRotation( rotation );
@@ -337,6 +331,15 @@ void MainCharacter::Tick( irr::f32 delta )
 void MainCharacter::DoInput()
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
+
+	if( receiver.keyDown(irr::KEY_KEY_C) )
+	{
+		_charging = true;
+	}
+	else
+	{
+		_charging = false;
+	}
 
 	if( receiver.keyDown(irr::KEY_KEY_X) )
 	{
@@ -469,8 +472,6 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	{
 		//moveState = EMCMS_DEAD;
 		action = EMCAS_DEAD;
-		moveState = EMCMS_IDLE;
-		rotationState = EMCRS_IDLE;
 	}
 	else
 	{
@@ -568,44 +569,6 @@ void MainCharacter::PlaceMine( LandMine& mine )
 	DoLaunchProjectile();
 }
 */
-
-// unbuffered mouse input 
-void MainCharacter::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
-{
-	// not allow player to throw dynamites except during gameplay
-	EGameState gameState = world.GetGameState();
-	if( gameState != state_GAMEPLAY && world.GetGameState() != state_WAVE_FINISHED )
-		return;
-
-	if( mouseEvent.Event == irr::EMIE_LMOUSE_PRESSED_DOWN )
-	{
-		// start filling up the throw power meter
-		//check( !bDoFillup );
-		bDoFillup = true;
-	}
-	else if( mouseEvent.Event == irr::EMIE_LMOUSE_LEFT_UP )
-	{
-		// get the first available projectile
-/*		DynamiteProjectile* projectile = world.GetFirstAvailableDynamite();
-		if( projectile && ammo > 0 )
-		{
-			// check if we're not throwing too soon
-			static irr::u32 lastThrowTime = 0;
-			irr::u32 currTime = GEngine->GetRealTime();
-			if( currTime - lastThrowTime > MIN_TIME_BETWEEN_THROWS || godMode )
-			{
-				// calculate the throw power, in percentage points
-				irr::f32 power = throwFillupTimer / THROW_METER_FILLUP_TIME;
-				ShootDynamite( power, *projectile );
-				lastThrowTime = currTime;
-			}
-		}
- */
-		//check(bDoFillup);
-		bDoFillup = false;
-		throwFillupTimer = 0.0f;
-	}
-}
 
 /*
 // drops a player footprint on the ground
