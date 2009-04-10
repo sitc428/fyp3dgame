@@ -222,8 +222,6 @@ private:
 	/************
 	 ************/
 
-	ProgressCircle* _healthBar;
-
 	GameWorld& world;
 
 	class MyMainCharacterShaderCallBack : public irr::video::IShaderConstantSetCallBack

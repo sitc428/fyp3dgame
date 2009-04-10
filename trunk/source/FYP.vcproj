@@ -304,6 +304,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\shader.h"
+				>
+			</File>
+			<File
 				RelativePath=".\engine\StartupScreen.h"
 				>
 			</File>
@@ -429,6 +433,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\SellingMachine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\shader.cpp"
 				>
 			</File>
 			<File
