@@ -70,7 +70,9 @@ static const irr::u32			FOOTSTEP_DURATION = 6000;
 
 // constructor
 MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
-	:Player(gameWorld),node(NULL),
+	:Player(gameWorld),
+	node(NULL),
+	weapon(NULL),
 	collisionAnimator(NULL),
 	shadowNode(NULL),
 	action(EMCAS_IDLE),

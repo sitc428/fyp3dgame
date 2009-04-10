@@ -146,6 +146,7 @@ private:
 
 	// scene graph node for player
 	irr::scene::IAnimatedMeshSceneNode* node;
+	irr::scene::IMeshSceneNode* weapon;
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
