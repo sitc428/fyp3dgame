@@ -332,11 +332,11 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
-		_charging = true;
+		SetCharging( true );
 	}
 	else
 	{
-		_charging = false;
+		SetCharging( false );
 	}
 
 	if( receiver.keyDown(irr::KEY_KEY_X) )
