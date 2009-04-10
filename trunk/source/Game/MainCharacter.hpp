@@ -37,6 +37,8 @@ enum EMainCharacterActionState
 class MainCharacter: public Player
 {
 public:
+	typedef irr::core::array< std::pair<Item*, int> > ItemCollection;
+
 	// constructor
 	MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& driver );
 
@@ -105,7 +107,7 @@ public:
 	irr::u32 GetChargingProgress() const {return _magicChargeProgress;}
 	bool GetCharging() const {return _charging;};		//to get whether the player is charging for Magic
 	//(std::vector< std::pair<Item*, int> >) GetItemBox() {return _itemBox;};
-	irr::core::array< std::pair<Item*,int> >& GetItemBox() {return _itemBox;}
+	ItemCollection& GetItemBox() {return _itemBox;}
 	irr::s32 GetEXP() const {return _exp;}
 	
 	/********************
@@ -119,7 +121,7 @@ public:
 	void SetMagicLevel(irr::s32 magiclevel) { _magiclevel = magiclevel;}; 
 	void SetCharging(bool charging) { _charging = charging;};		//to get whether the player is charging for Magic
 	//void SetItemBox(std::vector< std::pair<Item*, int> > itemBox) { _itemBox = itemBox;};
-	void SetItemBox(irr::core::array< std::pair<Item*, int> > itemBox) {_itemBox = itemBox;};
+	void SetItemBox(ItemCollection itemBox) {_itemBox = itemBox;};
 	void SetEXP(irr::s32 exp) {_exp = exp;};
 	
 protected:
@@ -179,7 +181,7 @@ private:
 	irr::s32 _magiclevel;
 	irr::u32 _magicChargeProgress;
 	bool _charging;
-	irr::core::array< std::pair<Item*,int> > _itemBox;
+	ItemCollection _itemBox;
 	irr::s32 _exp;
 	
 	

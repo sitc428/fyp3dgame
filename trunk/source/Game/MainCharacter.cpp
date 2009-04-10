@@ -91,7 +91,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	this->SetMagicDefencePoint(5);
 	this->SetCharging(false);
 
-	irr::core::array<std::pair<Item*, int> > tmpBox;
+	ItemCollection tmpBox;
 	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);
 	Item* md = new MDiscItem(world, MDISCITEM, "Magic Disc", 1);	
 	Item* xItem = new XItem(world, XITEM, "X Item", 1);
