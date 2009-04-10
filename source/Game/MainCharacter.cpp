@@ -72,7 +72,7 @@ static const irr::u32			FOOTSTEP_DURATION = 6000;
 MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
 	:Player(gameWorld),
 	node(NULL),
-	weapon(NULL),
+	weaponNode(NULL),
 	collisionAnimator(NULL),
 	shadowNode(NULL),
 	action(EMCAS_IDLE),
@@ -121,6 +121,8 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.jpg" ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
+
+	weaponNode = smgr.addCubeSceneNode(1, node->getJointNode("RightFingerBase"), -1, irr::core::vector3df(0, 0, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(.5, 10, .5));
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
