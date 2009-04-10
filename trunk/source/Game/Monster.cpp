@@ -99,6 +99,8 @@ void Monster::update(Player& _player, irr::f32 delta)
 			((MainCharacter&)world.GetCurrentPlayer()).SetDefencePoint(50+450*(playerLevel-1)/99);
 			((MainCharacter&)world.GetCurrentPlayer()).SetMagicAttackPoint(100+(playerLevel-1)*9);
 			((MainCharacter&)world.GetCurrentPlayer()).SetMagicDefencePoint(30+270*(playerLevel-1)/99);
+			((MainCharacter&)world.GetCurrentPlayer()).SetMaxHealth(1000+(playerLevel-1)*90);
+			((MainCharacter&)world.GetCurrentPlayer()).SetHealth(1000+(playerLevel-1)*90);
 		}
 		
 		//Death;

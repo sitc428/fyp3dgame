@@ -53,6 +53,8 @@ class Player: public Actor
 		virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent ) {};
 
 		virtual void SetHealth( irr::f32 pHealth ) { health = pHealth; }
+		virtual void SetMaxHealth( irr::f32 pHealth ) { max_health = pHealth; }
+
 		irr::u32 GetHealth() const { return health; }
 		irr::u32 GetMaxHealth() const { return max_health;}
 	
