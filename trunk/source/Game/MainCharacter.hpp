@@ -129,12 +129,6 @@ private:
 	// diallow copy constructor from being invoked
 	MainCharacter( const MainCharacter& other );
 
-	// updates the power of the throw meter
-	void UpdateThrowMeter( irr::f32 delta );
-
-	// updated the player position based on the value of translation set
-	void UpdatePosition( irr::f32 delta ); 
-
 	// MAYBE USEFUL!
 	// drops a player footprint on the ground
 	//! void PlaceRightFootPrint();

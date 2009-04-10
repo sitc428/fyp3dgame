@@ -319,8 +319,6 @@ void MainCharacter::Tick( irr::f32 delta )
 	if( !(isAttacking() || IsDead()) )
 		DoInput();
 
-	UpdateThrowMeter( delta );
-
 	node->setRotation( rotation );
 	irr::core::vector3df playerPos = node->getPosition();
 	playerPos += faceVector * delta * translation.Z;
@@ -442,17 +440,6 @@ void MainCharacter::DoInput()
 	}
 
 	setIdle();
-}
-
-// updates the power of the throw meter
-void MainCharacter::UpdateThrowMeter( irr::f32 delta )
-{
-	if( bDoFillup )
-	{
-		//throwFillupTimer += delta;
-		_charging = true;
-		_magiclevel += delta;
-	}
 }
 
 void MainCharacter::ReceiveDamage( irr::f32 value )
