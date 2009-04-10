@@ -30,6 +30,73 @@
 namespace sc = boost::statechart;
 namespace mpl = boost::mpl;
 
+struct FiniteStateMachine;
+
+class Monster: public Actor{
+	public:
+	
+		Monster( GameWorld& gameWorld, irr::video::IVideoDriver&, irr::s32 exp, irr::s32 attk, 
+			irr::s32 def, irr::s32 mattk, irr::s32 mdef);
+		~Monster(){
+			delete FSM;
+			//collisionAnimator->drop();
+			//collisionAnimator = NULL;
+			
+		//	irr::scene::ISceneManager& smgr = world.GetSceneManager();
+		//	smgr.addToDeletionQueue( _monster );
+		};
+		// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
+		virtual void RecreateCollisionResponseAnimator();
+
+		//void change(Player&);
+		void update(Player&, irr::f32 delta);
+		void Tick( irr::f32 delta );
+		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
+		EActorType GetActorType() const { return ACTOR_ENEMY; }
+		bool ShouldPerformCollisionCheck() const { return false; }
+		void DoCollisions( const CollisionInfo& collInfo ) { check(false); }
+		void ReceiveDamage(irr::f32 );
+		void DestroyActor( Actor*& actorToDestroy );
+		void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
+		virtual void ReSetPosition(irr::core::vector3df);
+		//int GetHealth();
+		void CheckActorPosition(irr::core::vector3df&,Player&);
+		irr::s32 GetEXP() {return _exp;};
+		irr::s32 GetAttk() {return _attk;};
+		irr::s32 GetDef() {return _def;};
+		irr::s32 GetMAttk() {return _mattk;};
+		irr::s32 GetMDef() {return _mdef;};
+
+		irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
+			
+	private:
+		irr::s32 _exp;
+		irr::s32 _attk;
+		irr::s32 _def;
+		irr::s32 _mattk;
+		irr::s32 _mdef;
+		FiniteStateMachine* FSM;
+		irr::scene::IAnimatedMeshSceneNode *_monster;
+	
+		// cached collision response animator
+		irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
+	
+		float _speed; 
+		irr::f32 health;
+		boost::timer* mon_timer;
+		boost::timer* attack_timer;
+		boost::timer* death_timer;
+		double timeout;
+		bool moved;
+		irr::core::vector3df target;
+		irr::core::vector3df original;
+		irr::core::vector3df pos;
+		//int  Health;
+		
+		GameWorld& world;
+	
+		ParticleSystemEngine* sparking;
+};
 
 //EVENT-------------------------------------------------------------
 struct EvIdleTooLong : sc::event< EvIdleTooLong > { virtual ~EvIdleTooLong () {};};
@@ -50,7 +117,7 @@ struct Name_test
 {
 	virtual std::string GetName() const = 0;
 	virtual void test(int, int, int) const =0;
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player&,irr::core::vector3df ) const = 0;
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode*,Player&,irr::core::vector3df, Monster*) const = 0;
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode*,Player&,irr::core::vector3df) const = 0;
 };
 
@@ -85,8 +152,8 @@ struct FiniteStateMachine : sc::state_machine<FiniteStateMachine, NotDeath >{
 	{
 		state_cast<const Name_test & >().test(a,s,q);
 	}
-	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ){
-		state_cast< const Name_test & >().reaction(_mon,_player, target);
+	void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target, Monster* _monster){
+		state_cast< const Name_test & >().reaction(_mon,_player, target, _monster);
 	}
 	void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df pos){
 		state_cast< const Name_test & >().IdleTooLong(_mon,_player, pos);
@@ -107,7 +174,7 @@ struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
     {
       std::cout<<-a+s+q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df target ) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df target, Monster* _monster  ) const{
 		_mon->setLoopMode(true);
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player,irr::core::vector3df pos) const{
@@ -126,7 +193,7 @@ struct NotDeath :Name_test, sc::simple_state<NotDeath, FiniteStateMachine, Idle 
     {
       std::cout<<"a-s-q"<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target, Monster* _monster  ) const{
 	
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
@@ -151,21 +218,26 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
     {
       std::cout<<a-s+q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
+	
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player, irr::core::vector3df target, class Monster* _monster ) const
+	{
 		//_player->reduceHealth(1);
 		//physical damage to player
 		//irr::s32 monAttk = _mon->GetAttk();
-		irr::s32 monAttk=10;
+		irr::s32 monAttk = _monster->GetAttk();
 		irr::s32 playerDef = ((MainCharacter&)_player).GetDefencePoint();
 		if (((MainCharacter&)_player).isDefending())
 			_player.ReceiveDamage(monAttk - (playerDef*2/3) * 2);
 		else
 			_player.ReceiveDamage(monAttk - playerDef*2/3);
 	}
+	
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
 	}
+	
 	virtual ~Attacking() {};
 	//virtual const std::string name () const { return "Attacking"; };
+	
 	typedef sc::transition< EvFiniteStateMachineOutOfRange, Idle >reactions;
 };
 
@@ -185,7 +257,7 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
     {
       std::cout<<a+s-q<<"\n";
     }
-	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
+	virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target, Monster* _monster  ) const{
 		_mon->setLoopMode(false);
 	}
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{
@@ -226,7 +298,7 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 		{
 			std::cout<<a+s+q<<"\n";
 		}
-		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target ) const{
+		virtual void reaction(irr::scene::IAnimatedMeshSceneNode* _mon, Player& _player,irr::core::vector3df target, Monster* _monster  ) const{
 			//_mon->setLoopMode(true);
 			irr::core::matrix4 m;
 			irr::core::vector3df targetPos = _player.GetNodePosition();
@@ -250,70 +322,6 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 			sc::transition< EvFiniteStateMachineOutOfRange, Idle >, 
 			sc::transition< EvWithinAttackRange, Attacking > >reactions;
 	
-};
-class Monster: public Actor{
-	public:
-	
-		Monster( GameWorld& gameWorld, irr::video::IVideoDriver&, irr::s32 exp, irr::s32 attk, 
-			irr::s32 def, irr::s32 mattk, irr::s32 mdef);
-		~Monster(){
-			//collisionAnimator->drop();
-			//collisionAnimator = NULL;
-			
-		//	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-		//	smgr.addToDeletionQueue( _monster );
-		};
-		// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
-		virtual void RecreateCollisionResponseAnimator();
-
-		//void change(Player&);
-		void update(Player&, irr::f32 delta);
-		void Tick( irr::f32 delta );
-		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
-		EActorType GetActorType() const { return ACTOR_ENEMY; }
-		bool ShouldPerformCollisionCheck() const { return false; }
-		void DoCollisions( const CollisionInfo& collInfo ) { check(false); }
-		void ReceiveDamage(irr::f32 );
-		void DestroyActor( Actor*& actorToDestroy );
-		void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
-		virtual void ReSetPosition(irr::core::vector3df);
-		//int GetHealth();
-		void CheckActorPosition(irr::core::vector3df&,Player&);
-		irr::s32 GetEXP() {return _exp;};
-		irr::s32 GetAttk() {return _attk;};
-		irr::s32 GetDef() {return _def;};
-		irr::s32 GetMAttk() {return _mattk;};
-		irr::s32 GetMDef() {return _mdef;};
-
-		irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
-			
-	private:
-		irr::s32 _exp;
-		irr::s32 _attk;
-		irr::s32 _def;
-		irr::s32 _mattk;
-		irr::s32 _mdef;
-		FiniteStateMachine FSM;
-		irr::scene::IAnimatedMeshSceneNode *_monster;
-	
-		// cached collision response animator
-		irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
-	
-		float _speed; 
-		irr::f32 health;
-		boost::timer* mon_timer;
-		boost::timer* attack_timer;
-		boost::timer* death_timer;
-		double timeout;
-		bool moved;
-		irr::core::vector3df target;
-		irr::core::vector3df original;
-		irr::core::vector3df pos;
-		//int  Health;
-		
-		GameWorld& world;
-	
-		ParticleSystemEngine* sparking;
 };
 
 #endif //__MONSTER_HPP__

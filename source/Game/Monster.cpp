@@ -49,7 +49,9 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver, ir
 	meshTriangleSelector->drop();
 	meshTriangleSelector = NULL;
 
-	FSM.initiate();
+	FSM = new FiniteStateMachine;
+
+	FSM->initiate();
 	original = defaultPosition;
 	pos = defaultPosition;
 	target = pos;
@@ -100,10 +102,10 @@ void Monster::update(Player& _player, irr::f32 delta)
 		}
 		
 		//Death;
-		if( FSM.GetName() != "Death" )
+		if( FSM->GetName() != "Death" )
 		{
-			FSM.process_event( EvDie() );
-			FSM.reaction(_monster, _player,target);
+			FSM->process_event( EvDie() );
+			FSM->reaction(_monster, _player,target, this);
 			irr::scene::ISceneManager& smgr = world.GetSceneManager();
 			
 			sparking= new ParticleSystemEngine(&smgr, pos, irr::core::vector3df(2,2,2),
@@ -122,18 +124,18 @@ void Monster::update(Player& _player, irr::f32 delta)
 	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
-		if(FSM.GetName() != "Attacking"){
-			FSM.process_event( EvWithinAttackRange());
+		if(FSM->GetName() != "Attacking"){
+			FSM->process_event( EvWithinAttackRange());
 			if(attack_timer->elapsed() > timeout){
 				attack_timer->restart();
-				FSM.reaction(_monster, _player,target);
+				FSM->reaction(_monster, _player,target, this);
 			}
 		}else{
 
 			if(attack_timer->elapsed() > timeout){
 				//	std::cout<<"Mon_timer:------------"<<"\n";
 				attack_timer->restart();
-				FSM.reaction(_monster, _player,target);			
+				FSM->reaction(_monster, _player,target, this);			
 			}
 		}
 	}
@@ -147,15 +149,15 @@ void Monster::update(Player& _player, irr::f32 delta)
 		if( targetPos.getDistanceFrom(original) < 120.0f )
 		{
 			//Tracing mode
-			//if(FSM.GetName() != "Tracing"){
-			if(FSM.GetName() == "Attacking")
-				FSM.process_event(EvFiniteStateMachineOutOfRange());
-			FSM.process_event( EvPlayerWithinRange());
+			//if(FSM->GetName() != "Tracing"){
+			if(FSM->GetName() == "Attacking")
+				FSM->process_event(EvFiniteStateMachineOutOfRange());
+			FSM->process_event( EvPlayerWithinRange());
 			//irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
 			//if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
 			target = targetPos;
 
-			FSM.reaction(_monster, _player,target);
+			FSM->reaction(_monster, _player,target,this);
 			pos = _monster->getPosition();
 			target = pos;
 
@@ -163,8 +165,8 @@ void Monster::update(Player& _player, irr::f32 delta)
 		}
 		else
 		{
-			FSM.process_event( EvFiniteStateMachineOutOfRange());
-			FSM.reaction(_monster, _player,target);
+			FSM->process_event( EvFiniteStateMachineOutOfRange());
+			FSM->reaction(_monster, _player,target, this);
 		}
 
 		//for jumping
@@ -181,13 +183,13 @@ void Monster::update(Player& _player, irr::f32 delta)
 			//Idle	
 			//std::cout<<"Mon_timer: "<<mon_timer->elapsed()<<"\n";
 			//irr::u32 current = mon_timer->getTime();
-			if( FSM.GetName() != "Idle" )
+			if( FSM->GetName() != "Idle" )
 			{
 				mon_timer->restart();
 				//std::cout<<"Mon_timer:Restart "<<"\n";
 
-				FSM.process_event( EvFiniteStateMachineOutOfRange());
-				FSM.reaction(_monster, _player,target);
+				FSM->process_event( EvFiniteStateMachineOutOfRange());
+				FSM->reaction(_monster, _player,target, this);
 
 			}
 			else
@@ -208,7 +210,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 							target.Z = pos.Z+z;
 							irr::core::vector3df direction = pos-target;
 							_monster->setRotation(direction.getHorizontalAngle());
-							FSM.IdleTooLong(_monster,_player, target);
+							FSM->IdleTooLong(_monster,_player, target);
 							pos = _monster->getPosition();
 						}
 						else
@@ -221,8 +223,8 @@ void Monster::update(Player& _player, irr::f32 delta)
 					}
 					else
 					{
-						//FSM.process_event( EvFiniteStateMachineOutOfRange());
-						FSM.IdleTooLong(_monster,_player, target);
+						//FSM->process_event( EvFiniteStateMachineOutOfRange());
+						FSM->IdleTooLong(_monster,_player, target);
 						pos = _monster->getPosition();
 						target=pos;
 						moved = true;
