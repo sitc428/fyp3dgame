@@ -243,7 +243,9 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 				damage = monAttk - playerDef*2/3;
 			}
 		}
-		_player.ReceiveDamage(damage);
+		irr::s32 offset = damage/5 * (rand()%601)/300;
+		std::cout << "Damage = " << damage-offset << std::endl;
+		_player.ReceiveDamage(damage-offset);
 	}
 	
 	virtual void IdleTooLong(irr::scene::IAnimatedMeshSceneNode* _mon,Player& _player, irr::core::vector3df pos) const{

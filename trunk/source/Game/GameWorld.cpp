@@ -1305,7 +1305,7 @@ void GameWorld::KillAllEnemies()
 				||  actors[i]->GetActorType() == ACTOR_ENEMY_TWO
 				||  actors[i]->GetActorType() == ACTOR_ENEMY_BOSS )
 		{
-			actors[i]->ReceiveDamage( 100 );
+			actors[i]->ReceiveDamage( 10000 );
 		}
 	}
 }
