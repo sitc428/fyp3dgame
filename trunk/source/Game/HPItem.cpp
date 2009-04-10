@@ -3,7 +3,7 @@
 #include "Item.hpp"
 #include "MainCharacter.hpp"
 //constructor
-HPItem::HPItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value)
+HPItem::HPItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value)
 	:Item(gameWorld),
 	world(gameWorld)
 {

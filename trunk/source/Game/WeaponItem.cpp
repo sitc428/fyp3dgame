@@ -3,7 +3,7 @@
 #include "MainCharacter.hpp"
 
 //constructor
-WeaponItem::WeaponItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value)
+WeaponItem::WeaponItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value)
 	:Item(gameWorld),
 	world(gameWorld)
 {

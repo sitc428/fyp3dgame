@@ -2,7 +2,7 @@
 #include "MainCharacter.hpp"
 
 //constructor
-XItem::XItem(GameWorld& gameWorld, EItemType type, irr::c8* name, irr::u32 value)
+XItem::XItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value)
 	:Item(gameWorld),
 	world(gameWorld)
 {
