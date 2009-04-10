@@ -128,7 +128,16 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 		smgr.getMesh("media/model/sword.x"),
 		node->getJointNode("RightFingerBase"),
 		-1,
-		irr::core::vector3df(0, 0, 0),
+		irr::core::vector3df(-5.5, 2.5, -5.5),
+		irr::core::vector3df(5.000000, 20.000000, -90.000000),
+		irr::core::vector3df(0.05, 0.05, 0.05)
+	);
+
+	weaponNode = smgr.addMeshSceneNode(
+		smgr.getMesh("media/model/sword.x"),
+		node->getJointNode("RightFingerBase"),
+		-1,
+		irr::core::vector3df(-5.5, 2.5, -5.5),
 		irr::core::vector3df(0, 0, 0),
 		irr::core::vector3df(0.05, 0.05, 0.05)
 	);
@@ -344,6 +353,13 @@ void MainCharacter::DoInput()
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
+	static bool cheatWeapon = false;
+	if( receiver.keyReleased(irr::KEY_KEY_1) && receiver.keyDown(irr::KEY_PLUS) )
+	{
+		cheatWeapon = !cheatWeapon;
+	}
+	if(cheatWeapon)
+	{
 	/**
 	weapon position and rotation tuning
 	**/
@@ -401,6 +417,7 @@ void MainCharacter::DoInput()
 	std::cout<<"R:"<<wr.X<<","<<wr.Y<<","<<wr.Z<<std::endl;
 	weaponNode->setRotation(wr);
 	weaponNode->setPosition(wp);
+	}
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
