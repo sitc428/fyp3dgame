@@ -77,6 +77,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	throwFillupTimer( 0.0f ),
 	bDoFillup( false ),
 	world(gameWorld),
+	_magicChargeProgress(0),
 	sfxTimer(12),
 	attackCallBack(NULL)
 {
@@ -360,7 +361,6 @@ void MainCharacter::DoInput()
 	{
 		if(faceVector != aimVector)
 		{
-			//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
 			faceVector = aimVector;
 			faceVector.normalize();
 		}
@@ -371,7 +371,6 @@ void MainCharacter::DoInput()
 	{
 		if(faceVector != -aimVector)
 		{
-			//Player::SetTranslation( irr::core::vector3df(0, 0, -20) );
 			faceVector = aimVector;
 			faceVector.rotateXZBy( 180, irr::core::vector3df(0, 0, 0) );
 			faceVector.normalize();
@@ -382,7 +381,6 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyDown(irr::KEY_LEFT) )
 	{
-		//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != 90 )
 		{
 			faceVector = aimVector;
@@ -395,7 +393,6 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyDown(irr::KEY_RIGHT) )
 	{
-		//Player::SetTranslation( irr::core::vector3df(0, 0, 20) );
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != -90 )
 		{
 			faceVector = aimVector;

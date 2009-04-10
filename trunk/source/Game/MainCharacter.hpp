@@ -96,16 +96,17 @@ public:
 	/********************
 	 Player Attribute GET FUNCTIONS
 	 *******************/
-	irr::s32 GetLevel() const {return _level;};
-	irr::s32 GetAttackPoint() const {return _attack;};
-	irr::s32 GetDefencePoint() const {return _defence;};
-	irr::s32 GetMagicAttackPoint() const {return _magicattack;};
-	irr::s32 GetMagicDefencePoint() const {return _magicdefence;};
-	irr::s32 GetMagicLevel() const {return _magiclevel;}; 
+	irr::s32 GetLevel() const {return _level;}
+	irr::s32 GetAttackPoint() const {return _attack;}
+	irr::s32 GetDefencePoint() const {return _defence;}
+	irr::s32 GetMagicAttackPoint() const {return _magicattack;}
+	irr::s32 GetMagicDefencePoint() const {return _magicdefence;}
+	irr::s32 GetMagicLevel() const {return _magiclevel;}
+	irr::u32 GetChargingProgress() const {return _magicChargeProgress;}
 	bool GetCharging() const {return _charging;};		//to get whether the player is charging for Magic
 	//(std::vector< std::pair<Item*, int> >) GetItemBox() {return _itemBox;};
-	irr::core::array< std::pair<Item*,int> >& GetItemBox() {return _itemBox;};
-	irr::s32 GetEXP() const {return _exp;};
+	irr::core::array< std::pair<Item*,int> >& GetItemBox() {return _itemBox;}
+	irr::s32 GetEXP() const {return _exp;}
 	
 	/********************
 	 Player Attribute SET FUNCTIONS
@@ -176,6 +177,7 @@ private:
 	irr::s32 _magicattack;
 	irr::s32 _magicdefence;
 	irr::s32 _magiclevel;
+	irr::u32 _magicChargeProgress;
 	bool _charging;
 	irr::core::array< std::pair<Item*,int> > _itemBox;
 	irr::s32 _exp;
