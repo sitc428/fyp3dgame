@@ -81,17 +81,17 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	world(gameWorld),
 	_magicChargeProgress(0),
 	sfxTimer(12),
-	attackCallBack(NULL)
+	attackCallBack(NULL),
+	_level(1),
+	_exp(0),
+	_attack(80),
+	_defence(50),
+	_magicattack(100),
+	_magicdefence(80),
+	_charging(false),
+	_magiclevel(0)
 {
 	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2);
-	this->SetLevel(0);
-	this->SetEXP(0);
-	this->SetHealth(100);
-	this->SetAttackPoint(10);
-	this->SetDefencePoint(5);
-	this->SetMagicAttackPoint(20);
-	this->SetMagicDefencePoint(5);
-	this->SetCharging(false);
 
 	ItemCollection tmpBox;
 	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);
