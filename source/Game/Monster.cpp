@@ -11,16 +11,18 @@
 #include "GameEngine.h"
 #include "GameWorld.h"
 #include "NodeID.h"
+#include "MainCharacter.hpp"
 
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
 extern GameEngine* GEngine;
 
-Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver)
+Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver, irr::s32 exp)
 	:Actor(gameWorld),
 	world(gameWorld),
-	collisionAnimator(NULL)
+	collisionAnimator(NULL),
+	_exp(exp)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
@@ -71,8 +73,6 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 void Monster::update(Player& _player, irr::f32 delta)
 {
 	
-	//CheckActorPosition();
-	//std::cout<<world.GetActors().size()<<" size \n";
 	pos= _monster->getAbsolutePosition();
 	//std::cout<<"origin: "<<_player.GetNodePosition().getDistanceFrom(original)<<"\n";
 	//std::cout<<"pos : "<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
@@ -80,10 +80,18 @@ void Monster::update(Player& _player, irr::f32 delta)
 	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 	if(health <= 0)
 	{
-		//Death
-	
-		if(FSM.GetName()!="Death"){
-			FSM.process_event( EvDie());
+		std::cout << ((MainCharacter&)world.GetCurrentPlayer()).GetLevel() << std::endl;
+		//+ player exp
+		((MainCharacter&)world.GetCurrentPlayer()).SetEXP(((MainCharacter&)world.GetCurrentPlayer()).GetEXP());
+		//+level
+		if ( ((MainCharacter&)world.GetCurrentPlayer()).GetEXP()%50 == 0 )
+			((MainCharacter&)world.GetCurrentPlayer()).SetLevel(
+				((MainCharacter&)world.GetCurrentPlayer()).GetLevel()+1);
+		
+		//Death;
+		if( FSM.GetName() != "Death" )
+		{
+			FSM.process_event( EvDie() );
 			FSM.reaction(_monster, _player,target);
 			irr::scene::ISceneManager& smgr = world.GetSceneManager();
 			
