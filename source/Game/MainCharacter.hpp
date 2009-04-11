@@ -3,11 +3,11 @@
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
-#include "Player.h"
+#include "Player.hpp"
 #include <vector>
 #include <utility>
 #include "Item.hpp"
-#include "shader.h"
+#include "shader.hpp"
 #include "WeaponItem.hpp"
 #include "MDiscItem.hpp"
 

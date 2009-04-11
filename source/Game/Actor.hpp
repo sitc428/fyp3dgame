@@ -2,8 +2,8 @@
 #define __ACTOR_HPP__
 
 #include <irrlicht/irrlicht.h>
-#include "ActorTypes.h"
-#include "Check.h"
+#include "ActorTypes.hpp"
+#include "Check.hpp"
 
 // forward declares
 class GameWorld;

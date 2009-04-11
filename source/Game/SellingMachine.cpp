@@ -1,7 +1,7 @@
 #include "SellingMachine.hpp"
-#include "Check.h"
+#include "Check.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
+#include "GameWorld.hpp"
 #include <iostream>
 
 extern GameEngine* GEngine;

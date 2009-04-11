@@ -1,4 +1,4 @@
-#include "FrontEnd.h"
+#include "FrontEnd.hpp"
 #include "GameEngine.hpp"
 #include "InputEventReceiver.hpp"
 //#include "CGUIStaticTTText.hpp"

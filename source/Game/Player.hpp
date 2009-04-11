@@ -1,7 +1,7 @@
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
-#include "Actor.h"
+#include "Actor.hpp"
 
 enum EPlayerState
 {

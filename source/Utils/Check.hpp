@@ -14,7 +14,7 @@
 
 #ifdef CHECKS_ON 
 
-#include "windows.h"
+#include "windows.hpp"
 
 #define ERROR_DISP(msg)                                                       \
 {                                                                             \

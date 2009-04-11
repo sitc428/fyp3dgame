@@ -1,7 +1,7 @@
 #ifndef __ROBOT_HPP__
 #define __ROBOT_HPP__
 
-#include "Actor.h"
+#include "Actor.hpp"
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>

@@ -1,5 +1,5 @@
 #include "Item.hpp"
-#include "GameWorld.h"
+#include "GameWorld.hpp"
 
 //constructor
 Item::Item(GameWorld& gameWorld):world(gameWorld)

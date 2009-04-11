@@ -2,12 +2,12 @@
  *  ParticleSystemEngine.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09年4月8日.
+ *  Created by Mr.JJ on 09�?????
  *  Copyright 2009 HKUST. All rights reserved.
  *
  */
 
-#include "ParticleSystemEngine.h"
+#include "ParticleSystemEngine.hpp"
 
 ParticleSystemEngine::ParticleSystemEngine(irr::scene::ISceneManager* _smgr, irr::core::vector3df _position, irr::core::vector3df _scale, 
 					 irr::core::aabbox3df _aabbox):ps(0){

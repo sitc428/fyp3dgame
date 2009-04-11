@@ -1,5 +1,5 @@
 #include "WeaponItem.hpp"
-#include "Player.h"
+#include "Player.hpp"
 #include "MainCharacter.hpp"
 
 //constructor

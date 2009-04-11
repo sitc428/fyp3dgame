@@ -1,5 +1,5 @@
 #include <irrlicht/irrlicht.h>
-#include "CGUITTFont.h"
+#include "CGUITTFont.hpp"
 
 namespace irr
 {
