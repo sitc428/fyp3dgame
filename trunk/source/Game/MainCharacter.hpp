@@ -8,6 +8,8 @@
 #include <utility>
 #include "Item.hpp"
 #include "shader.h"
+#include "WeaponItem.hpp"
+#include "MDiscItem.hpp"
 
 
 class ProgressCircle;
@@ -108,6 +110,8 @@ public:
 	//(std::vector< std::pair<Item*, int> >) GetItemBox() {return _itemBox;};
 	ItemCollection& GetItemBox() {return _itemBox;}
 	irr::s32 GetEXP() const {return _exp;}
+	WeaponItem* GetCurrentWeapon() const {return _currentWeapon;};
+	MDiscItem* GetCurrentMagic() const {return _currentMagic;};
 	
 	/********************
 	 Player Attribute SET FUNCTIONS
@@ -122,6 +126,8 @@ public:
 	//void SetItemBox(std::vector< std::pair<Item*, int> > itemBox) { _itemBox = itemBox;};
 	void SetItemBox(ItemCollection itemBox) {_itemBox = itemBox;};
 	void SetEXP(irr::s32 exp) {_exp = exp;};
+	void SetCurrentWeapon(WeaponItem* currentWeapon) { _currentWeapon = currentWeapon;};
+	void SetCurrentMagic(MDiscItem* currentMagic) { _currentMagic = currentMagic;};
 	
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
@@ -183,6 +189,8 @@ private:
 	bool _charging;
 	ItemCollection _itemBox;
 	irr::s32 _exp;
+	WeaponItem* _currentWeapon;
+	MDiscItem* _currentMagic;
 
 	/************
 	 ************/

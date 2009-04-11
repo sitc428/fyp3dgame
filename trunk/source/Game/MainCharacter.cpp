@@ -91,7 +91,9 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_magicattack(100),
 	_magicdefence(80),
 	_charging(false),
-	_magiclevel(0)
+	_magiclevel(0),
+	_currentWeapon(NULL),
+	_currentMagic(NULL)
 {
 	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, video::EMT_SOLID);
 

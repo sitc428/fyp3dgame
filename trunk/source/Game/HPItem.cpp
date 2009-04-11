@@ -42,6 +42,6 @@ void HPItem::use()
 	{
 		box[tmp].second--;
 	}
-
+	(((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(box));
 
 }

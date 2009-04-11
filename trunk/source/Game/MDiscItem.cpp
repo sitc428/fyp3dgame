@@ -37,4 +37,30 @@ void MDiscItem::use()
 	{
 		box[tmp].second--;
 	}
+	(((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(box));
+}
+
+void MDiscItem::equip()
+{
+	((MainCharacter&)world.GetCurrentPlayer()).SetCurrentMagic(this);
+	/*if (!getEquipState())
+	{
+		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
+			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() + getItemValue()
+			);
+		setEquipState(true);
+	}*/
+}
+
+void MDiscItem::unEquip()
+{
+	if ( ((MainCharacter&)world.GetCurrentPlayer()).GetCurrentMagic() == this)
+		((MainCharacter&)world.GetCurrentPlayer()).SetCurrentMagic(NULL);
+	/*if (getEquipState())
+	{
+		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
+			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() - getItemValue()
+			);
+		setEquipState(false);
+	}*/
 }
