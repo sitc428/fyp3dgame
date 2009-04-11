@@ -187,7 +187,7 @@ void GameWorld::InitLevel()
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
-			if (meshNode->getID() == NODE_ID_TRI_NEEDED)
+			if (meshNode->getID() != NODE_ID_FENCE_TO_FALL)
 			{
 				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
 				check(meshTriangleSelector);
