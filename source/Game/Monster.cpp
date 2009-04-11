@@ -31,7 +31,7 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver, ir
 	_mdef(mdef)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-	Shader* shader = new Shader(&(GEngine->GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag", 2, video::EMT_TRANSPARENT_ADD_COLOR );
+	Shader* shader = new Shader(&(GEngine->GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1, video::EMT_SOLID );
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
 	_monster->setPosition( defaultPosition );
@@ -39,8 +39,8 @@ Monster::Monster(GameWorld& gameWorld, irr::video::IVideoDriver& videoDriver, ir
 	//_monster->setMaterialType(irr::video::EMT_SOLID);
 	//_monster->setScale(irr::core::vector3df(1,1,1));
 	_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
-	_monster->setMaterialTexture(0, videoDriver.getTexture("media/model/slime.png"));
-	_monster->setMaterialTexture(1, videoDriver.getTexture("media/model/shade_line.jpg" ));
+	_monster->setMaterialTexture(0, videoDriver.getTexture("media/model/slimeeye.png"));
+	//_monster->setMaterialTexture(1, videoDriver.getTexture("media/model/shade_line.jpg" ));
 	//RecreateCollisionResponseAnimator();
 	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
 	//_monster->setTriangleSelector( triangleSelector );
