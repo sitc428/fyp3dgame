@@ -1,7 +1,7 @@
 #include "InteractiveActor.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
-#include "Player.h"
+#include "GameWorld.hpp"
+#include "Player.hpp"
 
 #include <iostream>
 

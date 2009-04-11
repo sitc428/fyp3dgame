@@ -1,7 +1,7 @@
 #include "TalkativeNPC.hpp"
-#include "GameHUD.h"
+#include "GameHUD.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
+#include "GameWorld.hpp"
 #include <iostream>
 
 extern GameEngine* GEngine;

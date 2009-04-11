@@ -7,12 +7,12 @@
  *
  */
 
-#include "Monster.h"
+#include "Monster.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
-#include "NodeID.h"
+#include "GameWorld.hpp"
+#include "NodeID.hpp"
 #include "MainCharacter.hpp"
-#include "shader.h"
+#include "shader.hpp"
 
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);

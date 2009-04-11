@@ -7,7 +7,7 @@
  *
  */
 
-#include "Shader.h" 
+#include "Shader.hpp" 
 
 // Shader material definitions 
 

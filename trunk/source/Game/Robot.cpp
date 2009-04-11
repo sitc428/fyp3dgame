@@ -1,7 +1,7 @@
 #include "Robot.hpp"
-#include "Check.h"
+#include "Check.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
+#include "GameWorld.hpp"
 #include "MainCharacter.hpp"
 #include <ctime>
 #include <iostream>

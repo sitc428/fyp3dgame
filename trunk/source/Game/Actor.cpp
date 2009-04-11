@@ -1,5 +1,5 @@
-#include "Actor.h"
-#include "Check.h"
+#include "Actor.hpp"
+#include "Check.hpp"
 
 // constructor
 	Actor::Actor( GameWorld& gameWorld )

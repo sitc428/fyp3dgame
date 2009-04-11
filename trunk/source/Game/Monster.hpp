@@ -19,11 +19,11 @@
 #include <boost/statechart/in_state_reaction.hpp>
 #include <iostream>
 #include <time.h>
-#include "Actor.h"
+#include "Actor.hpp"
 #include <irrlicht/irrlicht.h>
 #include <boost/timer.hpp>
-#include "Player.h"
-#include "ParticleSystemEngine.h"
+#include "Player.hpp"
+#include "ParticleSystemEngine.hpp"
 #include <math.h>
 #include "MainCharacter.hpp"
 

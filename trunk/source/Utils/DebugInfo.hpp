@@ -3,9 +3,9 @@
 
 #include <irrlicht/irrlicht.h>
 #include <algorithm>
-#include "GameWorld.h"
-#include "Actor.h"
-#include "Camera.h"
+#include "GameWorld.hpp"
+#include "Actor.hpp"
+#include "Camera.hpp"
 
 /*
  * A utility class for controlling debuggin information

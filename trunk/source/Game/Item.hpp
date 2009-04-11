@@ -3,7 +3,7 @@
 #include <string>
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
-#include "GameWorld.h"
+#include "GameWorld.hpp"
 
 enum EItemType
 {

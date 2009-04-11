@@ -1,5 +1,5 @@
-#include "CollisionHelper.h"
-#include "Check.h"
+#include "CollisionHelper.hpp"
+#include "Check.hpp"
 
 // collision between any triangle selector and a bounding box
 bool CollisionHelper::CheckCollision( const irr::scene::ITriangleSelector& selector, const irr::core::aabbox3d<irr::f32>& box )

@@ -7,7 +7,7 @@
 #include <string>
 #include <map>
 
-#include "Check.h"
+#include "Check.hpp"
 
 const irr::f64 PI = 3.14159265;
 

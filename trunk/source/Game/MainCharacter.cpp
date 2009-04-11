@@ -2,18 +2,18 @@
 #include <iostream>
 
 #include "MainCharacter.hpp"
-#include "CollisionHelper.h"
+#include "CollisionHelper.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
+#include "GameWorld.hpp"
 #include "InputEventReceiver.hpp"
-#include "FloorDecalSceneNode.h"
+#include "FloorDecalSceneNode.hpp"
 #include "ProgressCircle.hpp"
 #include "Item.hpp"
 #include "HPItem.hpp"
 #include "MDiscItem.hpp"
 #include "XItem.hpp"
 #include "WeaponItem.hpp"
-#include "Monster.h"
+#include "Monster.hpp"
 
 extern GameEngine* GEngine;
 

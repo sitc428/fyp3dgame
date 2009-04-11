@@ -200,15 +200,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\game\Actor.h"
+				RelativePath=".\Game\Actor.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game\ActorTypes.h"
+				RelativePath=".\Game\ActorTypes.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game\Camera.h"
+				RelativePath=".\Game\Camera.hpp"
 				>
 			</File>
 			<File
@@ -216,15 +216,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Engine\CGUITTFont.h"
+				RelativePath=".\Engine\CGUITTFont.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\utils\Check.h"
+				RelativePath=".\Utils\Check.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\utils\CollisionHelper.h"
+				RelativePath=".\Utils\CollisionHelper.hpp"
 				>
 			</File>
 			<File
@@ -232,11 +232,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\engine\FloorDecalSceneNode.h"
+				RelativePath=".\Engine\FloorDecalSceneNode.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\engine\FrontEnd.h"
+				RelativePath=".\Engine\FrontEnd.hpp"
 				>
 			</File>
 			<File
@@ -244,11 +244,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Game\GameHUD.h"
+				RelativePath=".\Game\GameHUD.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game\GameWorld.h"
+				RelativePath=".\Game\GameWorld.hpp"
 				>
 			</File>
 			<File
@@ -276,23 +276,23 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Game\Monster.h"
+				RelativePath=".\Game\Monster.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game\NodeID.h"
+				RelativePath=".\Game\NodeID.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game\ParticleManager.h"
+				RelativePath=".\Game\ParticleManager.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Game\ParticleSystemEngine.h"
+				RelativePath=".\Game\ParticleSystemEngine.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\game\Player.h"
+				RelativePath=".\Game\Player.hpp"
 				>
 			</File>
 			<File
@@ -308,11 +308,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Game\shader.h"
+				RelativePath=".\Game\shader.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\engine\StartupScreen.h"
+				RelativePath=".\Engine\StartupScreen.hpp"
 				>
 			</File>
 			<File

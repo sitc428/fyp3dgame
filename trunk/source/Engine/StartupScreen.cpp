@@ -1,6 +1,6 @@
 #include "GameEngine.hpp"
 #include "InputEventReceiver.hpp"
-#include "StartupScreen.h"
+#include "StartupScreen.hpp"
 
 static const irr::c8* STARTUP_GROUP_TEXTURE = "media/StartupScreen/psan2logo.png";
 static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "media/StartupScreen/irrLogo.png";

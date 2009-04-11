@@ -1,5 +1,5 @@
 #include "CGUIStaticTTText.hpp"
-#include "CGUITTFont.h"
+#include "CGUITTFont.hpp"
 
 namespace irr
 {

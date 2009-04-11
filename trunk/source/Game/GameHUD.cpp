@@ -1,13 +1,13 @@
-#include "GameHUD.h"
+#include "GameHUD.hpp"
 #include "GameEngine.hpp"
-#include "Check.h"
-#include "Player.h"
+#include "Check.hpp"
+#include "Player.hpp"
 #include "HPItem.hpp"
 #include "XItem.hpp"
 #include "WeaponItem.hpp"
 #include "MDiscItem.hpp"
 #include "MainCharacter.hpp"
-#include "CGUITTFont.h"
+#include "CGUITTFont.hpp"
 #include "InputEventReceiver.hpp"
 #include <iostream>
 

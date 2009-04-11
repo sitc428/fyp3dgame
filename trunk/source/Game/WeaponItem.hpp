@@ -1,7 +1,7 @@
 #ifndef __WEAPON_ITEM_HPP__
 #define __WEAPON_ITEM_HPP__
 #include "WeaponItem.hpp"
-#include "Player.h"
+#include "Player.hpp"
 #include "Item.hpp"
 class WeaponItem : public Item
 {

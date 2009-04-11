@@ -1,5 +1,5 @@
-#include "Player.h"
-#include "Check.h"
+#include "Player.hpp"
+#include "Check.hpp"
 #include "GameEngine.hpp"
 #include <iostream>
 

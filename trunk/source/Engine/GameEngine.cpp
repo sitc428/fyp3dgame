@@ -1,11 +1,11 @@
-#include "CGUITTFont.h"
-#include "FloorDecalSceneNode.h"
-#include "FrontEnd.h"
+#include "CGUITTFont.hpp"
+#include "FloorDecalSceneNode.hpp"
+#include "FrontEnd.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
+#include "GameWorld.hpp"
 #include "InputEventReceiver.hpp"
-#include "ParticleManager.h"
-#include "StartupScreen.h"
+#include "ParticleManager.hpp"
+#include "StartupScreen.hpp"
 
 #include <iostream>
 

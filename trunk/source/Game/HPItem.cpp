@@ -1,5 +1,5 @@
 #include "HPItem.hpp"
-#include "Player.h"
+#include "Player.hpp"
 #include "Item.hpp"
 #include "MainCharacter.hpp"
 //constructor

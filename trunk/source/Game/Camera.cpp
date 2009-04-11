@@ -1,8 +1,8 @@
-#include "Camera.h"
-#include "Check.h"
+#include "Camera.hpp"
+#include "Check.hpp"
 #include "GameEngine.hpp"
-#include "GameWorld.h"
-#include "Player.h"
+#include "GameWorld.hpp"
+#include "Player.hpp"
 #include "InputEventReceiver.hpp"
 #include <irrlicht/irrlicht.h>
 
