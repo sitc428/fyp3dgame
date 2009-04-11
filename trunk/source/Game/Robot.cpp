@@ -12,7 +12,7 @@ static const irr::core::vector3df	defaultPosition = irr::core::vector3df(10,50,1
 static const irr::core::vector3df	defaultRotation = irr::core::vector3df(0, 90, 0);
 static const irr::core::vector3df	defaultScale = irr::core::vector3df(0.1, 0.1, 0.1);
 
-static const irr::c8*		ROBOT_MODEL  = "media/model/robot21.x";
+static const irr::c8*		ROBOT_MODEL  = "media/model/robot22.x";
 //static const irr::c8*		defaultTexture = "media/model/MainTexutre1.png";
 static const irr::f32		ANIMATION_SPEED = 24;
 static const irr::f32		ANIMATION_TRANSITION_BLEND_TIME = 0.2f;

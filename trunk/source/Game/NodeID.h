@@ -14,4 +14,7 @@
 #define NODE_ID_PLAYERSPAWN_TWO 8
 #define NODE_ID_TRI_NEEDED 2
 
+//house ID = 20
+#define NODE_ID_HOUSE 20
+
 #endif // NodeID_h
