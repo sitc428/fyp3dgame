@@ -46,13 +46,14 @@ static const irr::u32			CONVERSATION_Y2 = 575;
 static const irr::u32			MENU_ITEM_X1 = 160;
 static const irr::u32			MENU_ITEM_Y1 = 70;
 static const irr::u32			MENU_ITEM_YOFFSET = 40;
-static const irr::u32			MENU_WINDOW_X1 = 360;
+static const irr::u32			MENU_WINDOW_X1 = 370;
 static const irr::u32			MENU_WINDOW_Y1 = 70;
 static const irr::u32			ITEM_QUANTITY_X1 = 700;
 static const irr::u32			ITEM_QUANTITY_Y1 = 70;
 static const irr::u32			MENU_WINDOW_YOFFSET = 40;
 static const irr::u32			CD_WIDTH = 30;
 static const irr::u32			CD_HEIGTH = 30;
+
 
 
 extern GameEngine* GEngine;
@@ -73,6 +74,7 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 , MenuFont(NULL)
 , SelectIconTexture(NULL)
 , MenuSelected(STATUS)
+, SubMenuIndex(-1)
 {	
 	//init by loading the textures required
 	IVideoDriver& driver = GEngine->GetDriver();
@@ -233,8 +235,10 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
 	//driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
-
 	
+	//reseting the selected menu item
+	MenuSelected = STATUS;
+	SubMenuIndex = -1;
 }
 
 
@@ -269,14 +273,166 @@ void GameHUD::DrawPauseMenu(Player& player){
 	MenuFont->draw(L"Magic", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*3, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 	MenuFont->draw(L"Save", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*4, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 	
-	if( receiver.keyReleased( irr::KEY_UP) )
-	{
-		MenuSelected == STATUS? MenuSelected = SAVE : MenuSelected = MENU_SELECTED(MenuSelected - 1);
+	/*******
+	 GETTING USER INPUT
+	 *******/
+	
+	
+	if( SubMenuIndex == -1){
+		
+		if( receiver.keyReleased( irr::KEY_UP) ){
+			MenuSelected == STATUS? MenuSelected = SAVE : MenuSelected = MENU_SELECTED(MenuSelected - 1);
+		}
+		
+		else if( receiver.keyReleased( irr::KEY_DOWN) ){
+			MenuSelected == SAVE? MenuSelected = STATUS : MenuSelected = MENU_SELECTED(MenuSelected + 1);
+		}
+		
+		
+		if( MenuSelected == ITEM ){
+			if( receiver.keyReleased( irr::KEY_RIGHT) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				int j = 0;
+				for (int i = 0 ; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == HPITEM || ItemBox[i].first->getItemType() == XITEM)
+						j++;
+				}
+				if (j>0)
+					SubMenuIndex = 0;
+			}
+		}
+		
+		else if( MenuSelected == EQUIP ){
+			if( receiver.keyReleased( irr::KEY_RIGHT) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				int j = 0;
+				for (int i = 0 ; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == WEAPONITEM1)
+						j++;
+				}
+				if (j>0)
+					SubMenuIndex = 0;			
+			}
+		}
+		
+		else if( MenuSelected == MAGIC){
+			if( receiver.keyReleased( irr::KEY_RIGHT) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				int j = 0;
+				for (int i = 0 ; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == MDISCITEM)
+						j++;
+				}
+				if (j>0)
+					SubMenuIndex = 0;			
+			}
+		}
+
+		
+		
 	}
-	else if( receiver.keyReleased( irr::KEY_DOWN) )
-	{
-		MenuSelected == SAVE? MenuSelected = STATUS : MenuSelected = MENU_SELECTED(MenuSelected + 1);
+	
+	// else SubMenuIndex != -1
+	else{
+		
+		if( MenuSelected == ITEM ){
+			if( receiver.keyReleased( irr::KEY_UP) ){
+				if(SubMenuIndex != 0){
+					SubMenuIndex -- ;
+				}
+			}
+			else if ( receiver.keyReleased( irr::KEY_DOWN) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				int j = 0;
+				for (int i = 0; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == HPITEM || ItemBox[i].first->getItemType() == XITEM)
+						j++;
+				}
+					
+				if ( SubMenuIndex < j-1 ){
+					
+					SubMenuIndex ++;
+				}
+				
+			}
+			else if ( receiver.keyReleased( irr::KEY_LEFT ) ){
+				
+				SubMenuIndex = -1;
+			}
+			
+			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
+				//MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+			}
+			
+		}
+		
+		else if( MenuSelected == EQUIP ){
+			if( receiver.keyReleased( irr::KEY_UP) ){
+				if(SubMenuIndex != 0){
+					SubMenuIndex -- ;
+				}
+			}
+			else if ( receiver.keyReleased( irr::KEY_DOWN) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				int j = 0;
+				for (int i = 0; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == WEAPONITEM1){
+						j++;
+					}
+					
+					if ( SubMenuIndex < j-1 ){
+						
+						SubMenuIndex ++;
+					}
+					
+				}
+			}
+			else if ( receiver.keyReleased( irr::KEY_LEFT) ){
+				
+				SubMenuIndex = -1;
+			}
+			
+		}
+		
+		else if( MenuSelected == MAGIC){
+			if( receiver.keyReleased( irr::KEY_UP) ){
+				if(SubMenuIndex != 0){
+					SubMenuIndex -- ;
+				}				
+			}
+			else if ( receiver.keyReleased( irr::KEY_DOWN) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				int j = 0;
+				for (int i = 0; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == MDISCITEM){
+						j++;
+					}
+					
+					if ( SubMenuIndex < j-1 ){
+						
+						SubMenuIndex ++;
+					}
+					
+				}
+			}
+			else if ( receiver.keyReleased( irr::KEY_LEFT) ){
+				
+				SubMenuIndex = -1;
+			}
+			
+		}
+		
 	}
+	
+	
+	
+	
+	
+		
+		
+	/**********
+	 Start drawing the layout and the text
+	 ********/
 	
 	//change the position of the icon according to the selection
 	driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*int(MenuSelected)), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
@@ -347,6 +503,11 @@ void GameHUD::DrawPauseMenu(Player& player){
 			}
 				
 		}
+		
+		if (SubMenuIndex != -1){
+			
+			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
+		}
 			
 		
 	}
@@ -367,6 +528,10 @@ void GameHUD::DrawPauseMenu(Player& player){
 			}
 			
 		}
+		if (SubMenuIndex != -1){
+			
+			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
+		}
 	}
 	else if ( MenuSelected == MAGIC){
 		irr::core::stringw outputString = L"";
@@ -384,6 +549,10 @@ void GameHUD::DrawPauseMenu(Player& player){
 				j++;
 			}
 			
+		}
+		if (SubMenuIndex != -1){
+			
+			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
 		}
 	}
 	else if ( MenuSelected == SAVE){
