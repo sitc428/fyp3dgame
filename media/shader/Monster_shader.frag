@@ -1,5 +1,5 @@
 uniform sampler2D myTexture0;
-uniform sampler2D myTexture1;
+//uniform sampler2D myTexture1;
 
 varying vec2 vTexCoord;
 varying vec3 vNormal;
@@ -30,13 +30,14 @@ void main (void)
 	
 	float Intensity = normalize( vNormal ).z * 0.5 + 0.5;
 	vec4 texture_line;
-	if(ina> 0.1)
+/*	if(ina> 0.1)
         texture_line= vec4(0.9);
      else  texture_line = texture2D( myTexture1, vTexCoord)*0.5;
-	
-	vec4 color=vec4(1.0, 1.0,0.3,1.0);
+*/	
+	vec4 color=vec4(0.5, 0.5,0.9,0.3);
 //	vec4 temp = texture2D( myTexture2, vTexCoord );
 //	gl_FragColor = texture2D( myTexture2, vTexCoord )*texture2D(myTexture, vTexCoord);
 //	gl_FragColor = texture2D( myTexture0, vTexCoord )*texture_line*intensityMod;
-	gl_FragColor = vec4(0.6, 0.3, 0.9, 1.0)*texture2D(myTexture0, vTexCoord)*4.0;
+//	gl_FragColor = vec4(0.8, 0.3, 0.2, 1.0)*texture2D(myTexture0, vTexCoord)*4.0;
+	gl_FragColor = texture2D(myTexture0, vTexCoord);
 }
