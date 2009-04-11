@@ -228,6 +228,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Utils\DebugInfo.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\engine\FloorDecalSceneNode.h"
 				>
 			</File>
@@ -357,6 +361,10 @@
 			</File>
 			<File
 				RelativePath=".\utils\CollisionHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Utils\DebugInfo.cpp"
 				>
 			</File>
 			<File

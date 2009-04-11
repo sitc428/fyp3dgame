@@ -2,7 +2,7 @@
  *  shader.h
  *  FYP
  *
- *  Created by Mr.JJ on 09年4月10日.
+ *  Created by Mr.JJ on 09�???0??
  *  Copyright 2009 HKUST. All rights reserved.
  *
  */
@@ -24,8 +24,7 @@ class Shader : public video::IMaterialRenderer, public video::IShaderConstantSet
 { 
 public: 
     Shader(IrrlichtDevice *, const c8*, const c8*, int, video::E_MATERIAL_TYPE);
-	
-	    
+
     // if shaders were successfully created 
     bool areAvailable(); 
     

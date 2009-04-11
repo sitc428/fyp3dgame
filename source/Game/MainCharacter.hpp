@@ -73,7 +73,7 @@ public:
 	void setIdle();
 	void setDefending( bool defending );
 	void setAttacking( bool attacking );
-	void setMoving( bool moving );
+	void setMoving( bool moving, bool backward = false );
 	void setRunning( bool running );
 	bool isIdle() const;
 	bool isDefending() const;
