@@ -3,7 +3,7 @@
 
 #include "MainCharacter.hpp"
 #include "CollisionHelper.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "GameWorld.h"
 #include "InputEventReceiver.hpp"
 #include "FloorDecalSceneNode.h"

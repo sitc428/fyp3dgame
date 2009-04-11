@@ -6,13 +6,13 @@
 
 // forward declares
 class Actor;
-class InteractiveActor;
 class Camera;
-class Player;
-class MainCharacter;
-class Robot;
 class GameEngine;
 class GameHUD;
+class InteractiveActor;
+class MainCharacter;
+class Player;
+class Robot;
 
 // different states for the game
 enum EGameState
@@ -31,7 +31,7 @@ enum EGameState
 class GameWorld
 {
 public:
-	explicit GameWorld( const GameEngine& Engine );
+	explicit GameWorld( GameEngine& Engine );
 
 	void Init();
 	
@@ -82,6 +82,7 @@ private:
 	void InitLevel();
 	void InitLight();
 	void InitMusic();
+	void InitNPC();
 	void InitPickups();
 	void InitPlayer();
 	void InitRobot();
@@ -128,6 +129,8 @@ private:
 	irr::s32 numLives; // since there is more than one class/object representing the player, it makes sense to put it here instead
 
 	irr::s32 curLevel;
+
+	GameEngine& GEngine;
 };
 
 #endif //__GAME_WORLD_HPP__

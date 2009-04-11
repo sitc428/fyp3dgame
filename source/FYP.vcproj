@@ -240,7 +240,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Engine\GameEngine.h"
+				RelativePath=".\Engine\GameEngine.hpp"
 				>
 			</File>
 			<File

@@ -1,7 +1,6 @@
 #include <cmath>
-#include "CollisionHelper.h"
 #include "GameWorld.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "Monster.h"
 #include "TalkativeNPC.hpp"
 #include "Camera.h"
@@ -36,11 +35,9 @@ static const irr::f32 START_LEVEL_STATE_TIMER = 3.0f;
 static const irr::f32 GAME_OVER_STATE_TIMER = 5.0f;
 static const irr::f32 FENCE_FALL_TIME = 3.f;
 
-extern GameEngine* GEngine;
-
-GameWorld::GameWorld( const GameEngine& Engine ):
-	smgr(Engine.GetSceneManager()),
-	smgr1(Engine.GetSceneManager()),
+GameWorld::GameWorld( GameEngine& gameEngine ):
+	smgr(gameEngine.GetSceneManager()),
+	smgr1(gameEngine.GetSceneManager()),
 	mainCharacter(NULL),
 	robot(NULL),
 	camera(NULL),
@@ -49,7 +46,8 @@ GameWorld::GameWorld( const GameEngine& Engine ):
 	interactingActor(NULL),
 	gameMessage(NULL),
 	gameOverImg(NULL),
-	curLevel(0)
+	curLevel(0),
+	GEngine(gameEngine)
 {
 }
 
@@ -68,6 +66,7 @@ void GameWorld::Init()
 	InitMusic();
 	InitItems();
 	InitShader();
+	InitNPC();
 }
 
 void GameWorld::InitItems()
@@ -86,25 +85,19 @@ void GameWorld::InitShader()
 	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, core::vector3df(0,20,0), core::vector3df(2,2,2),
 													   core::aabbox3d<f32>(-7,0,-7,7,1,7));
 	fire->CreateBoxEmitter(core::vector3df(0.0f,0.06f,0.0f),
-						   50,80,800,1000, GEngine->GetDriver().getTexture("media/shader/smoke.bmp"));
+						   50,80,800,1000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 	
 	ParticleSystemEngine* fire2 = new ParticleSystemEngine(&smgr, core::vector3df(0,20,-100), core::vector3df(2,2,2),
 													   core::aabbox3d<f32>(-7,0,-7,7,1,7) );
 	fire2->CreateBoxEmitter(core::vector3df(0.0f,0.06f,0.0f),
-							80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	 
 	ParticleSystemEngine* fire3 = new ParticleSystemEngine(&smgr, core::vector3df(40,20,0), core::vector3df(2,2,2),
 															core::aabbox3d<f32>(-7,0,-7,7,1,7) );
 	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),core::vector3df(0.0f,0.06f,0.0f),
-							10,20,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
-	 
-	 
-	
-	
-	
-	
-	
-/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
+							10,20,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+
+	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
 															core::aabbox3d<f32>(-7,0,-7,7,1,7),
 															core::vector3df(0.0f,0.06f,0.0f),
 															80,100,
@@ -140,7 +133,7 @@ void GameWorld::InitShader()
 	
 	ps->setMaterialFlag(video::EMF_LIGHTING, false);
 	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	ps->setMaterialTexture(0,GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	ps->setMaterialTexture(0,GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
 	*/
 }
@@ -188,16 +181,6 @@ void GameWorld::InitLevel()
 	actors.push_back( TriggerEventItem1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
-
-
-
-
-
-
-
-
-
-
 	
 /*
 	smgr1.loadScene( LEVEL_FILE5 );
@@ -244,15 +227,6 @@ void GameWorld::InitLevel()
 */
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 
-
-
-
-
-
-
-	// lock cursor
-	//GEngine->LockCursor();
-
 	// set game state
 	stateTimer = 0;
 	gameState = state_START_LEVEL;
@@ -263,22 +237,21 @@ void GameWorld::InitLevel()
 // initializes level sounds
 void GameWorld::InitMusic()
 {
-	/* 
 	// load and play music
-	GEngine->ChangeMusic();
+	GEngine.ChangeBGM();
 
+	/*
 	// play wind sound effect
-	ISound *music = GEngine->GetSoundEngine().play2D("../audio/sfx/wind1.wav", true, false, true);
+	ISound *music = GEngine.GetSoundEngine().play2D("../audio/sfx/wind1.wav", true, false, true);
 	music->setVolume( 1.5f );
 	music->drop();
 
 	// play barking sound effect
-	music = GEngine->GetSoundEngine().play2D("../audio/sfx/barkingdog.mp3", true, false, true);
+	music = GEngine.GetSoundEngine().play2D("../audio/sfx/barkingdog.mp3", true, false, true);
 	music->setVolume( 1.5f );
 	music->drop();
 	*/
 }
-
 
 // sets up the light in the world
 void GameWorld::InitLight()
@@ -299,40 +272,26 @@ void GameWorld::InitLight()
 // sets up the player model and player collisions with the world
 void GameWorld::InitPlayer()
 {
-	mainCharacter = new MainCharacter( *this, GEngine->GetDriver() );
+	mainCharacter = new MainCharacter( *this, GEngine.GetDriver() );
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
-	
-	irr::core::array<irr::core::stringw> npc1dialogs;
-	npc1dialogs.push_back("Testing line 1\n and line 2");
-	npc1dialogs.push_back("My testing 2");
-	npc1dialogs.push_back("Ha ha ha ~");
-	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/slime08.x", 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
-	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
-	
-	actors.push_back(npc1);
-	
-
-	
-	
 }
 
 void GameWorld::InitRobot()
 {
-	robot = new Robot( *this, GEngine->GetDriver() );
+	robot = new Robot( *this, GEngine.GetDriver() );
 	actors.push_back( robot );
 }
 
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
-
-	Monster* m1 = new Monster( *this, GEngine->GetDriver(), 50, 100, 20, 100, 20);
+	Monster* m1 = new Monster( *this, GEngine.GetDriver(), 50, 100, 20, 100, 20);
 	actors.push_back(m1);
 	m1->ReSetPosition(irr::core::vector3df(-40,0,180));
 	
 	
-	Monster* m2 = new Monster( *this, GEngine->GetDriver(), 50, 100, 20, 100, 20);
+	Monster* m2 = new Monster( *this, GEngine.GetDriver(), 50, 100, 20, 100, 20);
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(50,0,200));
 	
@@ -361,18 +320,15 @@ void GameWorld::InitEnemies()
 	
 	ps->setMaterialFlag(video::EMF_LIGHTING, false);
 	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	ps->setMaterialTexture(0,GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+	ps->setMaterialTexture(0,GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
 	*/
-	
-	
-	
 }
 
 // sets up the camera to be able to look at the scene
 void GameWorld::InitCamera()
 {
-	camera = new Camera( *this, GEngine->GetDriver(), *levelTriangleSelector, GetCurrentPlayer() );
+	camera = new Camera( *this, GEngine.GetDriver(), *levelTriangleSelector, GetCurrentPlayer() );
 	// add the camera to the actor's list so it gets ticked
 	actors.push_back( camera );
 }
@@ -382,19 +338,19 @@ void GameWorld::InitWeapons()
 {
 	/* for( int i=0; i < MAX_SNOWBALLS; ++i )
 	   {
-	   SnowballProjectile* projectile = new SnowballProjectile( *this, GEngine->GetDriver() );
+	   SnowballProjectile* projectile = new SnowballProjectile( *this, GEngine.GetDriver() );
 	   actors.push_back( projectile );
 	   }
 
 	   for( int i=0; i < MAX_DYNAMITE; ++i )
 	   {
-	   DynamiteProjectile* projectile = new DynamiteProjectile( *this, GEngine->GetDriver() );
+	   DynamiteProjectile* projectile = new DynamiteProjectile( *this, GEngine.GetDriver() );
 	   actors.push_back( projectile );
 	   }
 
 	   for( int i=0; i < MAX_LANDMINES; ++i )
 	   {
-	   LandMine* mine = new LandMine( *this, GEngine->GetDriver(), *levelTriangleSelector );
+	   LandMine* mine = new LandMine( *this, GEngine.GetDriver(), *levelTriangleSelector );
 	   actors.push_back( mine );
 	   }
 	   */
@@ -402,25 +358,18 @@ void GameWorld::InitWeapons()
 
 void GameWorld::InitEffects()
 {
-	/*
-	   for( int i=0; i < MAX_SNOWBALL_EXPLOSION_EFFECTS; ++i )
-	   {
-	   SnowballExplosionEffect* effect = new SnowballExplosionEffect( *this, GEngine->GetParticleManager() );
-	   actors.push_back( effect );
-	   }
+}
 
-	   for( int i=0; i < MAX_DYNAMITE_EXPLOSION_EFFECTS; ++i )
-	   {
-	   DynamiteExplosionEffect* effect = new DynamiteExplosionEffect( *this, GEngine->GetParticleManager() );
-	   actors.push_back( effect );
-	   }
-
-	   for( int i=0; i < MAX_ENEMY_DEATH_EFFECTS; ++i )
-	   {
-	   EnemyDeathEffect* effect = new EnemyDeathEffect( *this, GEngine->GetParticleManager() );
-	   actors.push_back( effect );
-	   }
-	   */
+void GameWorld::InitNPC()
+{
+	irr::core::array<irr::core::stringw> npc1dialogs;
+	npc1dialogs.push_back("Testing line 1\n and line 2");
+	npc1dialogs.push_back("My testing 2");
+	npc1dialogs.push_back("Ha ha ha ~");
+	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/slime08.x", 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
+	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
+	
+	actors.push_back(npc1);
 }
 
 // sets up the weapon/ammo pickup objects used by the game
@@ -436,13 +385,13 @@ void GameWorld::InitPickups()
 		   if( nodes[i]->getID() == NODE_ID_DYNAMITEPICKUP )
 		   {
 		   irr::core::vector3df pos = nodes[i]->getAbsolutePosition();
-		   DynamitePickup* pickup = new DynamitePickup( *this, pos, GEngine->GetDriver() );
+		   DynamitePickup* pickup = new DynamitePickup( *this, pos, GEngine.GetDriver() );
 		   actors.push_back(pickup);
 		   }
 		   else if( nodes[i]->getID() == NODE_ID_SNOWPLOWPICKUP )
 		   {
 		   irr::core::vector3df pos = nodes[i]->getAbsolutePosition();
-		   SnowplowPickup* pickup = new SnowplowPickup( *this, pos, GEngine->GetDriver() );
+		   SnowplowPickup* pickup = new SnowplowPickup( *this, pos, GEngine.GetDriver() );
 		   actors.push_back(pickup);
 		   }
 		   */
@@ -452,7 +401,7 @@ void GameWorld::InitPickups()
 
 void GameWorld::InitHUD()
 {
-	gameHUD = new GameHUD( GEngine->GetDevice() );
+	gameHUD = new GameHUD( GEngine.GetDevice() );
 	gameHUD->Init();
 }
 
@@ -477,7 +426,7 @@ void GameWorld::Exit()
 	}
 
 	// stop and clean up background audio
-	// GEngine->GetSoundEngine().removeAllSoundSources();
+	// GEngine.GetSoundEngine().removeAllSoundSources();
 
 	delete gameHUD;
 	gameHUD = NULL;
@@ -544,15 +493,15 @@ void GameWorld::Tick( irr::f32 delta )
 			{
 				if( gameMessage == NULL )
 				{
-					irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
 
-					irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+					irr::gui::IGUIEnvironment* env = GEngine.GetDevice().getGUIEnvironment();
 					check(env);
 					gameOverImg = env->addImage(irr::core::rect<int>(0,0,scrSize.Width,scrSize.Height));
-					gameOverImg->setImage( GEngine->GetDriver().getTexture("../art/UI/GameOver/gameover.jpg") );
+					gameOverImg->setImage( GEngine.GetDriver().getTexture("../art/UI/GameOver/gameover.jpg") );
 					gameOverImg->draw();
 
-					// GEngine->GetSoundEngine().play2D("../audio/sfx/gameover.mp3");
+					// GEngine.GetSoundEngine().play2D("../audio/sfx/gameover.mp3");
 
 					irr::scene::ISceneNode* rootNode = smgr.getRootSceneNode();
 
@@ -560,11 +509,11 @@ void GameWorld::Tick( irr::f32 delta )
 					scrSize.Width /= 2;
 					scrSize.Height /= 2;
 
-					gameMessage = GEngine->GetDevice().getGUIEnvironment()->addStaticText( L"GAME OVER",
+					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( L"GAME OVER",
 							irr::core::rect<irr::s32>(scrSize.Width-64, scrSize.Height-32, scrSize.Width+128, scrSize.Height+48) );
 					check(gameMessage);
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine->GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
+					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 				}
 				else if( stateTimer < GAME_OVER_STATE_TIMER )
 				{
@@ -580,7 +529,7 @@ void GameWorld::Tick( irr::f32 delta )
 					gameOverImg = 0;
 
 					stateTimer = 0;
-					GEngine->RequestStateChange( state_FRONTEND );
+					GEngine.RequestStateChange( state_FRONTEND );
 				}
 			}break;
 		case state_WAVE_FINISHED:
@@ -589,7 +538,7 @@ void GameWorld::Tick( irr::f32 delta )
 				{
 					camera->Tick(delta);
 
-					irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
 					scrSize.Width /= 2;
 					scrSize.Height /= 2;
 
@@ -598,11 +547,11 @@ void GameWorld::Tick( irr::f32 delta )
 					waveString += "/";
 					// waveString += enemyWaves.size();
 					waveString += " WAVES COMPLETED!";
-					gameMessage = GEngine->GetDevice().getGUIEnvironment()->addStaticText( waveString.c_str(),
+					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( waveString.c_str(),
 							irr::core::rect<irr::s32>(scrSize.Width-128, scrSize.Height-128, scrSize.Width+256, scrSize.Height+48) );
 					check(gameMessage);
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine->GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
+					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 				}
 
 				DoGameplay( delta );
@@ -619,15 +568,15 @@ void GameWorld::Tick( irr::f32 delta )
 
 				if( gameMessage == NULL )
 				{
-					irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
 					scrSize.Width /= 2;
 					scrSize.Height /= 2;
 
-					gameMessage = GEngine->GetDevice().getGUIEnvironment()->addStaticText( L"Get Ready",
+					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( L"Get Ready",
 							irr::core::rect<irr::s32>(scrSize.Width-64, scrSize.Height-32, scrSize.Width+128, scrSize.Height+48) );
 					check(gameMessage);
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine->GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
+					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 					//RestartLevel();
 					camera->SetPosition( GetCurrentPlayer().GetNodePosition() - GetCurrentPlayer().GetAimVector() * -5.0f );
 					camera->Tick(delta);
@@ -656,14 +605,14 @@ void GameWorld::Tick( irr::f32 delta )
 				{
 					camera->Tick(delta);
 
-					irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
 					scrSize.Width /= 2;
 					scrSize.Height /= 2;
 
-					gameMessage = GEngine->GetDevice().getGUIEnvironment()->addStaticText( L"It Begins...",
+					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( L"It Begins...",
 							irr::core::rect<irr::s32>(scrSize.Width-64, scrSize.Height-32, scrSize.Width+128, scrSize.Height+48) );
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine->GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
+					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 				}
 				/*else if( stateTimer < START_LEVEL_STATE_TIMER )
 				{
@@ -685,17 +634,17 @@ void GameWorld::Tick( irr::f32 delta )
 			{
 				if( gameMessage == NULL )
 				{
-					irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
 
-					irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+					irr::gui::IGUIEnvironment* env = GEngine.GetDevice().getGUIEnvironment();
 					check(env);
 					gameOverImg = env->addImage(irr::core::rect<int>(0,0,scrSize.Width,scrSize.Height));
-					gameOverImg->setImage( GEngine->GetDriver().getTexture("../art/UI/GameOver/gameover.jpg") );
+					gameOverImg->setImage( GEngine.GetDriver().getTexture("../art/UI/GameOver/gameover.jpg") );
 					gameOverImg->draw();
 
 
 					irr::scene::ISceneNode* rootNode = smgr.getRootSceneNode();
-					// GEngine->ChangeMusic( "../audio/music/plowmusic.mp3" );
+					// GEngine.ChangeMusic( "../audio/music/plowmusic.mp3" );
 
 					scrSize.Width /= 2;
 					scrSize.Height /= 2;
@@ -705,11 +654,11 @@ void GameWorld::Tick( irr::f32 delta )
 					msgString += "\n\nCREDITS:\n\n";
 
 
-					gameMessage = GEngine->GetDevice().getGUIEnvironment()->addStaticText( msgString.c_str(),
+					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( msgString.c_str(),
 							irr::core::rect<irr::s32>(scrSize.Width-256, scrSize.Height-128, scrSize.Width+256, scrSize.Height+128) );
 					check(gameMessage);
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine->GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
+					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 				}
 				else if( stateTimer < 13 )
 				{
@@ -725,7 +674,7 @@ void GameWorld::Tick( irr::f32 delta )
 					gameOverImg = 0;
 
 					stateTimer = 0;
-					GEngine->RequestStateChange( state_FRONTEND );
+					GEngine.RequestStateChange( state_FRONTEND );
 				}
 			}break;
 		default:
@@ -774,7 +723,7 @@ void GameWorld::DoGameplay( irr::f32 delta )
 void GameWorld::DoInput()
 {
 	// handle user input for player
-	InputEventReceiver& receiver = GEngine->GetReceiver();
+	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if(receiver.keyReleased(irr::KEY_ESCAPE))
 	{
@@ -855,7 +804,7 @@ void GameWorld::DoInput()
 void GameWorld::DoAudio()
 {
 	// update 3d position of player
-	// GEngine->GetSoundEngine().setListenerPosition(GetCurrentPlayer().GetNodePosition(), GetCurrentPlayer().GetAimVector());
+	// GEngine.GetSoundEngine().setListenerPosition(GetCurrentPlayer().GetNodePosition(), GetCurrentPlayer().GetAimVector());
 }
 
 // returns the player actor which is currently used
