@@ -33,11 +33,11 @@ void main (void)
 	vec4 texture_line;
 	if(ina> 0.1)
         texture_line= vec4(0.9);
-     else  texture_line = texture2D( myTexture1, vTexCoord)*0.5;
+     else  texture_line = texture2D( myTexture1, vTexCoord)*0.2;
 	
 	vec4 color=vec4(1.0, 0.7,0.3,1.0);
 //	vec4 temp = texture2D( myTexture2, vTexCoord );
 //	gl_FragColor = texture2D( myTexture2, vTexCoord )*texture2D(myTexture, vTexCoord);
-//	gl_FragColor = texture2D( myTexture0, vTexCoord )*texture_line*intensityMod;
-	gl_FragColor = color*texture_line*intensityMod;
+	gl_FragColor = texture2D( myTexture0, vTexCoord );
+//	gl_FragColor = color*texture_line*intensityMod;
 }
