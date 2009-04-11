@@ -14,7 +14,6 @@
 #include "XItem.hpp"
 #include "WeaponItem.hpp"
 #include "Monster.h"
-#include "DebugInfo.hpp"
 
 extern GameEngine* GEngine;
 
@@ -349,67 +348,6 @@ void MainCharacter::DoInput()
 {
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
-	static bool cheatWeapon = false;
-	static bool debugBoxes = false;
-	if( receiver.keyDown(irr::KEY_PLUS) )
-	{
-		if( receiver.keyReleased(irr::KEY_KEY_1) )
-			cheatWeapon = !cheatWeapon;
-		if( receiver.keyReleased(irr::KEY_KEY_2) )
-			debugBoxes = !debugBoxes;
-	}
-
-	if(cheatWeapon)
-	{
-		/**
-		weapon position and rotation tuning
-		**/
-		irr::core::vector3df wp = weaponNode->getPosition();
-		irr::core::vector3df wr = weaponNode->getRotation();
-		if( receiver.keyReleased(irr::KEY_F1) )
-			wp.X -= 1;
-		if( receiver.keyReleased(irr::KEY_F2) )
-			wp.X += 1;
-		if( receiver.keyReleased(irr::KEY_F3) )
-			wp.Y -= 1;
-		if( receiver.keyReleased(irr::KEY_F4) )
-			wp.Y += 1;
-		if( receiver.keyReleased(irr::KEY_F5) )
-			wp.Z -= 1;
-		if( receiver.keyReleased(irr::KEY_F6) )
-			wp.Z += 1;
-		if( receiver.keyDown(irr::KEY_F7) )
-			wr.X -= 1;
-		if( receiver.keyDown(irr::KEY_F8) )
-			wr.X += 1;
-		if( receiver.keyDown(irr::KEY_F9) )
-			wr.Y -= 1;
-		if( receiver.keyDown(irr::KEY_F10) )
-			wr.Y += 1;
-		if( receiver.keyDown(irr::KEY_F11) )
-			wr.Z -= 1;
-		if( receiver.keyDown(irr::KEY_F12) )
-			wr.Z += 1;
-		std::cout<<"P:"<<wp.X<<","<<wp.Y<<","<<wp.Z<<std::endl;
-		std::cout<<"R:"<<wr.X<<","<<wr.Y<<","<<wr.Z<<std::endl;
-		weaponNode->setRotation(wr);
-		weaponNode->setPosition(wp);
-	}
-
-	if( debugBoxes )
-		DebugInfo::enableDebugBBox( world );
-	else
-		DebugInfo::disableDebugBBox( world );
-
-	if( receiver.keyDown(irr::KEY_KEY_C) )
-	{
-		SetCharging( true );
-	}
-	else
-	{
-		SetCharging( false );
-	}
-
 	if( receiver.keyDown(irr::KEY_KEY_X) )
 	{
 		setDefending( true );
@@ -420,6 +358,15 @@ void MainCharacter::DoInput()
 	{
 		setAttacking( true );
 		return;
+	}
+
+	if( receiver.keyDown(irr::KEY_KEY_C) )
+	{
+		SetCharging( true );
+	}
+	else
+	{
+		SetCharging( false );
 	}
 
 	irr::core::vector3df playerTranslation(0, 0, 0);

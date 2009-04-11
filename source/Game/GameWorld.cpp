@@ -1,36 +1,25 @@
+#include <cmath>
 #include "CollisionHelper.h"
 #include "GameWorld.h"
 #include "GameEngine.h"
 #include "Monster.h"
 #include "TalkativeNPC.hpp"
-//#include "Enemy.h"
-//#include "EnemyTwo.h"
-//#include "EnemyBoss.h"
 #include "Camera.h"
 #include "Player.h"
 #include "MainCharacter.hpp"
 #include "Robot.hpp"
 #include "SellingMachine.hpp"
 #include "TriggerEventItem.hpp"
-//#include "SnowballProjectile.h"
-//#include "DynamiteProjectile.h"
-//#include "LandMine.h"
 #include "InputEventReceiver.hpp"
-//#include "DynamitePickup.h"
-//#include "SnowplowPickup.h"
-//#include "DynamiteExplosionEffect.h"
-//#include "SnowballExplosionEffect.h"
-//#include "EnemyDeathEffect.h"
 #include "GameHUD.h"
 #include "NodeID.h"
-//#include "EnemyWave.h"
-#include <cmath>  // for tan(x) function
 #include "ParticleSystemEngine.h"
 #include "HPItem.hpp"
 #include "MDiscItem.hpp"
 #include "XItem.hpp"
 #include "WeaponItem.hpp"
 #include "Item.hpp"
+#include "DebugInfo.hpp"
 
 static const irr::c8* LEVEL_FILE = "media/model/scene1.irr";
 static const irr::c8* LEVEL_FILE5 = "media/model/scene5.irr";
@@ -895,6 +884,64 @@ void GameWorld::DoInput()
 			gameStateBeforePause = gameState;
 			gameState = state_PAUSED;
 		}
+	}
+
+	static bool cheatWeapon = false;
+	static bool debugBoxes = false;
+	if( receiver.keyDown(irr::KEY_PLUS) )
+	{
+		if( receiver.keyReleased(irr::KEY_KEY_1) )
+			cheatWeapon = !cheatWeapon;
+		if( receiver.keyReleased(irr::KEY_KEY_2) )
+		{
+			if( debugBoxes )
+				DebugInfo::enableDebugBBox( *this );
+			else
+				DebugInfo::disableDebugBBox( *this );
+			
+			debugBoxes = !debugBoxes;
+		}
+		if( receiver.keyReleased(irr::KEY_KEY_3) )
+		{
+			DebugInfo::nextCullingMode( *camera );
+		}
+	}
+
+	if(cheatWeapon)
+	{
+		/**
+		weapon position and rotation tuning
+		**/
+		irr::core::vector3df wp = mainCharacter->getWeaponNode()->getPosition();
+		irr::core::vector3df wr = mainCharacter->getWeaponNode()->getRotation();
+		if( receiver.keyReleased(irr::KEY_F1) )
+			wp.X -= 1;
+		if( receiver.keyReleased(irr::KEY_F2) )
+			wp.X += 1;
+		if( receiver.keyReleased(irr::KEY_F3) )
+			wp.Y -= 1;
+		if( receiver.keyReleased(irr::KEY_F4) )
+			wp.Y += 1;
+		if( receiver.keyReleased(irr::KEY_F5) )
+			wp.Z -= 1;
+		if( receiver.keyReleased(irr::KEY_F6) )
+			wp.Z += 1;
+		if( receiver.keyDown(irr::KEY_F7) )
+			wr.X -= 1;
+		if( receiver.keyDown(irr::KEY_F8) )
+			wr.X += 1;
+		if( receiver.keyDown(irr::KEY_F9) )
+			wr.Y -= 1;
+		if( receiver.keyDown(irr::KEY_F10) )
+			wr.Y += 1;
+		if( receiver.keyDown(irr::KEY_F11) )
+			wr.Z -= 1;
+		if( receiver.keyDown(irr::KEY_F12) )
+			wr.Z += 1;
+		std::cout<<"P:"<<wp.X<<","<<wp.Y<<","<<wp.Z<<std::endl;
+		std::cout<<"R:"<<wr.X<<","<<wr.Y<<","<<wr.Z<<std::endl;
+		mainCharacter->getWeaponNode()->setRotation(wr);
+		mainCharacter->getWeaponNode()->setPosition(wp);
 	}
 
 	if( gameState == state_PAUSED || gameState == state_INTERACTING)

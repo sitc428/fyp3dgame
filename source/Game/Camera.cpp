@@ -25,8 +25,8 @@ Camera::Camera( GameWorld& gameWorld,
 {
 	//node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
 	node = world.GetSceneManager().addCameraSceneNode(0);
-	node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX );
-	node->setFarValue( 1000 );
+	node->setAutomaticCulling( irr::scene::EAC_OFF );
+	node->setFarValue( 750 );
 }
 
 // destructor, protected to force user to call Actor::DestroyActor

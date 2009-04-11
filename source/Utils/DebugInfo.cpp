@@ -1,6 +1,7 @@
 #include "DebugInfo.hpp"
 
 bool DebugInfo::enabledDebugBBox = false;
+irr::scene::E_CULLING_TYPE DebugInfo::cameraCullingMode = irr::scene::EAC_OFF;
 
 void DebugInfo::enableDebugBBox( GameWorld& world )
 {
@@ -40,4 +41,18 @@ void DebugInfo::disableDebugBBox( GameWorld& world )
 			DebugInfo::hideDebugBox2
 		);
 	}
+}
+
+void DebugInfo::nextCullingMode( Camera& cam )
+{
+	if( cameraCullingMode == irr::scene::EAC_OFF )
+		cameraCullingMode == irr::scene::EAC_BOX;
+	else if( cameraCullingMode == irr::scene::EAC_BOX )
+		cameraCullingMode == irr::scene::EAC_FRUSTUM_BOX;
+	else if( cameraCullingMode == irr::scene::EAC_FRUSTUM_BOX )
+		cameraCullingMode == irr::scene::EAC_FRUSTUM_SPHERE;
+	else if( cameraCullingMode == irr::scene::EAC_FRUSTUM_SPHERE )
+		cameraCullingMode == irr::scene::EAC_OFF;
+
+	cam.GetNode().setAutomaticCulling( cameraCullingMode );
 }

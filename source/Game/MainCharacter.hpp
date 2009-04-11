@@ -81,7 +81,6 @@ public:
 	bool isMoving() const;
 	bool isRunning() const;
 
-
 	void InitShader(irr::core::vector3df* lightPosition);
 
 	// sets the player into firing state
@@ -128,7 +127,9 @@ public:
 	void SetEXP(irr::s32 exp) {_exp = exp;};
 	void SetCurrentWeapon(WeaponItem* currentWeapon) { _currentWeapon = currentWeapon;};
 	void SetCurrentMagic(MDiscItem* currentMagic) { _currentMagic = currentMagic;};
-	
+
+	irr::scene::ISceneNode* getWeaponNode() { return weaponNode; }
+
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
 	virtual ~MainCharacter();
