@@ -37,7 +37,8 @@ void MDiscItem::use()
 	{
 		box[tmp].second--;
 	}
-	(((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(box));
+	if (box[tmp].second>=0)
+		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(box);
 }
 
 void MDiscItem::equip()
