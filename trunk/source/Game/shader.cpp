@@ -2,7 +2,7 @@
  *  shader.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09年4月10日.
+ *  Created by Mr.JJ on 09�???0??
  *  Copyright 2009 HKUST. All rights reserved.
  *
  */
@@ -45,9 +45,6 @@ Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path
     } 
     
     baseMaterialRenderer = driver->getMaterialRenderer(SHADER_MATERIAL_BASE);
-	
-	
-
 } 
 
 

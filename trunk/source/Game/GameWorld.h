@@ -50,7 +50,7 @@ class GameWorld
 
 		irr::scene::IMetaTriangleSelector& GetLevelTriangleSelector() { return *levelTriangleSelector; }
 		// provides access to the actors in the world, you can modify the actors, but not the irr::core::array itself
-		const irr::core::array<Actor*>& GetActors() const { return actors; }
+		irr::core::array<Actor*>& GetActors() { return actors; }
 		/*
 		// return the first available dynamite projectile for throwing, NULL if none are available
 		DynamiteProjectile* GetFirstAvailableDynamite() const;

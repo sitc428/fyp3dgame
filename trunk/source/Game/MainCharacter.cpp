@@ -1,22 +1,20 @@
+#include <cmath>
+#include <iostream>
+
 #include "MainCharacter.hpp"
-#include "Check.h"
 #include "CollisionHelper.h"
 #include "GameEngine.h"
 #include "GameWorld.h"
-/*#include "DynamiteProjectile.h"
-#include "SnowballProjectile.h"
-#include "LandMine.h"*/
 #include "InputEventReceiver.hpp"
 #include "FloorDecalSceneNode.h"
 #include "ProgressCircle.hpp"
-#include <cmath>
-#include <iostream>
 #include "Item.hpp"
 #include "HPItem.hpp"
 #include "MDiscItem.hpp"
 #include "XItem.hpp"
 #include "WeaponItem.hpp"
 #include "Monster.h"
+#include "DebugInfo.hpp"
 
 extern GameEngine* GEngine;
 
@@ -128,21 +126,12 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 
 	weaponNode = smgr.addMeshSceneNode(
 		smgr.getMesh("media/model/sword.x"),
-		node->getJointNode("RightFingerBase"),
-		-1,
-		irr::core::vector3df(-5.5, 2.5, -5.5),
-		irr::core::vector3df(5.000000, 20.000000, -90.000000),
-		irr::core::vector3df(0.05, 0.05, 0.05)
+		node->getJointNode("RightFingerBase")
 	);
-
-	weaponNode = smgr.addMeshSceneNode(
-		smgr.getMesh("media/model/sword.x"),
-		node->getJointNode("RightFingerBase"),
-		-1,
-		irr::core::vector3df(-5.5, 2.5, -5.5),
-		irr::core::vector3df(0, 0, 0),
-		irr::core::vector3df(0.05, 0.05, 0.05)
-	);
+	
+	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
+	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
+	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
@@ -271,15 +260,20 @@ void MainCharacter::setDefending( bool defending )
 	}
 }
 
-void MainCharacter::setMoving( bool moving )
+void MainCharacter::setMoving( bool moving, bool backward )
 {
-	if( isMoving() )
+	if( !isRunning() && isMoving() )
 		return;
 
 	if( moving )
 	{
 		action = EMCAS_MOVE;
-		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START, MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END );
+
+		if( backward )
+			node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_BACK_START, MAIN_CHARACTER_ANIMATION_WALK_BACK_END );
+		else
+			node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START, MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END );
+
 		node->setLoopMode( true );
 	}
 }
@@ -356,70 +350,56 @@ void MainCharacter::DoInput()
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 
 	static bool cheatWeapon = false;
-	if( receiver.keyReleased(irr::KEY_KEY_1) && receiver.keyDown(irr::KEY_PLUS) )
+	static bool debugBoxes = false;
+	if( receiver.keyDown(irr::KEY_PLUS) )
 	{
-		cheatWeapon = !cheatWeapon;
+		if( receiver.keyReleased(irr::KEY_KEY_1) )
+			cheatWeapon = !cheatWeapon;
+		if( receiver.keyReleased(irr::KEY_KEY_2) )
+			debugBoxes = !debugBoxes;
 	}
+
 	if(cheatWeapon)
 	{
-	/**
-	weapon position and rotation tuning
-	**/
-	irr::core::vector3df wp = weaponNode->getPosition();
-	irr::core::vector3df wr = weaponNode->getRotation();
-	if( receiver.keyReleased(irr::KEY_F1) )
-	{
-		wp.X -= 1;
+		/**
+		weapon position and rotation tuning
+		**/
+		irr::core::vector3df wp = weaponNode->getPosition();
+		irr::core::vector3df wr = weaponNode->getRotation();
+		if( receiver.keyReleased(irr::KEY_F1) )
+			wp.X -= 1;
+		if( receiver.keyReleased(irr::KEY_F2) )
+			wp.X += 1;
+		if( receiver.keyReleased(irr::KEY_F3) )
+			wp.Y -= 1;
+		if( receiver.keyReleased(irr::KEY_F4) )
+			wp.Y += 1;
+		if( receiver.keyReleased(irr::KEY_F5) )
+			wp.Z -= 1;
+		if( receiver.keyReleased(irr::KEY_F6) )
+			wp.Z += 1;
+		if( receiver.keyDown(irr::KEY_F7) )
+			wr.X -= 1;
+		if( receiver.keyDown(irr::KEY_F8) )
+			wr.X += 1;
+		if( receiver.keyDown(irr::KEY_F9) )
+			wr.Y -= 1;
+		if( receiver.keyDown(irr::KEY_F10) )
+			wr.Y += 1;
+		if( receiver.keyDown(irr::KEY_F11) )
+			wr.Z -= 1;
+		if( receiver.keyDown(irr::KEY_F12) )
+			wr.Z += 1;
+		std::cout<<"P:"<<wp.X<<","<<wp.Y<<","<<wp.Z<<std::endl;
+		std::cout<<"R:"<<wr.X<<","<<wr.Y<<","<<wr.Z<<std::endl;
+		weaponNode->setRotation(wr);
+		weaponNode->setPosition(wp);
 	}
-	if( receiver.keyReleased(irr::KEY_F2) )
-	{
-		wp.X += 1;
-	}
-	if( receiver.keyReleased(irr::KEY_F3) )
-	{
-		wp.Y -= 1;
-	}
-	if( receiver.keyReleased(irr::KEY_F4) )
-	{
-		wp.Y += 1;
-	}
-	if( receiver.keyReleased(irr::KEY_F5) )
-	{
-		wp.Z -= 1;
-	}
-	if( receiver.keyReleased(irr::KEY_F6) )
-	{
-		wp.Z += 1;
-	}
-	if( receiver.keyDown(irr::KEY_F7) )
-	{
-		wr.X -= 1;
-	}
-	if( receiver.keyDown(irr::KEY_F8) )
-	{
-		wr.X += 1;
-	}
-	if( receiver.keyDown(irr::KEY_F9) )
-	{
-		wr.Y -= 1;
-	}
-	if( receiver.keyDown(irr::KEY_F10) )
-	{
-		wr.Y += 1;
-	}
-	if( receiver.keyDown(irr::KEY_F11) )
-	{
-		wr.Z -= 1;
-	}
-	if( receiver.keyDown(irr::KEY_F12) )
-	{
-		wr.Z += 1;
-	}
-	std::cout<<"P:"<<wp.X<<","<<wp.Y<<","<<wp.Z<<std::endl;
-	std::cout<<"R:"<<wr.X<<","<<wr.Y<<","<<wr.Z<<std::endl;
-	weaponNode->setRotation(wr);
-	weaponNode->setPosition(wp);
-	}
+
+	if( debugBoxes )
+		DebugInfo::enableDebugBBox( world );
+	else
+		DebugInfo::disableDebugBBox( world );
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
@@ -446,6 +426,7 @@ void MainCharacter::DoInput()
 	irr::core::vector3df playerRotation(0, 0, 0);
 
 	bool move = false;
+	bool backward = false;
 
 	if( receiver.keyDown(irr::KEY_UP) )
 	{
@@ -484,14 +465,15 @@ void MainCharacter::DoInput()
 	}
 	else if( receiver.keyDown(irr::KEY_DOWN) )
 	{
-		if(faceVector != -aimVector)
+		//if(faceVector != -aimVector)
+		if( faceVector != aimVector )
 		{
 			faceVector = aimVector;
-			faceVector.rotateXZBy( 180, irr::core::vector3df(0, 0, 0) );
+			//faceVector.rotateXZBy( 180, irr::core::vector3df(0, 0, 0) );
 			faceVector.normalize();
 		}
 
-		move = true;
+		backward = move = true;
 	}
 	else if( receiver.keyDown(irr::KEY_LEFT) )
 	{
@@ -533,7 +515,7 @@ void MainCharacter::DoInput()
 
 	if(move)
 	{
-		if( receiver.keyDown(irr::KEY_SHIFT) )
+		if( receiver.keyDown(irr::KEY_SHIFT) && !backward )
 		{
 			playerTranslation.Z = 45;
 			setRunning( true );
@@ -541,8 +523,11 @@ void MainCharacter::DoInput()
 		else
 		{
 			playerTranslation.Z = 15;
-			setMoving( true );
+			setMoving( true, backward );
 		}
+
+		if( backward )
+			playerTranslation.Z = -playerTranslation.Z;
 
 		SetTranslation( playerTranslation );
 
