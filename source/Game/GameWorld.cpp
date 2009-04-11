@@ -40,6 +40,7 @@ extern GameEngine* GEngine;
 
 GameWorld::GameWorld( const GameEngine& Engine ):
 	smgr(Engine.GetSceneManager()),
+	smgr1(Engine.GetSceneManager()),
 	mainCharacter(NULL),
 	robot(NULL),
 	bUseOnFootPlayer(true),
@@ -209,31 +210,34 @@ void GameWorld::InitLevel()
 
 
 
-
+	
 /*
-	smgr.loadScene( LEVEL_FILE5 );
-	//smgr.loadScene( LEVEL_FILE5 );
+	smgr1.loadScene( LEVEL_FILE5 );
+	
+	
+	smgr1.getRootSceneNode()->setPosition(irr::core::vector3df(500,0,500));
 
 	// setup levelTriangleSelector, used for collision detection with the level
-	levelTriangleSelector = smgr.createMetaTriangleSelector();
+	levelTriangleSelector = smgr1.createMetaTriangleSelector();
 
 	// add triangle selectors for every mesh node in the level
 	//irr::core::array<irr::scene::ISceneNode*> outNodes;
-	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+	smgr1.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
 		//irr::scene::IMeshSceneNode* meshNode = dynamic_cast<irr::scene::IMeshSceneNode*>(outNodes[i]);
 		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
-		irr::core::vector3df tmp = meshNode->getPosition();
-		tmp.X += 1000;
-		meshNode->setPosition(tmp);
+		//irr::core::vector3df tmp = meshNode->getPosition();
+		//tmp.X += 200;
+		//tmp.Z += 200;
+		//meshNode->setPosition(tmp);
 
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
-			if (meshNode->getID() == NODE_ID_TRI_NEEDED)
+			if (meshNode->getID() != NODE_ID_FENCE_TO_FALL)
 			{
-				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
+				irr::scene::ITriangleSelector* meshTriangleSelector = smgr1.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
 				check(meshTriangleSelector);
 				meshNode->setTriangleSelector( meshTriangleSelector );
 				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
@@ -247,14 +251,11 @@ void GameWorld::InitLevel()
 	}
 	outNodes.clear();
 
-	//SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	//actors.push_back( sellingMachine1 );
 
-	//TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	//actors.push_back( TriggerEventItem1 );
-
-	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+		smgr1.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 */
+	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+
 
 
 

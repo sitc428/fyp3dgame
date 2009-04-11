@@ -370,11 +370,20 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
+		//std::cout << "Magic Level: " << GetMagicLevel() << std::endl;
 		SetCharging( true );
+		if (GetMagicLevel()<3)
+		{
+			SetChargingProgress(GetChargingProgress()+1);
+			if (GetChargingProgress()%100==0)
+				SetMagicLevel(GetMagicLevel()+1);
+		}
 	}
 	else
 	{
 		SetCharging( false );
+		SetChargingProgress(0);
+		SetMagicLevel(0);
 	}
 
 	irr::core::vector3df playerTranslation(0, 0, 0);

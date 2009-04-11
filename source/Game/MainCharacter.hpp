@@ -122,6 +122,7 @@ public:
 	void SetMagicDefencePoint(irr::s32 magicdefence) { _magicdefence = magicdefence;};
 	void SetMagicLevel(irr::s32 magiclevel) { _magiclevel = magiclevel;}; 
 	void SetCharging(bool charging) { _charging = charging;};		//to get whether the player is charging for Magic
+	void SetChargingProgress(irr::u32 magicChargeProgress) {_magicChargeProgress = magicChargeProgress;}
 	//void SetItemBox(std::vector< std::pair<Item*, int> > itemBox) { _itemBox = itemBox;};
 	void SetItemBox(ItemCollection itemBox) {_itemBox = itemBox;};
 	void SetEXP(irr::s32 exp) {_exp = exp;};
