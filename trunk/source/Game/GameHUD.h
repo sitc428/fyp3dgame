@@ -92,6 +92,7 @@ private:
 	ITexture*					SelectIconTexture;
 	//Menu attributes
 	MENU_SELECTED				MenuSelected;
+	irr::s32					SubMenuIndex;
 	
 	
 	
