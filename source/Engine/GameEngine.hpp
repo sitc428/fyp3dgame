@@ -1,10 +1,12 @@
 #ifndef __GAME_ENGINE_HPP__
 #define __GAME_ENGINE_HPP__
 
-#include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
-#include <map>
+#include <irrlicht/irrlicht.h>
+
 #include <string>
+#include <map>
+
 #include "Check.h"
 
 const irr::f64 PI = 3.14159265;

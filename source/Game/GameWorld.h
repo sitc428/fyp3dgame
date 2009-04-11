@@ -1,8 +1,8 @@
 #ifndef __GAME_WORLD_HPP__
 #define __GAME_WORLD_HPP__
 
-#include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
+#include <irrlicht/irrlicht.h>
 
 // forward declares
 class Actor;
@@ -83,7 +83,6 @@ private:
 	void InitLight();
 	void InitMusic();
 	void InitNPC();
-	void InitPickups();
 	void InitPlayer();
 	void InitRobot();
 	void InitShader();

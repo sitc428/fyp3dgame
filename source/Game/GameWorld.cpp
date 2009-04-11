@@ -1,24 +1,25 @@
 #include <cmath>
-#include "GameWorld.h"
-#include "GameEngine.hpp"
-#include "Monster.h"
-#include "TalkativeNPC.hpp"
+
 #include "Camera.h"
-#include "Player.h"
-#include "MainCharacter.hpp"
-#include "Robot.hpp"
-#include "SellingMachine.hpp"
-#include "TriggerEventItem.hpp"
-#include "InputEventReceiver.hpp"
+#include "DebugInfo.hpp"
+#include "GameEngine.hpp"
 #include "GameHUD.h"
+#include "GameWorld.h"
+#include "HPItem.hpp"
+#include "InputEventReceiver.hpp"
+#include "Item.hpp"
+#include "MainCharacter.hpp"
+#include "MDiscItem.hpp"
+#include "Monster.h"
 #include "NodeID.h"
 #include "ParticleSystemEngine.h"
-#include "HPItem.hpp"
-#include "MDiscItem.hpp"
-#include "XItem.hpp"
+#include "Player.h"
+#include "Robot.hpp"
+#include "SellingMachine.hpp"
+#include "TalkativeNPC.hpp"
+#include "TriggerEventItem.hpp"
 #include "WeaponItem.hpp"
-#include "Item.hpp"
-#include "DebugInfo.hpp"
+#include "XItem.hpp"
 
 static const irr::c8* LEVEL_FILE = "media/model/scene1.irr";
 static const irr::c8* LEVEL_FILE5 = "media/model/scene5.irr";
@@ -62,7 +63,6 @@ void GameWorld::Init()
 	InitHUD();
 	InitWeapons();
 	InitEffects();
-	InitPickups();
 	InitMusic();
 	InitItems();
 	InitShader();
@@ -173,12 +173,6 @@ void GameWorld::InitLevel()
 		}
 	}
 	outNodes.clear();
-
-	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	actors.push_back( sellingMachine1 );
-
-	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	actors.push_back( TriggerEventItem1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 	
@@ -362,6 +356,12 @@ void GameWorld::InitEffects()
 
 void GameWorld::InitNPC()
 {
+	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	actors.push_back( sellingMachine1 );
+
+	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	actors.push_back( TriggerEventItem1 );
+
 	irr::core::array<irr::core::stringw> npc1dialogs;
 	npc1dialogs.push_back("Testing line 1\n and line 2");
 	npc1dialogs.push_back("My testing 2");
@@ -370,33 +370,6 @@ void GameWorld::InitNPC()
 	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
 	actors.push_back(npc1);
-}
-
-// sets up the weapon/ammo pickup objects used by the game
-void GameWorld::InitPickups()
-{
-	// init the pickups by finding all the pickupspawner nodes in the level
-	irr::core::array<irr::scene::ISceneNode*> nodes;
-	smgr.getSceneNodesFromType(irr::scene::ESNT_EMPTY, nodes, smgr.getRootSceneNode());
-
-	for( irr::u32 i = 0; i < nodes.size(); ++i )
-	{
-		/*
-		   if( nodes[i]->getID() == NODE_ID_DYNAMITEPICKUP )
-		   {
-		   irr::core::vector3df pos = nodes[i]->getAbsolutePosition();
-		   DynamitePickup* pickup = new DynamitePickup( *this, pos, GEngine.GetDriver() );
-		   actors.push_back(pickup);
-		   }
-		   else if( nodes[i]->getID() == NODE_ID_SNOWPLOWPICKUP )
-		   {
-		   irr::core::vector3df pos = nodes[i]->getAbsolutePosition();
-		   SnowplowPickup* pickup = new SnowplowPickup( *this, pos, GEngine.GetDriver() );
-		   actors.push_back(pickup);
-		   }
-		   */
-	}
-
 }
 
 void GameWorld::InitHUD()
@@ -477,18 +450,16 @@ void GameWorld::Tick( irr::f32 delta )
 		case state_GAMEPLAY:
 		case state_INTERACTING:
 		case state_PAUSED:
-			{
-				DoGameplay( delta );
-			}break;
+			DoGameplay( delta );
+			break;
 		case state_PLAYER_DEAD:
+			stateTimer += delta;
+			if( stateTimer >= PLAYER_DEATH_STATE_TIMER )
 			{
-				stateTimer += delta;
-				if( stateTimer >= PLAYER_DEATH_STATE_TIMER )
-				{
-					stateTimer = 0;
-					gameState = state_RESTART_LEVEL;
-				}
-			}break;
+				stateTimer = 0;
+				gameState = state_RESTART_LEVEL;
+			}
+			break;
 		case state_GAME_OVER:
 			{
 				if( gameMessage == NULL )
@@ -688,15 +659,11 @@ void GameWorld::Tick( irr::f32 delta )
 // performs actual gameplay
 void GameWorld::DoGameplay( irr::f32 delta )
 {
+	// perform an input update
+	DoInput();
+
 	if(gameState != state_PAUSED)
 	{
-		// check for early exit
-		if( gameState == state_RESTART_LEVEL )
-			return;
-
-		// perform an input update
-		DoInput();
-
 		if(gameState != state_INTERACTING)
 		{
 			// tick all actors
@@ -705,18 +672,15 @@ void GameWorld::DoGameplay( irr::f32 delta )
 		}
 		else
 		{
-			for( irr::u32 i=0; i < actors.size(); ++i )
+			/*for( irr::u32 i=0; i < actors.size(); ++i )
 				if(actors[i]->GetActorType() & ACTOR_INTERACTIVE)
-					actors[i]->Tick( delta );
-		}
+					actors[i]->Tick( delta );*/
+			interactingActor->Tick( delta );
+		}		
+	}
 
-		// update 3d audio information
-		DoAudio();
-	}
-	else
-	{
-		DoInput();
-	}
+	// update 3d audio information
+	DoAudio();
 }
 
 // perform an tick of the input system
@@ -804,7 +768,7 @@ void GameWorld::DoInput()
 void GameWorld::DoAudio()
 {
 	// update 3d position of player
-	// GEngine.GetSoundEngine().setListenerPosition(GetCurrentPlayer().GetNodePosition(), GetCurrentPlayer().GetAimVector());
+	GEngine.GetSoundEngine().setListenerPosition(GetCurrentPlayer().GetNodePosition(), GetCurrentPlayer().GetFaceVector());
 }
 
 // returns the player actor which is currently used
