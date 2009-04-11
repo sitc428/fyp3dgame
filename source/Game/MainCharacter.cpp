@@ -72,6 +72,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	:Player(gameWorld),
 	node(NULL),
 	weaponNode(NULL),
+	ATFieldNode(NULL),
 	collisionAnimator(NULL),
 	shadowNode(NULL),
 	action(EMCAS_IDLE),
@@ -131,6 +132,10 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
 	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
+
+	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", 2 * ((node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength()) + 1 );
+	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
+	ATFieldNode->setVisible( false );
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
@@ -245,6 +250,8 @@ void MainCharacter::setIdle()
 	node->setFrameLoop( MAIN_CHARACTER_ANIMATION_IDLE_START, MAIN_CHARACTER_ANIMATION_IDLE_END );
 	node->setLoopMode( false );
 
+	ATFieldNode->setVisible( false );
+
 	action = EMCAS_IDLE;
 }
 
@@ -256,6 +263,7 @@ void MainCharacter::setDefending( bool defending )
 	if( defending )
 	{
 		action = EMCAS_DEFEND;
+		ATFieldNode->setVisible( true );
 	}
 }
 
