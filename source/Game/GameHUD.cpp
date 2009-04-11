@@ -235,7 +235,17 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	outputString+= ((MainCharacter&)player).GetHealth();
 	outputString+= L"/";
 	outputString+= ((MainCharacter&)player).GetMaxHealth();
+	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1+2, HP_TEXT_Y1+2, HP_TEXT_X2, HP_TEXT_Y2);
+	HPText->draw(outputString.c_str(), HPTextRec, video::SColor(255,0,0,0), true, true, 0);
+	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
 	HPText->draw(outputString.c_str(), HPTextRec, video::SColor(255,255,255,255), true, true, 0);
+	
+	if( ((MainCharacter&)player).GetCurrentMagic() != NULL){
+		outputString = ((MainCharacter&)player).GetCurrentMagic()->getItemName();
+		HPText->draw(outputString.c_str(), irr::core::rect<irr::s32>(152, 20+2, 0, 0), video::SColor(255,0,0,0), false, false, 0);
+		HPText->draw(outputString.c_str(), irr::core::rect<irr::s32>(150, 20, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	}
+	
 	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
 	//driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
@@ -454,7 +464,7 @@ void GameHUD::DrawPauseMenu(Player& player){
 				
 				SubMenuIndex = -1;
 			}
-			/*
+			
 			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
 				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
 				for (int i = 0, j = -1; i < ItemBox.size() ; i++){
@@ -471,7 +481,7 @@ void GameHUD::DrawPauseMenu(Player& player){
 				}
 				
 			}
-			*/
+			
 		}
 		
 	}
@@ -571,7 +581,14 @@ void GameHUD::DrawPauseMenu(Player& player){
 				
 				//output item name
 				outputString = ItemBox[i].first->getItemName();
-				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				if(((MainCharacter&)player).GetCurrentWeapon() != NULL){
+					if(outputString == ((MainCharacter&)player).GetCurrentWeapon()->getItemName())
+						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,0,0), false, false, 0);
+					else
+						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				}
+				else
+					MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 				
 				//output quantity
 				outputString = ItemBox[i].second;
@@ -593,7 +610,14 @@ void GameHUD::DrawPauseMenu(Player& player){
 				
 				//output item name
 				outputString = ItemBox[i].first->getItemName();
-				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				if(((MainCharacter&)player).GetCurrentMagic() != NULL){
+					if(outputString == ((MainCharacter&)player).GetCurrentMagic()->getItemName())
+						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,0,0), false, false, 0);
+					else
+						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				}
+				else
+					MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 				
 				//output quantity
 				outputString = ItemBox[i].second;
