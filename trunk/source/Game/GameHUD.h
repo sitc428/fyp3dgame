@@ -3,10 +3,6 @@
 
 #include <irrlicht/irrlicht.h>
 
-using namespace irr;
-using namespace irr::gui;
-using namespace irr::video;
-
 class Player;
 
 namespace irr{
@@ -15,12 +11,13 @@ namespace irr{
 	}
 }
 
-enum MENU_SELECTED{
+enum E_MENU_SELECTED{
 	STATUS = 0,
 	ITEM = 1,
 	EQUIP = 2,
 	MAGIC = 3,
-	SAVE = 4
+	SAVE = 4,
+	EMS_COUNT = 5
 };
 
 /**
@@ -30,7 +27,7 @@ class GameHUD
 {
 public:
 	// constructor
-	explicit GameHUD( IrrlichtDevice& device );
+	explicit GameHUD( irr::IrrlichtDevice& device );
 	// destructor
 	~GameHUD();
 
@@ -42,40 +39,41 @@ public:
 	void DrawConversation();	
 	
 	//for passing the words for conversation
-	void GetConversation(irr::core::stringw string, ITexture* actorTexture = NULL);
+	void GetConversation(irr::core::stringw string, irr::video::ITexture* actorTexture = NULL);
 	
 	//drawing pause menu, for gameworld to call during pause state
 	void DrawPauseMenu(Player& player);	
 	
 	void Exit();
 private:
+
 	//HP, Magic Frame
 	irr::core::rect<irr::s32>	HPRec;
-	ITexture*					HealthBarFrameTexture;
+	irr::video::ITexture*		HealthBarFrameTexture;
 	
 	//MagicCharge
 	irr::core::rect<irr::s32>	MagicChargeRec;
-	ITexture*					MagicChargeTexture;
+	irr::video::ITexture*		MagicChargeTexture;
 	
 	//MagicLevel
 	irr::core::rect<irr::s32>	MagicLevelRec;
-	ITexture*					MagicLevelTexture;
+	irr::video::ITexture*		MagicLevelTexture;
 	
 	//CDImage
 	irr::core::rect<irr::s32>	CDRec;
-	ITexture*					CDTexture;
-	ITexture*					StaticCDTexture;
+	irr::video::ITexture*		CDTexture;
+	irr::video::ITexture*		StaticCDTexture;
 	
 	//HPbar
 	irr::core::rect<irr::s32>	HPBar;
-	ITexture*					HP;
+	irr::video::ITexture*		HP;
 	
 	//HP Text
 	irr::core::rect<irr::s32>	HPTextRec;
 	irr::gui::CGUITTFont*		HPText;	//text for displaying the HP
 	
 	//Conversation frame
-	ITexture*					ConversationTexture;
+	irr::video::ITexture*		ConversationTexture;
 	
 	//conversation string
 	irr::core::stringw			ConversationString;
@@ -83,24 +81,22 @@ private:
 	irr::core::rect<irr::s32>	ConversationRec;
 	
 	//NPC image
-	ITexture*					NPCTexture;
+	irr::video::ITexture*		NPCTexture;
 	
 	//PauseMenu Attributes
 	//Texture and font
-	ITexture*					PauseMenuTexture;
+	irr::video::ITexture*		PauseMenuTexture;
 	irr::gui::CGUITTFont*		MenuFont;
-	ITexture*					SelectIconTexture;
+	irr::video::ITexture*		SelectIconTexture;
 	//Menu attributes
-	MENU_SELECTED				MenuSelected;
+	E_MENU_SELECTED				MenuSelected;
 	irr::s32					SubMenuIndex;
-	
-	
-	
-	double						timeElapsed;
-	int							modTime;
-	
 
-	
+	irr::f32					timeElapsed;
+	irr::u32					modTime;
+
+	// cached video driver
+	irr::video::IVideoDriver& driver;
 };
 
 #endif //GameHUD_h

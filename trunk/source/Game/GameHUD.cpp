@@ -11,22 +11,17 @@
 #include "InputEventReceiver.hpp"
 #include <iostream>
 
+static const irr::c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
+static const irr::c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
+static const irr::c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
+static const irr::c8*	CD_TEXTURE = "media/HUD/cd_spinning.png";
+static const irr::c8*	STATIC_CD_TEXTURE = "media/HUD/cd_static.png";
+static const irr::c8*	HP_TEXTURE = "media/HUD/hp.png";
+static const irr::c8*	CONVERSATION_TEXTURE = "media/HUD/conversation.png";
+static const irr::c8*	PAUSE_MENU_TEXTURE = "media/HUD/pause_menu.png";
+static const irr::c8*	SELECT_ICON_TEXTURE = "media/HUD/cd_icon.png";
 
-static const c8*	HEALTH_BAR_FRAME_TEXTURE = "media/HUD/frame_hud.png";
-static const c8*	MAGIC_CHARGE_TEXTURE = "media/HUD/circle_bar_hud.png";
-static const c8*	MAGIC_LEVEL_TEXTURE = "media/HUD/chargebar_hud_c.png";
-static const c8*	CD_TEXTURE = "media/HUD/cd_spinning.png";
-static const c8*	STATIC_CD_TEXTURE = "media/HUD/cd_static.png";
-static const c8*	HP_TEXTURE = "media/HUD/hp.png";
-static const c8*	CONVERSATION_TEXTURE = "media/HUD/conversation.png";
-static const c8*	PAUSE_MENU_TEXTURE = "media/HUD/pause_menu.png";
-static const c8*	SELECT_ICON_TEXTURE = "media/HUD/cd_icon.png";
-
-
-
-
-
-static const SColor		HUD_FONT_OVERRIDE_COLOR =  SColor(255,14,0,89);
+static const irr::video::SColor	HUD_FONT_OVERRIDE_COLOR =  irr::video::SColor(255,14,0,89);
 
 static const irr::u32			ELEMENT_HEIGHT = 32;
 static const irr::u32			HEALTH_BAR_FRAME_WIDTH = 349;
@@ -58,31 +53,28 @@ static const irr::u32			MENU_WINDOW_YOFFSET = 40;
 static const irr::u32			CD_WIDTH = 30;
 static const irr::u32			CD_HEIGTH = 30;
 
-
-
 extern GameEngine* GEngine;
 
 // constructor
 GameHUD::GameHUD( IrrlichtDevice& device )
-: HealthBarFrameTexture(NULL)
-, MagicChargeTexture(NULL)
-, MagicLevelTexture(NULL)
-, CDTexture(NULL)
-, StaticCDTexture(NULL)
-, HP(NULL)
-, HPText(NULL)
-, ConversationTexture(NULL)
-, ConversationString("")
-, ConversationFont(NULL)
-, PauseMenuTexture(NULL)
-, MenuFont(NULL)
-, SelectIconTexture(NULL)
-, MenuSelected(STATUS)
-, SubMenuIndex(-1)
-{	
+	: HealthBarFrameTexture(NULL),
+	MagicChargeTexture(NULL),
+	MagicLevelTexture(NULL),
+	CDTexture(NULL),
+	StaticCDTexture(NULL),
+	HP(NULL),
+	HPText(NULL),
+	ConversationTexture(NULL),
+	ConversationString(""),
+	ConversationFont(NULL),
+	PauseMenuTexture(NULL),
+	MenuFont(NULL),
+	SelectIconTexture(NULL),
+	MenuSelected(STATUS),
+	SubMenuIndex(-1),
+	driver(GEngine->GetDriver())
+{
 	//init by loading the textures required
-	IVideoDriver& driver = GEngine->GetDriver();
-
 	HealthBarFrameTexture = driver.getTexture(HEALTH_BAR_FRAME_TEXTURE);
 	MagicChargeTexture = driver.getTexture(MAGIC_CHARGE_TEXTURE);
 	MagicLevelTexture = driver.getTexture(MAGIC_LEVEL_TEXTURE);
@@ -140,15 +132,11 @@ GameHUD::~GameHUD()
 
 void GameHUD::Init()
 {
-	
 	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
 	
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
-	
-	IVideoDriver& driver = GEngine->GetDriver();
-	
-	
+
 	//Setting up Rectangles for displaying images
 	HPRec = irr::core::rect<irr::s32>(0,0, HEALTH_BAR_FRAME_WIDTH,HEALTH_BAR_FRAME_HEIGHT);
 	
@@ -157,16 +145,14 @@ void GameHUD::Init()
 	CDRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
 	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
-	ConversationRec = irr::core::rect<irr::s32>(CONVERSATION_X1, CONVERSATION_Y1, CONVERSATION_X2, CONVERSATION_Y2);
-	
+	ConversationRec = irr::core::rect<irr::s32>(CONVERSATION_X1, CONVERSATION_Y1, CONVERSATION_X2, CONVERSATION_Y2);	
 }
 
 void GameHUD::Update( irr::f32 delta , Player& player)
 {
-
-	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+	irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
-	IVideoDriver& driver = GEngine->GetDriver();
+	
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
 	//updating the rectangle for different HUD objects
@@ -190,16 +176,14 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 		MagicLevelRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (magic_level-1), 0, MAGIC_CHARGE_WIDTH * magic_level,  MAGIC_CHARGE_HEIGHT);
 		driver.draw2DImage(MagicLevelTexture, irr::core::position2d<irr::s32>(0, 0), MagicLevelRec, 0, video::SColor(255,255,255,255), true);
 	}
-		
-	
+
 	//draw HP
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH*hp_level, HP_HEIGHT);
 	driver.draw2DImage(HP, irr::core::position2d<irr::s32>(HP_START_X, (MAGIC_CHARGE_WIDTH-HP_HEIGHT)/2), HPBar, 0, video::SColor(255,255,255,255), true);
 	
 	//the frame draw last
 	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPRec, 0, video::SColor(255,255,255,255), true);
-	
-	
+
 	//spinning CD
 	
 	if( ((MainCharacter&)player).GetCharging() ){
@@ -225,12 +209,11 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 		modTime = 0;
 		driver.draw2DImage(StaticCDTexture, irr::core::position2d<irr::s32>(0, 0), CDRec, 0, video::SColor(255,255,255,255), true);
 	}
-	
-		
+
 	/*******
 	 DRAWING TEXT
 	 *******/
-	
+
 	irr::core::stringw outputString = L"";
 	outputString+= ((MainCharacter&)player).GetHealth();
 	outputString+= L"/";
@@ -255,15 +238,14 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	SubMenuIndex = -1;
 }
 
-
-
 //getting the string to be displayed from interactive actor 
-void GameHUD::GetConversation(irr::core::stringw string, ITexture* actorTexture){	
+void GameHUD::GetConversation(irr::core::stringw string, irr::video::ITexture* actorTexture)
+{
 	ConversationString = string;
 }
 
-void GameHUD::DrawConversation(){
-	IVideoDriver& driver = GEngine->GetDriver();
+void GameHUD::DrawConversation()
+{
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
 	//draw the frame for conversation
@@ -271,12 +253,11 @@ void GameHUD::DrawConversation(){
 	if(ConversationString != ""){
 		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), false, true, 0);
 	}
-
 }
 
-
-void GameHUD::DrawPauseMenu(Player& player){
-	IVideoDriver& driver = GEngine->GetDriver();
+void GameHUD::DrawPauseMenu(Player& player)
+{
+	
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 	
@@ -290,19 +271,16 @@ void GameHUD::DrawPauseMenu(Player& player){
 	/*******
 	 GETTING USER INPUT
 	 *******/
-	
-	
-	if( SubMenuIndex == -1){
-		
+
+	if( SubMenuIndex == -1 )
+	{	
 		if( receiver.keyReleased( irr::KEY_UP) ){
-			MenuSelected == STATUS? MenuSelected = SAVE : MenuSelected = MENU_SELECTED(MenuSelected - 1);
+			MenuSelected = (E_MENU_SELECTED)((MenuSelected + 1 )% EMS_COUNT);
 		}
-		
 		else if( receiver.keyReleased( irr::KEY_DOWN) ){
-			MenuSelected == SAVE? MenuSelected = STATUS : MenuSelected = MENU_SELECTED(MenuSelected + 1);
+			MenuSelected = (E_MENU_SELECTED)((MenuSelected - 1) % EMS_COUNT);
 		}
-		
-		
+
 		if( MenuSelected == ITEM ){
 			if( receiver.keyReleased( irr::KEY_RIGHT) ){
 				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
@@ -315,7 +293,6 @@ void GameHUD::DrawPauseMenu(Player& player){
 					SubMenuIndex = 0;
 			}
 		}
-		
 		else if( MenuSelected == EQUIP ){
 			if( receiver.keyReleased( irr::KEY_RIGHT) ){
 				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
@@ -328,7 +305,6 @@ void GameHUD::DrawPauseMenu(Player& player){
 					SubMenuIndex = 0;			
 			}
 		}
-		
 		else if( MenuSelected == MAGIC){
 			if( receiver.keyReleased( irr::KEY_RIGHT) ){
 				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
@@ -341,14 +317,9 @@ void GameHUD::DrawPauseMenu(Player& player){
 					SubMenuIndex = 0;			
 			}
 		}
-
-		
-		
 	}
-	
 	// else SubMenuIndex != -1
 	else{
-		
 		if( MenuSelected == ITEM ){
 			if( receiver.keyReleased( irr::KEY_UP) ){
 				if(SubMenuIndex != 0){
@@ -362,15 +333,11 @@ void GameHUD::DrawPauseMenu(Player& player){
 					if(ItemBox[i].first->getItemType() == HPITEM || ItemBox[i].first->getItemType() == XITEM)
 						j++;
 				}
-					
 				if ( SubMenuIndex < j-1 ){
-					
 					SubMenuIndex ++;
 				}
-				
 			}
 			else if ( receiver.keyReleased( irr::KEY_LEFT ) ){
-				
 				SubMenuIndex = -1;
 			}
 			
@@ -479,18 +446,9 @@ void GameHUD::DrawPauseMenu(Player& player){
 						}
 					}
 				}
-				
-			}
-			
+			}	
 		}
-		
 	}
-	
-	
-	
-	
-	
-		
 		
 	/**********
 	 Start drawing the layout and the text
@@ -498,19 +456,14 @@ void GameHUD::DrawPauseMenu(Player& player){
 	
 	//change the position of the icon according to the selection
 	driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*int(MenuSelected)), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
-	
 
 	//draw the right hand side of the menu according to the selection
-	
 	if( MenuSelected == STATUS){
-		
-		
 		//LEVEL
 		irr::core::stringw outputString = L"Level: ";
 		outputString+=((MainCharacter&)player).GetLevel();
 		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-		
-		
+
 		//EXP
 		outputString = L"EXP: ";
 		outputString+=((MainCharacter&)player).GetEXP();
@@ -563,22 +516,17 @@ void GameHUD::DrawPauseMenu(Player& player){
 				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 				j++;
 			}
-				
 		}
-		
+
 		if (SubMenuIndex != -1){
-			
 			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
 		}
-			
-		
 	}
 	else if ( MenuSelected == EQUIP){
 		irr::core::stringw outputString = L"";
 		MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
 		for (int i = 0, j = 0; i < ItemBox.size() ; i++){
 			if(ItemBox[i].first->getItemType() == WEAPONITEM1){
-				
 				//output item name
 				outputString = ItemBox[i].first->getItemName();
 				if(((MainCharacter&)player).GetCurrentWeapon() != NULL){
@@ -589,16 +537,14 @@ void GameHUD::DrawPauseMenu(Player& player){
 				}
 				else
 					MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-				
+
 				//output quantity
 				outputString = ItemBox[i].second;
 				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 				j++;
 			}
-			
 		}
 		if (SubMenuIndex != -1){
-			
 			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
 		}
 	}
@@ -624,22 +570,18 @@ void GameHUD::DrawPauseMenu(Player& player){
 				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
 				j++;
 			}
-			
 		}
 		if (SubMenuIndex != -1){
-			
 			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
 		}
 	}
 	else if ( MenuSelected == SAVE){
-		
 	}
 }
 
 
 void GameHUD::Exit()
 {
-
 	HealthBarFrameTexture = NULL;
 	MagicChargeTexture = NULL;
 	MagicLevelTexture = NULL;
