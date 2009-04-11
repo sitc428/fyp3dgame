@@ -33,6 +33,7 @@
 #include "Item.hpp"
 
 static const irr::c8* LEVEL_FILE = "media/model/scene1.irr";
+static const irr::c8* LEVEL_FILE5 = "media/model/scene5.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
 
 static const irr::u32 MAX_SNOWBALLS = 20;
@@ -171,6 +172,7 @@ void GameWorld::InitLevel()
 {
 	// load the scene
 	smgr.loadScene( LEVEL_FILE );
+	//smgr.loadScene( LEVEL_FILE5 );
 
 	// setup levelTriangleSelector, used for collision detection with the level
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
@@ -181,8 +183,7 @@ void GameWorld::InitLevel()
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
 		//irr::scene::IMeshSceneNode* meshNode = dynamic_cast<irr::scene::IMeshSceneNode*>(outNodes[i]);
-		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
-		
+		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);	
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
@@ -209,6 +210,67 @@ void GameWorld::InitLevel()
 	actors.push_back( TriggerEventItem1 );
 
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+
+
+
+
+
+
+
+
+
+
+
+/*
+	smgr.loadScene( LEVEL_FILE5 );
+	//smgr.loadScene( LEVEL_FILE5 );
+
+	// setup levelTriangleSelector, used for collision detection with the level
+	levelTriangleSelector = smgr.createMetaTriangleSelector();
+
+	// add triangle selectors for every mesh node in the level
+	//irr::core::array<irr::scene::ISceneNode*> outNodes;
+	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+	for( irr::u32 i = 0; i < outNodes.size(); ++i )
+	{
+		//irr::scene::IMeshSceneNode* meshNode = dynamic_cast<irr::scene::IMeshSceneNode*>(outNodes[i]);
+		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
+		irr::core::vector3df tmp = meshNode->getPosition();
+		tmp.X += 1000;
+		meshNode->setPosition(tmp);
+
+		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
+		if( meshNode->getMesh() )
+		{
+			if (meshNode->getID() == NODE_ID_TRI_NEEDED)
+			{
+				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
+				check(meshTriangleSelector);
+				meshNode->setTriangleSelector( meshTriangleSelector );
+				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+				meshTriangleSelector->drop();
+				meshTriangleSelector = NULL;
+
+				blocks.push_back( meshNode );
+				//meshNode->setDebugDataVisible( irr::scene::EDS_BBOX);
+			}
+		}
+	}
+	outNodes.clear();
+
+	//SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	//actors.push_back( sellingMachine1 );
+
+	//TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	//actors.push_back( TriggerEventItem1 );
+
+	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+*/
+
+
+
+
+
 
 	// lock cursor
 	//GEngine->LockCursor();

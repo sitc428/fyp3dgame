@@ -47,6 +47,7 @@ class GameWorld
 		GameHUD* GetGameHUD() {return gameHUD;	};
 
 		irr::scene::ISceneManager& GetSceneManager() { return smgr; }
+
 		irr::scene::IMetaTriangleSelector& GetLevelTriangleSelector() { return *levelTriangleSelector; }
 		// provides access to the actors in the world, you can modify the actors, but not the irr::core::array itself
 		const irr::core::array<Actor*>& GetActors() const { return actors; }
@@ -133,6 +134,8 @@ class GameWorld
 		EGameState gameStateBeforePause; // the state right before pasued;
 
 		irr::scene::ISceneManager& smgr; // scene manager from the engine
+
+
 		MainCharacter* mainCharacter; // player on foot actor
 		Robot* robot; // the robot following the main character
 		bool bUseOnFootPlayer; // which player model are we currently using

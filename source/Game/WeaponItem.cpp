@@ -7,9 +7,9 @@ WeaponItem::WeaponItem(GameWorld& gameWorld, EItemType type, irr::core::stringw 
 	:Item(gameWorld),
 	world(gameWorld)
 {
-	this->setItemType(type);
-	this->setItemName(name);
-	this->setItemValue(value);
+	setItemType(type);
+	setItemName(name);
+	setItemValue(value);
 }
 
 //destructor
@@ -19,22 +19,25 @@ WeaponItem::~WeaponItem()
 
 void WeaponItem::equip()
 {
-	if (!getEquipState())
+	((MainCharacter&)world.GetCurrentPlayer()).SetCurrentWeapon(this);
+	/*if (!getEquipState())
 	{
 		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
 			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() + getItemValue()
 			);
 		setEquipState(true);
-	}
+	}*/
 }
 
 void WeaponItem::unEquip()
 {
-	if (getEquipState())
+	if ( ((MainCharacter&)world.GetCurrentPlayer()).GetCurrentWeapon() == this)
+		((MainCharacter&)world.GetCurrentPlayer()).SetCurrentWeapon(NULL);
+	/*if (getEquipState())
 	{
 		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
 			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() - getItemValue()
 			);
 		setEquipState(false);
-	}
+	}*/
 }

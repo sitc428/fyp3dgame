@@ -7,6 +7,8 @@ class MDiscItem : public Item
 public:
 	MDiscItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value);
 	void use();
+	void equip();
+	void unEquip();
 protected:
 	~MDiscItem();
 private:
