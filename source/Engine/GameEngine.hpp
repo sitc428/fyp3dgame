@@ -67,7 +67,7 @@ public:
 	irrklang::ISoundEngine& GetSoundEngine() const { return *soundEngine; }
 	ParticleManager& GetParticleManager() { return *particleManager; }
 	irr::gui::CGUITTFont* GetFont(std::string fontName, int fontSize) { return _fonts[std::pair<std::string, int>(fontName, fontSize)]; }
-	const irr::core::dimension2d<irr::s32> & const GetScreenSize() const { return screenSize; }
+	const irr::core::dimension2d<irr::s32> & GetScreenSize() { return screenSize; }
 
 	irr::u32 GetRealTime() const {
 #if defined _IRR_WINDOWS_
