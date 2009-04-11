@@ -22,7 +22,7 @@ static const irr::core::vector3df		defaultPosition = irr::core::vector3df(150,50
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
-static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/MainTexutre1.png";
+static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/PedroTexture.png";
 static const irr::c8*		MAIN_CHARACTER_vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
 static const irr::c8*		MAIN_CHARACTER_psFileName = "model/shader/trial.frag"; // filename for the pixel shader
 
@@ -121,7 +121,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
-	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.jpg" ));
+	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	weaponNode = smgr.addMeshSceneNode(
