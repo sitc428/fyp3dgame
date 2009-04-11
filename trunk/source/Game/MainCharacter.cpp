@@ -447,15 +447,40 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyDown(irr::KEY_UP) )
 	{
-		if(faceVector != aimVector)
+		if( receiver.keyDown(irr::KEY_LEFT) && receiver.keyUp(irr::KEY_RIGHT) )
 		{
-			faceVector = aimVector;
-			faceVector.normalize();
-		}
+			if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != 45 )
+			{
+				faceVector = aimVector;
+				faceVector.rotateXZBy( 45, irr::core::vector3df(0, 0, 0) );
+				faceVector.normalize();
+			}
 
-		move = true;
+			move = true;
+		}
+		else if( receiver.keyDown(irr::KEY_RIGHT) && receiver.keyUp(irr::KEY_LEFT) )
+		{
+			if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != -45 )
+			{
+				faceVector = aimVector;
+				faceVector.rotateXZBy( -45, irr::core::vector3df(0, 0, 0) );
+				faceVector.normalize();
+			}
+
+			move = true;
+		}
+		else
+		{
+			if(faceVector != aimVector)
+			{
+				faceVector = aimVector;
+				faceVector.normalize();
+			}
+
+			move = true;
+		}
 	}
-	if( receiver.keyDown(irr::KEY_DOWN) )
+	else if( receiver.keyDown(irr::KEY_DOWN) )
 	{
 		if(faceVector != -aimVector)
 		{
@@ -466,8 +491,7 @@ void MainCharacter::DoInput()
 
 		move = true;
 	}
-
-	if( receiver.keyDown(irr::KEY_LEFT) )
+	else if( receiver.keyDown(irr::KEY_LEFT) )
 	{
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != 90 )
 		{
@@ -478,8 +502,7 @@ void MainCharacter::DoInput()
 
 		move = true;
 	}
-
-	if( receiver.keyDown(irr::KEY_RIGHT) )
+	else if( receiver.keyDown(irr::KEY_RIGHT) )
 	{
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != -90 )
 		{
