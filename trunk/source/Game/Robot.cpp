@@ -49,8 +49,8 @@ Robot::Robot( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
 	node->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
-	node->setMaterialTexture(0, driver.getTexture("media/model/shade_line.jpg" ));
-	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.jpg" ));
+	node->setMaterialTexture(0, driver.getTexture("media/model/robot_UV.png" ));
+	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
 	//node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 	node->setScale(defaultScale);
 	srand( time(0) );
