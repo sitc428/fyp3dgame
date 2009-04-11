@@ -33,4 +33,6 @@ void XItem::use()
 	{
 		box[tmp].second--;
 	}
+	if (box[tmp].second>=0)
+		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(box);
 }
