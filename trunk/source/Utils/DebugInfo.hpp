@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "GameWorld.h"
 #include "Actor.h"
+#include "Camera.h"
 
 /*
  * A utility class for controlling debuggin information
@@ -14,9 +15,11 @@ class DebugInfo
 public:
 	static void enableDebugBBox( GameWorld& );
 	static void disableDebugBBox( GameWorld& );
+	static void nextCullingMode( Camera& );
 
 private:
 	static bool enabledDebugBBox;
+	static irr::scene::E_CULLING_TYPE cameraCullingMode;
 
 	static Actor* showDebugBox( Actor* actor )
 	{
