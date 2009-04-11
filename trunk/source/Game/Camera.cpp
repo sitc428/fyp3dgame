@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include "Check.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "GameWorld.h"
 #include "Player.h"
 #include "InputEventReceiver.hpp"

@@ -1,6 +1,6 @@
 #include "TalkativeNPC.hpp"
 #include "GameHUD.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "GameWorld.h"
 #include <iostream>
 

@@ -8,7 +8,7 @@
  */
 
 #include "Monster.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "GameWorld.h"
 #include "NodeID.h"
 #include "MainCharacter.hpp"

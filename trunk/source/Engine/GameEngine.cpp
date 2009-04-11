@@ -1,14 +1,16 @@
-#include "GameEngine.h"
-#include <iostream>
-#include "InputEventReceiver.hpp"
-#include "GameWorld.h"
-#include "StartupScreen.h"
-#include "FrontEnd.h"
-#include "FloorDecalSceneNode.h"
-#include "ParticleManager.h"
 #include "CGUITTFont.h"
+#include "FloorDecalSceneNode.h"
+#include "FrontEnd.h"
+#include "GameEngine.hpp"
+#include "GameWorld.h"
+#include "InputEventReceiver.hpp"
+#include "ParticleManager.h"
+#include "StartupScreen.h"
+
+#include <iostream>
 
 #ifdef _IRR_WINDOWS_
+
 #include <windows.h>
 
 #pragma comment(lib, "Irrlicht.lib")
@@ -24,18 +26,16 @@ GameEngine::GameEngine()
 	:device(NULL),
 	driver(NULL),
 	smgr(NULL),
-	soundEngine(NULL),
 	receiver(NULL),
+	soundEngine(NULL),
+	particleManager(NULL),
 	screenSize(800, 600),
-	cursorLock(true),
-	lastCursorPosition(0, 0),
-	scrMid(0,0),
+	lastTime(0),
 	state(state_EXIT), // defaulting to exit state, to be able to shutdown cleanly if the engine initialization failed
 	requestedNextState(state_EXIT),
 	startupScreen(NULL),
 	frontEnd(NULL),
 	world(NULL),
-	particleManager(NULL),
 	gameMusic(NULL)
 {
 }
@@ -53,25 +53,17 @@ bool GameEngine::Init()
 	// create an event receiver
 	receiver = new InputEventReceiver( *this );
 	if( !receiver )
-	{
 		return false;
-	}
 
 	// create the device
-	device = createDevice( driverType, screenSize, 16, false, false, false, receiver);
+	device = createDevice( driverType, screenSize, 32, false, false, false, receiver);
 
 	if( !device )
-	{
 		return false; // could not create selected driver.
-	}
 
 	// setup the driver and the scenemanager
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
-
-	// calculate middle of screen
-	scrMid.X = screenSize.Width/2;
-	scrMid.Y = screenSize.Height/2;
 
 	// setup the true type fonts
 	_faces["media/font/kochi-gothic-subst.ttf"] = new irr::gui::CGUITTFace;
@@ -103,9 +95,6 @@ bool GameEngine::Init()
 	// create a particle manager instance
 	particleManager = new ParticleManager( *smgr );
 
-	// init the global weather effect
-	InitGlobalWeatherEffect();
-
 	// init successfull
 	return true;
 }
@@ -117,6 +106,7 @@ void GameEngine::Exit()
 {
 	// make sure that the only way to exit the game is through the exit state
 	check( state == state_EXIT );
+
 	// make sure all the objects associated with different states have been cleaned up
 	check( startupScreen == NULL );
 	check( frontEnd == NULL );
@@ -132,8 +122,17 @@ void GameEngine::Exit()
 	}
 
 	// clean up the particle manager
-	delete particleManager;
-	particleManager = NULL;
+	if( particleManager)
+	{
+		delete particleManager;
+		particleManager = NULL;
+	}
+
+	if( receiver )
+	{
+		delete receiver;
+		receiver = NULL;
+	}
 
 	/*
 	   In the end, delete the Irrlicht device.
@@ -145,15 +144,12 @@ void GameEngine::Exit()
 		driver = NULL;
 		smgr = NULL;
 	}
-
-	delete receiver;
-	receiver = NULL;
 }
 
 void GameEngine::InitStartupScreen()
 {
 	check(startupScreen == NULL);
-	startupScreen = new StartupScreen();
+	startupScreen = new StartupScreen( *this );
 	startupScreen->Init();
 }
 
@@ -315,58 +311,6 @@ void GameEngine::TickCurrentState( irr::f32 delta )
 }
 
 /**
-  Displays a message to the console prompting the user to select a display driver type, and reads in the input.
-  Function returns true if valid driver has been specified, and stores the result in the outDriverType.
-  Returns false if an invalid choice has been specified. 
-  */
-bool GameEngine::PromptForDriverType( irr::video::E_DRIVER_TYPE& outDriverType )
-{
-	printf("Please select the driver you want for this example:\n"\
-			" (a) Direct3D 9.0c\n (b) Direct3D 8.1\n (c) OpenGL 1.5\n"\
-			" (d) Software Renderer\n (e) Burning's Software Renderer\n"\
-			" (f) NullDevice\n (otherKey) exit\n\n");
-
-	char i;
-	std::cin >> i;
-
-	switch(i)
-	{
-		case 'a': outDriverType = irr::video::EDT_DIRECT3D9;break;
-		case 'b': outDriverType = irr::video::EDT_DIRECT3D8;break;
-		case 'c': outDriverType = irr::video::EDT_OPENGL;   break;
-		case 'd': outDriverType = irr::video::EDT_SOFTWARE; break;
-		case 'e': outDriverType = irr::video::EDT_BURNINGSVIDEO;break;
-		case 'f': outDriverType = irr::video::EDT_NULL;     break;
-		default: return false;
-	} 
-
-	return true;
-}
-
-/**
-  Displays a message to the console prompting the user to select a display size
-  */
-bool GameEngine::PromptForScreenSize( irr::core::dimension2d<irr::s32>& outScreensize, bool& outIsFullscreen )
-{
-	printf("\n\nPlease select the display size:\n"\
-			" (a) 800x600 windowed\n (b) 1280x720 fullscreen\n (c) 800x600 fullscreen\n (d) 1280x720 windowed\n (otherKey) exit\n\n");
-
-	char i;
-	std::cin >> i;
-
-	switch(i)
-	{
-		case 'a': outScreensize = irr::core::dimension2d<irr::s32>(800,600); outIsFullscreen = false; break;
-		case 'b': outScreensize = irr::core::dimension2d<irr::s32>(1280,720); outIsFullscreen = true; break;
-		case 'c': outScreensize = irr::core::dimension2d<irr::s32>(800,600); outIsFullscreen = true; break;
-		case 'd': outScreensize = irr::core::dimension2d<irr::s32>(1280,720); outIsFullscreen = false; break;
-		default: return false;
-	} 
-
-	return true;
-}
-
-/**
   Calculates elapsed time for each frame iteration
   */
 irr::f32 GameEngine::CalcElapsedTime()
@@ -407,65 +351,12 @@ void GameEngine::DisplayFPS()
 		str += driver->getName();
 		str += "] FPS:";
 		str += fps;
-		str += " ";
+		str += " Tri Count:";
 		str += driver->getPrimitiveCountDrawn();
 
 		device->setWindowCaption(str.c_str());
 		lastFPS = fps;
 	}
-}
-
-/**
-  Locks cursor to the middle of the screen when using camera view, or unlocks it when you need to move the cursor around
-  */
-void GameEngine::LockCursor( bool lock )
-{
-	irr::gui::ICursorControl* cursor = device->getCursorControl();
-	cursor->grab();
-
-	if( !lock )
-	{
-		cursorLock = false;
-		lastCursorPosition = cursor->getPosition();
-	}
-	else
-	{
-		cursorLock = true;
-		// put cursor into middle of screen to prepare it for next GetMouseDelta call
-		cursor->setPosition(scrMid);
-	}
-
-	cursor->drop();
-}
-
-/**
-  Calculates mouse movement using cursor displacement
-  */
-irr::core::position2d<irr::s32> GameEngine::GetMouseDelta()
-{
-	irr::gui::ICursorControl* cursor = device->getCursorControl();
-	cursor->grab();
-
-	irr::core::position2d<irr::s32> mouseOffset;
-
-	if( cursorLock )
-	{
-		// calculate relative offset from center of screen
-		mouseOffset = (scrMid - cursor->getPosition());
-
-		// put cursor back into center of the screen
-		cursor->setPosition(scrMid);
-	}
-	else
-	{
-		mouseOffset = lastCursorPosition - cursor->getPosition();
-		lastCursorPosition = cursor->getPosition();
-	}
-
-	cursor->drop();
-
-
-	return mouseOffset;
 }
 
 // unbuffered mouse input 
@@ -609,7 +500,7 @@ irr::scene::CFloorDecalSceneNode* GameEngine::addFloorDecalSceneNode(irr::scene:
 }
 
 
-void GameEngine::ChangeMusic( const irr::c8* name )
+void GameEngine::ChangeBGM( const irr::c8* name )
 {
 	if( gameMusic )
 	{
@@ -618,19 +509,10 @@ void GameEngine::ChangeMusic( const irr::c8* name )
 		gameMusic = NULL;
 	}
 
-	if( name == NULL )
-	{
-		// load and play music
-		//gameMusic = GetSoundEngine().play2D("../audio/music/track1.mp3", true, false, true);
-		//check(gameMusic);
-		//gameMusic->setVolume( 0.15f );
-		return;
-	}
-	else
+	if( name )
 	{
 		// load and play music
 		gameMusic = GetSoundEngine().play2D(name, true, false, true);
-		check(gameMusic);
 		gameMusic->setVolume( 0.65f );
 	}
 

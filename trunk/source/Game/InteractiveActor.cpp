@@ -1,5 +1,5 @@
 #include "InteractiveActor.hpp"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "GameWorld.h"
 #include "Player.h"
 
@@ -42,7 +42,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 				*/
 					//startAction();
 					interacting = true;
-					world.requireInteracting(true, this);
+					world.requestInteracting(true, this);
 					interaction( delta );
 				//}
 			}
@@ -55,7 +55,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 			if (firstTime)
 			{
 				interacting = true;
-				world.requireInteracting(true, this);
+				world.requestInteracting(true, this);
 				interaction( delta );
 				//firstTime = false;
 				//std::cout << firstTime << std::endl;
@@ -77,7 +77,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 
 void InteractiveActor::finishAction()
 {
-	world.requireInteracting(false, NULL);
+	world.requestInteracting(false, NULL);
 	interacting = false;
 }
 

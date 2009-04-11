@@ -1,5 +1,5 @@
 #include "FrontEnd.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "InputEventReceiver.hpp"
 //#include "CGUIStaticTTText.hpp"
 

@@ -1,5 +1,5 @@
 #include "ParticleManager.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include "Check.h"
 
 static const irr::c8* SNOW_EXPLOSION_TEXTURE = "media/StartupScreen/irrLogo.png";

@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Check.h"
-#include "GameEngine.h"
+#include "GameEngine.hpp"
 #include <iostream>
 
 extern GameEngine* GEngine;
