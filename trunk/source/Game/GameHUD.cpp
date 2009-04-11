@@ -578,16 +578,3 @@ void GameHUD::DrawPauseMenu(Player& player)
 	else if ( MenuSelected == SAVE){
 	}
 }
-
-
-void GameHUD::Exit()
-{
-	HealthBarFrameTexture = NULL;
-	MagicChargeTexture = NULL;
-	MagicLevelTexture = NULL;
-	CDTexture = NULL;
-	StaticCDTexture = NULL;
-	HP = NULL;
-	ConversationTexture = NULL;
-	PauseMenuTexture = NULL;
-}

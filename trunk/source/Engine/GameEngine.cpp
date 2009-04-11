@@ -36,7 +36,6 @@ GameEngine::GameEngine()
 	frontEnd(NULL),
 	world(NULL),
 	particleManager(NULL),
-	GlobalWeatherEffect(NULL),
 	gameMusic(NULL)
 {
 }
@@ -111,14 +110,6 @@ bool GameEngine::Init()
 	return true;
 }
 
-void GameEngine::InitGlobalWeatherEffect()
-{
-	check(GlobalWeatherEffect == NULL);
-	GlobalWeatherEffect = smgr->addParticleSystemSceneNode( false );
-	check(GlobalWeatherEffect);
-	//particleManager->CreateFallingSnowEmitter(*GlobalWeatherEffect);
-}
-
 /**
   Shuts down the game engine, properly cleans up the device.
   */
@@ -138,14 +129,6 @@ void GameEngine::Exit()
 	{
 		soundEngine->drop();
 		soundEngine = NULL;
-	}
-
-	// clean up the global weather effect
-	if(GlobalWeatherEffect)
-	{
-		// this is cleaned up when game world exits
-		smgr->addToDeletionQueue(GlobalWeatherEffect);
-		GlobalWeatherEffect = NULL;
 	}
 
 	// clean up the particle manager

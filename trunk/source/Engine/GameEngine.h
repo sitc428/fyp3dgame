@@ -155,9 +155,6 @@ class GameEngine
 		GameWorld* world;
 
 		irrklang::ISound* gameMusic;
-		// HACK
-	public:
-		irr::scene::IParticleSystemSceneNode* GlobalWeatherEffect;  // global weather effect
 	private:
 
 		bool PromptForDriverType( irr::video::E_DRIVER_TYPE& outDriverType );

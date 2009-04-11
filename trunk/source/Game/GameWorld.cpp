@@ -43,25 +43,13 @@ GameWorld::GameWorld( const GameEngine& Engine ):
 	smgr1(Engine.GetSceneManager()),
 	mainCharacter(NULL),
 	robot(NULL),
-	bUseOnFootPlayer(true),
-	bSwitchPlayers(false),
 	camera(NULL),
 	levelTriangleSelector(NULL),
 	gameHUD(NULL),
 	interactingActor(NULL),
-	lastEnemySpawn(0),
-	totalEnemyOne(0),
-	totalEnemyTwo(0),
-	totalEnemyBoss(0),
-	curEnemyWave(NULL),
 	gameMessage(NULL),
 	gameOverImg(NULL),
-	waveTimer(0),
-	spawnsDone(false),
-	curLevel(0),
-	FenceToFall(NULL),
-	FenceFallTime(0.f),
-	paused(false)
+	curLevel(0)
 {
 }
 
@@ -272,80 +260,6 @@ void GameWorld::InitLevel()
 	SetNumLives( 3 );
 }
 
-// restarts the current level
-void GameWorld::RestartLevel()
-{
-	for( irr::s32 i = actors.size()-1; i >= 0; --i )
-	{
-		// delete camera
-		if( actors[i]->GetActorType() == ACTOR_CAMERA )
-		{
-			Actor::DestroyActor(actors[i]);
-			actors.erase( i );
-		}
-		// delete player
-		else if( actors[i]->GetActorType() == ACTOR_PLAYER )
-		{
-			Actor::DestroyActor(actors[i]);
-			actors.erase( i );
-			//playerOnFoot = NULL;
-		}
-		// delete player on snowplow
-		else if( actors[i]->GetActorType() == ACTOR_ROBOT )
-		{
-			Actor::DestroyActor(actors[i]);
-			actors.erase( i );
-			//playerOnSnowplow = NULL;
-		}
-		// delete enemies
-		else if( actors[i]->GetActorType() == ACTOR_ENEMY)
-		{
-			totalEnemyOne--;
-			Actor::DestroyActor(actors[i]);
-			actors.erase( i );
-		}
-		// delete enemy two
-		else if( actors[i]->GetActorType() == ACTOR_ENEMY_TWO)
-		{
-			totalEnemyTwo--;
-			Actor::DestroyActor(actors[i]);
-			actors.erase( i );
-		}
-		// delete enemy boss
-		else if( actors[i]->GetActorType() == ACTOR_ENEMY_BOSS)
-		{
-			totalEnemyBoss--;
-			Actor::DestroyActor(actors[i]);
-			actors.erase( i );
-		}
-		// else just remove it
-		else
-		{
-			Actor::DestroyActor(actors[i]);
-			actors.erase( i );
-		}
-	}
-
-	waveTimer = 0;
-	spawnsDone = false;
-	lastEnemySpawn = 0;
-	spawnTimer = 6;
-
-	// re-initialize
-	InitPlayer();
-	InitCamera();
-
-	// if the player just died, don't restart all the waves
-	if( gameState != state_RESTART_LEVEL )
-		InitEnemies();
-	else;
-	// enemyWaves[ curEnemyWave ]->ResetSpawnCounter();
-
-	InitWeapons();
-	InitEffects();
-	InitPickups();
-}
-
 // initializes level sounds
 void GameWorld::InitMusic()
 {
@@ -545,14 +459,11 @@ void GameWorld::InitHUD()
 // cleans up the game world
 void GameWorld::Exit()
 {
-	// clean up spawn nodes
-	spawnNodes.clear();
-
 	// clean up all the actors
-	for( irr::u32 i=0; i < actors.size(); ++i )
-	{
+	irr::u32 actorNum = actors.size();
+	for( irr::u32 i=0; i < actorNum; ++i )
 		Actor::DestroyActor(actors[i]);
-	}
+
 	actors.clear();
 
 	mainCharacter = NULL;
@@ -568,17 +479,11 @@ void GameWorld::Exit()
 	// stop and clean up background audio
 	// GEngine->GetSoundEngine().removeAllSoundSources();
 
-	// clean up the HUD
-	gameHUD->Exit();
 	delete gameHUD;
 	gameHUD = NULL;
 
 	// clear scene
 	smgr.clear();
-
-	// clear out the global weather effect because it got deleted by smgr.clear call
-	GEngine->GlobalWeatherEffect = NULL;
-	GEngine->InitGlobalWeatherEffect();
 }
 
 void GameWorld::UpdateHUD( irr::f32 delta ){
@@ -601,7 +506,7 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 	}
 }
 
-void GameWorld::requireInteracting(bool on, InteractiveActor* currentInteractingActor = NULL)
+void GameWorld::requestInteracting(bool on, InteractiveActor* currentInteractingActor = NULL)
 {
 	if(on && currentInteractingActor != NULL)
 	{
@@ -689,7 +594,7 @@ void GameWorld::Tick( irr::f32 delta )
 					scrSize.Height /= 2;
 
 					irr::core::stringw waveString;
-					waveString += curEnemyWave+1;
+					//waveString += curEnemyWave+1;
 					waveString += "/";
 					// waveString += enemyWaves.size();
 					waveString += " WAVES COMPLETED!";
@@ -723,7 +628,7 @@ void GameWorld::Tick( irr::f32 delta )
 					check(gameMessage);
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
 					gameMessage->setOverrideFont( GEngine->GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
-					RestartLevel();
+					//RestartLevel();
 					camera->SetPosition( GetCurrentPlayer().GetNodePosition() - GetCurrentPlayer().GetAimVector() * -5.0f );
 					camera->Tick(delta);
 				}
@@ -857,10 +762,7 @@ void GameWorld::DoGameplay( irr::f32 delta )
 		}
 
 		// update 3d audio information
-		DoAudio(); 
-
-		// deletes all the dead actors
-		DoCleanup();
+		DoAudio();
 	}
 	else
 	{
@@ -947,248 +849,6 @@ void GameWorld::DoInput()
 
 	if( gameState == state_PAUSED || gameState == state_INTERACTING)
 		return;
-
-	/*GetCurrentPlayer().SetRotation( playerRotation );
-	GetCurrentPlayer().SetTranslation( playerTranslation );*/
-
-	/*if(receiver.keyPressed(irr::KEY_RETURN) || receiver.mousePressed(InputEventReceiver::LEFT))
-	{
-		for( irr::u32 i=0; i < actors.size(); ++i )
-		{
-			if( actors[i]->GetActorType() != ACTOR_ENEMY)
-				continue;
-			
-			if(
-				CollisionHelper::CheckProximity2D(
-					mainCharacter->GetNodePosition(),
-					actors[i]->GetNode().getPosition(),
-					25.0f
-				)
-			)
-				actors[i]->ReceiveDamage(10);
-		}
-	}*/
-}
-
-// perform a physics update, includes collision detection
-void GameWorld::DoPhysics()
-{
-	// check collisions between the actors
-	CheckCollisions();
-}
-
-void GameWorld::AdvanceLevel()
-{
-	//BringDownDividerFence();
-
-	// if we go past level 2, do game ending state
-	if( ++curLevel >= 2 )
-	{
-		gameState = state_GAME_VICTORY;
-		stateTimer = 0;
-		return;
-	}
-
-	// load in new enemy waves
-	InitEnemies();
-}
-
-void GameWorld::DoAI( irr::f32 delta )
-{
-	// check player death
-	if( GetCurrentPlayer().IsDead() )
-	{
-		SetNumLives( GetNumLives() - 1 );
-		gameState = state_PLAYER_DEAD;
-		stateTimer = 0;
-		return;
-	}
-
-
-	// all spawns of the wave were pushed out, see if the player killed off all enemies
-	if( spawnsDone )
-	{
-		if( (totalEnemyOne + totalEnemyTwo + totalEnemyBoss) == 0 )
-		{
-			gameState = state_WAVE_FINISHED;
-			waveTimer = 0;
-			GetCurrentPlayer().SetHealth( 100.0f );
-			spawnsDone = false;
-			return;
-		}
-	}
-	// advance to next wave?
-	else if( gameState == state_WAVE_FINISHED )
-	{
-		waveTimer += delta;
-		// if( waveTimer >= enemyWaves[curEnemyWave]->GetTimeTillNextWave() )
-		{
-			// time to start the next wave
-			++curEnemyWave;
-			check(gameMessage);
-			gameMessage->remove();
-			gameMessage = NULL;
-			gameState = state_GAMEPLAY;
-			return;
-		}
-	}
-	else
-	{
-		// check to see if all waves are completed, then open door to next level...
-		/* if( (irr::u32)(curEnemyWave) >= enemyWaves.size() )
-		   {
-		   lastEnemySpawn = 0;
-		   waveTimer = 0;
-		   spawnsDone = false;
-		   AdvanceLevel();
-		   return;
-		   }
-		   */
-		// at this point, spawns still need to be pushed out...
-		// spawn enemy waves at the player
-		lastEnemySpawn += delta;
-		if( lastEnemySpawn >= spawnTimer )
-		{
-			/*EnemyWave::Spawn& spawn = enemyWaves[curEnemyWave]->GetSpawn();
-			  spawnTimer = (irr::f32)spawn.duration;
-			  lastEnemySpawn = 0;
-
-			  static irr::s32 spawner = 0;
-
-			  switch( spawn.type )
-			  {
-			  case ACTOR_ENEMY:
-			  for( int i=0; i<spawn.amount; i++ )
-			  {
-			  irr::core::vector3df pos = spawnNodes[ spawner ]->getAbsolutePosition();
-			  if( (irr::u32)++spawner >= spawnNodes.size() )
-			  spawner = 0;
-
-			  Enemy *enemy = new Enemy( *this, pos, *levelTriangleSelector );
-			  actors.push_back(enemy);
-			  totalEnemyOne++;
-			  enemy->SetAimTarget( GetCurrentPlayer() );
-
-			// play spawn sound
-			ISound* sound = GEngine->GetSoundEngine().play3D( "../audio/sfx/spawn.mp3", spawnNodes[spawner]->getAbsolutePosition(), false, false, true );
-			sound->setMinDistance( 40.0f );
-			sound->drop();
-			}
-			break;
-
-			case ACTOR_ENEMY_TWO:
-			for( int i=0; i<spawn.amount; i++ )
-			{
-			irr::core::vector3df pos = spawnNodes[ spawner ]->getAbsolutePosition();
-			if( (irr::u32)++spawner >= spawnNodes.size() )
-			spawner = 0;
-
-			EnemyTwo *enemy = new EnemyTwo( *this, pos, *levelTriangleSelector );
-			actors.push_back(enemy);
-			totalEnemyTwo++;
-			enemy->SetAimTarget( GetCurrentPlayer() );
-
-			// play spawn sound
-			ISound* sound = GEngine->GetSoundEngine().play3D( "../audio/sfx/spawn.mp3", spawnNodes[spawner]->getAbsolutePosition(), false, false, true );
-			sound->setMinDistance( 40.0f );
-			sound->drop();
-			}
-			break;
-
-			case ACTOR_ENEMY_BOSS:
-			for( int i=0; i<spawn.amount; i++ )
-			{
-			irr::core::vector3df pos = spawnNodes[ spawner ]->getAbsolutePosition();
-			if( (irr::u32)++spawner >= spawnNodes.size() )
-			spawner = 0;
-
-			EnemyBoss *enemy = new EnemyBoss( *this, pos, *levelTriangleSelector );
-			actors.push_back(enemy);
-			totalEnemyBoss++;
-			enemy->SetAimTarget( GetCurrentPlayer() );
-
-			// play spawn sound
-			ISound* sound = GEngine->GetSoundEngine().play3D( "../audio/sfx/spawn.mp3", spawnNodes[spawner]->getAbsolutePosition(), false, false, true );
-			sound->setMinDistance( 40.0f );
-			sound->drop();
-			}
-			break;
-
-			default:
-			check(false);
-			break;
-			}
-
-			// wave finished ?
-			if( enemyWaves[curEnemyWave]->AdvanceSpawn() == false )
-			{
-				spawnsDone = true;
-				return;
-			}
-			*/
-		}
-	}
-
-	// inform enemies of new player location
-	/*
-	for( irr::u32 i=0; i < actors.size(); ++i )
-	{
-		if( actors[i]->GetActorType() == ACTOR_ENEMY )
-		{
-			Enemy* enemy = (Enemy *)actors[i];
-			enemy->SetAimTarget( GetCurrentPlayer() );
-		}
-		/* else if( actors[i]->GetActorType() == ACTOR_ENEMY_TWO )
-		   {
-		   EnemyTwo* enemy = (EnemyTwo *)actors[i];
-		   enemy->SetAimTarget( GetCurrentPlayer() );
-		   }
-		   else if( actors[i]->GetActorType() == ACTOR_ENEMY_BOSS )
-		   {
-		   EnemyBoss* enemy = (EnemyBoss *)actors[i];
-		   enemy->SetAimTarget( GetCurrentPlayer() );
-		   }
-	}
-	*/
-}
-
-// perform collision checks between the actors
-void GameWorld::CheckCollisions()
-{
-	// setup a helper structure with information requried for actors to do collision checks
-	CollisionInfo collisionInfo(*levelTriangleSelector, actors);
-
-	for( irr::u32 i=0; i < actors.size(); ++i )
-	{
-		if( actors[i]->ShouldPerformCollisionCheck() )
-		{
-			actors[i]->DoCollisions( collisionInfo );
-		}
-	}
-}
-
-// deletes all the dead actors
-void GameWorld::DoCleanup()
-{
-	// delete all the dead actors
-	if( actors.size() > 0 )
-	{
-		for( irr::s32 i = actors.size()-1; i >= 0; --i )
-		{
-			if( actors[i]->GetActorState() == state_ACTOR_DEAD )
-			{
-				if( actors[i]->GetActorType() == ACTOR_ENEMY )
-					totalEnemyOne--;
-				else if( actors[i]->GetActorType() == ACTOR_ENEMY_TWO )
-					totalEnemyTwo--;
-				else if( actors[i]->GetActorType() == ACTOR_ENEMY_BOSS )
-					totalEnemyBoss--;
-
-				Actor::DestroyActor(actors[i]);
-				actors.erase( i );
-			}
-		}
-	}
 }
 
 // updates and plays 3d audio effects
@@ -1196,204 +856,12 @@ void GameWorld::DoAudio()
 {
 	// update 3d position of player
 	// GEngine->GetSoundEngine().setListenerPosition(GetCurrentPlayer().GetNodePosition(), GetCurrentPlayer().GetAimVector());
-
 }
-
-
-// draws the HUD, called after the 3d scene has been rendered
-/*void GameWorld::DoHUD(irr::f32 delta)
-{
-	// Player& p = GetCurrentPlayer();
-	// gameHUD->Update( p.GetAmmo(), p.GetScore(), numLives, curEnemyWave+1, enemyWaves.size(), GetCurrentPlayer().GetHealth(), GetCurrentPlayer().HasGodMode() );
-	gameHUD->Update(delta, GetCurrentPlayer());
-	
-}
-*/
-
-// return the first available dynamite projectile for throwing, NULL if none are available
-/*
-   DynamiteProjectile* GameWorld::GetFirstAvailableDynamite() const
-   {
-   for( irr::u32 i=0; i < actors.size(); ++i )
-   {
-   if( actors[i]->GetActorType() == ACTOR_DYNAMITE )
-   {
-// a projectile is available if its state is IDLE
-DynamiteProjectile* projectile = dynamic_cast<DynamiteProjectile*>(actors[i]);
-check(projectile);
-if( projectile->GetDynamiteState() == state_DYNAMITE_IDLE )
-{
-return projectile;
-}
-}
-
-}
-
-return NULL;
-}
-
-// return the first available snowball projectile for throwing, NULL if none are available
-
-SnowballProjectile* GameWorld::GetFirstAvailableSnowball() const
-{
-for( irr::u32 i=0; i < actors.size(); ++i )
-{
-if( actors[i]->GetActorType() == ACTOR_SNOWBALL )
-{
-// a projectile is available if its state is IDLE
-SnowballProjectile* projectile = dynamic_cast<SnowballProjectile*>(actors[i]);
-check(projectile);
-if( projectile->GetSnowballState() == state_SNOWBALL_IDLE )
-{
-return projectile;
-}
-}
-}
-
-return NULL;
-}
-
-
-// return the first available landmine for arming, NULL if none are available
-
-LandMine* GameWorld::GetFirstAvailableLandMine() const
-{
-for( irr::u32 i=0; i < actors.size(); ++i )
-{
-if( actors[i]->GetActorType() == ACTOR_LANDMINE )
-{
-// a projectile is available if its state is IDLE
-LandMine* mine = dynamic_cast<LandMine*>(actors[i]);
-check(mine);
-if( mine->GetLandMineState() == state_LANDMINE_IDLE )
-{
-return mine;
-}
-}
-}
-
-return NULL;
-}
-
-
-// return the first available explosion effect, NULL if none are available
-
-ExplosionEffect* GameWorld::GetFirstAvailableSnowballExplosionEffect() const
-{
-for( irr::u32 i=0; i < actors.size(); ++i )
-{
-if( actors[i]->GetActorType() == ACTOR_EXPLOSION_EFFECT_SNOWBALL )
-{
-	// a projectile is available if its state is IDLE
-	ExplosionEffect* effect = dynamic_cast<ExplosionEffect*>(actors[i]);
-	check(effect);
-	if( effect->GetExplosionState() == state_EXPLOSION_IDLE )
-	{
-		return effect;
-	}
-}
-}
-
-return NULL;
-}
-
-
-// return the first available explosion effect, NULL if none are available
-
-ExplosionEffect* GameWorld::GetFirstAvailableDynamiteExplosionEffect() const
-{
-	for( irr::u32 i=0; i < actors.size(); ++i )
-	{
-		if( actors[i]->GetActorType() == ACTOR_EXPLOSION_EFFECT_DYNAMITE )
-		{
-			// a projectile is available if its state is IDLE
-			ExplosionEffect* effect = dynamic_cast<ExplosionEffect*>(actors[i]);
-			check(effect);
-			if( effect->GetExplosionState() == state_EXPLOSION_IDLE )
-			{
-				return effect;
-			}
-		}
-	}
-
-	return NULL;
-}
-
-// return the first available enemy death effect, NULL if none are available
-ExplosionEffect* GameWorld::GetFirstAvailableEnemyDeathEffect() const
-{
-	for( irr::u32 i=0; i < actors.size(); ++i )
-	{
-		if( actors[i]->GetActorType() == ACTOR_EXPLOSION_EFFECT_ENEMYDEATH )
-		{
-			// a projectile is available if its state is IDLE
-			ExplosionEffect* effect = dynamic_cast<ExplosionEffect*>(actors[i]);
-			check(effect);
-			if( effect->GetExplosionState() == state_EXPLOSION_IDLE )
-			{
-				return effect;
-			}
-		}
-	}
-
-	return NULL;
-}
-*/
 
 // returns the player actor which is currently used
 Player& GameWorld::GetCurrentPlayer() const
 {
 	return *mainCharacter;
-}
-
-// switches the player models from onFoot to onSnowplow, and notifies all the necessary actors about the change
-void GameWorld::SwitchPlayers( )
-{ 
-	// transfer the position, rotation and ammo information from old player to the new
-	// this is so any pickups picked up will transfer to the other one
-	/*Player* oldPlayer = bUseOnFootPlayer ? playerOnFoot : playerOnSnowplow;
-	Player* newPlayer = bUseOnFootPlayer ? playerOnSnowplow: playerOnFoot;
-
-	newPlayer->SetNodePosition( oldPlayer->GetNodePosition() );
-	newPlayer->CopyStateFrom( *oldPlayer );
-	// recreate the collision animator, otherwise it will think that the new player moved a huge amount of distance in one tick 
-	// this is causing problems with not positioning the player where he should be 
-	newPlayer->RecreateCollisionResponseAnimator();
-
-	newPlayer->SetActive( true );
-	oldPlayer->SetActive( false );
-
-	bUseOnFootPlayer = !bUseOnFootPlayer;
-	NotifyNewPlayerTarget( GetCurrentPlayer() );*/
-}
-
-// notifies all the actors that a new player is to be their target
-void GameWorld::NotifyNewPlayerTarget( Player& player ) const
-{
-	// notify the camera actor about the target change
-	camera->SetAimTarget( player );
-
-	// notify the enemies about the target player change
-	/*
-	for( irr::u32 i=0; i < actors.size(); ++i )
-	{
-		if( actors[i]->GetActorType() == ACTOR_ENEMY )
-		{
-			Enemy* enemy = dynamic_cast<Enemy*>(actors[i]);
-			enemy->SetAimTarget( player );
-		}
-		else if( actors[i]->GetActorType() == ACTOR_ENEMY_TWO )
-		   {
-		   EnemyTwo* enemy2 = dynamic_cast<EnemyTwo*>(actors[i]);
-		   enemy2->SetAimTarget( player );
-		   }
-		   else if( actors[i]->GetActorType() == ACTOR_ENEMY_BOSS )
-		   {
-		   EnemyBoss* enemyBoss = dynamic_cast<EnemyBoss*>(actors[i]);
-		   enemyBoss->SetAimTarget( player );
-		   }
-	}
-	*/
 }
 
 // unbuffered mouse input 
@@ -1403,48 +871,4 @@ void GameWorld::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
 	{
 		GetCurrentPlayer().OnMouseEvent( mouseEvent );
 	}
-}
-
-// kills all enemies that are currently spawned
-void GameWorld::KillAllEnemies()
-{
-	// just do a lot of damage to all the current enemy actors
-	for( irr::u32 i=0; i < actors.size(); ++i )
-	{
-		if( actors[i]->GetActorType() == ACTOR_ENEMY
-				||  actors[i]->GetActorType() == ACTOR_ENEMY_TWO
-				||  actors[i]->GetActorType() == ACTOR_ENEMY_BOSS )
-		{
-			actors[i]->ReceiveDamage( 10000 );
-		}
-	}
-}
-
-irr::core::vector3df GameWorld::GetPlayerSpawn()
-{
-	irr::s32 playerSpawnID;
-
-	switch( curLevel )
-	{
-		case 0:
-			playerSpawnID = NODE_ID_PLAYERSPAWN_ONE;
-			break;
-		case 1:
-			playerSpawnID = NODE_ID_PLAYERSPAWN_TWO;
-			break;
-		default:
-			check( false );
-			break;
-	}
-
-	// find player spawn depending on level
-	irr::core::array<irr::scene::ISceneNode*> nodes;
-	smgr.getSceneNodesFromType(irr::scene::ESNT_EMPTY, nodes, smgr.getRootSceneNode());
-	for( irr::u32 i = 0; i < nodes.size(); ++i )
-	{
-		if( nodes[i]->getID() == playerSpawnID )
-			return nodes[i]->getAbsolutePosition();
-	}
-
-	return irr::core::vector3df( 0, 20, 0 );
 }
