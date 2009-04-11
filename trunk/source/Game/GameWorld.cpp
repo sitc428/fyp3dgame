@@ -104,10 +104,10 @@ void GameWorld::InitShader()
 {
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 	
-	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, core::vector3df(-100,0,0), core::vector3df(2,2,2),
+	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, core::vector3df(0,20,0), core::vector3df(2,2,2),
 													   core::aabbox3d<f32>(-7,0,-7,7,1,7));
 	fire->CreateBoxEmitter(core::vector3df(0.0f,0.06f,0.0f),
-						   80,100,800,2000, GEngine->GetDriver().getTexture("media/shader/fire.bmp"));
+						   50,80,800,1000, GEngine->GetDriver().getTexture("media/shader/smoke.bmp"));
 	
 	ParticleSystemEngine* fire2 = new ParticleSystemEngine(&smgr, core::vector3df(0,20,-100), core::vector3df(2,2,2),
 													   core::aabbox3d<f32>(-7,0,-7,7,1,7) );
