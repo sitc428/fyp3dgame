@@ -1,8 +1,7 @@
 #ifndef __CAMERA_HPP__
 #define __CAMERA_HPP__
 
-#include "irrlicht/irrlicht.hpp"
-#include "irrlicht/vector3d.hpp"
+#include <irrlicht/irrlicht.h>
 #include "Actor.hpp"
 
 // forward declares
