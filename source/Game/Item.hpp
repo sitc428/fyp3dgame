@@ -4,6 +4,7 @@
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
 #include "GameWorld.h"
+
 enum EItemType
 {
 	WEAPONITEM1 = 1,	//weapon1
