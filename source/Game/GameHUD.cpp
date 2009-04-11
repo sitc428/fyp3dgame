@@ -2,6 +2,10 @@
 #include "GameEngine.h"
 #include "Check.h"
 #include "Player.h"
+#include "HPItem.hpp"
+#include "XItem.hpp"
+#include "WeaponItem.hpp"
+#include "MDiscItem.hpp"
 #include "MainCharacter.hpp"
 #include "CGUITTFont.h"
 #include "InputEventReceiver.hpp"
@@ -361,7 +365,22 @@ void GameHUD::DrawPauseMenu(Player& player){
 			}
 			
 			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
-				//MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				for (int i = 0, j = -1; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == HPITEM || ItemBox[i].first->getItemType() == XITEM){
+						j++;
+						if (SubMenuIndex == j && j != -1){
+							if(ItemBox[i].first->getItemType() == HPITEM){
+								((HPItem*)ItemBox[i].first)->use();
+							}
+							else if(ItemBox[i].first->getItemType() == XITEM){
+								((XItem*)ItemBox[i].first)->use();
+							}
+							break;
+						}
+					}	
+				}
+				
 			}
 			
 		}
@@ -391,6 +410,22 @@ void GameHUD::DrawPauseMenu(Player& player){
 				
 				SubMenuIndex = -1;
 			}
+			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				for (int i = 0, j = -1; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == WEAPONITEM1){
+						j++;
+						if (SubMenuIndex == j && j != -1){
+							((WeaponItem*)ItemBox[i].first)->equip();
+							break;
+						}
+						else{
+							((WeaponItem*)ItemBox[i].first)->unEquip();
+						}
+					}
+				}
+				
+			}
 			
 		}
 		
@@ -419,7 +454,24 @@ void GameHUD::DrawPauseMenu(Player& player){
 				
 				SubMenuIndex = -1;
 			}
-			
+			/*
+			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
+				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
+				for (int i = 0, j = -1; i < ItemBox.size() ; i++){
+					if(ItemBox[i].first->getItemType() == MDISCITEM){
+						j++;
+						if (SubMenuIndex == j && j != -1){
+							((MDiscItem*)ItemBox[i].first)->equip();
+							break;
+						}
+						else{
+							((MDiscItem*)ItemBox[i].first)->unEquip();
+						}
+					}
+				}
+				
+			}
+			*/
 		}
 		
 	}
