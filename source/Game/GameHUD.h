@@ -43,8 +43,6 @@ public:
 	
 	//drawing pause menu, for gameworld to call during pause state
 	void DrawPauseMenu(Player& player);	
-	
-	void Exit();
 private:
 
 	//HP, Magic Frame
