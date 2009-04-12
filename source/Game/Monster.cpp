@@ -12,7 +12,8 @@
 #include "GameWorld.hpp"
 #include "NodeID.hpp"
 #include "MainCharacter.hpp"
-#include "shader.hpp"
+//#include "shader.hpp"
+#include "ShaderFactory.hpp"
 
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
@@ -29,14 +30,16 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 
-	Shader* shader = new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
+	Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
+		//new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
 	_monster->setPosition( defaultPosition );
 	_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
 	//_monster->setMaterialType(irr::video::EMT_SOLID);
 	//_monster->setScale(irr::core::vector3df(1,1,1));
-	_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
+	//_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
+	_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
 	_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.png"));
 	//_monster->setMaterialTexture(1, driver.getTexture("media/model/slimebase.png"));
 	//_monster->setMaterialTexture(1, driver.getTexture("media/model/shade_line.jpg" ));

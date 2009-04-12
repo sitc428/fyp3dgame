@@ -5,6 +5,7 @@
 #include "GameWorld.hpp"
 #include "InputEventReceiver.hpp"
 #include "ParticleManager.hpp"
+#include "ShaderFactory.hpp"
 #include "StartupScreen.hpp"
 
 #include <iostream>
@@ -27,6 +28,7 @@ GameEngine::GameEngine()
 	driver(NULL),
 	smgr(NULL),
 	receiver(NULL),
+	shaderFactory(NULL),
 	soundEngine(NULL),
 	particleManager(NULL),
 	fmgr(NULL),
@@ -76,6 +78,8 @@ bool GameEngine::Init()
 	// randomize randomize :)
 	srand( GetRealTime() );
 
+	shaderFactory = new ShaderFactory( *this );
+
 	// create a particle manager instance
 	particleManager = new ParticleManager( *smgr );
 
@@ -100,6 +104,12 @@ void GameEngine::Exit()
 	{
 		soundEngine->drop();
 		soundEngine = NULL;
+	}
+
+	if( shaderFactory )
+	{
+		delete shaderFactory;
+		shaderFactory = NULL;
 	}
 
 	// clean up the particle manager

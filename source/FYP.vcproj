@@ -316,6 +316,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\ShaderFactory.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Engine\StartupScreen.hpp"
 				>
 			</File>
@@ -457,6 +461,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\shader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\ShaderFactory.cpp"
 				>
 			</File>
 			<File

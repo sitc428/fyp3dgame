@@ -21,6 +21,7 @@ class FrontEnd;
 class GameWorld;
 class InputEventReceiver;
 class ParticleManager;
+class ShaderFactory;
 class StartupScreen;
 
 enum EEngineState
@@ -56,6 +57,7 @@ public:
 	irr::video::IVideoDriver& GetDriver() const { return *driver; }
 	irr::scene::ISceneManager& GetSceneManager() const { return *smgr; }
 	InputEventReceiver& GetReceiver() const { return *receiver; }
+	ShaderFactory& GetShaderFactory() const { return *shaderFactory; }
 	irrklang::ISoundEngine& GetSoundEngine() const { return *soundEngine; }
 	ParticleManager& GetParticleManager() { return *particleManager; }
 	FontManager* GetFontManager() { return fmgr; }
@@ -123,6 +125,7 @@ private:
 	irr::video::IVideoDriver* driver;
 	irr::scene::ISceneManager* smgr;
 	InputEventReceiver* receiver;
+	ShaderFactory* shaderFactory;
 	irrklang::ISoundEngine* soundEngine;
 	ParticleManager* particleManager; // particle manager for easy creation of particle effects 
 	FontManager* fmgr;

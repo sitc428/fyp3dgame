@@ -57,7 +57,7 @@ static const irr::u32			CD_HEIGTH = 30;
 extern GameEngine* GEngine;
 
 // constructor
-GameHUD::GameHUD( IrrlichtDevice& device )
+GameHUD::GameHUD( irr::IrrlichtDevice& device )
 	: HealthBarFrameTexture(NULL),
 	MagicChargeTexture(NULL),
 	MagicLevelTexture(NULL),
@@ -130,7 +130,7 @@ GameHUD::~GameHUD()
 
 void GameHUD::Init()
 {
-	gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
+	irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
 	check(env);
 	
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
@@ -167,20 +167,20 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 			MagicChargeRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (magic_charge%5-1), MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5), MAGIC_CHARGE_WIDTH * (magic_charge%5),  MAGIC_CHARGE_HEIGHT * ((magic_charge-1)/5+1));
 
 		}
-		driver.draw2DImage(MagicChargeTexture, irr::core::position2d<irr::s32>(0, 0), MagicChargeRec, 0, video::SColor(255,255,255,255), true);
+		driver.draw2DImage(MagicChargeTexture, irr::core::position2d<irr::s32>(0, 0), MagicChargeRec, 0, irr::video::SColor(255,255,255,255), true);
 	}
 		
 	if(magic_level != 0){
 		MagicLevelRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (magic_level-1), 0, MAGIC_CHARGE_WIDTH * magic_level,  MAGIC_CHARGE_HEIGHT);
-		driver.draw2DImage(MagicLevelTexture, irr::core::position2d<irr::s32>(0, 0), MagicLevelRec, 0, video::SColor(255,255,255,255), true);
+		driver.draw2DImage(MagicLevelTexture, irr::core::position2d<irr::s32>(0, 0), MagicLevelRec, 0, irr::video::SColor(255,255,255,255), true);
 	}
 
 	//draw HP
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH*hp_level, HP_HEIGHT);
-	driver.draw2DImage(HP, irr::core::position2d<irr::s32>(HP_START_X, (MAGIC_CHARGE_WIDTH-HP_HEIGHT)/2), HPBar, 0, video::SColor(255,255,255,255), true);
+	driver.draw2DImage(HP, irr::core::position2d<irr::s32>(HP_START_X, (MAGIC_CHARGE_WIDTH-HP_HEIGHT)/2), HPBar, 0, irr::video::SColor(255,255,255,255), true);
 	
 	//the frame draw last
-	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPRec, 0, video::SColor(255,255,255,255), true);
+	driver.draw2DImage(HealthBarFrameTexture, irr::core::position2d<irr::s32>(0, 0), HPRec, 0, irr::video::SColor(255,255,255,255), true);
 
 	//spinning CD
 	
@@ -195,7 +195,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 		int stage = modTime % 20;
 		CDRec = irr::core::rect<irr::s32>(MAGIC_CHARGE_WIDTH * (stage%5), MAGIC_CHARGE_HEIGHT * ((stage)/5), MAGIC_CHARGE_WIDTH * (stage%5+1),  MAGIC_CHARGE_HEIGHT * ((stage)/5+1));
 		
-		driver.draw2DImage(CDTexture, irr::core::position2d<irr::s32>(0, 0), CDRec, 0, video::SColor(255,255,255,255), true);
+		driver.draw2DImage(CDTexture, irr::core::position2d<irr::s32>(0, 0), CDRec, 0, irr::video::SColor(255,255,255,255), true);
 		
 		//reseting the modtime
 		if (modTime >= 20)
@@ -205,7 +205,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	else{
 		timeElapsed = 0;
 		modTime = 0;
-		driver.draw2DImage(StaticCDTexture, irr::core::position2d<irr::s32>(0, 0), CDRec, 0, video::SColor(255,255,255,255), true);
+		driver.draw2DImage(StaticCDTexture, irr::core::position2d<irr::s32>(0, 0), CDRec, 0, irr::video::SColor(255,255,255,255), true);
 	}
 
 	/*******
@@ -217,19 +217,19 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 	outputString+= L"/";
 	outputString+= ((MainCharacter&)player).GetMaxHealth();
 	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1+2, HP_TEXT_Y1+2, HP_TEXT_X2, HP_TEXT_Y2);
-	HPText->draw(outputString.c_str(), HPTextRec, video::SColor(255,0,0,0), true, true, 0);
+	HPText->draw(outputString.c_str(), HPTextRec, irr::video::SColor(255,0,0,0), true, true, 0);
 	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
-	HPText->draw(outputString.c_str(), HPTextRec, video::SColor(255,255,255,255), true, true, 0);
+	HPText->draw(outputString.c_str(), HPTextRec, irr::video::SColor(255,255,255,255), true, true, 0);
 	
 	if( ((MainCharacter&)player).GetCurrentMagic() != NULL){
 		outputString = ((MainCharacter&)player).GetCurrentMagic()->getItemName();
-		HPText->draw(outputString.c_str(), irr::core::rect<irr::s32>(152, 20+2, 0, 0), video::SColor(255,0,0,0), false, false, 0);
-		HPText->draw(outputString.c_str(), irr::core::rect<irr::s32>(150, 20, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		HPText->draw(outputString.c_str(), irr::core::rect<irr::s32>(152, 20+2, 0, 0), irr::video::SColor(255,0,0,0), false, false, 0);
+		HPText->draw(outputString.c_str(), irr::core::rect<irr::s32>(150, 20, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	}
 	
 	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
-	//driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
+	//driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, irr::video::SColor(255,255,255,255), true);
 	
 	//reseting the selected menu item
 	MenuSelected = STATUS;
@@ -247,9 +247,9 @@ void GameHUD::DrawConversation()
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	
 	//draw the frame for conversation
-	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
+	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, irr::video::SColor(255,255,255,255), true);
 	if(ConversationString != ""){
-		ConversationFont->draw(ConversationString.c_str(), ConversationRec, video::SColor(255,255,255,255), false, true, 0);
+		ConversationFont->draw(ConversationString.c_str(), ConversationRec, irr::video::SColor(255,255,255,255), false, true, 0);
 	}
 }
 
@@ -259,12 +259,12 @@ void GameHUD::DrawPauseMenu(Player& player)
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	InputEventReceiver& receiver = GEngine->GetReceiver();
 	
-	driver.draw2DImage(PauseMenuTexture,irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, video::SColor(255,255,255,255), true);
-	MenuFont->draw(L"Status", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Item", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Equip", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*2, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Magic", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*3, 0, 0), video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Save", irr::core::rect<s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*4, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+	driver.draw2DImage(PauseMenuTexture,irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, irr::video::SColor(255,255,255,255), true);
+	MenuFont->draw(L"Status", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Item", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Equip", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*2, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Magic", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*3, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Save", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*4, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	
 	/*******
 	 GETTING USER INPUT
@@ -452,46 +452,46 @@ void GameHUD::DrawPauseMenu(Player& player)
 	 ********/
 	
 	//change the position of the icon according to the selection
-	driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*int(MenuSelected)), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
+	driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*int(MenuSelected)), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 
 	//draw the right hand side of the menu according to the selection
 	if( MenuSelected == STATUS){
 		//LEVEL
 		irr::core::stringw outputString = L"Level: ";
 		outputString+=((MainCharacter&)player).GetLevel();
-		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 
 		//EXP
 		outputString = L"EXP: ";
 		outputString+=((MainCharacter&)player).GetEXP();
-		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*1, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*1, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 		
 		//HP
 		outputString = L"HP: ";
 		outputString+= ((MainCharacter&)player).GetHealth();
 		outputString+= L"/";
 		outputString+= ((MainCharacter&)player).GetMaxHealth();
-		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*2, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*2, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 		
 		//Attack
 		outputString = L"Attack: ";
 		outputString+= ((MainCharacter&)player).GetAttackPoint();
-		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*3, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*3, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 		
 		//Defence
 		outputString = L"Defence: ";
 		outputString+= ((MainCharacter&)player).GetDefencePoint();
-		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*4, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*4, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 		
 		//Magic Attack
 		outputString = L"Magic Attack: ";
 		outputString+= ((MainCharacter&)player).GetMagicAttackPoint();
-		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*5, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*5, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 		
 		//Magic Defence
 		outputString = L"Magic Defence: ";
 		outputString+= ((MainCharacter&)player).GetMagicDefencePoint();
-		MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*6, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*6, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	
 	}
 	else if ( MenuSelected == ITEM){
@@ -506,17 +506,17 @@ void GameHUD::DrawPauseMenu(Player& player)
 				
 				//output item name
 				outputString = ItemBox[i].first->getItemName();
-				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				
 				//output quantity
 				outputString = ItemBox[i].second;
-				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				j++;
 			}
 		}
 
 		if (SubMenuIndex != -1){
-			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
+			driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 		}
 	}
 	else if ( MenuSelected == EQUIP){
@@ -528,21 +528,21 @@ void GameHUD::DrawPauseMenu(Player& player)
 				outputString = ItemBox[i].first->getItemName();
 				if(((MainCharacter&)player).GetCurrentWeapon() != NULL){
 					if(outputString == ((MainCharacter&)player).GetCurrentWeapon()->getItemName())
-						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,0,0), false, false, 0);
+						MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,0,0), false, false, 0);
 					else
-						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+						MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				}
 				else
-					MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+					MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 
 				//output quantity
 				outputString = ItemBox[i].second;
-				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				j++;
 			}
 		}
 		if (SubMenuIndex != -1){
-			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
+			driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 		}
 	}
 	else if ( MenuSelected == MAGIC){
@@ -555,21 +555,21 @@ void GameHUD::DrawPauseMenu(Player& player)
 				outputString = ItemBox[i].first->getItemName();
 				if(((MainCharacter&)player).GetCurrentMagic() != NULL){
 					if(outputString == ((MainCharacter&)player).GetCurrentMagic()->getItemName())
-						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,0,0), false, false, 0);
+						MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,0,0), false, false, 0);
 					else
-						MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+						MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				}
 				else
-					MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+					MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				
 				//output quantity
 				outputString = ItemBox[i].second;
-				MenuFont->draw(outputString.c_str(), irr::core::rect<s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), video::SColor(255,255,255,255), false, false, 0);
+				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				j++;
 			}
 		}
 		if (SubMenuIndex != -1){
-			driver.draw2DImage(SelectIconTexture, irr::core::position2d<s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, video::SColor(255,255,255,255), true);
+			driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 		}
 	}
 	else if ( MenuSelected == SAVE){

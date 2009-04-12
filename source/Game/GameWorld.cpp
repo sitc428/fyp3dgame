@@ -84,29 +84,29 @@ void GameWorld::InitShader()
 {
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 	
-	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, core::vector3df(0,20,0), core::vector3df(2,2,2),
-													   core::aabbox3d<f32>(-7,0,-7,7,1,7));
-	fire->CreateBoxEmitter(core::vector3df(0.0f,0.06f,0.0f),
+	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, irr::core::vector3df(0,20,0), irr::core::vector3df(2,2,2),
+		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7));
+	fire->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 						   50,80,800,1000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 	
-	ParticleSystemEngine* fire2 = new ParticleSystemEngine(&smgr, core::vector3df(0,20,-100), core::vector3df(2,2,2),
-													   core::aabbox3d<f32>(-7,0,-7,7,1,7) );
-	fire2->CreateBoxEmitter(core::vector3df(0.0f,0.06f,0.0f),
+	ParticleSystemEngine* fire2 = new ParticleSystemEngine(&smgr, irr::core::vector3df(0,20,-100), irr::core::vector3df(2,2,2),
+													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	fire2->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	 
-	ParticleSystemEngine* fire3 = new ParticleSystemEngine(&smgr, core::vector3df(40,20,0), core::vector3df(2,2,2),
-															core::aabbox3d<f32>(-7,0,-7,7,1,7) );
-	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),core::vector3df(0.0f,0.06f,0.0f),
+	ParticleSystemEngine* fire3 = new ParticleSystemEngine(&smgr, irr::core::vector3df(40,20,0), irr::core::vector3df(2,2,2),
+		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"), irr::core::vector3df(0.0f,0.06f,0.0f),
 							10,20,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 
 	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
-															core::aabbox3d<f32>(-7,0,-7,7,1,7),
+															core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
 															core::vector3df(0.0f,0.06f,0.0f),
 															80,100,
-															video::SColor(0,255,255,255), video::SColor(0,255,255,255),
+															video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255),
 															800,2000);
 */	
-	/*irr::scene::IParticleEmitter* em = ps->createCylinderEmitter(core::vector3df(-100,0,0),5.0f, core::vector3df(-100,0,0),
+	/*irr::scene::IParticleEmitter* em = ps->createCylinderEmitter(core::vector3df(-100,0,0),5.0f, irr::core::vector3df(-100,0,0),
 																 10,false,core::vector3df(0.0f,0.06f,0.0f));
  	*/
 	//irr::scene::IParticleEmitter* em = ps->createPointEmitter(core::vector3df(0.0f,0.06f,0.0f));
@@ -116,11 +116,11 @@ void GameWorld::InitShader()
 	ps = smgr.addParticleSystemSceneNode(false);
 	ps->setPosition(core::vector3df(40,20,0));
 	ps->setScale(core::vector3df(2,2,2));
-	ps->setParticleSize(core::dimension2d<f32>(20.0f, 20.0f));
+	ps->setParticleSize(core::dimension2d<irr::f32>(20.0f, 20.0f));
 	
 	irr::scene::IParticleEmitter* em = ps->createMeshEmitter(smgr.getMesh("media/model/slime08.x"),true,
-															 core::vector3df(0.0f,0.06f,0.0f),100.0f,-1,false,10,20,
-															 video::SColor(0,255,255,255), video::SColor(0,255,255,255),
+															 irr::core::vector3df(0.0f,0.06f,0.0f),100.0f,-1,false,10,20,
+															 irr::video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255),
 															 800,2000);
 	
 	
@@ -351,13 +351,13 @@ void GameWorld::InitEnemies()
 	ps = smgr.addParticleSystemSceneNode(false);
 	ps->setPosition(core::vector3df(-100,0,0));
 	ps->setScale(core::vector3df(2,2,2));
-	ps->setParticleSize(core::dimension2d<f32>(20.0f, 20.0f));
+	ps->setParticleSize(core::dimension2d<irr::f32>(20.0f, 20.0f));
 	
 	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
-		core::aabbox3d<f32>(-7,0,-7,7,1,7),
+		core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
 		core::vector3df(0.0f,0.06f,0.0f),
 		80,100,
-		video::SColor(0,255,255,255), video::SColor(0,255,255,255),
+		video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255),
 		800,2000);
 	ps->setEmitter(em);
 	em->drop();

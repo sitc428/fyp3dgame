@@ -21,7 +21,8 @@ public:
 	void Tick(irr::f32 delta);
 
 	// returns the node of the actor by const reference
-	virtual irr::scene::ISceneNode& GetNode() const = 0;
+	virtual irr::scene::ISceneNode& GetNode() const { return *node; }
+	virtual irr::core::vector3df& GetRadius() const { return node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter(); }
 
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_INTERACTIVE; }
