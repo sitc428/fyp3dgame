@@ -2,13 +2,8 @@
 #include "FrontEnd.hpp"
 #include "GameEngine.hpp"
 #include "InputEventReceiver.hpp"
-//#include "CGUIStaticTTText.hpp"
-
-extern GameEngine* GEngine;
 
 static const irr::c8* FRONTEND_BACKGROUND_TEXTURE = "media/StartupScreen/startupscreen.png";
-//static const irr::c8* FRONTEND_BACKGROUND_TEXTURE_1280x720 = "../art/StartupScreen/1280x720GameSplash.png";
-static const irr::c8* FRONTEND_FONT_FILE = "../art/fonts/FEfont.png";
 static const irr::video::SColor SELECTED_ITEM_OVERRIDE_COLOR = irr::video::SColor(255,255,0,0);
 
 // dimensions of the text elements in the frontend
@@ -18,12 +13,13 @@ static const irr::s32 FIRST_TEXT_ELEMENT_Y_OFFSET = 150;
 static const irr::s32 SECOND_TEXT_ELEMENT_Y_OFFSET = 170;
 
 // constructor
-FrontEnd::FrontEnd()
+FrontEnd::FrontEnd( GameEngine& gameEngine)
 	:FrontEndBackground(NULL),
 	BackgroundImage(NULL),
 	StartGameText(NULL),
 	ExitGameText(NULL),
-	currSelectedItem(FE_MENU_ITEM_STARTGAME)
+	currSelectedItem(FE_MENU_ITEM_STARTGAME),
+	GEngine(gameEngine)
 { 
 }
 
@@ -31,25 +27,25 @@ FrontEnd::FrontEnd()
 FrontEnd::~FrontEnd()
 {
 	// clear all the frontend resoruces
-	GEngine->GetDriver().removeTexture( FrontEndBackground );
+	GEngine.GetDriver().removeTexture( FrontEndBackground );
 	FrontEndBackground = NULL;
 }
 
 void FrontEnd::Init()
 {
 	// load the background image
-	FrontEndBackground = GEngine->GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
+	FrontEndBackground = GEngine.GetDriver().getTexture( FRONTEND_BACKGROUND_TEXTURE );
 
 	// init the ammo display
-	irr::gui::IGUIEnvironment* env = GEngine->GetDevice().getGUIEnvironment();
-	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+	irr::gui::IGUIEnvironment* env = GEngine.GetDevice().getGUIEnvironment();
+	irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
 
 	irr::core::position2d<irr::s32> backgroundPos = irr::core::position2d<irr::s32>(0,0);
 
 	BackgroundImage = env->addImage( irr::core::rect<irr::s32>(backgroundPos, scrSize) );
 	BackgroundImage->setImage( FrontEndBackground );
 
-	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFontManager()->getFont("IMPACT", 24));
+	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine.GetFontManager()->getFont("IMPACT", 16));
 	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
 
 	// add the text elements
@@ -65,7 +61,7 @@ void FrontEnd::Init()
 	StartGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
 
 	ExitGameText = env->addStaticText(
-			L"Load",
+			L"Exit",
 			irr::core::rect<irr::s32>(
 				scrSize.Width/2 - TEXT_ELEMENT_WIDTH/2,
 				scrSize.Height/2 - TEXT_ELEMENT_HEIGHT/2 + SECOND_TEXT_ELEMENT_Y_OFFSET,
@@ -142,21 +138,21 @@ void FrontEnd::SetCurrentlyEnabledItem( EMenuItem item )
 // perform an tick of the input system
 void FrontEnd::DoInput()
 {
-	InputEventReceiver& receiver = GEngine->GetReceiver();
+	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	// perform requested menu item action if the enter key is pressed
-	if(receiver.keyDown(irr::KEY_RETURN))
+	if(receiver.keyReleased(irr::KEY_RETURN))
 	{
 		switch(currSelectedItem)
 		{
 			case FE_MENU_ITEM_STARTGAME:
 				{
-					GEngine->RequestStateChange(state_GAME);
+					GEngine.RequestStateChange(state_GAME);
 					break;
 				}
 			case FE_MENU_ITEM_EXIT:
 				{
-					GEngine->RequestStateChange(state_EXIT);
+					GEngine.RequestStateChange(state_EXIT);
 					break;
 				}
 			default:
@@ -166,9 +162,8 @@ void FrontEnd::DoInput()
 				}
 		}
 	}
-	else if(receiver.keyDown(irr::KEY_UP) || receiver.keyDown(irr::KEY_KEY_W))
+	else if( receiver.keyDown(irr::KEY_UP) )
 	{
-		// find what the next selected item should be, don't allow for list iteration wraparound
 		EMenuItem nextItem = currSelectedItem;
 		if( currSelectedItem == FE_MENU_ITEM_EXIT )
 		{
@@ -180,9 +175,8 @@ void FrontEnd::DoInput()
 			SetCurrentlyEnabledItem(nextItem);
 		}
 	}
-	else if(receiver.keyDown(irr::KEY_DOWN) || receiver.keyDown(irr::KEY_KEY_S))
+	else if( receiver.keyDown(irr::KEY_DOWN) )
 	{
-		// find what the next selected item should be, don't allow for list iteration wraparound
 		EMenuItem nextItem = currSelectedItem;
 		if( currSelectedItem == FE_MENU_ITEM_STARTGAME )
 		{

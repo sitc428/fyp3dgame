@@ -3,6 +3,8 @@
 
 #include <irrlicht/irrlicht.h>
 
+class GameEngine;
+
 enum EMenuItem
 {
 	FE_MENU_ITEM_STARTGAME,
@@ -11,32 +13,36 @@ enum EMenuItem
 
 class FrontEnd
 {
-	public:
-		// constructor
-		FrontEnd();
-		// destructor
-		~FrontEnd();
+public:
+	// constructor
+	FrontEnd( GameEngine& );
+	// destructor
+	~FrontEnd();
 
-		void Init();
-		// called every frame with the frame's elapsed time
-		void Tick( irr::f32 delta );
-		void Exit();
+	void Init();
 
-	private:
+	// called every frame with the frame's elapsed time
+	void Tick( irr::f32 delta );
+	void Exit();
 
-		// perform an tick of the input system
-		void DoInput();
-		// returns the static text item corresponding to the curr selected menu item
-		irr::gui::IGUIStaticText* GetCurrentlySelectedItem();
-		// changes which item is currently highligted
-		void SetCurrentlyEnabledItem( EMenuItem item );
+private:
+	// perform an tick of the input
+	void DoInput();
 
-		irr::video::ITexture* FrontEndBackground;  // texture displayed as the background in the frontend
-		irr::gui::IGUIImage* BackgroundImage;  // gui element which contains the background image
-		irr::gui::IGUIStaticText* StartGameText;  // gui element displaying start game text
-		irr::gui::IGUIStaticText* ExitGameText;  // gui element displaying exit game text
+	// returns the static text item corresponding to the curr selected menu item
+	irr::gui::IGUIStaticText* GetCurrentlySelectedItem();
 
-		EMenuItem currSelectedItem;    // which of the text menu items is currently selected
+	// changes which item is currently highligted
+	void SetCurrentlyEnabledItem( EMenuItem item );
+
+	irr::video::ITexture* FrontEndBackground; // texture displayed as the background in the frontend
+	irr::gui::IGUIImage* BackgroundImage; // gui element which contains the background image
+	irr::gui::IGUIStaticText* StartGameText;  // gui element displaying start game text
+	irr::gui::IGUIStaticText* ExitGameText;  // gui element displaying exit game text
+
+	EMenuItem currSelectedItem;    // which of the text menu items is currently selected
+
+	GameEngine& GEngine;
 };
 
 #endif //__FRONT_END_HPP__

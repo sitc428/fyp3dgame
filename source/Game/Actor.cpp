@@ -2,10 +2,11 @@
 #include "Check.hpp"
 
 // constructor
-	Actor::Actor( GameWorld& gameWorld )
-	: world(gameWorld)
-	, state(state_ACTOR_ALIVE)
-	  , attachActorParent(NULL)
+Actor::Actor( GameEngine& gameEngine, GameWorld& gameWorld )
+	: state(state_ACTOR_ALIVE),
+	attachActorParent(NULL),
+	world(gameWorld),
+	GEngine(gameEngine)
 {
 }
 
@@ -24,28 +25,24 @@ void Actor::Cleanup()
 {
 	// if we are attached, detach ourselves from the parent
 	if( attachActorParent )
-	{
 		attachActorParent->DetachActor(*this);
-	}
+
 	// the parent should have cleared our parent pointer
 	check(attachActorParent == NULL);
 
 	// if we have any attached children, detach them
 	for( irr::s32 i = attachActorChildren.size()-1; i >= 0; --i )
-	{
 		DetachActor( *attachActorChildren[i] );
-	}
+
 	attachActorChildren.clear();
 }
 
 // interface for attaching and detaching external actors
-void Actor::AttachActor( Actor& actorToAttach, const irr::c8* nodeName/*=NULL*/ )
+void Actor::AttachActor( Actor& actorToAttach, const irr::c8* nodeName )
 {
 	// if the actor was already attached, detach it
 	if(actorToAttach.attachActorParent != NULL)
-	{
 		actorToAttach.attachActorParent->DetachActor(actorToAttach);
-	}
 
 	// remember that we attached this node in the attachedNodes irr::core::array
 	attachActorChildren.push_back( &actorToAttach );
@@ -74,4 +71,3 @@ void Actor::DetachActor( Actor& actorToDetach )
 
 	actorToDetach.attachActorParent = NULL;
 }
-

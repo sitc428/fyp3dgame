@@ -8,22 +8,23 @@
 
 // Parameters specifying default parameters
 static irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 50.0f, 100.0f);
-
-extern GameEngine* GEngine;
+static irr::u32 cameraMaxY = 80;
+static irr::u32 cameraMinY = 20;
+static irr::f32 cameraDefaultZoom = 2.5;
+static irr::f32 cameraMaxZoom = 2.5;
+static irr::f32 cameraMinZoom = 0.5;
 
 // constructor
-Camera::Camera( GameWorld& gameWorld,
-		irr::video::IVideoDriver& driver,
+Camera::Camera( GameEngine& gameEngine, GameWorld& gameWorld,
 		irr::scene::ITriangleSelector& levelSelector,
 		Player& player )
-	:Actor(gameWorld),
+	: Actor(gameEngine, gameWorld),
 	node(NULL),
 	levelTriangleSelector(levelSelector),
 	target(&player),
 	lastSelectedSceneNode(NULL),
-	zoom(1)
+	zoom(cameraDefaultZoom)
 {
-	//node = world.GetSceneManager().addCameraSceneNode( 0, defaultPosition, target->GetNodePosition());
 	node = world.GetSceneManager().addCameraSceneNode(0);
 	node->setAutomaticCulling( irr::scene::EAC_OFF );
 	node->setFarValue( 750 );
@@ -61,32 +62,29 @@ void Camera::Tick( irr::f32 delta )
 	node->setPosition( position );
 
 	// update target position
-	//node->setTarget( target->GetNodePosition() + irr::core::vector3df(0.0f, cameraOffset.Y + rotation.X, 0.0f) );
 	node->setTarget( target->GetNodePosition() + aimVector * 50 );
 
 }
 
 void Camera::DoInput( irr::f32 delta )
 {
-	InputEventReceiver& receiver = GEngine->GetReceiver();
+	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if( receiver.keyDown( irr::KEY_KEY_W) )
 	{
-		if(cameraOffset.Y < 80)
+		if(cameraOffset.Y < cameraMaxY)
 			cameraOffset.Y += 5;
 	}
 	else if( receiver.keyDown( irr::KEY_KEY_S) )
 	{
-		if(cameraOffset.Y > 20)
+		if(cameraOffset.Y > cameraMinY)
 			cameraOffset.Y -= 5;
 	}
 
 	zoom = zoom - receiver.wheel() * delta;
 
-	if( zoom < 0.5 )
-		zoom = 0.5;
-	if( zoom > 3.0 )
-		zoom = 3.0;
-
-	//translation += cameraTranslation * delta;
+	if( zoom < cameraMinZoom )
+		zoom = cameraMinZoom;
+	if( zoom > cameraMaxZoom )
+		zoom = cameraMaxZoom;
 }

@@ -2,9 +2,6 @@
 #define __INPUT_EVENT_RECEIVER_HPP__
 
 #include <irrlicht/irrlicht.h>
-#include <boost/thread.hpp>
-
-class GameEngine;
 
 class InputEventReceiver : public irr::IEventReceiver 
 {
@@ -13,10 +10,8 @@ public:
 
 	typedef irr::EKEY_CODE keys;
 
-	InputEventReceiver(GameEngine& engine);
+	InputEventReceiver();
 	~InputEventReceiver();
-	
-	void operator()();
 
 	bool OnEvent(const irr::SEvent& event);
 
@@ -56,8 +51,6 @@ private:
 	keyStates keyState[irr::KEY_KEY_CODES_COUNT];
 
 	handlerStates handlerState;
-	
-	GameEngine& _engine;
 };
 
 #endif //! __INPUT_EVENT_RECEIVER_HPP__

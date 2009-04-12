@@ -3,10 +3,12 @@
 
 #include "InteractiveActor.hpp"
 
+class GameEngine;
+
 class SellingMachine: public InteractiveActor
 {
 public:
-	SellingMachine( GameWorld& gameWorld, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df );
+	SellingMachine( GameEngine&, GameWorld&, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df );
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
@@ -19,9 +21,6 @@ public:
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
 	virtual ~SellingMachine();
-
-private:
-	GameWorld& world;
 };
 
 #endif // __SELLING_MACHINE_HPP__

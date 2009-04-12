@@ -6,7 +6,8 @@
 class TriggerEventItem: public InteractiveActor
 {
 public:
-	TriggerEventItem( GameWorld& gameWorld, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df );
+	//! Constructor
+	TriggerEventItem( GameEngine&, GameWorld&, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df );
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
@@ -26,7 +27,6 @@ protected:
 	virtual ~TriggerEventItem();
 
 private:
-	GameWorld& world;
 	bool enabled;
 };
 

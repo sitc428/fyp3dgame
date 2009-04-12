@@ -1,8 +1,6 @@
 #include "InputEventReceiver.hpp"
-#include <iostream>
 
-InputEventReceiver::InputEventReceiver(GameEngine& engine)
- :_engine(engine)
+InputEventReceiver::InputEventReceiver()
 {
 	// init keyboard states. 
 	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i)
@@ -21,10 +19,6 @@ InputEventReceiver::InputEventReceiver(GameEngine& engine)
 }
 
 InputEventReceiver::~InputEventReceiver()
-{
-}
-
-void InputEventReceiver::operator()()
 {
 }
 
@@ -167,7 +161,6 @@ void InputEventReceiver::disable()
 
 void InputEventReceiver::enable()
 {
-
 	handlerState = ENABLED;
 
 	// update keyboard state

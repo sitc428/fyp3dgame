@@ -1,14 +1,11 @@
-#include "TalkativeNPC.hpp"
-#include "GameHUD.hpp"
 #include "GameEngine.hpp"
+#include "GameHUD.hpp"
 #include "GameWorld.hpp"
-#include <iostream>
+#include "InputEventReceiver.hpp"
+#include "TalkativeNPC.hpp"
 
-extern GameEngine* GEngine;
-
-TalkativeNPC::TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::core::stringw>& dialogs, const irr::c8* mesh, irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
-	:InteractiveActor(gameWorld),
-	world(gameWorld),
+TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, irr::core::array<irr::core::stringw>& dialogs, const irr::c8* mesh, irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
+	: InteractiveActor(gameEngine, gameWorld),
 	acceptable_Distance(acceptableDistance)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
@@ -72,7 +69,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 	}
 	else if(state == 1)
 	{
-		InputEventReceiver& receiver = GEngine->GetReceiver();
+		InputEventReceiver& receiver = GEngine.GetReceiver();
 
 		if(receiver.keyReleased(irr::KEY_KEY_P))
 		{
