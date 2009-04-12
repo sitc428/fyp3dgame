@@ -2,7 +2,7 @@
  *  shader.cpp
  *  FYP
  *
- *  Created by Mr.JJ on 09�???0??
+ *  Created by Mr.JJ on 09Âπ???0??
  *  Copyright 2009 HKUST. All rights reserved.
  *
  */
@@ -15,9 +15,10 @@ s32 SHADER_MATERIAL_BASE = video::EMT_SOLID;
 s32 SHADER_MATERIAL_STANDARD = video::EMT_SOLID; 
 s32 SHADER_MATERIAL_ANOTHER_EXAMPLE = video::EMT_SOLID; 
 
-Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path, int Num, video::E_MATERIAL_TYPE type) { 
+Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path, int Num, video::E_MATERIAL_TYPE type, c8* nodetype) { 
 
 	NumOfTexture  = Num;
+	nodeType = nodetype;
 	driver = device->getVideoDriver(); 
     currentMaterial = NULL; 
     
@@ -30,7 +31,7 @@ Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path
 	if (shadersAvailable) 
 	{ 
         video::IGPUProgrammingServices *gpu = driver->getGPUProgrammingServices(); 
-        
+     
         SHADER_MATERIAL_BASE = gpu->addHighLevelShaderMaterialFromFiles( 
 																		vert_path, "main", video::EVST_VS_1_1, 
 																		frag_path, "main", video::EPST_PS_1_1, 
@@ -76,8 +77,10 @@ void Shader::OnSetConstants(video::IMaterialRendererServices *services, s32 user
 		else if(i == 4)
 			services->setPixelShaderConstant("myTexture4", (f32 *)(&(tex[i])), 1);
 	}
+	irr::core::vector3df pos = irr::core::vector3df(0.0f,9.0f,-7.0f);
 	
-	
+	services->setVertexShaderConstant("Lightpos", reinterpret_cast<f32*>(&pos), 3); 
+
 	/*
 	if (!currentMaterial) 
     { 

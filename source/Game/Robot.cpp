@@ -40,7 +40,7 @@ Robot::Robot( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
 	collisionAnimator(NULL),
 	world(gameWorld)
 {
-	Shader* shader = new Shader(&(GEngine->GetDevice()),"media/shader/robot.vert", "media/shader/robot.frag", 2, video::EMT_SOLID);	
+	Shader* shader = new Shader(&(GEngine->GetDevice()),"media/shader/robot.vert", "media/shader/robot.frag", 2, video::EMT_SOLID,"Robot");	
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	// load the animated mesh, and add a new scene graph node for it
 	irr::scene::ISkinnedMesh* robotMesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( ROBOT_MODEL ));
