@@ -72,6 +72,9 @@ public:
 	// tell the world and actors is the world in interactive mode
 	bool isInteracting() const { return gameState == state_INTERACTING; };
 
+	// add scene to the world
+	void AddScene(irr::s32);
+
 private:
 	// should be self-explained by the function name
 	void InitCamera();

@@ -18,7 +18,8 @@
 extern GameEngine* GEngine;
 
 // Parameters specifying default parameters
-static const irr::core::vector3df		defaultPosition = irr::core::vector3df(150,50,20);
+//static const irr::core::vector3df		defaultPosition = irr::core::vector3df(150,50,20);
+static const irr::core::vector3df		defaultPosition = irr::core::vector3df(0,10,450);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
