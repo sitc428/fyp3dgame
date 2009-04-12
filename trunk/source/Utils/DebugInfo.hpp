@@ -3,9 +3,10 @@
 
 #include <irrlicht/irrlicht.h>
 #include <algorithm>
-#include "GameWorld.hpp"
 #include "Actor.hpp"
 #include "Camera.hpp"
+#include "GameWorld.hpp"
+#include "MainCharacter.hpp"
 
 /*
  * A utility class for controlling debuggin information
@@ -16,10 +17,15 @@ public:
 	static void enableDebugBBox( GameWorld& );
 	static void disableDebugBBox( GameWorld& );
 	static void nextCullingMode( Camera& );
+	static void mainCharacterFrameNum( MainCharacter& );
+	static void enableDebugCamera( GameWorld&, Camera* );
+	static void disableDebugCamera( GameWorld& );
 
 private:
 	static bool enabledDebugBBox;
 	static irr::scene::E_CULLING_TYPE cameraCullingMode;
+	static irr::scene::ICameraSceneNode* debugCamera;
+	static irr::scene::ICameraSceneNode* normalCamera;
 
 	static Actor* showDebugBox( Actor* actor )
 	{

@@ -2,6 +2,8 @@
 
 bool DebugInfo::enabledDebugBBox = false;
 irr::scene::E_CULLING_TYPE DebugInfo::cameraCullingMode = irr::scene::EAC_OFF;
+irr::scene::ICameraSceneNode* DebugInfo::debugCamera = NULL;
+irr::scene::ICameraSceneNode* DebugInfo::normalCamera = NULL;
 
 void DebugInfo::enableDebugBBox( GameWorld& world )
 {
@@ -56,3 +58,25 @@ void DebugInfo::nextCullingMode( Camera& cam )
 
 	cam.GetNode().setAutomaticCulling( cameraCullingMode );
 }
+
+void DebugInfo::mainCharacterFrameNum(MainCharacter & mainCharacter)
+{
+}
+
+void DebugInfo::enableDebugCamera( GameWorld& world, Camera* norCam)
+{
+	normalCamera = (irr::scene::ICameraSceneNode*)(&(norCam->GetNode()));
+	if( debugCamera == NULL)
+	{
+		debugCamera = world.GetSceneManager().addCameraSceneNodeFPS(0, 100, 1000, -1);
+		debugCamera->setPosition(irr::core::vector3df(0, 500, 0));
+		debugCamera->setTarget(irr::core::vector3df(0, 0, 0));
+	}
+	world.GetSceneManager().setActiveCamera( debugCamera );
+}
+
+void DebugInfo::disableDebugCamera(GameWorld & world)
+{
+	world.GetSceneManager().setActiveCamera( normalCamera );
+}
+
