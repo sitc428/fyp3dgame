@@ -236,6 +236,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Engine\FontManager.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Engine\FrontEnd.hpp"
 				>
 			</File>
@@ -320,6 +324,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Utils\Tokenizer.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Game\TriggerEventItem.hpp"
 				>
 			</File>
@@ -369,6 +377,10 @@
 			</File>
 			<File
 				RelativePath=".\engine\FloorDecalSceneNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Engine\FontManager.cpp"
 				>
 			</File>
 			<File
@@ -453,6 +465,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\TalkativeNPC.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Utils\Tokenizer.cpp"
 				>
 			</File>
 			<File

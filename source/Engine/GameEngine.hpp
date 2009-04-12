@@ -4,32 +4,24 @@
 #include <irrklang/irrKlang.h>
 #include <irrlicht/irrlicht.h>
 
-#include <string>
-#include <map>
-
 #include "Check.hpp"
-
-const irr::f64 PI = 3.14159265;
-
-class FrontEnd;
-class GameWorld;
-class InputEventReceiver;
-class ParticleManager;
-class StartupScreen;
 
 namespace irr
 {
-	namespace gui
-	{
-		class CGUITTFace;
-		class CGUITTFont;
-	}
-
 	namespace scene
 	{
 		class CFloorDecalSceneNode;
 	}
 }
+
+const irr::f64 PI = 3.14159265;
+
+class FontManager;
+class FrontEnd;
+class GameWorld;
+class InputEventReceiver;
+class ParticleManager;
+class StartupScreen;
 
 enum EEngineState
 {
@@ -66,7 +58,7 @@ public:
 	InputEventReceiver& GetReceiver() const { return *receiver; }
 	irrklang::ISoundEngine& GetSoundEngine() const { return *soundEngine; }
 	ParticleManager& GetParticleManager() { return *particleManager; }
-	irr::gui::CGUITTFont* GetFont(std::string fontName, int fontSize) { return _fonts[std::pair<std::string, int>(fontName, fontSize)]; }
+	FontManager* GetFontManager() { return fmgr; }
 	const irr::core::dimension2d<irr::s32> & GetScreenSize() { return screenSize; }
 
 	irr::u32 GetRealTime() const {
@@ -133,9 +125,7 @@ private:
 	InputEventReceiver* receiver;
 	irrklang::ISoundEngine* soundEngine;
 	ParticleManager* particleManager; // particle manager for easy creation of particle effects 
-
-	std::map<std::string, irr::gui::CGUITTFace*> _faces; // face cache ( ttf files )
-	std::map< std::pair<std::string, int>, irr::gui::CGUITTFont* > _fonts; // the font
+	FontManager* fmgr;
 
 	irr::core::dimension2d<irr::s32> screenSize;
 

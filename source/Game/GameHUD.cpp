@@ -1,3 +1,4 @@
+#include "FontManager.hpp"
 #include "GameHUD.hpp"
 #include "GameEngine.hpp"
 #include "Check.hpp"
@@ -99,12 +100,9 @@ GameHUD::GameHUD( IrrlichtDevice& device )
 	modTime = 0;
 	
 	//loading the fonts
-	HPText = GEngine->GetFont("media/font/impact.ttf", 24);
-	HPText->AntiAlias = true;
-	ConversationFont = GEngine->GetFont("media/font/impact.ttf", 24);
-	ConversationFont->AntiAlias = true;
-	MenuFont = GEngine->GetFont("media/font/impact.ttf", 24);
-	MenuFont->AntiAlias = true;
+	HPText = GEngine->GetFontManager()->getFont("IMPACT", 24);
+	ConversationFont = GEngine->GetFontManager()->getFont("IMPACT", 24);
+	MenuFont = GEngine->GetFontManager()->getFont("IMPACT", 24);
 }
 
 // destructor
