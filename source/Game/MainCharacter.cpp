@@ -97,13 +97,23 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 
 	ItemCollection tmpBox;
 	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);
-	Item* md = new MDiscItem(world, MDISCITEM, "Magic Disc", 1);	
+	Item* md1 = new MDiscItem(world, MDISCITEM, "Fire Ball", 10);	
+	Item* md2 = new MDiscItem(world, MDISCITEM, "Ice Ball", 10);
+	Item* md3 = new MDiscItem(world, MDISCITEM, "Lightning", 30);
+	Item* md4 = new MDiscItem(world, MDISCITEM, "Cyclone", 40);
 	Item* xItem = new XItem(world, XITEM, "X Item", 1);
-	Item* weapon = new WeaponItem(world, WEAPONITEM1, "Sword", 10);
+	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10);
+	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20);
+	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30);
 	tmpBox.push_back(std::make_pair(hp, 2));
-	tmpBox.push_back(std::make_pair(md, 1));
+	tmpBox.push_back(std::make_pair(md1, 5));
+	tmpBox.push_back(std::make_pair(md2, 10));
+	tmpBox.push_back(std::make_pair(md3, 12));
+	tmpBox.push_back(std::make_pair(md4, 11));
 	tmpBox.push_back(std::make_pair(xItem, 0));
-	tmpBox.push_back(std::make_pair(weapon, 1));
+	tmpBox.push_back(std::make_pair(weapon1, 1));
+	tmpBox.push_back(std::make_pair(weapon2, 2));
+	tmpBox.push_back(std::make_pair(weapon3, 1));
 	this->SetItemBox(tmpBox);
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	// load the animated mesh, and add a new scene graph node for it
