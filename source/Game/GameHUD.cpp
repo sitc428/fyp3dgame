@@ -273,7 +273,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 	if( SubMenuIndex == -1 )
 	{	
 		if( receiver.keyReleased( irr::KEY_UP) ){
-			if( (int) MenuSelected == 0 )
+			if( MenuSelected == STATUS )
 				MenuSelected = SAVE;
 			else
 				MenuSelected = (E_MENU_SELECTED)((MenuSelected - 1 )% EMS_COUNT);
