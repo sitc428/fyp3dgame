@@ -26,7 +26,7 @@ static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/PedroTexture.
 static const irr::c8*		MAIN_CHARACTER_vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
 static const irr::c8*		MAIN_CHARACTER_psFileName = "model/shader/trial.frag"; // filename for the pixel shader
 
-static const irr::c8*		defaultTexture = "media/model/MainTexutre1.png";
+static const irr::c8*		defaultTexture = "media/model/PedroTexture.png";
 static const irr::f32		ANIMATION_SPEED = 24;
 static const irr::f32		ANIMATION_TRANSITION_BLEND_TIME = 0.2f;
 
@@ -128,7 +128,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
-	node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+	node->setMaterialFlag(irr::video::EMF_LIGHTING, true );
 	node->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
@@ -267,12 +267,6 @@ void MainCharacter::setIdle()
 
 void MainCharacter::setDefending( bool defending )
 {
-	if( !defending )
-	{
-		action = EMCAS_IDLE;
-		return;
-	}
-
 	if( isDefending() )
 		return;
 	
@@ -298,6 +292,8 @@ void MainCharacter::setMoving( bool moving, bool backward )
 			node->setFrameLoop( MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START, MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END );
 
 		node->setLoopMode( true );
+
+		ATFieldNode->setVisible( false );
 	}
 }
 
@@ -313,6 +309,8 @@ void MainCharacter::setAttacking( bool attacking )
 		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_ATTACK_START, MAIN_CHARACTER_ANIMATION_ATTACK_END );
 		node->setLoopMode( false );
 		node->setAnimationEndCallback( attackCallBack );
+
+		ATFieldNode->setVisible( false );
 	}
 }
 
@@ -327,6 +325,8 @@ void MainCharacter::setRunning( bool running )
 		node->setLoopMode( true );
 
 		action = EMCAS_RUNNING;
+
+		ATFieldNode->setVisible( false );
 	}
 }
 
@@ -377,8 +377,6 @@ void MainCharacter::DoInput()
 		setDefending( true );
 		return;
 	}
-	else
-		setDefending( false );
 
 	if( receiver.keyReleased(irr::KEY_KEY_Z) )
 	{
@@ -685,48 +683,37 @@ void MainCharacter::PlaceLeftFootPrint()
 
 void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
 {
-	static int state = 0;
-
-	if( state == 0 )
+	irr::core::array<Actor*> actors = world.GetActors();
+	irr::u32 actorsNum = actors.size();
+	for( irr::u32 i=0; i < actorsNum; ++i )
 	{
-		theNode->setFrameLoop(MAIN_CHARACTER_ANIMATION_ATTACK_END - 1, MAIN_CHARACTER_ANIMATION_ATTACK_START);
-		theNode->setLoopMode( false );
-		state = 1;
-	}
-	else if( state == 1 )
-	{
-		irr::core::array<Actor*> actors = world.GetActors();
-		irr::u32 actorsNum = actors.size();
-		for( irr::u32 i=0; i < actorsNum; ++i )
+		if( actors[i]->GetActorType() != ACTOR_ENEMY)
+			continue;
+		
+		if(
+			/*CollisionHelper::CheckProximity2D(
+				theMainCharacter.GetNodePosition(),
+				actors[i]->GetNode().getPosition(),
+				25.0f
+			)*/
+			CollisionHelper::CheckCollision(actors[i]->GetNode().getBoundingBox(), theMainCharacter.weaponNode->getBoundingBox())
+		)
 		{
-			if( actors[i]->GetActorType() != ACTOR_ENEMY)
-				continue;
-			
-			if(
-				CollisionHelper::CheckProximity2D(
-					theMainCharacter.GetNodePosition(),
-					actors[i]->GetNode().getPosition(),
-					25.0f
-				)
-			)
+			irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
+			irr::s32 monDef = ((Monster*)actors[i])->GetDef();
+			std::cout << "Player Attk = " << playerAttk << std::endl;
+			std::cout << "Monster Defence = " << monDef << std::endl;
+			irr::s32 damage = 0;
+			if (playerAttk - monDef > 0 )
 			{
-				irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
-				irr::s32 monDef = ((Monster*)actors[i])->GetDef();
-				std::cout << "Player Attk = " << playerAttk << std::endl;
-				std::cout << "Monster Defence = " << monDef << std::endl;
-				irr::s32 damage = 0;
-				if (playerAttk - monDef > 0 )
-				{
-					damage = playerAttk - monDef;
-				}
-				irr::s32 offset = damage/5 * (rand()%601)/300;
-				std::cout << "Damage = " << damage-offset << std::endl;
-				actors[i]->ReceiveDamage(damage-offset);
+				damage = playerAttk - monDef;
 			}
+			irr::s32 offset = damage/5 * (rand()%601)/300;
+			std::cout << "Damage = " << damage-offset << std::endl;
+			actors[i]->ReceiveDamage(damage-offset);
 		}
-
-		theMainCharacter.setIdle();
-		theNode->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
-		state = 0;
 	}
+
+	theMainCharacter.setIdle();
+	theNode->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
 }
