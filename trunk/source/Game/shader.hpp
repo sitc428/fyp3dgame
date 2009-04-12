@@ -2,7 +2,7 @@
  *  shader.h
  *  FYP
  *
- *  Created by Mr.JJ on 09�???0??
+ *  Created by Mr.JJ on 09Âπ???0??
  *  Copyright 2009 HKUST. All rights reserved.
  *
  */
@@ -23,7 +23,7 @@ extern s32 SHADER_MATERIAL_ANOTHER_EXAMPLE;
 class Shader : public video::IMaterialRenderer, public video::IShaderConstantSetCallBack 
 { 
 public: 
-    Shader(IrrlichtDevice *, const c8*, const c8*, int, video::E_MATERIAL_TYPE);
+    Shader(IrrlichtDevice *, const c8*, const c8*, int, video::E_MATERIAL_TYPE, c8*);
 
     // if shaders were successfully created 
     bool areAvailable(); 
@@ -41,7 +41,7 @@ private:
     video::IMaterialRenderer *baseMaterialRenderer; 
     video::SMaterial *currentMaterial; 
     bool shadersAvailable; 
-
+	c8* nodeType;
 	int NumOfTexture;
 }; 
 

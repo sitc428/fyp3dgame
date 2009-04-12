@@ -94,7 +94,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_currentWeapon(NULL),
 	_currentMagic(NULL)
 {
-	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, video::EMT_SOLID);
+	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, video::EMT_SOLID, "MainCharacter");
 
 	ItemCollection tmpBox;
 	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);
@@ -143,10 +143,11 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
 	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
-
+	Shader* Field = new Shader(&(GEngine->GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
+	ATFieldNode->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
