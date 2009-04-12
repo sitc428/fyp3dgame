@@ -7,42 +7,33 @@
  *
  */
 
-#ifndef __Shader_h 
-#define __Shader_h 
+#ifndef __SHADER_HPP__
+#define __SHADER_HPP__
 
 #include <irrlicht/irrlicht.h> 
-#include <iostream>
 
-using namespace irr; 
-
-// Declare new materials externally for use by scene nodes 
-extern s32 SHADER_MATERIAL_BASE; 
-extern s32 SHADER_MATERIAL_STANDARD; 
-extern s32 SHADER_MATERIAL_ANOTHER_EXAMPLE; 
-
-class Shader : public video::IMaterialRenderer, public video::IShaderConstantSetCallBack 
+class Shader : public irr::video::IMaterialRenderer, public irr::video::IShaderConstantSetCallBack
 { 
 public: 
-    Shader(IrrlichtDevice *, const c8*, const c8*, int, video::E_MATERIAL_TYPE, c8*);
+	Shader( int );
+	void OnSetConstants( irr::video::IMaterialRendererServices*, irr::s32 );
+	void OnSetMaterial( irr::video::SMaterial &, const irr::video::SMaterial &, bool, irr::video::IMaterialRendererServices* );
+	bool OnRender( irr::video::IMaterialRendererServices*, irr::video::E_VERTEX_TYPE );
+	void OnUnsetMaterial();
 
-    // if shaders were successfully created 
-    bool areAvailable(); 
-    
-    void OnSetConstants(video::IMaterialRendererServices *, s32); 
-    
-    void OnSetMaterial(video::SMaterial &, const video::SMaterial &, bool, video::IMaterialRendererServices *); 
-    bool OnRender(video::IMaterialRendererServices *, video::E_VERTEX_TYPE); 
-    void OnUnsetMaterial(); 
-    bool isTransparent(); 
-    s32 getRenderCapability(); 
-    
+	void SetShaderMaterial( irr::s32 newShaderMaterial );
+	irr::s32 GetShaderMaterial();
+	
+	void SetBaseMaterialRender( irr::video::IMaterialRenderer* );
+
+	bool isTransparent();
+	irr::s32 getRenderCapability();
+
 private: 
-    video::IVideoDriver *driver; 
-    video::IMaterialRenderer *baseMaterialRenderer; 
-    video::SMaterial *currentMaterial; 
-    bool shadersAvailable; 
-	c8* nodeType;
-	int NumOfTexture;
+	irr::video::IMaterialRenderer* baseMaterialRenderer; 
+	irr::video::SMaterial* currentMaterial; 
+	irr::u32 NumOfTexture;
+	irr::s32 shaderMaterial;
 }; 
 
-#endif
+#endif // SHADER_HPP__

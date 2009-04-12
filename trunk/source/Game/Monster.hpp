@@ -51,6 +51,7 @@ public:
 	void update(Player&, irr::f32 delta);
 	void Tick( irr::f32 delta );
 	virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
+	virtual irr::core::vector3df& GetRadius() const { return _monster->getBoundingBox().MaxEdge - _monster->getBoundingBox().getCenter(); }
 	EActorType GetActorType() const { return ACTOR_ENEMY; }
 	bool ShouldPerformCollisionCheck() const { return false; }
 	void ReceiveDamage(irr::f32 );
@@ -333,7 +334,6 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 			sc::transition< EvPlayerWithinRange, Tracing >,
 			sc::transition< EvFiniteStateMachineOutOfRange, Idle >, 
 			sc::transition< EvWithinAttackRange, Attacking > >reactions;
-	
 };
 
 #endif //__MONSTER_HPP__

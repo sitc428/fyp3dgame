@@ -3,6 +3,7 @@
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
 #include "MainCharacter.hpp"
+#include "ShaderFactory.hpp"
 #include <ctime>
 #include <iostream>
 
@@ -37,7 +38,8 @@ Robot::Robot( GameEngine& gameEngine, GameWorld& gameWorld )
 	node(NULL),
 	collisionAnimator(NULL)
 {
-	Shader* shader = new Shader(&(GEngine.GetDevice()),"media/shader/robot.vert", "media/shader/robot.frag", 2, video::EMT_SOLID, "Robot");	
+	Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/robot.vert", "media/shader/robot.frag", 2, irr::video::EMT_SOLID );
+	//Shader* shader = new Shader(&(GEngine.GetDevice()),"media/shader/robot.vert", "media/shader/robot.frag", 2, video::EMT_SOLID, "Robot");	
 
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 
@@ -48,7 +50,7 @@ Robot::Robot( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
-	node->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
+	node->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial());
 	node->setMaterialTexture(0, driver.getTexture("media/model/robot_UV.png" ));
 	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
 	//node->setMaterialFlag(irr::video::EMF_LIGHTING, true);

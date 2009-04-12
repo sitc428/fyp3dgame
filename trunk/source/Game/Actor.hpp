@@ -29,8 +29,11 @@ public:
 	// called every frame to update the actor
 	virtual void Tick( irr::f32 delta ) = 0;
 
-	// returns the graph node of the actor by const reference, the derived classes are assumed to all have a node of some kind
+	// return the graph node of the actor by const reference, the derived classes are assumed to all have a node of some kind
 	virtual irr::scene::ISceneNode& GetNode() const = 0;
+
+	// return the radius of the actor's node
+	virtual irr::core::vector3df& GetRadius() const = 0;
 
 	// interface for attaching and detaching external actor, you can specify an optional name of the node to attach to
 	virtual void AttachActor( Actor& actorToAttach, const irr::c8* nodeName=NULL );

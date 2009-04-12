@@ -16,80 +16,80 @@ enum EPlayerState
  */
 class Player: public Actor
 {
-	public:
-		// constructor
-		Player( GameEngine&, GameWorld& );
+public:
+	// constructor
+	Player( GameEngine&, GameWorld& );
 
-		// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
-		virtual void RecreateCollisionResponseAnimator() = 0;
+	// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
+	virtual void RecreateCollisionResponseAnimator() = 0;
 
-		// called every frame to update player
-		virtual void Tick(irr::f32 delta) = 0;
-		// returns the graph node of the actor by const reference
-		virtual irr::scene::ISceneNode& GetNode() const = 0;
-		// interface for identifying the type of actor
-		virtual EActorType GetActorType() const = 0;
-		// interface for turning player on/off
-		virtual void SetActive( bool bValue ); 
-		bool IsActive() const { return playerState == state_PLAYER_ACTIVE; }
+	// called every frame to update player
+	virtual void Tick(irr::f32 delta) = 0;
+	// returns the graph node of the actor by const reference
+	virtual irr::scene::ISceneNode& GetNode() const = 0;
+	// interface for identifying the type of actor
+	virtual EActorType GetActorType() const = 0;
+	// interface for turning player on/off
+	virtual void SetActive( bool bValue ); 
+	bool IsActive() const { return playerState == state_PLAYER_ACTIVE; }
 
-		// check if the player is dead
-		virtual bool IsDead() const = 0;
+	// check if the player is dead
+	virtual bool IsDead() const = 0;
 
-		// accessor methods for node position and rotation
-		virtual irr::core::vector3df GetNodePosition() const = 0;
-		virtual irr::core::vector3df GetNodeRotation() const = 0;
-		virtual void SetNodePosition( const irr::core::vector3df& vect ) = 0;
-		virtual void SetNodeRotation( const irr::core::vector3df& vect ) = 0;
+	// accessor methods for node position and rotation
+	virtual irr::core::vector3df GetNodePosition() const = 0;
+	virtual irr::core::vector3df GetNodeRotation() const = 0;
+	virtual void SetNodePosition( const irr::core::vector3df& vect ) = 0;
+	virtual void SetNodeRotation( const irr::core::vector3df& vect ) = 0;
 
-		virtual void SetTranslation( const irr::core::vector3df& trans );
-		virtual void SetRotation( const irr::core::vector3df& rot );
-		const irr::core::vector3df& GetTranslation() const { return translation; }
-		const irr::core::vector3df& GetRotation() const { return rotation; }
-		const irr::core::vector3df& GetAimVector() const { return aimVector; } 
-		const irr::core::vector3df& GetFaceVector() const { return faceVector; } 
+	virtual void SetTranslation( const irr::core::vector3df& trans );
+	virtual void SetRotation( const irr::core::vector3df& rot );
+	const irr::core::vector3df& GetTranslation() const { return translation; }
+	const irr::core::vector3df& GetRotation() const { return rotation; }
+	const irr::core::vector3df& GetAimVector() const { return aimVector; } 
+	const irr::core::vector3df& GetFaceVector() const { return faceVector; } 
 
-		// unbuffered mouse input 
-		virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent ) {};
+	// unbuffered mouse input 
+	virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent ) {};
 
-		virtual void SetHealth( irr::f32 pHealth ) { health = pHealth; }
-		virtual void SetMaxHealth( irr::f32 pHealth ) { max_health = pHealth; }
+	virtual void SetHealth( irr::f32 pHealth ) { health = pHealth; }
+	virtual void SetMaxHealth( irr::f32 pHealth ) { max_health = pHealth; }
 
-		irr::u32 GetHealth() const { return health; }
-		irr::u32 GetMaxHealth() const { return max_health;}
-	
-		// god mode
-		virtual void SetGodMode( bool enable = true ) { godMode = enable; }
-		virtual bool HasGodMode() { return godMode; }
+	irr::u32 GetHealth() const { return health; }
+	irr::u32 GetMaxHealth() const { return max_health;}
 
-	private:
-		// diallow copy constructor from being invoked
-		Player( const Player& other );
+	// god mode
+	virtual void SetGodMode( bool enable = true ) { godMode = enable; }
+	virtual bool HasGodMode() { return godMode; }
 
-	protected:
-		// destructor, protected to force user to call Actor::DestroyActor
-		virtual ~Player();
+private:
+	// diallow copy constructor from being invoked
+	Player( const Player& other );
 
-		// tracks whether this player is currently active
-		EPlayerState playerState;
+protected:
+	// destructor, protected to force user to call Actor::DestroyActor
+	virtual ~Player();
 
-		// player is aiming at
-		irr::core::vector3df aimVector;
+	// tracks whether this player is currently active
+	EPlayerState playerState;
 
-		// player is facing at
-		irr::core::vector3df faceVector;
+	// player is aiming at
+	irr::core::vector3df aimVector;
 
-		// player translation
-		irr::core::vector3df translation;
+	// player is facing at
+	irr::core::vector3df faceVector;
 
-		// player rotation
-		irr::core::vector3df rotation;
+	// player translation
+	irr::core::vector3df translation;
 
-		irr::u32 health;
-		irr::u32 max_health;
-	
-		// god mode
-		bool godMode;
+	// player rotation
+	irr::core::vector3df rotation;
+
+	irr::u32 health;
+	irr::u32 max_health;
+
+	// god mode
+	bool godMode;
 };
 
 #endif //__PLAYER_HPP__

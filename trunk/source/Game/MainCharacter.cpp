@@ -12,6 +12,7 @@
 #include "MDiscItem.hpp"
 #include "Monster.hpp"
 #include "ProgressCircle.hpp"
+#include "ShaderFactory.hpp"
 #include "WeaponItem.hpp"
 #include "XItem.hpp"
 
@@ -91,7 +92,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_currentWeapon(NULL),
 	_currentMagic(NULL)
 {
-	test1 = new Shader(&(GEngine.GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, video::EMT_SOLID, "MainCharacter");
+	//test1 = new Shader(&(GEngine.GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID, "MainCharacter");
+	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 
@@ -129,7 +131,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true );
-	node->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
+	node->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
@@ -142,11 +144,12 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
 	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
-	Shader* Field = new Shader(&(GEngine.GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
+	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 0, irr::video::EMT_TRANSPARENT_ADD_COLOR );
+		//new Shader(&(GEngine.GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
-	ATFieldNode->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_STANDARD);
+	ATFieldNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
@@ -679,18 +682,23 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 {
 	irr::core::array<Actor*> actors = world.GetActors();
 	irr::u32 actorsNum = actors.size();
+
+	irr::core::line3df line;
+	line.start = theMainCharacter.GetNodePosition();
+	line.end = line.start - theMainCharacter.GetFaceVector() * theMainCharacter.GetRadius().getLength();
+
 	for( irr::u32 i=0; i < actorsNum; ++i )
 	{
 		if( actors[i]->GetActorType() != ACTOR_ENEMY)
 			continue;
-		
+
 		if(
 			/*CollisionHelper::CheckProximity2D(
 				theMainCharacter.GetNodePosition(),
 				actors[i]->GetNode().getPosition(),
-				25.0f
+				theMainCharacter.GetRadius().getLength() + actors[i]->GetRadius().getLength() - 5.0
 			)*/
-			CollisionHelper::CheckCollision(actors[i]->GetNode().getBoundingBox(), theMainCharacter.weaponNode->getBoundingBox())
+			world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line)
 		)
 		{
 			irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
