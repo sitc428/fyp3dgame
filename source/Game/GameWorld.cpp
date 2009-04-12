@@ -21,8 +21,10 @@
 #include "WeaponItem.hpp"
 #include "XItem.hpp"
 
-static const irr::c8* LEVEL_FILE = "media/model/scene1.irr";
-static const irr::c8* LEVEL_FILE5 = "media/model/scene5.irr";
+static const irr::c8* LEVEL_FILE1 = "media/model/scene1_new.irr";
+static const irr::c8* LEVEL_FILE2 = "media/model/scene2.irr";
+static const irr::c8* LEVEL_FILE3 = "media/model/scene3.irr";
+static const irr::c8* LEVEL_FILE4 = "media/model/scene4.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
 
 static const irr::u32 MAX_SNOWBALLS = 20;
@@ -38,7 +40,7 @@ static const irr::f32 FENCE_FALL_TIME = 3.f;
 
 GameWorld::GameWorld( GameEngine& gameEngine ):
 	smgr(gameEngine.GetSceneManager()),
-	smgr1(gameEngine.GetSceneManager()),
+	smgr1(*(smgr.createNewSceneManager())),
 	mainCharacter(NULL),
 	robot(NULL),
 	camera(NULL),
@@ -141,6 +143,7 @@ void GameWorld::InitShader()
 // loads us the level and sets up the triangle selector used for collision checks with the level
 void GameWorld::InitLevel()
 {
+	/*
 	// load the scene
 	smgr.loadScene( LEVEL_FILE );
 	//smgr.loadScene( LEVEL_FILE5 );
@@ -158,7 +161,7 @@ void GameWorld::InitLevel()
 		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
 		if( meshNode->getMesh() )
 		{
-			if (meshNode->getID() != NODE_ID_FENCE_TO_FALL)
+			if (meshNode->getID() != NODE_ID_FENCE_TO_FALL)// && meshNode->getID() != NODE_ID_SCENE5_FALL)
 			{
 				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
 				check(meshTriangleSelector);
@@ -173,53 +176,11 @@ void GameWorld::InitLevel()
 		}
 	}
 	outNodes.clear();
-
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
-	
-/*
-	smgr1.loadScene( LEVEL_FILE5 );
-	
-	
-	smgr1.getRootSceneNode()->setPosition(irr::core::vector3df(500,0,500));
-
-	// setup levelTriangleSelector, used for collision detection with the level
-	levelTriangleSelector = smgr1.createMetaTriangleSelector();
-
-	// add triangle selectors for every mesh node in the level
-	//irr::core::array<irr::scene::ISceneNode*> outNodes;
-	smgr1.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
-	for( irr::u32 i = 0; i < outNodes.size(); ++i )
-	{
-		//irr::scene::IMeshSceneNode* meshNode = dynamic_cast<irr::scene::IMeshSceneNode*>(outNodes[i]);
-		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
-		//irr::core::vector3df tmp = meshNode->getPosition();
-		//tmp.X += 200;
-		//tmp.Z += 200;
-		//meshNode->setPosition(tmp);
-
-		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
-		if( meshNode->getMesh() )
-		{
-			if (meshNode->getID() != NODE_ID_FENCE_TO_FALL)
-			{
-				irr::scene::ITriangleSelector* meshTriangleSelector = smgr1.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
-				check(meshTriangleSelector);
-				meshNode->setTriangleSelector( meshTriangleSelector );
-				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-				meshTriangleSelector->drop();
-				meshTriangleSelector = NULL;
-
-				blocks.push_back( meshNode );
-				//meshNode->setDebugDataVisible( irr::scene::EDS_BBOX);
-			}
-		}
-	}
-	outNodes.clear();
-
-
-		smgr1.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 */
-	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+
+	AddScene(NODE_ID_SCENE1);
+	//AddScene(NODE_ID_SCENE2);
 
 	// set game state
 	stateTimer = 0;
@@ -227,6 +188,101 @@ void GameWorld::InitLevel()
 
 	SetNumLives( 3 );
 }
+
+
+void GameWorld::AddScene(irr::s32 sceneType)
+{
+	//smgr.clear();
+	irr::s32 x_pos;
+	irr::s32 z_pos;
+	irr::s32 scene_fall_id;
+	irr::s32 scene_tri_id;
+	const irr::c8* sceneFile;
+	switch  (sceneType)
+	{
+		case NODE_ID_SCENE1:
+			x_pos = 0;
+			z_pos = 0;
+			scene_fall_id = NODE_ID_SCENE1_FALL;
+			scene_tri_id = NODE_ID_SCENE1_TRI_NEEDED;
+			sceneFile = LEVEL_FILE1;
+			break;
+		case NODE_ID_SCENE2:
+			x_pos = 100;
+			z_pos = 100;
+			scene_fall_id = NODE_ID_SCENE2_FALL;
+			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
+			sceneFile = LEVEL_FILE2;
+			break;
+		case NODE_ID_SCENE3:
+			x_pos = 100;
+			z_pos = 100;
+			scene_fall_id = NODE_ID_SCENE3_FALL;
+			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
+			sceneFile = LEVEL_FILE3;
+			break;
+		case NODE_ID_SCENE4:
+			x_pos = 300;
+			z_pos = 0;
+			scene_fall_id = NODE_ID_SCENE4_FALL;
+			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
+			sceneFile = LEVEL_FILE4;
+			break;
+	}
+
+	smgr.loadScene(sceneFile);
+	irr::core::vector3df radius = smgr.getRootSceneNode()->getBoundingBox().MaxEdge 
+		- smgr.getRootSceneNode()->getBoundingBox().getCenter();
+	
+	//std::cout << "Radius: " << radius.X << std::endl;
+
+	levelTriangleSelector = smgr.createMetaTriangleSelector();
+
+	// add triangle selectors for every mesh node in the level
+	irr::core::array< irr::scene::ISceneNode* > outNodes;
+
+	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+	for( irr::u32 i = 0; i < outNodes.size(); ++i )
+	{
+		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
+
+		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
+		if( meshNode->getMesh() )
+		{
+			if (meshNode->getID() != NODE_ID_SCENE1_FALL && meshNode->getID() != NODE_ID_SCENE2_FALL &&
+				meshNode->getID() != NODE_ID_SCENE3_FALL && meshNode->getID() != NODE_ID_SCENE4_FALL)
+			{
+				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
+				check(meshTriangleSelector);
+				meshNode->setTriangleSelector( meshTriangleSelector );
+				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+				meshTriangleSelector->drop();
+				meshTriangleSelector = NULL;
+				blocks.push_back( meshNode );
+				//meshNode->setDebugDataVisible( irr::scene::EDS_BBOX);
+				if (meshNode->getID()==scene_tri_id)
+				{
+					std::cout << "!!!!" << std::endl;
+					irr::core::vector3df tmp = meshNode->getPosition();
+					tmp.X += x_pos;
+					tmp.Z += z_pos;
+					meshNode->setPosition(tmp);
+				}				
+			}
+			else if (meshNode->getID()==scene_fall_id)
+			{
+				irr::core::vector3df tmp = meshNode->getPosition();
+				tmp.X += x_pos;
+				tmp.Z += z_pos;
+				meshNode->setPosition(tmp);
+			}	
+		}
+	}
+	outNodes.clear();
+	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+}
+
+
 
 // initializes level sounds
 void GameWorld::InitMusic()
@@ -282,12 +338,12 @@ void GameWorld::InitEnemies()
 {
 	Monster* m1 = new Monster( *this, GEngine.GetDriver(), 50, 100, 20, 100, 20);
 	actors.push_back(m1);
-	m1->ReSetPosition(irr::core::vector3df(-40,0,180));
+	m1->ReSetPosition(irr::core::vector3df(0,0,380));
 	
 	
 	Monster* m2 = new Monster( *this, GEngine.GetDriver(), 50, 100, 20, 100, 20);
 	actors.push_back(m2);
-	m2->ReSetPosition(irr::core::vector3df(50,0,200));
+	m2->ReSetPosition(irr::core::vector3df(0,0,400));
 	
 	
 	/*
@@ -704,7 +760,6 @@ void GameWorld::DoInput()
 
 	static bool cheatWeapon = false;
 	static bool debugBoxes = false;
-	static bool debugCamera = false;
 	if( receiver.keyDown(irr::KEY_PLUS) )
 	{
 		if( receiver.keyReleased(irr::KEY_KEY_1) )
@@ -721,15 +776,6 @@ void GameWorld::DoInput()
 		if( receiver.keyReleased(irr::KEY_KEY_3) )
 		{
 			DebugInfo::nextCullingMode( *camera );
-		}
-		if( receiver.keyReleased(irr::KEY_KEY_4) )
-		{
-			if( debugCamera )
-				DebugInfo::enableDebugCamera( *this, camera );
-			else
-				DebugInfo::disableDebugCamera( *this );
-			
-			debugCamera = !debugCamera;
 		}
 	}
 
