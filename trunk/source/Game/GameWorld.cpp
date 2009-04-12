@@ -760,6 +760,7 @@ void GameWorld::DoInput()
 
 	static bool cheatWeapon = false;
 	static bool debugBoxes = false;
+	static bool debugCamera = false;
 	if( receiver.keyDown(irr::KEY_PLUS) )
 	{
 		if( receiver.keyReleased(irr::KEY_KEY_1) )
@@ -776,6 +777,15 @@ void GameWorld::DoInput()
 		if( receiver.keyReleased(irr::KEY_KEY_3) )
 		{
 			DebugInfo::nextCullingMode( *camera );
+		}
+		if( receiver.keyReleased(irr::KEY_KEY_4) )
+		{
+			if( debugCamera )
+				DebugInfo::enableDebugCamera( *this, camera );
+			else
+				DebugInfo::disableDebugCamera( *this );
+			
+			debugCamera = !debugCamera;
 		}
 	}
 
