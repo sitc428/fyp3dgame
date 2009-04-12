@@ -1,5 +1,5 @@
-#include "CGUITTFont.hpp"
 #include "FloorDecalSceneNode.hpp"
+#include "FontManager.hpp"
 #include "FrontEnd.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
@@ -29,6 +29,7 @@ GameEngine::GameEngine()
 	receiver(NULL),
 	soundEngine(NULL),
 	particleManager(NULL),
+	fmgr(NULL),
 	screenSize(800, 600),
 	lastTime(0),
 	state(state_EXIT), // defaulting to exit state, to be able to shutdown cleanly if the engine initialization failed
@@ -65,24 +66,7 @@ bool GameEngine::Init()
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
 
-	// setup the true type fonts
-	_faces["media/font/kochi-gothic-subst.ttf"] = new irr::gui::CGUITTFace;
-	_faces["media/font/kochi-gothic-subst.ttf"]->load("media/font/kochi-gothic-subst.ttf");
-
-	_faces["media/font/impact.ttf"] = new irr::gui::CGUITTFace;
-	_faces["media/font/impact.ttf"]->load("media/font/impact.ttf");
-	
-	irr::gui::CGUITTFont* _font = new irr::gui::CGUITTFont(driver);
-	_font->attach(_faces["media/font/kochi-gothic-subst.ttf"], 24);
-	_font->AntiAlias = true;
-
-	_fonts[std::pair<std::string, int>("media/font/kochi-gothic-subst.ttf", 24)] = _font;
-
-	irr::gui::CGUITTFont* _font2 = new irr::gui::CGUITTFont(driver);
-	_font2->attach(_faces["media/font/impact.ttf"], 24);
-	_font2->AntiAlias = true;
-
-	_fonts[std::pair<std::string, int>("media/font/impact.ttf", 24)] = _font2;
+	fmgr = new FontManager( driver );
 
 	// create sound engine
 	soundEngine = irrklang::createIrrKlangDevice();
@@ -111,9 +95,6 @@ void GameEngine::Exit()
 	check( startupScreen == NULL );
 	check( frontEnd == NULL );
 	check( world == NULL );
-
-	for(std::map<std::pair<std::string, int>, irr::gui::CGUITTFont*>::iterator i = _fonts.begin(); i != _fonts.end(); ++i)
-		(*i).second->drop();
 
 	if(soundEngine)
 	{

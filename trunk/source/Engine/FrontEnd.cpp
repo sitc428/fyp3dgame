@@ -1,3 +1,4 @@
+#include "FontManager.hpp"
 #include "FrontEnd.hpp"
 #include "GameEngine.hpp"
 #include "InputEventReceiver.hpp"
@@ -48,7 +49,7 @@ void FrontEnd::Init()
 	BackgroundImage = env->addImage( irr::core::rect<irr::s32>(backgroundPos, scrSize) );
 	BackgroundImage->setImage( FrontEndBackground );
 
-	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFont("media/font/impact.ttf", 24));
+	env->getSkin()->setFont((irr::gui::IGUIFont*) GEngine->GetFontManager()->getFont("IMPACT", 24));
 	env->getSkin()->setColor( irr::gui::EGDC_BUTTON_TEXT, irr::video::SColor(255, 255, 255, 255) );
 
 	// add the text elements
