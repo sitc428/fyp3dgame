@@ -1,17 +1,15 @@
 #include "InteractiveActor.hpp"
+#include "InputEventReceiver.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
 #include "Player.hpp"
 
 #include <iostream>
 
-extern GameEngine* GEngine;
-
-InteractiveActor::InteractiveActor( GameWorld& gameWorld )
-	:Actor(gameWorld),
-	world(gameWorld),
-	interacting(false),
-	collisionAnimator(NULL)
+InteractiveActor::InteractiveActor( GameEngine& gameEngine, GameWorld& gameWorld )
+	: Actor(gameEngine, gameWorld),
+	collisionAnimator(NULL),
+	interacting(false)
 {
 }
 
@@ -25,7 +23,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 	if(world.isInteracting() && !interacting)
 		return;
 
-	InputEventReceiver& receiver = GEngine->GetReceiver();
+	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if(!interacting)
 	{
@@ -47,27 +45,6 @@ void InteractiveActor::Tick( irr::f32 delta )
 				//}
 			}
 		}
-		else if (node->getID()== 10 && 
-				node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
-		{
-			//std::cout<<"TriggerEventItem node matched"<<std::endl;
-			static bool firstTime = true;
-			if (firstTime)
-			{
-				interacting = true;
-				world.requestInteracting(true, this);
-				interaction( delta );
-				//firstTime = false;
-				//std::cout << firstTime << std::endl;
-				//if( receiver.keyReleased(irr::KEY_KEY_P))
-				//{
-					//std::cout << "???" << std::endl;
-					firstTime = false;
-				//}
-			}
-			//static bool tmpFirst = true;
-			//if (tmpFirst)
-		}
 	}
 	else if(interacting)
 	{
@@ -80,8 +57,3 @@ void InteractiveActor::finishAction()
 	world.requestInteracting(false, NULL);
 	interacting = false;
 }
-
-/*void InteractiveActor::startAction()
-{
-
-}*/

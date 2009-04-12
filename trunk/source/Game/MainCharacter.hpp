@@ -3,26 +3,16 @@
 
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
-#include "Player.hpp"
+
 #include <vector>
 #include <utility>
+
+
 #include "Item.hpp"
+#include "MDiscItem.hpp"
+#include "Player.hpp"
 #include "shader.hpp"
 #include "WeaponItem.hpp"
-#include "MDiscItem.hpp"
-
-
-class ProgressCircle;
-
-using namespace irrklang;
-
-namespace irr
-{
-namespace scene
-{
-	class CFloorDecalSceneNode;
-}
-}
 
 enum EMainCharacterActionState
 {
@@ -42,7 +32,7 @@ public:
 	typedef irr::core::array< std::pair<Item*, int> > ItemCollection;
 
 	// constructor
-	MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& driver );
+	MainCharacter( GameEngine&, GameWorld& );
 
 	// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
 	virtual void RecreateCollisionResponseAnimator();
@@ -82,9 +72,6 @@ public:
 	bool isRunning() const;
 
 	void InitShader(irr::core::vector3df* lightPosition);
-
-	// sets the player into firing state
-	//void DoLaunchProjectile();
 	
 	// damage done to player
 	virtual void ReceiveDamage( irr::f32 value );
@@ -105,31 +92,28 @@ public:
 	irr::s32 GetMagicDefencePoint() const {return _magicdefence;}
 	irr::s32 GetMagicLevel() const {return _magiclevel;}
 	irr::u32 GetChargingProgress() const {return _magicChargeProgress;}
-	bool GetCharging() const {return _charging;};		//to get whether the player is charging for Magic
-	//(std::vector< std::pair<Item*, int> >) GetItemBox() {return _itemBox;};
+	bool GetCharging() const {return _charging;} //to get whether the player is charging for Magic
 	ItemCollection& GetItemBox() {return _itemBox;}
 	irr::s32 GetEXP() const {return _exp;}
 	WeaponItem* GetCurrentWeapon() const {return _currentWeapon;};
 	MDiscItem* GetCurrentMagic() const {return _currentMagic;};
+	irr::scene::ISceneNode* getWeaponNode() { return weaponNode; }
 	
 	/********************
 	 Player Attribute SET FUNCTIONS
 	 *******************/
-	void SetLevel(irr::s32 level) {_level = level;};
-	void SetAttackPoint(irr::s32 attack) { _attack = attack;};
-	void SetDefencePoint(irr::s32 defence) { _defence = defence;};
-	void SetMagicAttackPoint(irr::s32 magicattack) { _magicattack = magicattack;};
-	void SetMagicDefencePoint(irr::s32 magicdefence) { _magicdefence = magicdefence;};
-	void SetMagicLevel(irr::s32 magiclevel) { _magiclevel = magiclevel;}; 
-	void SetCharging(bool charging) { _charging = charging;};		//to get whether the player is charging for Magic
+	void SetLevel(irr::s32 level) {_level = level;}
+	void SetAttackPoint(irr::s32 attack) { _attack = attack;}
+	void SetDefencePoint(irr::s32 defence) { _defence = defence;}
+	void SetMagicAttackPoint(irr::s32 magicattack) { _magicattack = magicattack;}
+	void SetMagicDefencePoint(irr::s32 magicdefence) { _magicdefence = magicdefence;}
+	void SetMagicLevel(irr::s32 magiclevel) { _magiclevel = magiclevel;}
+	void SetCharging(bool charging) { _charging = charging;} //to get whether the player is charging for Magic
 	void SetChargingProgress(irr::u32 magicChargeProgress) {_magicChargeProgress = magicChargeProgress;}
-	//void SetItemBox(std::vector< std::pair<Item*, int> > itemBox) { _itemBox = itemBox;};
 	void SetItemBox(ItemCollection itemBox) {_itemBox = itemBox;};
-	void SetEXP(irr::s32 exp) {_exp = exp;};
-	void SetCurrentWeapon(WeaponItem* currentWeapon) { _currentWeapon = currentWeapon;};
-	void SetCurrentMagic(MDiscItem* currentMagic) { _currentMagic = currentMagic;};
-
-	irr::scene::ISceneNode* getWeaponNode() { return weaponNode; }
+	void SetEXP(irr::s32 exp) {_exp = exp;}
+	void SetCurrentWeapon(WeaponItem* currentWeapon) { _currentWeapon = currentWeapon;}
+	void SetCurrentMagic(MDiscItem* currentMagic) { _currentMagic = currentMagic;}
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
@@ -144,13 +128,6 @@ private:
 	//! void PlaceRightFootPrint();
 	//! void PlaceLeftFootPrint();
 
-	// updates the move state based on the current value of player translation
-	void SetMoveState( );
-
-	// updates the move and arms state inside the tick function
-	void UpdateRotationState( );
-	void UpdateMoveState( irr::f32 delta );
-
 	// scene graph node for player
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ISceneNode* weaponNode;
@@ -158,23 +135,14 @@ private:
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
-	
-	// scene graph node for player's arms
-	// irr::scene::IAnimatedMeshSceneNode* arms;
-	
-	// player's shadow, a simple static texture
-	irr::scene::CFloorDecalSceneNode* shadowNode;
 
 	EMainCharacterActionState action;
-
-	// the meter which tracks how long the player is holding the throw button;
-	irr::f32 throwFillupTimer;
 	
 	// whether the throw power should be increased
 	bool bDoFillup;
 
 	// player footstep sound effect
-	ISound* sfxFootstep;
+	irrklang::ISound* sfxFootstep;
 	irr::f32 sfxTimer;
 
 	Shader* test1;

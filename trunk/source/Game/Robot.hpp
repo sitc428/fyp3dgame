@@ -1,15 +1,15 @@
 #ifndef __ROBOT_HPP__
 #define __ROBOT_HPP__
 
-#include "Actor.hpp"
-
 #include <irrlicht/irrlicht.h>
 #include <irrklang/irrKlang.h>
+
+#include "Actor.hpp"
 
 class Robot: public Actor
 {
 public:
-	Robot( GameWorld& gameWorld, irr::video::IVideoDriver& driver );
+	Robot( GameEngine&, GameWorld& );
 
 	// called every frame to update player
 	virtual void Tick(irr::f32 delta);
@@ -29,8 +29,6 @@ private:
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
-
-	GameWorld& world;
 };
 	
 #endif // __ROBOT_HPP__

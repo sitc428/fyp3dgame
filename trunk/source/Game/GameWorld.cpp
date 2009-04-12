@@ -322,26 +322,26 @@ void GameWorld::InitLight()
 // sets up the player model and player collisions with the world
 void GameWorld::InitPlayer()
 {
-	mainCharacter = new MainCharacter( *this, GEngine.GetDriver() );
+	mainCharacter = new MainCharacter( GEngine, *this );
 	actors.push_back( mainCharacter );
 	mainCharacter->SetRotation(irr::core::vector3df(0, 0, 0));
 }
 
 void GameWorld::InitRobot()
 {
-	robot = new Robot( *this, GEngine.GetDriver() );
+	robot = new Robot( GEngine, *this );
 	actors.push_back( robot );
 }
 
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
-	Monster* m1 = new Monster( *this, GEngine.GetDriver(), 50, 100, 20, 100, 20);
+	Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
 	actors.push_back(m1);
 	m1->ReSetPosition(irr::core::vector3df(0,0,300));
 	
 	
-	Monster* m2 = new Monster( *this, GEngine.GetDriver(), 50, 100, 20, 100, 20);
+	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(0,0,400));
 	
@@ -378,7 +378,7 @@ void GameWorld::InitEnemies()
 // sets up the camera to be able to look at the scene
 void GameWorld::InitCamera()
 {
-	camera = new Camera( *this, GEngine.GetDriver(), *levelTriangleSelector, GetCurrentPlayer() );
+	camera = new Camera( GEngine, *this, *levelTriangleSelector, GetCurrentPlayer() );
 	// add the camera to the actor's list so it gets ticked
 	actors.push_back( camera );
 }
@@ -412,17 +412,17 @@ void GameWorld::InitEffects()
 
 void GameWorld::InitNPC()
 {
-	SellingMachine* sellingMachine1 = new SellingMachine( *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	actors.push_back( sellingMachine1 );
 
-	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	actors.push_back( TriggerEventItem1 );
 
 	irr::core::array<irr::core::stringw> npc1dialogs;
 	npc1dialogs.push_back("Testing line 1\n and line 2");
 	npc1dialogs.push_back("My testing 2");
 	npc1dialogs.push_back("Ha ha ha ~");
-	TalkativeNPC* npc1 = new TalkativeNPC( *this, npc1dialogs, "media/model/slime08.x", 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
+	TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
 	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
 	actors.push_back(npc1);
@@ -605,7 +605,7 @@ void GameWorld::Tick( irr::f32 delta )
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
 					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 					//RestartLevel();
-					camera->SetPosition( GetCurrentPlayer().GetNodePosition() - GetCurrentPlayer().GetAimVector() * -5.0f );
+					//camera->SetPosition( GetCurrentPlayer().GetNodePosition() - GetCurrentPlayer().GetAimVector() * -5.0f );
 					camera->Tick(delta);
 				}
 				else if( stateTimer < START_LEVEL_STATE_TIMER )

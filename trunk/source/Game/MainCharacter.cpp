@@ -1,21 +1,19 @@
 #include <cmath>
 #include <iostream>
 
-#include "MainCharacter.hpp"
 #include "CollisionHelper.hpp"
+#include "FloorDecalSceneNode.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
-#include "InputEventReceiver.hpp"
-#include "FloorDecalSceneNode.hpp"
-#include "ProgressCircle.hpp"
-#include "Item.hpp"
 #include "HPItem.hpp"
+#include "InputEventReceiver.hpp"
+#include "Item.hpp"
+#include "MainCharacter.hpp"
 #include "MDiscItem.hpp"
-#include "XItem.hpp"
-#include "WeaponItem.hpp"
 #include "Monster.hpp"
-
-extern GameEngine* GEngine;
+#include "ProgressCircle.hpp"
+#include "WeaponItem.hpp"
+#include "XItem.hpp"
 
 // Parameters specifying default parameters
 //static const irr::core::vector3df		defaultPosition = irr::core::vector3df(150,50,20);
@@ -69,15 +67,14 @@ static const irr::u32			FOOTSTEP_DURATION = 6000;
 */
 
 // constructor
-MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
-	:Player(gameWorld),
+MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
+	:Player(gameEngine, gameWorld),
 	node(NULL),
 	weaponNode(NULL),
 	ATFieldNode(NULL),
 	collisionAnimator(NULL),
-	shadowNode(NULL),
 	action(EMCAS_IDLE),
-	throwFillupTimer( 0.0f ),
+	//throwFillupTimer( 0.0f ),
 	bDoFillup( false ),
 	world(gameWorld),
 	_magicChargeProgress(0),
@@ -94,7 +91,9 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	_currentWeapon(NULL),
 	_currentMagic(NULL)
 {
-	test1 = new Shader(&(GEngine->GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, video::EMT_SOLID, "MainCharacter");
+	test1 = new Shader(&(GEngine.GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, video::EMT_SOLID, "MainCharacter");
+
+	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 
 	ItemCollection tmpBox;
 	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);
@@ -143,7 +142,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
 	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
-	Shader* Field = new Shader(&(GEngine->GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
+	Shader* Field = new Shader(&(GEngine.GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
@@ -158,18 +157,12 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	triangleSelector->drop();
 	triangleSelector = NULL;
 
-	// setup player shadow
-	shadowNode = GEngine->addFloorDecalSceneNode(node, irr::core::dimension2d<irr::f32>(0, 0));
-	shadowNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
-	shadowNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-	shadowNode->setMaterialTexture(0, driver.getTexture(MAIN_CHARACTER_SHADOWTEXTURE));
-
 	attackCallBack = new AttackAnimationEndCallBack( world, *this );
 
 	aimVector = defaultAimVector;
 
 	// setup snow steps sound effect
-	//	sfxFootstep = GEngine->GetSoundEngine().play2D( "../audio/sfx/snowstepsrun.mp3", true, false, true );
+	//	sfxFootstep = GEngine.GetSoundEngine().play2D( "../audio/sfx/snowstepsrun.mp3", true, false, true );
 	//	sfxFootstep->setVolume( 0 );
 }
 
@@ -214,7 +207,6 @@ MainCharacter::~MainCharacter()
 	
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	smgr.addToDeletionQueue( node );
-	smgr.addToDeletionQueue( shadowNode );
 
 	node->setAnimationEndCallback( NULL );
 
@@ -240,10 +232,10 @@ void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
 {
 	irr::s32 newMaterialType = 0;
 
-	irr::video::IGPUProgrammingServices* gpuServices = GEngine->GetDriver().getGPUProgrammingServices();
+	irr::video::IGPUProgrammingServices* gpuServices = GEngine.GetDriver().getGPUProgrammingServices();
 	if(gpuServices)
 	{
-		MyMainCharacterShaderCallBack *mc = new MyMainCharacterShaderCallBack(&(GEngine->GetDevice()), lightPosition);
+		MyMainCharacterShaderCallBack *mc = new MyMainCharacterShaderCallBack(&(GEngine.GetDevice()), lightPosition);
 
 		newMaterialType = gpuServices->addHighLevelShaderMaterialFromFiles(
 			MAIN_CHARACTER_vsFileName, "main", irr::video::EVST_VS_1_1,
@@ -372,7 +364,7 @@ void MainCharacter::Tick( irr::f32 delta )
 
 void MainCharacter::DoInput()
 {
-	InputEventReceiver& receiver = GEngine->GetReceiver();
+	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if( receiver.keyDown(irr::KEY_KEY_X) )
 	{
@@ -542,10 +534,10 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 		switch( rand() % 2 )
 		{
 		case 0:
-//			GEngine->GetSoundEngine().play2D("../audio/sfx/playerhurt1.mp3");
+//			GEngine.GetSoundEngine().play2D("../audio/sfx/playerhurt1.mp3");
 			break;
 		case 1:
-//			GEngine->GetSoundEngine().play2D("../audio/sfx/playerhurt2.mp3");
+//			GEngine.GetSoundEngine().play2D("../audio/sfx/playerhurt2.mp3");
 			break;
 		}
 	}
@@ -645,11 +637,11 @@ void MainCharacter::PlaceRightFootPrint()
 	irr::core::vector3df pos = node->getAbsolutePosition() - rightVector + forwardVector;
 
 	// create the texture node to paste on the ground
-	CFloorDecalSceneNode* footStepNode = GEngine->addFloorDecalSceneNode(NULL, core::dimension2d<irr::f32>(4.5, 4.5));
+	CFloorDecalSceneNode* footStepNode = GEngine.addFloorDecalSceneNode(NULL, core::dimension2d<irr::f32>(4.5, 4.5));
 	check(shadowNode);
 	footStepNode->setMaterialFlag(video::EMF_LIGHTING, false);
 	footStepNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-	footStepNode->setMaterialTexture(0, GEngine->GetDriver().getTexture(CHARACTER_RIGHT_FOOTSTEP_TEXTURE));
+	footStepNode->setMaterialTexture(0, GEngine.GetDriver().getTexture(CHARACTER_RIGHT_FOOTSTEP_TEXTURE));
 	footStepNode->setRotation(node->getRotation() + irr::core::vector3df(0.f,180.f,0.f));
 	footStepNode->setPosition(pos);
 
@@ -669,11 +661,11 @@ void MainCharacter::PlaceLeftFootPrint()
 	irr::core::vector3df pos = node->getAbsolutePosition() + rightVector + forwardVector;
 
 	// create the texture node to paste on the ground
-	CFloorDecalSceneNode* footStepNode = GEngine->addFloorDecalSceneNode(NULL, core::dimension2d<irr::f32>(4.5, 4.5));
+	CFloorDecalSceneNode* footStepNode = GEngine.addFloorDecalSceneNode(NULL, core::dimension2d<irr::f32>(4.5, 4.5));
 	check(shadowNode);
 	footStepNode->setMaterialFlag(video::EMF_LIGHTING, false);
 	footStepNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-	footStepNode->setMaterialTexture(0, GEngine->GetDriver().getTexture(CHARACTER_LEFT_FOOTSTEP_TEXTURE));
+	footStepNode->setMaterialTexture(0, GEngine.GetDriver().getTexture(CHARACTER_LEFT_FOOTSTEP_TEXTURE));
 	footStepNode->setRotation(node->getRotation() + irr::core::vector3df(0.f,180.f,0.f));
 	footStepNode->setPosition(pos);
 

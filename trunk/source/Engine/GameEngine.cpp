@@ -52,12 +52,12 @@ bool GameEngine::Init()
 	irr::video::E_DRIVER_TYPE driverType = irr::video::EDT_OPENGL;
 
 	// create an event receiver
-	receiver = new InputEventReceiver( *this );
+	receiver = new InputEventReceiver();
 	if( !receiver )
 		return false;
 
 	// create the device
-	device = createDevice( driverType, screenSize, 32, false, false, false, receiver);
+	device = irr::createDevice( driverType, screenSize, 32, false, false, false, receiver );
 
 	if( !device )
 		return false; // could not create selected driver.
@@ -146,7 +146,7 @@ void GameEngine::ExitStartupScreen()
 void GameEngine::InitFrontEnd()
 {
 	check(frontEnd == NULL);
-	frontEnd = new FrontEnd();
+	frontEnd = new FrontEnd( *this );
 	frontEnd->Init();
 
 	// load and play music

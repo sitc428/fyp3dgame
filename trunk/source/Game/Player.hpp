@@ -3,6 +3,8 @@
 
 #include "Actor.hpp"
 
+class GameEngine;
+
 enum EPlayerState
 {
 	state_PLAYER_ACTIVE,   // this player is currently being active and used
@@ -16,7 +18,7 @@ class Player: public Actor
 {
 	public:
 		// constructor
-		Player( GameWorld& gameWorld );
+		Player( GameEngine&, GameWorld& );
 
 		// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
 		virtual void RecreateCollisionResponseAnimator() = 0;
@@ -47,8 +49,6 @@ class Player: public Actor
 		const irr::core::vector3df& GetAimVector() const { return aimVector; } 
 		const irr::core::vector3df& GetFaceVector() const { return faceVector; } 
 
-		irr::core::vector3df GetVelApprox() { return velApprox; }
-
 		// unbuffered mouse input 
 		virtual void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent ) {};
 
@@ -59,7 +59,7 @@ class Player: public Actor
 		irr::u32 GetMaxHealth() const { return max_health;}
 	
 		// god mode
-		virtual void SetGodMode( bool enable=true ) { godMode=enable; }
+		virtual void SetGodMode( bool enable = true ) { godMode = enable; }
 		virtual bool HasGodMode() { return godMode; }
 
 	private:
@@ -81,11 +81,9 @@ class Player: public Actor
 
 		// player translation
 		irr::core::vector3df translation;
+
 		// player rotation
 		irr::core::vector3df rotation;
-
-		// approximation of movement velocity used by AI
-		irr::core::vector3df velApprox;
 
 		irr::u32 health;
 		irr::u32 max_health;

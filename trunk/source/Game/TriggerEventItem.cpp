@@ -4,14 +4,11 @@
 #include "GameWorld.hpp"
 #include <iostream>
 
-extern GameEngine* GEngine;
-
 static const irr::f32		acceptable_Distance = 30.0;
 static const irr::c8*		TRIGGER_EVENT_ITEM_MODEL  = "media/model/sellingmachine08.x";
 
-TriggerEventItem::TriggerEventItem( GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale )
-	:InteractiveActor(gameWorld),
-	world(gameWorld),
+TriggerEventItem::TriggerEventItem( GameEngine& gameEngine, GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale )
+	: InteractiveActor(gameEngine, gameWorld),
 	enabled(false)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();

@@ -6,8 +6,6 @@
 #include <ctime>
 #include <iostream>
 
-extern GameEngine* GEngine;
-
 static const irr::core::vector3df	defaultPosition = irr::core::vector3df(10,50,10);
 static const irr::core::vector3df	defaultRotation = irr::core::vector3df(0, 90, 0);
 static const irr::core::vector3df	defaultScale = irr::core::vector3df(0.1, 0.1, 0.1);
@@ -34,13 +32,15 @@ static const irr::u32		ROBOT_ANIMATION_WALK_DEAD_START = -1;
 static const irr::u32		ROBOT_ANIMATION_WALK_DEAD_END = -1;
 */
 
-Robot::Robot( GameWorld& gameWorld, irr::video::IVideoDriver& driver )
-	:Actor(gameWorld),
+Robot::Robot( GameEngine& gameEngine, GameWorld& gameWorld )
+	:Actor(gameEngine, gameWorld),
 	node(NULL),
-	collisionAnimator(NULL),
-	world(gameWorld)
+	collisionAnimator(NULL)
 {
-	Shader* shader = new Shader(&(GEngine->GetDevice()),"media/shader/robot.vert", "media/shader/robot.frag", 2, video::EMT_SOLID,"Robot");	
+	Shader* shader = new Shader(&(GEngine.GetDevice()),"media/shader/robot.vert", "media/shader/robot.frag", 2, video::EMT_SOLID, "Robot");	
+
+	irr::video::IVideoDriver& driver = GEngine.GetDriver();
+
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	// load the animated mesh, and add a new scene graph node for it
 	irr::scene::ISkinnedMesh* robotMesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( ROBOT_MODEL ));

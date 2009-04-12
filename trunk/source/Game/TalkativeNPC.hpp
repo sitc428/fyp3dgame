@@ -1,20 +1,26 @@
 #ifndef __TALKATIVE_NPC_HPP__
 #define __TALKATIVE_NPC_HPP__
 
-#include "InteractiveActor.hpp"
 #include <string>
 #include <vector>
+
+#include "InteractiveActor.hpp"
 
 class TalkativeNPC: public InteractiveActor
 {
 public:
-	TalkativeNPC( GameWorld& gameWorld, irr::core::array<irr::core::stringw>&, const irr::c8*, irr::f32, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df);
+	TalkativeNPC( GameEngine&, GameWorld&, irr::core::array<irr::core::stringw>&, const irr::c8*, irr::f32, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df);
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
+
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return (EActorType) (ACTOR_INTERACTIVE | ACTOR_TALKACTIVE_NPC); }
+
+	// interactions of the actor
 	void interaction( irr::f32 );
+
+	// return the acceptable interactive distance
 	virtual irr::f32 acceptableDistance();
 
 protected:
@@ -22,7 +28,6 @@ protected:
 	virtual ~TalkativeNPC();
 
 private:
-	GameWorld& world;
 	irr::core::array<irr::core::stringw> _dialogs;
 	irr::f32 acceptable_Distance;
 };

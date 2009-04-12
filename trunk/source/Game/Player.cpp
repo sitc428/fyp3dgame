@@ -3,17 +3,14 @@
 #include "GameEngine.hpp"
 #include <iostream>
 
-extern GameEngine* GEngine;
-
 // constructor
-Player::Player( GameWorld& gameWorld )
-	:Actor(gameWorld),
+Player::Player( GameEngine& gameEngine, GameWorld& gameWorld )
+	:Actor(gameEngine, gameWorld),
 	playerState( state_PLAYER_INACTIVE ),
 	aimVector( irr::core::vector3df(0.0f, 0.0f, -1.0f) ),
 	faceVector( irr::core::vector3df(0.0f, 0.0f, -1.0f) ),
 	translation( irr::core::vector3df(0.0f, 0.0f, 0.0f) ),
 	rotation( irr::core::vector3df(0.0f, 0.0f, 0.0f) ),
-	velApprox(0,0,0),
 	health(1000),
 	max_health(1000),
 	godMode( false )

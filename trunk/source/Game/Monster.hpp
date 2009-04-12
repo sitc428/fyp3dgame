@@ -33,69 +33,65 @@ namespace mpl = boost::mpl;
 struct FiniteStateMachine;
 
 class Monster: public Actor{
-	public:
-	
-		Monster( GameWorld& gameWorld, irr::video::IVideoDriver&, irr::s32 exp, irr::s32 attk, 
-			irr::s32 def, irr::s32 mattk, irr::s32 mdef);
-		~Monster(){
-			delete FSM;
-			//collisionAnimator->drop();
-			//collisionAnimator = NULL;
-			
-		//	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-		//	smgr.addToDeletionQueue( _monster );
-		};
-		// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
-		virtual void RecreateCollisionResponseAnimator();
+public:
 
-		//void change(Player&);
-		void update(Player&, irr::f32 delta);
-		void Tick( irr::f32 delta );
-		virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
-		EActorType GetActorType() const { return ACTOR_ENEMY; }
-		bool ShouldPerformCollisionCheck() const { return false; }
-		void DoCollisions( const CollisionInfo& collInfo ) { check(false); }
-		void ReceiveDamage(irr::f32 );
-		void DestroyActor( Actor*& actorToDestroy );
-		void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
-		virtual void ReSetPosition(irr::core::vector3df);
-		//int GetHealth();
-		void CheckActorPosition(irr::core::vector3df&,Player&);
-		irr::s32 GetEXP() {return _exp;};
-		irr::s32 GetAttk() {return _attk;};
-		irr::s32 GetDef() {return _def;};
-		irr::s32 GetMAttk() {return _mattk;};
-		irr::s32 GetMDef() {return _mdef;};
-
-		irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
-			
-	private:
-		irr::s32 _exp;
-		irr::s32 _attk;
-		irr::s32 _def;
-		irr::s32 _mattk;
-		irr::s32 _mdef;
-		FiniteStateMachine* FSM;
-		irr::scene::IAnimatedMeshSceneNode *_monster;
-	
-		// cached collision response animator
-		irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
-	
-		float _speed; 
-		irr::f32 health;
-		boost::timer* mon_timer;
-		boost::timer* attack_timer;
-		boost::timer* death_timer;
-		double timeout;
-		bool moved;
-		irr::core::vector3df target;
-		irr::core::vector3df original;
-		irr::core::vector3df pos;
-		//int  Health;
+	Monster( GameEngine&, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef);
+	~Monster(){
+		delete FSM;
+		//collisionAnimator->drop();
+		//collisionAnimator = NULL;
 		
-		GameWorld& world;
-	
-		ParticleSystemEngine* sparking;
+	//	irr::scene::ISceneManager& smgr = world.GetSceneManager();
+	//	smgr.addToDeletionQueue( _monster );
+	};
+	// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
+	virtual void RecreateCollisionResponseAnimator();
+
+	//void change(Player&);
+	void update(Player&, irr::f32 delta);
+	void Tick( irr::f32 delta );
+	virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
+	EActorType GetActorType() const { return ACTOR_ENEMY; }
+	bool ShouldPerformCollisionCheck() const { return false; }
+	void ReceiveDamage(irr::f32 );
+	void DestroyActor( Actor*& actorToDestroy );
+	void SetNodePosition( const irr::core::vector3df& vect ) { _monster->setPosition(vect); _monster->updateAbsolutePosition(); }
+	virtual void ReSetPosition(irr::core::vector3df);
+	//int GetHealth();
+	void CheckActorPosition(irr::core::vector3df&,Player&);
+	irr::s32 GetEXP() {return _exp;};
+	irr::s32 GetAttk() {return _attk;};
+	irr::s32 GetDef() {return _def;};
+	irr::s32 GetMAttk() {return _mattk;};
+	irr::s32 GetMDef() {return _mdef;};
+
+	irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
+		
+private:
+	irr::s32 _exp;
+	irr::s32 _attk;
+	irr::s32 _def;
+	irr::s32 _mattk;
+	irr::s32 _mdef;
+	FiniteStateMachine* FSM;
+	irr::scene::IAnimatedMeshSceneNode *_monster;
+
+	// cached collision response animator
+	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
+
+	float _speed; 
+	irr::f32 health;
+	boost::timer* mon_timer;
+	boost::timer* attack_timer;
+	boost::timer* death_timer;
+	double timeout;
+	bool moved;
+	irr::core::vector3df target;
+	irr::core::vector3df original;
+	irr::core::vector3df pos;
+	//int  Health;
+
+	ParticleSystemEngine* sparking;
 };
 
 //EVENT-------------------------------------------------------------
