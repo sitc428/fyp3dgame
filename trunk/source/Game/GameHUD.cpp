@@ -377,13 +377,11 @@ void GameHUD::DrawPauseMenu(Player& player)
 					if(ItemBox[i].first->getItemType() == WEAPONITEM1){
 						j++;
 					}
-					
-					if ( SubMenuIndex < j-1 ){
-						
-						SubMenuIndex ++;
-					}
-					
 				}
+				if ( SubMenuIndex < j-1 ){	
+					SubMenuIndex ++;
+				}
+				
 			}
 			else if ( receiver.keyReleased( irr::KEY_LEFT) ){
 				
@@ -421,12 +419,9 @@ void GameHUD::DrawPauseMenu(Player& player)
 					if(ItemBox[i].first->getItemType() == MDISCITEM){
 						j++;
 					}
-					
-					if ( SubMenuIndex < j-1 ){
-						
-						SubMenuIndex ++;
-					}
-					
+				}
+				if ( SubMenuIndex < j-1 ){
+					SubMenuIndex ++;
 				}
 			}
 			else if ( receiver.keyReleased( irr::KEY_LEFT) ){
