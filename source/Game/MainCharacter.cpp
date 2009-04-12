@@ -147,7 +147,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
-	ATFieldNode->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
+	ATFieldNode->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_STANDARD);
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();

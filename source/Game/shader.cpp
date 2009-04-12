@@ -31,13 +31,22 @@ Shader::Shader(IrrlichtDevice *device, const c8* vert_path,  const c8* frag_path
 	if (shadersAvailable) 
 	{ 
         video::IGPUProgrammingServices *gpu = driver->getGPUProgrammingServices(); 
-     
-        SHADER_MATERIAL_BASE = gpu->addHighLevelShaderMaterialFromFiles( 
+		if(nodeType=="field"){
+			SHADER_MATERIAL_BASE = driver->addMaterialRenderer(this, "SHADER_MATERIAL_BASE"); 
+			SHADER_MATERIAL_STANDARD =  gpu->addHighLevelShaderMaterialFromFiles( 
+																								  vert_path, "main", video::EVST_VS_1_1, 
+																								  frag_path, "main", video::EPST_PS_1_1, 
+																								  this, type, 0); 
+
+		
+		}else{
+			SHADER_MATERIAL_BASE = gpu->addHighLevelShaderMaterialFromFiles( 
 																		vert_path, "main", video::EVST_VS_1_1, 
 																		frag_path, "main", video::EPST_PS_1_1, 
 																		this, type, 0); 
 		
-		SHADER_MATERIAL_STANDARD = driver->addMaterialRenderer(this, "SHADER_MATERIAL_STANDARD"); 
+			SHADER_MATERIAL_STANDARD = driver->addMaterialRenderer(this, "SHADER_MATERIAL_STANDARD"); 
+		}
 		SHADER_MATERIAL_ANOTHER_EXAMPLE = driver->addMaterialRenderer(this, "SHADER MATERIAL EXAMPLE"); 
 	} 
 	else 
