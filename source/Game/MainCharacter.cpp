@@ -143,7 +143,7 @@ MainCharacter::MainCharacter( GameWorld& gameWorld, irr::video::IVideoDriver& dr
 	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
 	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
 
-	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", 2 * ((node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength()) + 1 );
+	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
 
@@ -267,6 +267,12 @@ void MainCharacter::setIdle()
 
 void MainCharacter::setDefending( bool defending )
 {
+	if( !defending )
+	{
+		action = EMCAS_IDLE;
+		return;
+	}
+
 	if( isDefending() )
 		return;
 	
@@ -371,6 +377,8 @@ void MainCharacter::DoInput()
 		setDefending( true );
 		return;
 	}
+	else
+		setDefending( false );
 
 	if( receiver.keyReleased(irr::KEY_KEY_Z) )
 	{
