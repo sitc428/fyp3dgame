@@ -16,6 +16,8 @@
 		98563E790F1A46380050410E /* libboost_date_time-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E740F1A46370050410E /* libboost_date_time-gcc40-mt-s-1_37.a */; };
 		98563E7A0F1A46380050410E /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E750F1A46370050410E /* libfreetype.a */; };
 		98563E7C0F1A46480050410E /* libIrrlicht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E7B0F1A46480050410E /* libIrrlicht.a */; };
+		985A49DF0F91E6DE00C9C0DE /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 985A49DD0F91E6DE00C9C0DE /* FontManager.cpp */; };
+		985A49EB0F91E71800C9C0DE /* Tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 985A49E90F91E71800C9C0DE /* Tokenizer.cpp */; };
 		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
 		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
 		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
@@ -61,6 +63,10 @@
 		98563E740F1A46370050410E /* libboost_date_time-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_date_time-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_date_time-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
 		98563E750F1A46370050410E /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../lib/libfreetype.a; sourceTree = SOURCE_ROOT; };
 		98563E7B0F1A46480050410E /* libIrrlicht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIrrlicht.a; path = ../../lib/libIrrlicht.a; sourceTree = SOURCE_ROOT; };
+		985A49DD0F91E6DE00C9C0DE /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
+		985A49DE0F91E6DE00C9C0DE /* FontManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FontManager.hpp; sourceTree = "<group>"; };
+		985A49E90F91E71800C9C0DE /* Tokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tokenizer.cpp; sourceTree = "<group>"; };
+		985A49EA0F91E71800C9C0DE /* Tokenizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tokenizer.hpp; sourceTree = "<group>"; };
 		9868EF510F130414004AE96C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		9868EF520F130414004AE96C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		9868EF530F130414004AE96C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -207,6 +213,8 @@
 				98BF9EDA0F91144900561309 /* CollisionHelper.hpp */,
 				98BF9EDB0F91144900561309 /* DebugInfo.cpp */,
 				98BF9EDC0F91144900561309 /* DebugInfo.hpp */,
+				985A49E90F91E71800C9C0DE /* Tokenizer.cpp */,
+				985A49EA0F91E71800C9C0DE /* Tokenizer.hpp */,
 			);
 			name = Utils;
 			path = ../Utils;
@@ -273,6 +281,8 @@
 				98BF9F2B0F91144A00561309 /* CGUITTFont.hpp */,
 				98BF9F2C0F91144A00561309 /* FloorDecalSceneNode.cpp */,
 				98BF9F2D0F91144A00561309 /* FloorDecalSceneNode.hpp */,
+				985A49DD0F91E6DE00C9C0DE /* FontManager.cpp */,
+				985A49DE0F91E6DE00C9C0DE /* FontManager.hpp */,
 				98BF9F2E0F91144A00561309 /* FrontEnd.cpp */,
 				98BF9F2F0F91144A00561309 /* FrontEnd.hpp */,
 				98BF9F300F91144A00561309 /* GameEngine.cpp */,
@@ -374,6 +384,8 @@
 				98BF9F5F0F91144A00561309 /* GameEngine.cpp in Sources */,
 				98BF9F600F91144A00561309 /* InputEventReceiver.cpp in Sources */,
 				98BF9F610F91144A00561309 /* StartupScreen.cpp in Sources */,
+				985A49DF0F91E6DE00C9C0DE /* FontManager.cpp in Sources */,
+				985A49EB0F91E71800C9C0DE /* Tokenizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
