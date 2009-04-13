@@ -144,13 +144,14 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
 	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
-	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 0, irr::video::EMT_TRANSPARENT_ADD_COLOR );
+	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 		//new Shader(&(GEngine.GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
 	ATFieldNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
-
+	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
+	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
 
