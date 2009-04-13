@@ -3,6 +3,7 @@ uniform sampler2D myTexture1;
 
 varying vec2 vTexCoord;
 varying vec3 vNormal;
+varying float Offset;
 
 
 void main (void)
@@ -26,19 +27,21 @@ void main (void)
          intensityMod = 0.66;
       else
          intensityMod = 0.6;
-		 
-	vec4 color = mix(texture2D(myTexture0, vTexCoord),vec4(1,1,1,1),vec4(0,0,0,1));
-	float Intensity = normalize( vNormal ).z * 0.5 + 0.5;
-	vec4 texture_line;
+	float f = 1.0-Offset;
+	vec4 color = mix(texture2D(myTexture0, vTexCoord),vec4(1,1,1,1),vec4(f,0,0,1)*4.0);
+//	color = mix(color,vec4(1,1,1,1), vec4(1,0,0,1));
+//	float Intensity = normalize( vNormal ).z * 0.5 + 0.5;
+//	vec4 texture_line;
 /*	if(ina> 0.1)
         texture_line= vec4(0.9);
      else  texture_line = texture2D( myTexture1, vTexCoord)*0.5;
 */	
+	//vec4 color = vec4(1,0,0,1)*2.0;
 //	vec4 color=vec4(0.5, 0.5,0.9,0.3);
 //	vec4 temp = texture2D( myTexture2, vTexCoord );
 //	gl_FragColor = texture2D( myTexture2, vTexCoord )*texture2D(myTexture, vTexCoord);
 //	gl_FragColor = texture2D( myTexture0, vTexCoord )*texture_line*intensityMod;
 //	gl_FragColor = texture2D(myTexture0, vTexCoord)*texture2D(myTexture1, vTexCoord);
 //	gl_FragColor = mix(vec4(0.8,0.3,0.2,0.5), texture2D(myTexture0, vTexCoord), vec4(0.8,0.3,0.2,0.0));
-	gl_FragColor =color;
+	gl_FragColor = color;
 }

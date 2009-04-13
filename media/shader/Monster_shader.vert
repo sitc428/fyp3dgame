@@ -1,8 +1,8 @@
-
+uniform float offset;
 
 varying vec2 vTexCoord;
 varying vec3 vNormal;
-
+varying float Offset;
 
 void main(void)
 {
@@ -24,7 +24,7 @@ void main(void)
 	
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 */	
-	
+	Offset = offset;
 	gl_Position= ftransform();
 	vTexCoord = gl_MultiTexCoord0.st;
 	vNormal = gl_NormalMatrix * gl_Normal;
