@@ -34,6 +34,8 @@ private:
 	irr::video::SMaterial* currentMaterial; 
 	irr::u32 NumOfTexture;
 	irr::s32 shaderMaterial;
+	irr::f32 offset;
+	irr::f32 factor;
 }; 
 
 #endif // SHADER_HPP__

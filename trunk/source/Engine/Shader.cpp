@@ -21,6 +21,8 @@ Shader::Shader( int numOfTexture )
 	NumOfTexture(numOfTexture),
 	shaderMaterial(irr::video::EMT_SOLID)
 {
+	offset = 0;
+	factor=0.01;
 	/*
 	if(nodeType=="field"){
 			SHADER_MATERIAL_BASE = driver->addMaterialRenderer(this, "SHADER_MATERIAL_BASE");
@@ -73,7 +75,11 @@ void Shader::OnSetConstants(irr::video::IMaterialRendererServices* services, irr
 	}
 	irr::core::vector3df pos = irr::core::vector3df(0.0f,9.0f,-7.0f);
 	services->setVertexShaderConstant("Lightpos", reinterpret_cast<irr::f32*>(&pos), 3);
-
+	if(offset>1.0) factor=-0.01;
+	if(offset<=0.0) factor=0.01;
+	offset+=factor;
+	services->setVertexShaderConstant("offset", reinterpret_cast<irr::f32*>(&offset), 3);
+	
 	/*
 	   if (!currentMaterial)
 	   {
