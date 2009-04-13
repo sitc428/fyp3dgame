@@ -1,4 +1,3 @@
-#include "FloorDecalSceneNode.hpp"
 #include "FontManager.hpp"
 #include "FrontEnd.hpp"
 #include "GameEngine.hpp"
@@ -66,8 +65,7 @@ bool GameEngine::Init()
 
 	// setup the driver and the scenemanager
 	driver = device->getVideoDriver();
-	mainSmgr = device->getSceneManager();
-	smgr = mainSmgr->createNewSceneManager( true );
+	smgr = device->getSceneManager();
 
 	fmgr = new FontManager( driver );
 
@@ -472,22 +470,6 @@ void GameEngine::HandleRequestedStateChange()
 	}
 }
 
-//! Adds a floor decal billboard scene node to the scene. This scene node has a texture which always faces up
-irr::scene::CFloorDecalSceneNode* GameEngine::addFloorDecalSceneNode(irr::scene::ISceneNode* parent,
-		const irr::core::dimension2d<irr::f32>& size, const irr::core::vector3df& position, irr::s32 id,
-		irr::video::SColor shade_top, irr::video::SColor shade_down )
-{
-	if (!parent)
-		parent = smgr->getRootSceneNode();
-
-	irr::scene::CFloorDecalSceneNode* node = new irr::scene::CFloorDecalSceneNode(parent, smgr, id, position, size,
-			shade_top, shade_down);
-	node->drop();
-
-	return node;
-}
-
-
 void GameEngine::ChangeBGM( const irr::c8* name )
 {
 	if( gameMusic )
@@ -504,10 +486,4 @@ void GameEngine::ChangeBGM( const irr::c8* name )
 		gameMusic->setVolume( 0.65f );
 	}
 
-}
-
-void GameEngine::switchToNewSceneManager(irr::scene::ISceneManager* newSmgr)
-{
-	smgr = newSmgr;
-	device->setInputReceivingSceneManager( smgr );
 }
