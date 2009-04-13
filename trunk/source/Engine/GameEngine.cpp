@@ -66,7 +66,8 @@ bool GameEngine::Init()
 
 	// setup the driver and the scenemanager
 	driver = device->getVideoDriver();
-	smgr = device->getSceneManager();
+	mainSmgr = device->getSceneManager();
+	smgr = mainSmgr->createNewSceneManager( true );
 
 	fmgr = new FontManager( driver );
 
@@ -226,11 +227,7 @@ void GameEngine::Run()
 		smgr->drawAll();
 
 		// draw all UI elements after the 3d scene
-
-		smgr->getRootSceneNode()->setDebugDataVisible( irr::scene::EDS_BBOX );
-		
 		device->getGUIEnvironment()->drawAll();
-		
 		TickHUD(frameDelta);
 
 		driver->endScene();
@@ -507,4 +504,10 @@ void GameEngine::ChangeBGM( const irr::c8* name )
 		gameMusic->setVolume( 0.65f );
 	}
 
+}
+
+void GameEngine::switchToNewSceneManager(irr::scene::ISceneManager* newSmgr)
+{
+	smgr = newSmgr;
+	device->setInputReceivingSceneManager( smgr );
 }

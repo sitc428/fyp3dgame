@@ -2,7 +2,9 @@
 #include "Check.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
+#include "NodeID.hpp"
 #include <iostream>
+#include <boost/thread.hpp>
 
 static const irr::f32		acceptable_Distance = 30.0;
 static const irr::c8*		TRIGGER_EVENT_ITEM_MODEL  = "media/model/sellingmachine08.x";
@@ -18,14 +20,7 @@ TriggerEventItem::TriggerEventItem( GameEngine& gameEngine, GameWorld& gameWorld
 	node->setRotation(defaultRotation);
 	node->setScale(defaultScale);
 	node->setName("TriggerEventItem");
-	node->setID(10);
-	//this->setEnable(false);
-
-	//irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( ((irr::scene::IMeshSceneNode*)node)->getMesh(), node );
-	//node->setTriangleSelector( meshTriangleSelector );
-	//world.GetLevelTriangleSelector().addTriangleSelector( meshTriangleSelector );
-	//meshTriangleSelector->drop();
-	//meshTriangleSelector = NULL;
+	node->setID(NODE_ID_TRIGGER_EVENT_ITEM);
 }
 
 TriggerEventItem::~TriggerEventItem()
@@ -41,6 +36,8 @@ void TriggerEventItem::interaction(irr::f32 delta)
 			//std::cout << "========== Processing ==========" << std::endl;
 		//startAction();
 		setEnabled(true);
+
+		boost::thread addSceneThread( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE1) );
 		runGameOne();
 		finishAction();
 	}

@@ -45,7 +45,6 @@ public:
 	void Exit();
 	
 	irr::scene::ISceneManager& GetSceneManager() { return smgr; }
-	irr::scene::ISceneManager& GetSceneManager1() { return smgr1; }
 
 	irr::scene::IMetaTriangleSelector& GetLevelTriangleSelector() { return *levelTriangleSelector; }
 	
@@ -107,7 +106,6 @@ private:
 	EGameState gameStateBeforePause; // the state right before pasued;
 
 	irr::scene::ISceneManager& smgr; // scene manager from the engine
-	irr::scene::ISceneManager& smgr1; // scene manager from the engine
 
 	MainCharacter* mainCharacter; // player node
 	Robot* robot; // the robot following the main character
