@@ -98,15 +98,18 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 
 	ItemCollection tmpBox;
-	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50);
-	Item* md1 = new MDiscItem(world, MDISCITEM, "Fire Ball", 10);	
-	Item* md2 = new MDiscItem(world, MDISCITEM, "Ice Ball", 10);
-	Item* md3 = new MDiscItem(world, MDISCITEM, "Lightning", 30);
-	Item* md4 = new MDiscItem(world, MDISCITEM, "Cyclone", 40);
-	Item* xItem = new XItem(world, XITEM, "X Item", 1);
-	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10);
-	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20);
-	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30);
+	//temp use only
+	irr::video::ITexture* text = NULL;
+
+	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50, "Recover 50 Health Point", text);
+	Item* md1 = new MDiscItem(world, MDISCITEM, "Fire", 10, "Fire Magic of 10 Magical Attack point", text);	
+	Item* md2 = new MDiscItem(world, MDISCITEM, "Ice", 10, "Ice Magic of 10 Magical Attack point", text);
+	Item* md3 = new MDiscItem(world, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
+	Item* md4 = new MDiscItem(world, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
+	Item* xItem = new XItem(world, XITEM, "X Item", 1, "Special Item", text);
+	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text);
+	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text);
+	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text);
 	tmpBox.push_back(std::make_pair(hp, 2));
 	tmpBox.push_back(std::make_pair(md1, 5));
 	tmpBox.push_back(std::make_pair(md2, 10));
