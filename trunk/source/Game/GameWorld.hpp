@@ -73,7 +73,6 @@ public:
 
 	// add scene to the world
 	void AddScene(irr::s32);
-	void AddScene2(irr::s32);
 
 private:
 	// should be self-explained by the function name
