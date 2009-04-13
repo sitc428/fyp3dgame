@@ -11,6 +11,7 @@ public:
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
+	virtual irr::core::vector3df GetRadius() { return node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter(); }
 
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return (EActorType) (ACTOR_INTERACTIVE | ACTOR_TRIGGER_EVENT_ITEM); }
