@@ -231,9 +231,10 @@ void GameWorld::AddScene(irr::s32 sceneType)
 	}
 
 	smgr.loadScene(sceneFile);
+/*	
 	irr::core::vector3df radius = smgr.getRootSceneNode()->getBoundingBox().MaxEdge 
 		- smgr.getRootSceneNode()->getBoundingBox().getCenter();
-	
+*/	
 	//std::cout << "Radius: " << radius.X << std::endl;
 
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
