@@ -21,9 +21,13 @@ public:
 	EItemType getItemType(){return type;};
 	irr::core::stringw getItemName(){return name;};
 	irr::u32 getItemValue(){return value;};
+	irr::core::stringw getItemDescription() {return description;};
+	irr::video::ITexture* getItemTexture() {return texture;};
 	void setItemType(EItemType t){type = t;};
 	void setItemName(irr::core::stringw n){name = n;};
 	void setItemValue(irr::u32 v){value = v;};
+	void setItemDescription(irr::core::stringw des) {description = des;};
+	void setItemTexture(irr::video::ITexture* text){texture = text;};
 
 protected:
 	virtual ~Item();
@@ -35,6 +39,10 @@ private:
 	irr::core::stringw name;
 	//item value, e.g. +10 HP, +20 M_DISC
 	irr::u32 value;
+	//Description
+	irr::core::stringw description;
+	//item texture
+	irr::video::ITexture* texture;
 
 	GameWorld& world;
 };

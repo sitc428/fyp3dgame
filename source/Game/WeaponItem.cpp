@@ -3,13 +3,16 @@
 #include "MainCharacter.hpp"
 
 //constructor
-WeaponItem::WeaponItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value)
+WeaponItem::WeaponItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value,
+					   irr::core::stringw des, irr::video::ITexture* text)
 	:Item(gameWorld),
 	world(gameWorld)
 {
 	setItemType(type);
 	setItemName(name);
 	setItemValue(value);
+	setItemDescription(des);
+	setItemTexture(text);
 }
 
 //destructor

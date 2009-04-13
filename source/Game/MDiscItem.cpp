@@ -6,13 +6,16 @@
 #include "MainCharacter.hpp"
 
 //constructor
-MDiscItem::MDiscItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value)
+MDiscItem::MDiscItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value,
+					 irr::core::stringw des, irr::video::ITexture* text)
 	:Item(gameWorld),
 	world(gameWorld)
 {
-		this->setItemType(type);
-	this->setItemName(name);
-	this->setItemValue(value);
+	setItemType(type);
+	setItemName(name);
+	setItemValue(value);
+	setItemDescription(des);
+	setItemTexture(text);
 }
 
 //destructor
