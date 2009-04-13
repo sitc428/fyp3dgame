@@ -1,8 +1,7 @@
-uniform vec3 Lightpos;
+
 
 varying vec2 vTexCoord;
 varying vec3 vNormal;
-varying vec3 light;
 
 
 void main(void)
@@ -25,7 +24,7 @@ void main(void)
 	
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 */	
-	light = Lightpos;
+
 	gl_Position= ftransform();
 	vTexCoord = gl_MultiTexCoord0.xy;
 	vNormal = gl_NormalMatrix * gl_Normal;
