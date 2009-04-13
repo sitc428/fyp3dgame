@@ -22,9 +22,9 @@
 #include "XItem.hpp"
 
 static const irr::c8* LEVEL_FILE1 = "media/model/scene1_new.irr";
-static const irr::c8* LEVEL_FILE2 = "media/model/scene2.irr";
-static const irr::c8* LEVEL_FILE3 = "media/model/scene3.irr";
-static const irr::c8* LEVEL_FILE4 = "media/model/scene4.irr";
+static const irr::c8* LEVEL_FILE2 = "media/model/scene2_new.irr";
+static const irr::c8* LEVEL_FILE3 = "media/model/scene3_new.irr";
+static const irr::c8* LEVEL_FILE4 = "media/model/scene4_new.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
 
 static const irr::u32 MAX_SNOWBALLS = 20;
@@ -179,7 +179,7 @@ void GameWorld::InitLevel()
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 */
 
-	AddScene(NODE_ID_SCENE1);
+	AddScene(NODE_ID_SCENE2);
 	//AddScene(NODE_ID_SCENE2);
 
 	// set game state
