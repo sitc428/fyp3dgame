@@ -33,7 +33,7 @@ public:
 	virtual irr::scene::ISceneNode& GetNode() const = 0;
 
 	// return the radius of the actor's node
-	virtual irr::core::vector3df& GetRadius() const = 0;
+	virtual irr::core::vector3df GetRadius() const = 0;
 
 	// interface for attaching and detaching external actor, you can specify an optional name of the node to attach to
 	virtual void AttachActor( Actor& actorToAttach, const irr::c8* nodeName=NULL );
