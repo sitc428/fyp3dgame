@@ -376,12 +376,6 @@ void MainCharacter::DoInput()
 		return;
 	}
 
-	if( receiver.keyReleased(irr::KEY_KEY_Z) )
-	{
-		setAttacking( true );
-		return;
-	}
-
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
 		//std::cout << "Magic Level: " << GetMagicLevel() << std::endl;
@@ -398,6 +392,12 @@ void MainCharacter::DoInput()
 		SetCharging( false );
 		SetChargingProgress(0);
 		SetMagicLevel(0);
+	}
+
+	if( receiver.keyReleased(irr::KEY_KEY_Z) )
+	{
+		setAttacking( true );
+		return;
 	}
 
 	irr::core::vector3df playerTranslation(0, 0, 0);
@@ -493,7 +493,7 @@ void MainCharacter::DoInput()
 
 	if(move)
 	{
-		if( receiver.keyDown(irr::KEY_SHIFT) && !backward )
+		if( receiver.keyDown(irr::KEY_SPACE) && !backward )
 		{
 			playerTranslation.Z = 45;
 			setRunning( true );
