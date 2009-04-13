@@ -27,6 +27,8 @@ public:
 	virtual void Tick(irr::f32 delta) = 0;
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const = 0;
+	// returns the radius
+	virtual irr::core::vector3df GetRadius() = 0;
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const = 0;
 	// interface for turning player on/off
