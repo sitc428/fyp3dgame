@@ -30,7 +30,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 
-	Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
+	Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
 		//new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
@@ -41,7 +41,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	//_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
 	_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
 	_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.png"));
-	//_monster->setMaterialTexture(1, driver.getTexture("media/model/slimebase.png"));
+	_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
 	//_monster->setMaterialTexture(1, driver.getTexture("media/model/shade_line.jpg" ));
 	//RecreateCollisionResponseAnimator();
 	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
@@ -86,7 +86,7 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 }
 void Monster::update(Player& _player, irr::f32 delta)
 {
-	pos= _monster->getAbsolutePosition();
+	
 	//std::cout<<"origin: "<<_player.GetNodePosition().getDistanceFrom(original)<<"\n";
 	//std::cout<<"pos : "<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
 	//std::cout<<_player.GetNodePosition().X<<" "<<_player.GetNodePosition().Y<<" "<<_player.GetNodePosition().Z<<"\n";
@@ -187,9 +187,14 @@ void Monster::update(Player& _player, irr::f32 delta)
 
 		//for jumping
 		irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 1)*0.5, 0);
-		_monster->setPosition(_monster->getAbsolutePosition()+offset);
+		if((_monster->getAbsolutePosition()+offset).Y < 0 ){
+			irr::core::vector3df v = _monster->getAbsolutePosition()+offset;
+			v.Y = 0.0;
+			_monster->setPosition(v);
+		}else 
+			_monster->setPosition(_monster->getAbsolutePosition()+offset);
 		_monster->setRotation(_monster->getRotation()+offset);
-
+		//pos= _monster->getAbsolutePosition() - offset;
 
 	}else if ( pos.getDistanceFrom(original) > 120.0f){
 			//std::cout<<"Out of range !!\n";
