@@ -2,7 +2,7 @@ uniform sampler2D myTexture0;
 
 varying vec2 vTexCoord;
 varying vec3 vNormal;
-varying vec3 light;
+
 
 
 void main (void)
