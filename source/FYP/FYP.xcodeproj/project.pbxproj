@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9803EA410F9308F00041D61B /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9803EA3F0F9308F00041D61B /* ShaderFactory.cpp */; };
+		9803EA440F9309050041D61B /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9803EA430F9309050041D61B /* Shader.cpp */; };
 		9807F47D0F4FED16008E3E5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F47C0F4FED16008E3E5B /* main.cpp */; };
 		9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7AB0F50645B008E3E5B /* libirrKlang.a */; };
 		9830F63E0F8CBAB5009055BC /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 9830F6390F8CBAB5009055BC /* MainMenu.nib */; };
@@ -39,7 +41,6 @@
 		98BF9F500F91144A00561309 /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F110F91144A00561309 /* ProgressCircle.cpp */; };
 		98BF9F510F91144A00561309 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F130F91144A00561309 /* Robot.cpp */; };
 		98BF9F520F91144A00561309 /* SellingMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F150F91144A00561309 /* SellingMachine.cpp */; };
-		98BF9F530F91144A00561309 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F170F91144A00561309 /* shader.cpp */; };
 		98BF9F570F91144A00561309 /* TalkativeNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F1F0F91144A00561309 /* TalkativeNPC.cpp */; };
 		98BF9F580F91144A00561309 /* TriggerEventItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F210F91144A00561309 /* TriggerEventItem.cpp */; };
 		98BF9F590F91144A00561309 /* WeaponItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F230F91144A00561309 /* WeaponItem.cpp */; };
@@ -54,6 +55,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9803EA3F0F9308F00041D61B /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderFactory.cpp; sourceTree = "<group>"; };
+		9803EA400F9308F00041D61B /* ShaderFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderFactory.hpp; sourceTree = "<group>"; };
+		9803EA420F9309050041D61B /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		9803EA430F9309050041D61B /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		9807F47C0F4FED16008E3E5B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
 		9807F7AB0F50645B008E3E5B /* libirrKlang.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libirrKlang.a; path = ../../lib/libirrKlang.a; sourceTree = SOURCE_ROOT; };
 		9830F6390F8CBAB5009055BC /* MainMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MainMenu.nib; sourceTree = "<group>"; };
@@ -111,8 +116,6 @@
 		98BF9F140F91144A00561309 /* Robot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Robot.hpp; sourceTree = "<group>"; };
 		98BF9F150F91144A00561309 /* SellingMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SellingMachine.cpp; sourceTree = "<group>"; };
 		98BF9F160F91144A00561309 /* SellingMachine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SellingMachine.hpp; sourceTree = "<group>"; };
-		98BF9F170F91144A00561309 /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
-		98BF9F180F91144A00561309 /* shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shader.hpp; sourceTree = "<group>"; };
 		98BF9F1F0F91144A00561309 /* TalkativeNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TalkativeNPC.cpp; sourceTree = "<group>"; };
 		98BF9F200F91144A00561309 /* TalkativeNPC.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TalkativeNPC.hpp; sourceTree = "<group>"; };
 		98BF9F210F91144A00561309 /* TriggerEventItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerEventItem.cpp; sourceTree = "<group>"; };
@@ -257,8 +260,6 @@
 				98BF9F140F91144A00561309 /* Robot.hpp */,
 				98BF9F150F91144A00561309 /* SellingMachine.cpp */,
 				98BF9F160F91144A00561309 /* SellingMachine.hpp */,
-				98BF9F170F91144A00561309 /* shader.cpp */,
-				98BF9F180F91144A00561309 /* shader.hpp */,
 				98BF9F1F0F91144A00561309 /* TalkativeNPC.cpp */,
 				98BF9F200F91144A00561309 /* TalkativeNPC.hpp */,
 				98BF9F210F91144A00561309 /* TriggerEventItem.cpp */,
@@ -275,6 +276,10 @@
 		98BF9F270F91144A00561309 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				9803EA420F9309050041D61B /* Shader.hpp */,
+				9803EA430F9309050041D61B /* Shader.cpp */,
+				9803EA3F0F9308F00041D61B /* ShaderFactory.cpp */,
+				9803EA400F9308F00041D61B /* ShaderFactory.hpp */,
 				98BF9F280F91144A00561309 /* CGUIStaticTTText.cpp */,
 				98BF9F290F91144A00561309 /* CGUIStaticTTText.hpp */,
 				98BF9F2A0F91144A00561309 /* CGUITTFont.cpp */,
@@ -372,7 +377,6 @@
 				98BF9F500F91144A00561309 /* ProgressCircle.cpp in Sources */,
 				98BF9F510F91144A00561309 /* Robot.cpp in Sources */,
 				98BF9F520F91144A00561309 /* SellingMachine.cpp in Sources */,
-				98BF9F530F91144A00561309 /* shader.cpp in Sources */,
 				98BF9F570F91144A00561309 /* TalkativeNPC.cpp in Sources */,
 				98BF9F580F91144A00561309 /* TriggerEventItem.cpp in Sources */,
 				98BF9F590F91144A00561309 /* WeaponItem.cpp in Sources */,
@@ -386,6 +390,8 @@
 				98BF9F610F91144A00561309 /* StartupScreen.cpp in Sources */,
 				985A49DF0F91E6DE00C9C0DE /* FontManager.cpp in Sources */,
 				985A49EB0F91E71800C9C0DE /* Tokenizer.cpp in Sources */,
+				9803EA410F9308F00041D61B /* ShaderFactory.cpp in Sources */,
+				9803EA440F9309050041D61B /* Shader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
