@@ -27,7 +27,7 @@ void main(void)
 */	
 	light = Lightpos;
 	gl_Position= ftransform();
-	vTexCoord = gl_MultiTexCoord0.st;
+	vTexCoord = gl_MultiTexCoord0.xy;
 	vNormal = gl_NormalMatrix * gl_Normal;
 	
 }
