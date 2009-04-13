@@ -312,11 +312,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Game\shader.hpp"
+				RelativePath=".\Engine\Shader.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Game\ShaderFactory.hpp"
+				RelativePath=".\Engine\ShaderFactory.hpp"
 				>
 			</File>
 			<File
@@ -460,12 +460,48 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Game\shader.cpp"
+				RelativePath=".\Engine\Shader.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Game\ShaderFactory.cpp"
+				RelativePath=".\Engine\ShaderFactory.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\engine\StartupScreen.cpp"
