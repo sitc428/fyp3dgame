@@ -40,11 +40,11 @@ static const irr::f32 FENCE_FALL_TIME = 3.f;
 
 GameWorld::GameWorld( GameEngine& gameEngine ):
 	smgr(gameEngine.GetSceneManager()),
-	smgr1(*(smgr.createNewSceneManager())),
 	mainCharacter(NULL),
 	robot(NULL),
 	camera(NULL),
 	levelTriangleSelector(NULL),
+	light(NULL),
 	gameHUD(NULL),
 	interactingActor(NULL),
 	gameMessage(NULL),
@@ -178,7 +178,7 @@ void GameWorld::InitLevel()
 	outNodes.clear();
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 */
-
+levelTriangleSelector = smgr.createMetaTriangleSelector();
 	AddScene(NODE_ID_SCENE2);
 	//AddScene(NODE_ID_SCENE2);
 
@@ -208,15 +208,15 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			sceneFile = LEVEL_FILE1;
 			break;
 		case NODE_ID_SCENE2:
-			x_pos = 100;
-			z_pos = 100;
+			x_pos = 0;
+			z_pos = 0;
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
 			sceneFile = LEVEL_FILE2;
 			break;
 		case NODE_ID_SCENE3:
-			x_pos = 100;
-			z_pos = 100;
+			x_pos = 0;
+			z_pos = -1000;
 			scene_fall_id = NODE_ID_SCENE3_FALL;
 			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
 			sceneFile = LEVEL_FILE3;
@@ -230,19 +230,17 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 	}
 
-	smgr.loadScene(sceneFile);
+	irr::scene::ISceneManager* smgr1 = smgr.createNewSceneManager(  );
+	smgr1->loadScene(sceneFile);
 /*	
 	irr::core::vector3df radius = smgr.getRootSceneNode()->getBoundingBox().MaxEdge 
 		- smgr.getRootSceneNode()->getBoundingBox().getCenter();
 */	
 	//std::cout << "Radius: " << radius.X << std::endl;
-
-	levelTriangleSelector = smgr.createMetaTriangleSelector();
-
 	// add triangle selectors for every mesh node in the level
 	irr::core::array< irr::scene::ISceneNode* > outNodes;
 
-	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+	smgr1->getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
 		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
@@ -253,7 +251,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			if (meshNode->getID() != NODE_ID_SCENE1_FALL && meshNode->getID() != NODE_ID_SCENE2_FALL &&
 				meshNode->getID() != NODE_ID_SCENE3_FALL && meshNode->getID() != NODE_ID_SCENE4_FALL)
 			{
-				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
+				irr::scene::ITriangleSelector* meshTriangleSelector = smgr1->createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
 				check(meshTriangleSelector);
 				meshNode->setTriangleSelector( meshTriangleSelector );
 				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
@@ -280,7 +278,17 @@ void GameWorld::AddScene(irr::s32 sceneType)
 		}
 	}
 	outNodes.clear();
+	//smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+	GEngine.switchToNewSceneManager( smgr1 );
+
+	// refresh the cached scene manager
+	smgr = GEngine.GetSceneManager();
+	std::cout<<"1"<<std::endl;
+	std::cout << (smgr.getRootSceneNode() ? "NOTNULL" : "NULL") << std::endl;
+	std::cout<<"1.5"<<std::endl;
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+	//smgr.setActiveCamera(smgr.addCameraSceneNode());
+	std::cout<<"2"<<std::endl;
 }
 
 
@@ -313,8 +321,10 @@ void GameWorld::InitLight()
 	lightInfo.Type = irr::video::ELT_DIRECTIONAL;
 	lightInfo.DiffuseColor = irr::video::SColorf(0.5f,0.5f,0.5f);
 
+	std::cout<<"3"<<std::endl;
 	// Add a single directional light in the level
 	light = smgr.addLightSceneNode();
+	std::cout<<"4"<<std::endl;
 	check(light);
 	light->setLightData( lightInfo );
 	light->setRotation( DIRECTIONAL_LIGHT_ROTATION );
@@ -416,7 +426,7 @@ void GameWorld::InitNPC()
 	SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	actors.push_back( sellingMachine1 );
 
-	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(200, 30, -30), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(50, 25, 400), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	actors.push_back( TriggerEventItem1 );
 
 	irr::core::array<irr::core::stringw> npc1dialogs;

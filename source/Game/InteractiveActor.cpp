@@ -3,6 +3,7 @@
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
 #include "Player.hpp"
+#include "NodeID.hpp"
 
 #include <iostream>
 
@@ -27,7 +28,7 @@ void InteractiveActor::Tick( irr::f32 delta )
 
 	if(!interacting)
 	{
-		if( receiver.keyReleased(irr::KEY_KEY_V) && node->getID()!=10)
+		if( receiver.keyReleased(irr::KEY_KEY_V) && node->getID()!= NODE_ID_TRIGGER_EVENT_ITEM)
 		{
 			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 			{
@@ -45,6 +46,19 @@ void InteractiveActor::Tick( irr::f32 delta )
 				//}
 			}
 		}
+		else if (node->getID()== NODE_ID_TRIGGER_EVENT_ITEM
+			&& node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance()
+		)
+        {
+			static bool firstTime = true;
+			if (firstTime)
+			{
+				interacting = true;
+				world.requestInteracting(true, this);
+				interaction( delta );
+				firstTime = false;
+			}
+        }
 	}
 	else if(interacting)
 	{

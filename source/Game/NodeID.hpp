@@ -34,5 +34,6 @@
 
 //house ID = 20
 #define NODE_ID_HOUSE 20
+#define NODE_ID_TRIGGER_EVENT_ITEM 10
 
 #endif // NodeID_h

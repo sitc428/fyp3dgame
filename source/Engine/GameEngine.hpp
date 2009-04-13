@@ -4,6 +4,8 @@
 #include <irrklang/irrKlang.h>
 #include <irrlicht/irrlicht.h>
 
+#include <iostream>
+
 #include "Check.hpp"
 
 namespace irr
@@ -57,7 +59,7 @@ public:
 	irr::video::IVideoDriver& GetDriver() const { return *driver; }
 	irr::scene::ISceneManager& GetSceneManager() const { return *smgr; }
 	InputEventReceiver& GetReceiver() const { return *receiver; }
-	ShaderFactory& GetShaderFactory() const { return *shaderFactory; }
+	ShaderFactory& GetShaderFactory() { return *shaderFactory; }
 	irrklang::ISoundEngine& GetSoundEngine() const { return *soundEngine; }
 	ParticleManager& GetParticleManager() { return *particleManager; }
 	FontManager* GetFontManager() { return fmgr; }
@@ -99,6 +101,8 @@ public:
 	// changes the music playing
 	void ChangeBGM( const irr::c8* name = NULL );
 
+	void switchToNewSceneManager(irr::scene::ISceneManager* newSmgr);
+
 private:
 	// perform the main tick update for the current state
 	void TickCurrentState( irr::f32 delta );
@@ -123,6 +127,7 @@ private:
 
 	irr::IrrlichtDevice* device;
 	irr::video::IVideoDriver* driver;
+	irr::scene::ISceneManager* mainSmgr;
 	irr::scene::ISceneManager* smgr;
 	InputEventReceiver* receiver;
 	ShaderFactory* shaderFactory;

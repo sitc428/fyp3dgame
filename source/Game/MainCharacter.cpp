@@ -17,18 +17,12 @@
 #include "XItem.hpp"
 
 // Parameters specifying default parameters
-//static const irr::core::vector3df		defaultPosition = irr::core::vector3df(150,50,20);
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(0,10,450);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
-static const irr::c8*		MAIN_CHARACTER_SHADOWTEXTURE = "mdeia/model/PedroTexture.png";
-static const irr::c8*		MAIN_CHARACTER_vsFileName = "model/shader/trial.vert"; // filename for the vertex shader
-static const irr::c8*		MAIN_CHARACTER_psFileName = "model/shader/trial.frag"; // filename for the pixel shader
-
 static const irr::c8*		defaultTexture = "media/model/PedroTexture.png";
 static const irr::f32		ANIMATION_SPEED = 24;
-static const irr::f32		ANIMATION_TRANSITION_BLEND_TIME = 0.2f;
 
 static irr::core::vector3df defaultAimVector = irr::core::vector3df(0, 0, -1.0);
 
@@ -39,33 +33,12 @@ static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_START = 4;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_FORWARD_END = 30;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_START = 38;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_END = 63;
-//static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 72;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 80;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_END = 97;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_START = -1;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_JUMP_END = -1;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_START = 126;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_END = 139;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_START = 104;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_END = 124;
-//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_START = 92;
-//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_END = 121;
-//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_START = 62;
-//static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_END = 91;
-
-// frame numbers for footsteps
-/*
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_FORWARD_LEFT_FOOTSTEP_FRAME = 2;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_FORWARD_RIGHT_FOOTSTEP_FRAME = 17;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_BACK_LEFT_FOOTSTEP_FRAME = 32;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_BACK_RIGHT_FOOTSTEP_FRAME = 40;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_BACK_LEFT_FOOTSTEP2_FRAME = 48;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_LEFT_FOOTSTEP_FRAME = 120;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_LEFT_RIGHT_FOOTSTEP_FRAME = 107;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_LEFT_FOOTSTEP_FRAME = 90;
-static const irr::u32			MAIN_CHARACTER_ANIMATION_WALK_SIDESTEP_RIGHT_RIGHT_FOOTSTEP_FRAME = 75;
-static const irr::u32			FOOTSTEP_DURATION = 6000;
-*/
 
 // constructor
 MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
@@ -245,8 +218,8 @@ void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
 		MyMainCharacterShaderCallBack *mc = new MyMainCharacterShaderCallBack(&(GEngine.GetDevice()), lightPosition);
 
 		newMaterialType = gpuServices->addHighLevelShaderMaterialFromFiles(
-			MAIN_CHARACTER_vsFileName, "main", irr::video::EVST_VS_1_1,
-			MAIN_CHARACTER_psFileName, "main", irr::video::EPST_PS_1_1,
+			"media/shader/opengl.vert", "main", irr::video::EVST_VS_1_1,
+			"media/shader/opengl.frag", "main", irr::video::EPST_PS_1_1,
 			mc, irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
 
 		mc->drop();
@@ -386,11 +359,11 @@ void MainCharacter::DoInput()
 		if (GetMagicLevel()<3)
 		{
 			SetChargingProgress(GetChargingProgress()+1);
-			if (GetChargingProgress()%100==0)
+			if (GetChargingProgress()%100 == 0)
 				SetMagicLevel(GetMagicLevel()+1);
 		}
 	}
-	else
+	else if( receiver.keyReleased(irr::KEY_KEY_C) )
 	{
 		SetCharging( false );
 		SetChargingProgress(0);
