@@ -99,6 +99,8 @@ public:
 	WeaponItem* GetCurrentWeapon() const {return _currentWeapon;};
 	MDiscItem* GetCurrentMagic() const {return _currentMagic;};
 	irr::scene::ISceneNode* getWeaponNode() { return weaponNode; }
+	bool GetCombo() const {return _combo;};
+	irr::s32 GetComboNum() const {return _comboNum;};
 	
 	/********************
 	 Player Attribute SET FUNCTIONS
@@ -115,6 +117,8 @@ public:
 	void SetEXP(irr::s32 exp) {_exp = exp;}
 	void SetCurrentWeapon(WeaponItem* currentWeapon) { _currentWeapon = currentWeapon;}
 	void SetCurrentMagic(MDiscItem* currentMagic) { _currentMagic = currentMagic;}
+	void SetCombo(bool combo) {_combo = combo;};
+	void SetComboNum(irr::s32 comboNum) {_comboNum = comboNum;};
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
@@ -163,6 +167,8 @@ private:
 	irr::s32 _exp;
 	WeaponItem* _currentWeapon;
 	MDiscItem* _currentMagic;
+	bool _combo;
+	irr::s32 _comboNum;
 
 	/************
 	 ************/
