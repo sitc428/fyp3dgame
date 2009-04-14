@@ -63,7 +63,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_charging(false),
 	_magiclevel(0),
 	_currentWeapon(NULL),
-	_currentMagic(NULL)
+	_currentMagic(NULL),
+	_combo(false),
+	_comboNum(0)
 {
 	//test1 = new Shader(&(GEngine.GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID, "MainCharacter");
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
@@ -113,13 +115,16 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	weaponNode = smgr.addMeshSceneNode(
-		smgr.getMesh("media/model/sword.x"),
-		node->getJointNode("RightFingerBase")
+		smgr.getMesh("media/model/sword.obj"),//Mastersword_v003.obj or sword.obj
+		node->getJointNode("RightFingerBase"),
+		0,
+		irr::core::vector3df(-3,0,3.5),
+		irr::core::vector3df(-433.5,-1833,-12)
 	);
 	
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
-	weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
-	weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
+	//weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
+	//weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 		//new Shader(&(GEngine.GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );

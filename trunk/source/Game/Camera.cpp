@@ -83,8 +83,8 @@ void Camera::DoInput( irr::f32 delta )
 
 	zoom = zoom - receiver.wheel() * delta;
 
-	if( zoom < cameraMinZoom )
-		zoom = cameraMinZoom;
+	//if( zoom < cameraMinZoom )
+		//zoom = cameraMinZoom;
 	if( zoom > cameraMaxZoom )
 		zoom = cameraMaxZoom;
 }
