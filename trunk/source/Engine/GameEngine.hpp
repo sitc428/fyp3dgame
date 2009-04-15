@@ -63,7 +63,6 @@ public:
 	InputEventReceiver& GetReceiver() const { return *receiver; }
 	ShaderFactory& GetShaderFactory() { return *shaderFactory; }
 	irrklang::ISoundEngine& GetSoundEngine() const { return *soundEngine; }
-	ParticleManager& GetParticleManager() { return *particleManager; }
 	FontManager* GetFontManager() { return fmgr; }
 	const irr::core::dimension2d<irr::s32> & GetScreenSize() { return screenSize; }
 	irr::video::ITexture* GetTexture(irr::c8*);
@@ -139,7 +138,6 @@ private:
 	InputEventReceiver* receiver;
 	ShaderFactory* shaderFactory;
 	irrklang::ISoundEngine* soundEngine;
-	ParticleManager* particleManager; // particle manager for easy creation of particle effects 
 	FontManager* fmgr;
 
 	irr::core::dimension2d<irr::s32> screenSize;

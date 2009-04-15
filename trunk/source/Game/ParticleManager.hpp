@@ -1,45 +1,51 @@
+/*
+ *  ParticleManager.hpp
+ *  FYP
+ *
+ *  Created by Mr.JJ on 09å¹?????
+ *  Copyright 2009 HKUST. All rights reserved.
+ *
+ */
 #ifndef __PARTICLE_MANAGER_HPP__
 #define __PARTICLE_MANAGER_HPP__
 
 #include <irrlicht/irrlicht.h>
 
-/**
- * Class which provides methods for spawning various particle effects in the game
- */
+static const irr::video::E_MATERIAL_TYPE matrerialType= irr::video::EMT_TRANSPARENT_VERTEX_ALPHA;
+
 class ParticleManager
 {
-	public:
+public:
+	ParticleManager(irr::scene::ISceneManager*, irr::core::vector3df, irr::core::vector3df, irr::core::aabbox3df);
+	~ParticleManager();
 
-		// constructor
-		explicit ParticleManager( irr::scene::ISceneManager& sceneManager );
-		// destructor
-		~ParticleManager();
-		/*
-		// creates a snowball explosion particle emmiter and sets it for the owningNode, duration must be in milliseconds
-		// returns the emitter which has been attached to the owning node
-		irr::scene::IParticleEmitter* CreateSnowballExplosion( irr::scene::IParticleSystemSceneNode& owningNode, const irr::u32 duration );
-		// creates a dynamite explosion particle emmiter and sets it for the owningNode, duration must be in milliseconds
-		// returns the emitter which has been attached to the owning node
-		irr::scene::IParticleEmitter* CreateDynamiteExplosion( irr::scene::IParticleSystemSceneNode& owningNode, const irr::u32 duration );
-		// creates a snowplow snowblast particle emmiter and sets it for the owningNode
-		// returns the emitter which has been attached to the owning node
-		irr::scene::IParticleEmitter* CreateSnowplowSnowblast( irr::scene::IParticleSystemSceneNode& owningNode, const irr::core::vector3df& direction );
-		// creates a spark particle emmiter and sets it for the owningNode
-		// returns the emitter which has been attached to the owning node
-		irr::scene::IParticleEmitter* CreateDynamiteSparkEmitter( irr::scene::IParticleSystemSceneNode& owningNode );
-		// creates snow explosion particles
-		void CreateSnowExplosion( const irr::core::vector3df& position, const irr::u32 duration );
-		irr::scene::IParticleEmitter* CreateSnowmanDeathExplosion( irr::scene::IParticleSystemSceneNode& owningNode, const irr::u32 duration );
-		*/
-		// creates a falling snow particle emmiter and sets it for the owningNode
-		// returns the emitter which has been attached to the owning node
-		irr::scene::IParticleEmitter* CreateFallingSnowEmitter( irr::scene::IParticleSystemSceneNode& owningNode );
-	private:
+	void CreateBoxEmitter(irr::core::vector3df, irr::u32, irr::u32, irr::u32, irr::u32, irr::video::ITexture*);
+	void CreateMeshEmitter(irr::scene::IMesh * , irr::core::vector3df, irr::u32, irr::u32, irr::u32, irr::u32, irr::video::ITexture*);
+	
+	irr::scene::IParticleSystemSceneNode* GetParticleSystemNode();
+	irr::scene::IParticleEmitter* GetEmitter();
 
-		irr::scene::ISceneManager& smgr; // scene manager from the engine
-		irr::video::ITexture* SnowExplosionTexture;  // texture used for the snow explosion effect
-		irr::video::ITexture* DynamiteExplosionTexture; // texture used for dynamite explosion effect
-		irr::video::ITexture* ParticleWhiteTexture; // texture used for dynamite explosion effect
+	void resetEmitter()
+	{
+		ps->setEmitter(0);
+	}
+	
+private:
+	irr::scene::IParticleSystemSceneNode* ps;
+	irr::scene::IParticleEmitter* em;
+	irr::scene::IParticleAffector* paf;
+
+	irr::core::vector3df position;
+	irr::core::vector3df scale;
+	irr::core::aabbox3df aabbox;
+	irr::core::vector3df direction;
+	irr::u32 minParticlesPerSecond;
+	irr::u32 maxParticlesPerSecond;
+	irr::u32 lifeTimeMin;
+	irr::u32 lifeTimeMax;
+	irr::video::ITexture *texture;
+
+	irr::scene::ISceneManager* smgr;
 };
 
-#endif //__PARTICLE_MANAGER_HPP__
+#endif // __PARTICLE_MANAGER_HPP__

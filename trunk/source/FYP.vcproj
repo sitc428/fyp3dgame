@@ -296,10 +296,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Game\ParticleSystemEngine.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Game\Player.hpp"
 				>
 			</File>
@@ -444,11 +440,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\game\ParticleManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Game\ParticleSystemEngine.cpp"
+				RelativePath=".\Game\ParticleManager.cpp"
 				>
 			</File>
 			<File
