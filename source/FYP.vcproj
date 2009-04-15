@@ -252,6 +252,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Engine\GamePart.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Game\GameWorld.hpp"
 				>
 			</File>
@@ -397,6 +401,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\GameHUD.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Engine\GamePart.cpp"
 				>
 			</File>
 			<File

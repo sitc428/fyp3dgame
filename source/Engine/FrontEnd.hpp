@@ -3,7 +3,7 @@
 
 #include <irrlicht/irrlicht.h>
 
-class GameEngine;
+#include "GamePart.hpp"
 
 enum EMenuItem
 {
@@ -11,7 +11,7 @@ enum EMenuItem
 	FE_MENU_ITEM_EXIT
 };
 
-class FrontEnd
+class FrontEnd : public GamePart
 {
 public:
 	// constructor
@@ -23,6 +23,7 @@ public:
 
 	// called every frame with the frame's elapsed time
 	void Tick( irr::f32 delta );
+
 	void Exit();
 
 private:
@@ -41,8 +42,6 @@ private:
 	irr::gui::IGUIStaticText* ExitGameText;  // gui element displaying exit game text
 
 	EMenuItem currSelectedItem;    // which of the text menu items is currently selected
-
-	GameEngine& GEngine;
 };
 
 #endif //__FRONT_END_HPP__

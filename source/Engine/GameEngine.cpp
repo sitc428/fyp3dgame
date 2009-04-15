@@ -260,10 +260,7 @@ void GameEngine::PreloadTexture()
 			std::getline( textureList, texturePath );
 
 			if( texturePath != "" )
-				//texturePool.insert(
-				//	std::make_pair( texturePath, driver->getTexture( texturePath.c_str() ) )
 				driver->getTexture( texturePath.c_str() );
-				//);
 		}
 	}
 
@@ -282,8 +279,6 @@ void GameEngine::PreloadModel()
 			std::getline( modelList, modelPath );
 
 			if( modelPath != "")
-				//modelMeshPool.insert(
-				//	std::make_pair( modelPath, smgr->getMesh( modelPath.c_str() )
 				smgr->getMesh( modelPath.c_str() );
 		}
 	}
@@ -526,8 +521,19 @@ void GameEngine::ChangeBGM( const irr::c8* name )
 	if( name )
 	{
 		// load and play music
-		gameMusic = GetSoundEngine().play2D(name, true, false, true);
+		gameMusic = soundEngine->play2D(name, true, false, true);
 		gameMusic->setVolume( 0.65f );
 	}
 
+}
+
+void GameEngine::PlaySE(const irr::c8* SEFilePath)
+{
+	if( SEFilePath )
+	{
+	}
+	else
+	{
+		//irrklang::ISound* se = soundEngine->
+	}
 }

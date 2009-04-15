@@ -40,7 +40,8 @@ static const irr::f32 START_LEVEL_STATE_TIMER = 3.0f;
 static const irr::f32 GAME_OVER_STATE_TIMER = 5.0f;
 static const irr::f32 FENCE_FALL_TIME = 3.f;
 
-GameWorld::GameWorld( GameEngine& gameEngine ):
+GameWorld::GameWorld( GameEngine& gameEngine )
+	: GamePart( gameEngine ),
 	smgr(gameEngine.GetSceneManager()),
 	mainCharacter(NULL),
 	robot(NULL),
@@ -51,8 +52,7 @@ GameWorld::GameWorld( GameEngine& gameEngine ):
 	interactingActor(NULL),
 	gameMessage(NULL),
 	gameOverImg(NULL),
-	curLevel(0),
-	GEngine(gameEngine)
+	curLevel(0)
 {
 }
 
@@ -285,7 +285,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 void GameWorld::InitMusic()
 {
 	// load and play music
-	GEngine.ChangeBGM();
+	GEngine.ChangeBGM("media/music/scene1.mp3");
 
 	/*
 	// play wind sound effect
