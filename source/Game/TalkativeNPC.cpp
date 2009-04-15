@@ -72,7 +72,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 	{
 		InputEventReceiver& receiver = GEngine.GetReceiver();
 
-		if(receiver.keyReleased(irr::KEY_KEY_P))
+		if(receiver.keyReleased(irr::KEY_KEY_V))
 		{
 			state = 0;
 		}
