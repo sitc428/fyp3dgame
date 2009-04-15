@@ -14,7 +14,7 @@
 #include "MDiscItem.hpp"
 #include "Monster.hpp"
 #include "NodeID.hpp"
-#include "ParticleSystemEngine.hpp"
+#include "ParticleManager.hpp"
 #include "Player.hpp"
 #include "Robot.hpp"
 #include "ShaderFactory.hpp"
@@ -86,17 +86,17 @@ void GameWorld::InitShader()
 {
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 	
-	ParticleSystemEngine* fire = new ParticleSystemEngine(&smgr, irr::core::vector3df(0,20,0), irr::core::vector3df(2,2,2),
+	ParticleManager* fire = new ParticleManager(&smgr, irr::core::vector3df(0,20,0), irr::core::vector3df(2,2,2),
 		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7));
 	fire->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 						   50,80,800,1000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 	
-	ParticleSystemEngine* fire2 = new ParticleSystemEngine(&smgr, irr::core::vector3df(0,20,-100), irr::core::vector3df(2,2,2),
+	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(0,20,-100), irr::core::vector3df(2,2,2),
 													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire2->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	 
-	ParticleSystemEngine* fire3 = new ParticleSystemEngine(&smgr, irr::core::vector3df(40,20,0), irr::core::vector3df(2,2,2),
+	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(40,20,0), irr::core::vector3df(2,2,2),
 		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"), irr::core::vector3df(0.0f,0.06f,0.0f),
 							10,20,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
@@ -107,91 +107,19 @@ void GameWorld::InitShader()
 															80,100,
 															video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255),
 															800,2000);
-*/	
-	/*irr::scene::IParticleEmitter* em = ps->createCylinderEmitter(core::vector3df(-100,0,0),5.0f, irr::core::vector3df(-100,0,0),
-																 10,false,core::vector3df(0.0f,0.06f,0.0f));
- 	*/
-	//irr::scene::IParticleEmitter* em = ps->createPointEmitter(core::vector3df(0.0f,0.06f,0.0f));
-	
-/*	
-	irr::scene::IParticleSystemSceneNode* ps =0;
-	ps = smgr.addParticleSystemSceneNode(false);
-	ps->setPosition(core::vector3df(40,20,0));
-	ps->setScale(core::vector3df(2,2,2));
-	ps->setParticleSize(core::dimension2d<irr::f32>(20.0f, 20.0f));
-	
-	irr::scene::IParticleEmitter* em = ps->createMeshEmitter(smgr.getMesh("media/model/slime08.x"),true,
-															 irr::core::vector3df(0.0f,0.06f,0.0f),100.0f,-1,false,10,20,
-															 irr::video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255),
-															 800,2000);
-	
-	
-	ps->setEmitter(em);
-	em->drop();
-	
-	scene::IParticleAffector* paf =
-	ps->createFadeOutParticleAffector();
-	
-	ps->addAffector(paf);
-	paf->drop();
-	
-	ps->setMaterialFlag(video::EMF_LIGHTING, false);
-	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	ps->setMaterialTexture(0,GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
-	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
-	*/
+*/
 }
 
 // loads us the level and sets up the triangle selector used for collision checks with the level
 void GameWorld::InitLevel()
 {
-	/*
-	// load the scene
-	smgr.loadScene( LEVEL_FILE );
-	//smgr.loadScene( LEVEL_FILE5 );
-
-	// setup levelTriangleSelector, used for collision detection with the level
-	levelTriangleSelector = smgr.createMetaTriangleSelector();
-
-	// add triangle selectors for every mesh node in the level
-	irr::core::array<irr::scene::ISceneNode*> outNodes;
-	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
-	for( irr::u32 i = 0; i < outNodes.size(); ++i )
-	{
-		//irr::scene::IMeshSceneNode* meshNode = dynamic_cast<irr::scene::IMeshSceneNode*>(outNodes[i]);
-		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);	
-		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
-		if( meshNode->getMesh() )
-		{
-			if (meshNode->getID() != NODE_ID_FENCE_TO_FALL)// && meshNode->getID() != NODE_ID_SCENE5_FALL)
-			{
-				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
-				check(meshTriangleSelector);
-				meshNode->setTriangleSelector( meshTriangleSelector );
-				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-				meshTriangleSelector->drop();
-				meshTriangleSelector = NULL;
-
-				blocks.push_back( meshNode );
-				//meshNode->setDebugDataVisible( irr::scene::EDS_BBOX);
-			}
-		}
-	}
-	outNodes.clear();
-	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
-*/
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
 	AddScene(NODE_ID_SCENE1);
-	//AddScene(NODE_ID_SCENE3);
-	//boost::thread thread1( boost::bind(&GameWorld::AddScene, this, NODE_ID_SCENE2));
-	//boost::thread thread2( boost::bind(&GameWorld::AddScene, (GameWorld*)this, NODE_ID_SCENE3));
 
 	// set game state
 	stateTimer = 0;
 	gameState = state_START_LEVEL;
-
-	SetNumLives( 3 );
 }
 
 void GameWorld::AddScene(irr::s32 sceneType)
@@ -264,7 +192,6 @@ void GameWorld::AddScene(irr::s32 sceneType)
 
 				meshNode->setMaterialTexture( 1, linetext );
 				meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
-				//meshNode->setDebugDataVisible( irr::scene::EDS_BBOX);
 				if (meshNode->getID()==scene_tri_id)
 				{
 					std::cout << "!!!!" << std::endl;
@@ -304,10 +231,8 @@ void GameWorld::InitLight()
 	lightInfo.Type = irr::video::ELT_DIRECTIONAL;
 	lightInfo.DiffuseColor = irr::video::SColorf(0.5f,0.5f,0.5f);
 
-	std::cout<<"3"<<std::endl;
 	// Add a single directional light in the level
 	light = smgr.addLightSceneNode();
-	std::cout<<"4"<<std::endl;
 	check(light);
 	light->setLightData( lightInfo );
 	light->setRotation( DIRECTIONAL_LIGHT_ROTATION );
@@ -338,35 +263,6 @@ void GameWorld::InitEnemies()
 	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(0,0,400));
-	
-	
-	/*
-	irr::scene::IParticleSystemSceneNode* ps =0;
-	ps = smgr.addParticleSystemSceneNode(false);
-	ps->setPosition(core::vector3df(-100,0,0));
-	ps->setScale(core::vector3df(2,2,2));
-	ps->setParticleSize(core::dimension2d<irr::f32>(20.0f, 20.0f));
-	
-	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
-		core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
-		core::vector3df(0.0f,0.06f,0.0f),
-		80,100,
-		video::SColor(0,255,255,255), irr::video::SColor(0,255,255,255),
-		800,2000);
-	ps->setEmitter(em);
-	em->drop();
-	
-	scene::IParticleAffector* paf =
-	ps->createFadeOutParticleAffector();
-	
-	ps->addAffector(paf);
-	paf->drop();
-	
-	ps->setMaterialFlag(video::EMF_LIGHTING, false);
-	ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	ps->setMaterialTexture(0,GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
-	ps->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
-	*/
 }
 
 // sets up the camera to be able to look at the scene

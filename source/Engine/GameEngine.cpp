@@ -30,7 +30,6 @@ GameEngine::GameEngine()
 	receiver(NULL),
 	shaderFactory(NULL),
 	soundEngine(NULL),
-	particleManager(NULL),
 	fmgr(NULL),
 	screenSize(800, 600),
 	lastTime(0),
@@ -85,9 +84,6 @@ bool GameEngine::Init()
 	if( !shaderFactory->ShaderAvailable() )
 		std::cout << "Shader Not Available, all shadering effect will be disabled." << std::endl;
 
-	// create a particle manager instance
-	particleManager = new ParticleManager( *smgr );
-
 	boost::thread textureThread( boost::bind(&GameEngine::PreloadTexture, this) );
 
 	// init successfull
@@ -117,13 +113,6 @@ void GameEngine::Exit()
 	{
 		delete shaderFactory;
 		shaderFactory = NULL;
-	}
-
-	// clean up the particle manager
-	if( particleManager)
-	{
-		delete particleManager;
-		particleManager = NULL;
 	}
 
 	if( receiver )

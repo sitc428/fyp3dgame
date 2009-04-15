@@ -23,7 +23,7 @@
 #include <irrlicht/irrlicht.h>
 #include <boost/timer.hpp>
 #include "Player.hpp"
-#include "ParticleSystemEngine.hpp"
+#include "ParticleManager.hpp"
 #include <math.h>
 #include "MainCharacter.hpp"
 
@@ -92,7 +92,7 @@ private:
 	irr::core::vector3df pos;
 	//int  Health;
 
-	ParticleSystemEngine* sparking;
+	ParticleManager* sparking;
 };
 
 //EVENT-------------------------------------------------------------
