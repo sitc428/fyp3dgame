@@ -21,6 +21,11 @@ public:
 
 	void CreateBoxEmitter(irr::core::vector3df, irr::u32, irr::u32, irr::u32, irr::u32, irr::video::ITexture*);
 	void CreateMeshEmitter(irr::scene::IMesh * , irr::core::vector3df, irr::u32, irr::u32, irr::u32, irr::u32, irr::video::ITexture*);
+	void CreateCylinderEmitter(const irr::core::vector3df , irr::f32 , irr::core::vector3df, 
+							   irr::f32, irr::core::vector3df, 
+							   irr::u32 , irr::u32 , 
+							   irr::u32, irr::u32, irr::video::ITexture*);
+	
 	
 	irr::scene::IParticleSystemSceneNode* GetParticleSystemNode();
 	irr::scene::IParticleEmitter* GetEmitter();
