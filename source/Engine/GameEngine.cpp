@@ -260,9 +260,10 @@ void GameEngine::PreloadTexture()
 			std::getline( textureList, texturePath );
 
 			if( texturePath != "" )
-				texturePool.insert(
-					std::make_pair( texturePath, driver->getTexture( texturePath.c_str() ) )
-				);
+				//texturePool.insert(
+				//	std::make_pair( texturePath, driver->getTexture( texturePath.c_str() ) )
+				driver->getTexture( texturePath.c_str() );
+				//);
 		}
 	}
 
@@ -281,10 +282,9 @@ void GameEngine::PreloadModel()
 			std::getline( modelList, modelPath );
 
 			if( modelPath != "")
-				modelMeshPool.insert(
-					std::make_pair( modelPath, smgr->getMesh( modelPath.c_str() )
-				)
-			);
+				//modelMeshPool.insert(
+				//	std::make_pair( modelPath, smgr->getMesh( modelPath.c_str() )
+				smgr->getMesh( modelPath.c_str();
 		}
 	}
 }
