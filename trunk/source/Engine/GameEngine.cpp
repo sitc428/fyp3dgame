@@ -284,7 +284,7 @@ void GameEngine::PreloadModel()
 			if( modelPath != "")
 				//modelMeshPool.insert(
 				//	std::make_pair( modelPath, smgr->getMesh( modelPath.c_str() )
-				smgr->getMesh( modelPath.c_str();
+				smgr->getMesh( modelPath.c_str() );
 		}
 	}
 }
