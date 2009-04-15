@@ -18,7 +18,7 @@
 #include "Robot.hpp"
 
 // Parameters specifying default parameters
-static const irr::core::vector3df		defaultPosition = irr::core::vector3df(0,10,0);
+static const irr::core::vector3df		defaultPosition = irr::core::vector3df(100,10,0);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
@@ -376,6 +376,9 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyDown(irr::KEY_KEY_X) )
 	{
+		SetCharging(false);
+		SetChargingProgress(0);
+		SetMagicLevel(0);
 		setDefending( true );
 		return;
 	}
