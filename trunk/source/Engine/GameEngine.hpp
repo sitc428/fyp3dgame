@@ -5,6 +5,8 @@
 #include <irrlicht/irrlicht.h>
 
 #include <iostream>
+#include <map>
+#include <string>
 
 #include "Check.hpp"
 
@@ -64,6 +66,8 @@ public:
 	ParticleManager& GetParticleManager() { return *particleManager; }
 	FontManager* GetFontManager() { return fmgr; }
 	const irr::core::dimension2d<irr::s32> & GetScreenSize() { return screenSize; }
+	irr::video::ITexture* GetTexture(irr::c8*);
+	irr::video::ITexture* GetMesh(irr::c8*);
 
 	irr::u32 GetRealTime() const {
 #if defined _IRR_WINDOWS_
@@ -102,6 +106,10 @@ public:
 	void ChangeBGM( const irr::c8* name = NULL );
 
 private:
+	// preload texture and model files
+	void PreloadTexture();
+	void PreloadModel();
+
 	// perform the main tick update for the current state
 	void TickCurrentState( irr::f32 delta );
 	void TickHUD( irr::f32 delta);
@@ -135,6 +143,9 @@ private:
 	irr::core::dimension2d<irr::s32> screenSize;
 
 	irr::u32 lastTime; // used to get elapsed time
+
+	std::map< std::string, irr::video::ITexture*> texturePool;
+	std::map< std::string, irr::scene::IMesh*> modelMeshPool;
 
 	EEngineState state; // the state the engine is in
 	EEngineState requestedNextState; // requested next state we want to transition to 

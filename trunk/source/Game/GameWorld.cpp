@@ -182,7 +182,7 @@ void GameWorld::InitLevel()
 */
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
-	AddScene(NODE_ID_SCENE2);
+	AddScene(NODE_ID_SCENE1);
 	//AddScene(NODE_ID_SCENE3);
 	//boost::thread thread1( boost::bind(&GameWorld::AddScene, this, NODE_ID_SCENE2));
 	//boost::thread thread2( boost::bind(&GameWorld::AddScene, (GameWorld*)this, NODE_ID_SCENE3));
@@ -206,28 +206,28 @@ void GameWorld::AddScene(irr::s32 sceneType)
 	{
 		case NODE_ID_SCENE1:
 			x_pos = 0;
-			z_pos = 1000;
+			z_pos = 0;
 			scene_fall_id = NODE_ID_SCENE1_FALL;
 			scene_tri_id = NODE_ID_SCENE1_TRI_NEEDED;
 			sceneFile = LEVEL_FILE1;
 			break;
 		case NODE_ID_SCENE2:
 			x_pos = 0;
-			z_pos = 0;
+			z_pos = 1000;
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
 			sceneFile = LEVEL_FILE2;
 			break;
 		case NODE_ID_SCENE3:
 			x_pos = 0;
-			z_pos = -1000;
+			z_pos = 2000;
 			scene_fall_id = NODE_ID_SCENE3_FALL;
 			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
 			sceneFile = LEVEL_FILE3;
 			break;
 		case NODE_ID_SCENE4:
-			x_pos = 300;
-			z_pos = 0;
+			x_pos = 0;
+			z_pos = 3000;
 			scene_fall_id = NODE_ID_SCENE4_FALL;
 			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
 			sceneFile = LEVEL_FILE4;

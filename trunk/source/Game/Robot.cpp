@@ -16,7 +16,7 @@ static const irr::c8*		defaultTexture0 = "media/model/robot_UV.png";
 static const irr::c8*		defaultTexture1 = "media/model/shade_line.png";
 
 Robot::Robot( GameEngine& gameEngine, GameWorld& gameWorld )
-	:Actor(gameEngine, gameWorld),
+	:Player(gameEngine, gameWorld),
 	node(NULL),
 	collisionAnimator(NULL)
 {
