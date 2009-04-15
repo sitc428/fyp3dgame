@@ -1,3 +1,4 @@
+
 #include <cmath>
 #include <iostream>
 
@@ -276,33 +277,71 @@ void MainCharacter::setCasting( bool casting )
 	{
 		action = EMCAS_MAGICATTACK;
 		MagicNode->setParent(&(world.GetRobot()->GetNode()));
-		MagicNode->setPosition(MagicNode->getPosition() + irr::core::vector3df(0,50,0));
+		static irr::core::vector3df magicPos = MagicNode->getPosition() + irr::core::vector3df(0,70,0);
+		MagicNode->setPosition(magicPos);
 		MagicNode->setVisible(true);
 		
 		irr::scene::ISceneManager& smgr = world.GetSceneManager();
 
 		irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
-			MagicNode->getPosition(), getTargetPos(), 3000);
+			magicPos,
+			getTargetPos(),
+			2000
+			);
+
+		std::cout << "X:  " << getTargetPos().X << std::endl;
+		std::cout << "Y:  " << getTargetPos().Y << std::endl;
+		std::cout << "Z:  " << getTargetPos().Z << std::endl;
 
 		MagicNode->addAnimator(anim);
 		anim->drop();
-		MagicNode->setVisible(false);
-
-
+		//MagicNode->setVisible(false);
 
 		setIdle();
-
 		ATFieldNode->setVisible( false );
 	}
 }
 
 irr::core::vector3df MainCharacter::getTargetPos()
 {
+	irr::core::array<Actor*> actors = world.GetActors();
+	irr::u32 actorsNum = actors.size();
 
+	irr::core::line3df line;
+	line.start = GetNodePosition();
+	line.end = line.start - GetFaceVector() * GetRadius().getLength();
 
+	for( irr::u32 i=0; i < actorsNum; ++i )
+	{
+		if( actors[i]->GetActorType() != ACTOR_ENEMY)
+			continue;
 
-	irr::core::vector3df tmp = irr::core::vector3df(0,0,0);
-	return tmp;
+		if(
+			CollisionHelper::CheckProximity2D(
+				GetNodePosition(),
+				actors[i]->GetNode().getPosition(),
+				GetRadius().getLength() + actors[i]->GetRadius().getLength() - 20.0
+			)
+			//world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line)
+		)
+		{
+			/*irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
+			irr::s32 monDef = ((Monster*)actors[i])->GetDef();
+			std::cout << "Player Attk = " << playerAttk << std::endl;
+			std::cout << "Monster Defence = " << monDef << std::endl;
+			irr::s32 damage = 0;
+			if (playerAttk - monDef > 0 )
+			{
+				damage = playerAttk - monDef;
+			}
+			irr::s32 offset = damage/5 * (rand()%601)/300;
+			std::cout << "Damage = " << damage-offset << std::endl;
+			actors[i]->ReceiveDamage(damage-offset);*/
+			return actors[i]->GetNode().getPosition();
+		}
+	}
+	return world.GetRobot()->GetFaceVector() * GetRadius() * 300;
+	//return GetFaceVector() * GetRadius().getLength() * 30;
 }
 
 void MainCharacter::setRunning( bool running )
