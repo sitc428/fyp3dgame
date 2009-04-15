@@ -7,7 +7,8 @@
 #include "ShaderFactory.hpp"
 #include "StartupScreen.hpp"
 
-#include <iostream>
+#include <boost/thread.hpp>
+#include <fstream>
 
 #ifdef _IRR_WINDOWS_
 
@@ -81,6 +82,8 @@ bool GameEngine::Init()
 
 	// create a particle manager instance
 	particleManager = new ParticleManager( *smgr );
+
+	boost::thread textureThread( boost::bind(&GameEngine::PreloadTexture, this) );
 
 	// init successfull
 	return true;
@@ -242,6 +245,47 @@ void GameEngine::Run()
 	if(state != state_EXIT)
 	{
 		GoToExit();
+	}
+}
+
+void GameEngine::PreloadTexture()
+{
+	std::ifstream textureList("media/model/TextureList.rxw");
+
+	if( textureList )
+	{
+		std::string texturePath = "";
+		while( !textureList.eof() )
+		{
+			std::getline( textureList, texturePath );
+
+			if( texturePath != "" )
+				texturePool.insert(
+					std::make_pair( texturePath, driver->getTexture( texturePath.c_str() ) )
+				);
+		}
+	}
+
+	boost::thread modelThread( boost::bind(&GameEngine::PreloadModel, this) );
+}
+
+void GameEngine::PreloadModel()
+{
+	std::ifstream modelList("media/model/ModelList.rxw");
+
+	if( modelList )
+	{
+		std::string modelPath = "";
+		while( !modelList.eof() )
+		{
+			std::getline( modelList, modelPath );
+
+			if( modelPath != "")
+				modelMeshPool.insert(
+					std::make_pair( modelPath, smgr->getMesh( modelPath.c_str() )
+				)
+			);
+		}
 	}
 }
 
