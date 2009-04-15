@@ -128,11 +128,6 @@ private:
 	// diallow copy constructor from being invoked
 	MainCharacter( const MainCharacter& other );
 
-	// MAYBE USEFUL!
-	// drops a player footprint on the ground
-	//! void PlaceRightFootPrint();
-	//! void PlaceLeftFootPrint();
-
 	// scene graph node for player
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ISceneNode* weaponNode;
@@ -145,10 +140,6 @@ private:
 	
 	// whether the throw power should be increased
 	bool bDoFillup;
-
-	// player footstep sound effect
-	irrklang::ISound* sfxFootstep;
-	irr::f32 sfxTimer;
 
 	Shader* test1;
 	/*********************
@@ -170,28 +161,8 @@ private:
 	bool _combo;
 	irr::s32 _comboNum;
 
-	/************
-	 ************/
-
 	GameWorld& world;
 
-	class MyMainCharacterShaderCallBack : public irr::video::IShaderConstantSetCallBack
-	{
-		public:
-			MyMainCharacterShaderCallBack(irr::IrrlichtDevice* device, irr::core::vector3df* lightPos) : _device(device), _lightPos(lightPos)
-			{
-			}
-
-			virtual void OnSetConstants(irr::video::IMaterialRendererServices* services, irr::s32 userData)
-			{
-				irr::core::vector3df camPos = _device->getSceneManager()->getActiveCamera()->getAbsolutePosition();
-				services->setVertexShaderConstant("view_position", reinterpret_cast<irr::f32*>(&camPos), 3);
-				services->setVertexShaderConstant("LightPosition", reinterpret_cast<irr::f32*>(_lightPos), 3);
-			}
-		private:
-			irr::IrrlichtDevice* _device;
-			irr::core::vector3df* _lightPos;
-	};
 
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{

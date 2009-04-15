@@ -48,11 +48,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	ATFieldNode(NULL),
 	collisionAnimator(NULL),
 	action(EMCAS_IDLE),
-	//throwFillupTimer( 0.0f ),
 	bDoFillup( false ),
 	world(gameWorld),
 	_magicChargeProgress(0),
-	sfxTimer(12),
 	attackCallBack(NULL),
 	_level(1),
 	_exp(0),
@@ -67,7 +65,6 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_combo(false),
 	_comboNum(0)
 {
-	//test1 = new Shader(&(GEngine.GetDevice()),"media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID, "MainCharacter");
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
@@ -123,16 +120,14 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	);
 	
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
-	//weaponNode->setRotation(irr::core::vector3df(5.000000, 20.000000, -90.000000));
-	//weaponNode->setPosition(irr::core::vector3df(-5.5, 2.5, -5.5));
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
-		//new Shader(&(GEngine.GetDevice()),"media/shader/field.vert", "media/shader/field.frag", 0, video::EMT_TRANSPARENT_ADD_COLOR, "field");
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
 	ATFieldNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
 	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
+
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
 
@@ -145,10 +140,6 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	attackCallBack = new AttackAnimationEndCallBack( world, *this );
 
 	aimVector = defaultAimVector;
-
-	// setup snow steps sound effect
-	//	sfxFootstep = GEngine.GetSoundEngine().play2D( "../audio/sfx/snowstepsrun.mp3", true, false, true );
-	//	sfxFootstep->setVolume( 0 );
 }
 
 // we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
@@ -177,13 +168,6 @@ void MainCharacter::RecreateCollisionResponseAnimator()
 // destructor, protected to force user to call Actor::DestroyActor
 MainCharacter::~MainCharacter()
 {
-/*	if( sfxFootstep )
-	{
-		sfxFootstep->stop();
-		sfxFootstep->drop();
-		sfxFootstep = NULL;
-	}
-*/
 	if(collisionAnimator)
 	{
 		collisionAnimator->drop();
@@ -211,26 +195,6 @@ void MainCharacter::SetRotation( const irr::core::vector3df& rot )
 
 	// rotate player
 	node->setRotation( irr::core::vector3df( 0, rotation.Y + defaultRotation.Y, 0 ) );
-}
-
-void MainCharacter::InitShader(irr::core::vector3df* lightPosition)
-{
-	irr::s32 newMaterialType = 0;
-
-	irr::video::IGPUProgrammingServices* gpuServices = GEngine.GetDriver().getGPUProgrammingServices();
-	if(gpuServices)
-	{
-		MyMainCharacterShaderCallBack *mc = new MyMainCharacterShaderCallBack(&(GEngine.GetDevice()), lightPosition);
-
-		newMaterialType = gpuServices->addHighLevelShaderMaterialFromFiles(
-			"media/shader/opengl.vert", "main", irr::video::EVST_VS_1_1,
-			"media/shader/opengl.frag", "main", irr::video::EPST_PS_1_1,
-			mc, irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-
-		mc->drop();
-	}
-
-	node->setMaterialType( (irr::video::E_MATERIAL_TYPE) newMaterialType );
 }
 
 void MainCharacter::setIdle()
@@ -359,7 +323,6 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
-		//std::cout << "Magic Level: " << GetMagicLevel() << std::endl;
 		SetCharging( true );
 		if (GetMagicLevel()<3)
 		{
@@ -424,11 +387,9 @@ void MainCharacter::DoInput()
 	}
 	else if( receiver.keyDown(irr::KEY_DOWN) )
 	{
-		//if(faceVector != -aimVector)
 		if( faceVector != aimVector )
 		{
 			faceVector = aimVector;
-			//faceVector.rotateXZBy( 180, irr::core::vector3df(0, 0, 0) );
 			faceVector.normalize();
 		}
 
@@ -501,156 +462,28 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	if( godMode )
 		return;
 
-	/*if( action == EMCAS_DEFEND )
-	{
-		std::cout<<"defending"<<std::endl;
-		value = value / 4;
-	}*/
-
-	health -= value;
+	if( health - value < 0 )
+		health = 0;
+	else
+		health -= value;
 
 	if( health <= 0 )
 	{
-		//moveState = EMCMS_DEAD;
 		action = EMCAS_DEAD;
 	}
 	else
 	{
-		GEngine.PlaySE("media/se/playerhurt.mp3", GetNodePosition());
+		switch( rand() % 3 )
+		{
+			case 0:
+				GEngine.PlaySE("media/se/playerhurt.mp3", GetNodePosition());
+				break;
+			case 1:
+			case 2:
+				break;
+		}
 	}
 }
-
-/*
-// shoots a snowball from the current player location
-void MainCharacter::ShootDynamite( irr::f32 power, DynamiteProjectile& projectile )
-{
-	check( ammo > 0 );
-	if( !godMode )
-		ammo--;
-
-	// make sure its ok to throw this projectile
-	check(projectile.GetDynamiteState() == state_DYNAMITE_IDLE);
-
-	// make sure the power is between 0 and 1
-	check( 0 <= power && power <= 1 );
-
-	// start position for the dynamite
-	irr::core::vector3df startPos = Position() + PROJECTILE_START_OFFSET;
-	// start rotation for the dynamite
-	irr::core::vector3df startRot = node->getRotation();
-
-	// direction of the throw is the vector in the XZ plane from the player position to the camera aim target.
-	// vector needs to be normalized
-	irr::core::vector3df direction = GetAimVector();
-	direction.Y = 0;
-	direction.normalize();
-
-	// to properly take the angle into account, we add tan(angle) to Y
-	float rad = ( -MIN_XROT_ANGLE + rotation.X ) * ( PI / 180 ) * 0.8f;
-
-	direction.Y = (irr::f32)tan(rad);
-	direction.normalize();
-
-	check(MAX_THROW_POWER > MIN_THROW_POWER);
-	const irr::f32 speed = MIN_THROW_POWER + power * (MAX_THROW_POWER - MIN_THROW_POWER);
-	projectile.Launch( startPos, startRot, direction, speed );
-	DoLaunchProjectile();	
-}
-*/
-
-/*
-// shoots a snowball from the current player location
-void MainCharacter::ShootSnowball( irr::f32 power, SnowballProjectile& projectile )
-{
-	// make sure its ok to throw this projectile
-	check(projectile.GetSnowballState() == state_DYNAMITE_IDLE);
-
-	// make sure the power is between 0 and 1
-	check( 0 <= power && power <= 1 );
-
-	// start position for the snowball
-	irr::core::vector3df startPos = GetNodePosition() + PROJECTILE_START_OFFSET;
-	// direction of the throw is the vector in the XZ plane from the player position to the camera aim target.
-	// vector needs to be normalized
-	irr::core::vector3df direction = GetAimVector();
-	direction.Y = 0;
-	direction.normalize();
-
-	// to properly take the angle into account, we add tan(angle) to Y
-	float rad = ( -MIN_XROT_ANGLE + rotation.X ) * ( PI / 180 );
-	direction.Y = (irr::f32)tan(rad);
-	direction.normalize();
-
-	check(MAX_THROW_POWER > MIN_THROW_POWER);
-	const irr::f32 speed = MIN_THROW_POWER + power * (MAX_THROW_POWER - MIN_THROW_POWER);
-	projectile.Launch( startPos, direction, speed );
-	DoLaunchProjectile();	
-}
-*/
-
-/*
-// makes the player put a landmine on the ground
-void MainCharacter::PlaceMine( LandMine& mine )
-{
-	// make sure its ok to place this landmine
-	check(mine.GetLandMineState() == state_LANDMINE_IDLE);
-	// start position from where the landmine is dropped
-	irr::core::vector3df startPos = GetNodePosition();
-	mine.Place( startPos );
-
-	// play a sound effect and do an animation
-	DoLaunchProjectile();
-}
-*/
-
-/*
-// drops a player footprint on the ground
-void MainCharacter::PlaceRightFootPrint()
-{
-	irr::core::vector3df forwardVector = aimVector*2;
-	irr::core::vector3df rightVector = aimVector.crossProduct(irr::core::vector3df(0,1,0));
-	// add some additioal scaling to the right vector so it falls in the place where the foot is
-	rightVector *= 1.5;
-	irr::core::vector3df pos = node->getAbsolutePosition() - rightVector + forwardVector;
-
-	// create the texture node to paste on the ground
-	CFloorDecalSceneNode* footStepNode = GEngine.addFloorDecalSceneNode(NULL, core::dimension2d<irr::f32>(4.5, 4.5));
-	check(shadowNode);
-	footStepNode->setMaterialFlag(video::EMF_LIGHTING, false);
-	footStepNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-	footStepNode->setMaterialTexture(0, GEngine.GetDriver().getTexture(CHARACTER_RIGHT_FOOTSTEP_TEXTURE));
-	footStepNode->setRotation(node->getRotation() + irr::core::vector3df(0.f,180.f,0.f));
-	footStepNode->setPosition(pos);
-
-	// delete the node after some time
-	scene::ISceneNodeAnimator* anim = world.GetSceneManager().createDeleteAnimator( FOOTSTEP_DURATION );
-	footStepNode->addAnimator( anim );
-}
-*/
-
-/*
-void MainCharacter::PlaceLeftFootPrint()
-{
-	irr::core::vector3df forwardVector = aimVector*2;
-	irr::core::vector3df rightVector = aimVector.crossProduct(irr::core::vector3df(0,1,0));
-	// add some additioal scaling to the right vector so it falls in the place where the foot is
-	rightVector *= 1.5;
-	irr::core::vector3df pos = node->getAbsolutePosition() + rightVector + forwardVector;
-
-	// create the texture node to paste on the ground
-	CFloorDecalSceneNode* footStepNode = GEngine.addFloorDecalSceneNode(NULL, core::dimension2d<irr::f32>(4.5, 4.5));
-	check(shadowNode);
-	footStepNode->setMaterialFlag(video::EMF_LIGHTING, false);
-	footStepNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-	footStepNode->setMaterialTexture(0, GEngine.GetDriver().getTexture(CHARACTER_LEFT_FOOTSTEP_TEXTURE));
-	footStepNode->setRotation(node->getRotation() + irr::core::vector3df(0.f,180.f,0.f));
-	footStepNode->setPosition(pos);
-
-	// delete the node after some time
-	scene::ISceneNodeAnimator* anim = world.GetSceneManager().createDeleteAnimator( FOOTSTEP_DURATION );
-	footStepNode->addAnimator( anim );
-}
-*/
 
 void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
 {
@@ -667,12 +500,12 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 			continue;
 
 		if(
-			/*CollisionHelper::CheckProximity2D(
+			CollisionHelper::CheckProximity2D(
 				theMainCharacter.GetNodePosition(),
 				actors[i]->GetNode().getPosition(),
-				theMainCharacter.GetRadius().getLength() + actors[i]->GetRadius().getLength() - 5.0
-			)*/
-			world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line)
+				theMainCharacter.GetRadius().getLength() + actors[i]->GetRadius().getLength() - 1.0
+			)
+			//world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line)
 		)
 		{
 			irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
