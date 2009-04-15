@@ -16,7 +16,7 @@ public:
 
 	bool ShaderAvailable() const { return shaderAvailable; }
 
-	Shader* createShader( irr::core::stringc, irr::core::stringc, irr::u32, irr::video::E_MATERIAL_TYPE);
+	Shader* createShader( irr::core::stringc, irr::core::stringc, irr::u32, irr::video::E_MATERIAL_TYPE, irr::core::vector3df* = NULL);
 
 private:
 	bool shaderAvailable;
