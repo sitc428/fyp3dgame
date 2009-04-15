@@ -299,7 +299,7 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 };
 struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 		Tracing(){ 
-			std::cout<<"Tracing\n";
+			//std::cout<<"Tracing\n";
 		};
 		virtual ~Tracing() {};
 	//	virtual const std::string name () const { return "Tracing"; };
