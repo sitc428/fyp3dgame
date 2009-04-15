@@ -21,6 +21,7 @@ enum EMainCharacterActionState
 	EMCAS_ROTATE = 2,
 	EMCAS_JUMP = 4,
 	EMCAS_ATTACK = 8,
+	EMCAS_MAGICATTACK = 9,
 	EMCAS_DEFEND = 16,
 	EMCAS_RUNNING = 32,
 	EMCAS_DEAD = 1 << 31
@@ -64,13 +65,17 @@ public:
 	void setIdle();
 	void setDefending( bool defending );
 	void setAttacking( bool attacking );
+	void setCasting( bool casting );
 	void setMoving( bool moving, bool backward = false );
 	void setRunning( bool running );
 	bool isIdle() const;
 	bool isDefending() const;
 	bool isAttacking() const;
+	bool isCasting() const;
 	bool isMoving() const;
 	bool isRunning() const;
+
+	irr::core::vector3df getTargetPos();
 
 	void InitShader(irr::core::vector3df* lightPosition);
 	
@@ -132,6 +137,7 @@ private:
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ISceneNode* weaponNode;
 	irr::scene::ISceneNode* ATFieldNode;
+	irr::scene::ISceneNode* MagicNode;
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
