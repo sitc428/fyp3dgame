@@ -15,6 +15,7 @@
 #include "ShaderFactory.hpp"
 #include "WeaponItem.hpp"
 #include "XItem.hpp"
+#include "Robot.hpp"
 
 // Parameters specifying default parameters
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(0,10,0);
@@ -46,6 +47,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	node(NULL),
 	weaponNode(NULL),
 	ATFieldNode(NULL),
+	MagicNode(NULL),
 	collisionAnimator(NULL),
 	action(EMCAS_IDLE),
 	bDoFillup( false ),
@@ -127,6 +129,14 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	ATFieldNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
 	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
+
+	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 70 );
+	MagicNode = smgr.addMeshSceneNode( Magicmesh, node );
+	MagicNode->setVisible( false );
+	MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
+	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
+	MagicNode->setScale(irr::core::vector3df(0.8,0.8,0.8));
+
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
@@ -257,6 +267,44 @@ void MainCharacter::setAttacking( bool attacking )
 	}
 }
 
+void MainCharacter::setCasting( bool casting )
+{
+	if( isCasting())
+		return;
+
+	if( casting )
+	{
+		action = EMCAS_MAGICATTACK;
+		MagicNode->setParent(&(world.GetRobot()->GetNode()));
+		MagicNode->setPosition(MagicNode->getPosition() + irr::core::vector3df(0,50,0));
+		MagicNode->setVisible(true);
+		
+		irr::scene::ISceneManager& smgr = world.GetSceneManager();
+
+		irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
+			MagicNode->getPosition(), getTargetPos(), 3000);
+
+		MagicNode->addAnimator(anim);
+		anim->drop();
+		MagicNode->setVisible(false);
+
+
+
+		setIdle();
+
+		ATFieldNode->setVisible( false );
+	}
+}
+
+irr::core::vector3df MainCharacter::getTargetPos()
+{
+
+
+
+	irr::core::vector3df tmp = irr::core::vector3df(0,0,0);
+	return tmp;
+}
+
 void MainCharacter::setRunning( bool running )
 {
 	if( isRunning() )
@@ -286,6 +334,11 @@ bool MainCharacter::isDefending() const
 bool MainCharacter::isAttacking() const
 {
 	return action == EMCAS_ATTACK;
+}
+
+bool MainCharacter::isCasting() const
+{
+	return action == EMCAS_MAGICATTACK;
 }
 
 bool MainCharacter::isMoving() const
@@ -342,6 +395,8 @@ void MainCharacter::DoInput()
 		SetCharging( false );
 		SetChargingProgress(0);
 		SetMagicLevel(0);
+		setCasting( true );
+		return;
 	}
 
 	if( receiver.keyReleased(irr::KEY_KEY_Z) )
