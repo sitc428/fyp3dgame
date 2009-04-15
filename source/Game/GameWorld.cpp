@@ -285,7 +285,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 void GameWorld::InitMusic()
 {
 	// load and play music
-	GEngine.ChangeBGM("media/music/scene1.mp3");
+	GEngine.ChangeBGM("media/music/scene1.wav");
 
 	/*
 	// play wind sound effect
