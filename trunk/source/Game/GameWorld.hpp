@@ -90,7 +90,6 @@ private:
 	void InitPlayer();
 	void InitRobot();
 	void InitShader();
-	void InitWeapons();
 
 	// do the actual gameplay
 	void DoGameplay( irr::f32 delta );

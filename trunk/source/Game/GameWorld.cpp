@@ -66,7 +66,6 @@ void GameWorld::Init()
 	InitCamera();
 	InitEnemies();
 	InitHUD();
-	InitWeapons();
 	InitEffects();
 	InitMusic();
 	InitItems();
@@ -378,29 +377,6 @@ void GameWorld::InitCamera()
 	actors.push_back( camera );
 }
 
-// sets up the different weapon actors used by the game
-void GameWorld::InitWeapons()
-{
-	/* for( int i=0; i < MAX_SNOWBALLS; ++i )
-	   {
-	   SnowballProjectile* projectile = new SnowballProjectile( *this, GEngine.GetDriver() );
-	   actors.push_back( projectile );
-	   }
-
-	   for( int i=0; i < MAX_DYNAMITE; ++i )
-	   {
-	   DynamiteProjectile* projectile = new DynamiteProjectile( *this, GEngine.GetDriver() );
-	   actors.push_back( projectile );
-	   }
-
-	   for( int i=0; i < MAX_LANDMINES; ++i )
-	   {
-	   LandMine* mine = new LandMine( *this, GEngine.GetDriver(), *levelTriangleSelector );
-	   actors.push_back( mine );
-	   }
-	   */
-}
-
 void GameWorld::InitEffects()
 {
 }
@@ -417,7 +393,8 @@ void GameWorld::InitNPC()
 	npc1dialogs.push_back("Testing line 1\n and line 2");
 	npc1dialogs.push_back("My testing 2");
 	npc1dialogs.push_back("Ha ha ha ~");
-	TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
+	irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head.gif");
+	TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
 	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
 	actors.push_back(npc1);

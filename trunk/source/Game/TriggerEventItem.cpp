@@ -32,13 +32,9 @@ void TriggerEventItem::interaction(irr::f32 delta)
 	if (!getEnabled())
 	{
 		std::cout << "----- Mini Game Start -----" << std::endl;
-		//for (int i=0; i< 101; i++)
-			//std::cout << "========== Processing ==========" << std::endl;
-		//startAction();
 		setEnabled(true);
-
 		boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE1) );
-		boost::thread addSceneThread3( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE3) );
+		//boost::thread addSceneThread3( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE3) );
 		runGameOne();
 		finishAction();
 	}

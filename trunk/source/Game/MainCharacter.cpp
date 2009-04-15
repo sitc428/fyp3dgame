@@ -315,6 +315,12 @@ void MainCharacter::DoInput()
 {
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
+	if( receiver.keyDown(irr::KEY_TAB) )
+	{
+		//lockNextTarget();
+		std::cout<<"TAB"<<std::endl;
+	}
+
 	if( receiver.keyDown(irr::KEY_KEY_X) )
 	{
 		setDefending( true );

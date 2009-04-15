@@ -4,8 +4,9 @@
 #include "InputEventReceiver.hpp"
 #include "TalkativeNPC.hpp"
 
-TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, irr::core::array<irr::core::stringw>& dialogs, const irr::c8* mesh, irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
+TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, irr::core::array<irr::core::stringw>& dialogs, const irr::c8* mesh, irr::video::ITexture* header,irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
 	: InteractiveActor(gameEngine, gameWorld),
+	_header(header),
 	acceptable_Distance(acceptableDistance)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
@@ -47,7 +48,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				if(timeElapsed > 0.05)
 				{
 					irr::core::stringw temp  = _dialogs[talking].subString(0, currentline);
-					world.GetGameHUD()->GetConversation(temp);
+					world.GetGameHUD()->GetConversation(temp, _header);
 					++currentline;
 					timeElapsed = 0;
 				}
