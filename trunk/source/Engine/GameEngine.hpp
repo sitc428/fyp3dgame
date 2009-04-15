@@ -103,7 +103,9 @@ public:
 	void RequestStateChange( EEngineState newState );
 
 	// changes the music playing
-	void ChangeBGM( const irr::c8* name = NULL );
+	void ChangeBGM( const irr::c8* = NULL );
+
+	void PlaySE( const irr::c8* = NULL );
 
 private:
 	// preload texture and model files

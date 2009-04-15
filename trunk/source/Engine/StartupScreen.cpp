@@ -15,12 +15,12 @@ static const irr::f32 STARTUP_IRR_LOGO_DURATION = 7.f;
 
 // constructor
 StartupScreen::StartupScreen(GameEngine& gameEngine)
-	:GroupLogoTexture(NULL),
+	: GamePart( gameEngine ),
+	GroupLogoTexture(NULL),
 	GroupLogoImage(NULL),
 	EngineLogoTexture(NULL),
 	EngineLogoImage(NULL),
-	elapsedTime(0.f),
-	GEngine(gameEngine)
+	elapsedTime(0.f)
 {
 	// load all the startup screen resources
 	GroupLogoTexture = GEngine.GetDriver().getTexture( STARTUP_GROUP_TEXTURE );

@@ -4,6 +4,8 @@
 #include <irrklang/irrKlang.h>
 #include <irrlicht/irrlicht.h>
 
+#include "GamePart.hpp"
+
 // forward declares
 class Actor;
 class Camera;
@@ -28,10 +30,10 @@ enum EGameState
 	state_PAUSED
 };
 
-class GameWorld
+class GameWorld : public GamePart
 {
 public:
-	explicit GameWorld( GameEngine& Engine );
+	explicit GameWorld( GameEngine& );
 
 	void Init();
 	
@@ -129,8 +131,6 @@ private:
 	irr::s32 numLives; // since there is more than one class/object representing the player, it makes sense to put it here instead
 
 	irr::s32 curLevel;
-
-	GameEngine& GEngine;
 };
 
 #endif //__GAME_WORLD_HPP__

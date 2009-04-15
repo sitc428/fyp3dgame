@@ -3,31 +3,34 @@
 
 #include <irrlicht/irrlicht.h>
 
-class StartupScreen
+#include "GamePart.hpp"
+
+class StartupScreen : public GamePart
 {
-	public:
-		// constructor
-		StartupScreen( GameEngine& );
-		// destructor
-		~StartupScreen();
+public:
+	// constructor
+	StartupScreen( GameEngine& );
 
-		void Init();
-		// called every frame with the frame's elapsed time
-		void Tick( irr::f32 delta );
-		void Exit();
+	// destructor
+	~StartupScreen();
 
-	private:
-		// perform an tick of the input system
-		void DoInput();
+	void Init();
 
-		irr::video::ITexture* GroupLogoTexture; // texture of the group logo
-		irr::gui::IGUIImage* GroupLogoImage; // gui element of the group logo image
-		irr::video::ITexture* EngineLogoTexture; // texture of the irrEngine logo
-		irr::gui::IGUIImage* EngineLogoImage; // gui element of the irrEngine logo image
+	// called every frame with the frame's elapsed time
+	void Tick( irr::f32 delta );
 
-		irr::f32 elapsedTime; // keeps track how long the startup screen has been up
+	void Exit();
 
-		GameEngine& GEngine;
+	// perform an tick of the input system
+	void DoInput();
+
+private:
+	irr::video::ITexture* GroupLogoTexture; // texture of the group logo
+	irr::gui::IGUIImage* GroupLogoImage; // gui element of the group logo image
+	irr::video::ITexture* EngineLogoTexture; // texture of the irrEngine logo
+	irr::gui::IGUIImage* EngineLogoImage; // gui element of the irrEngine logo image
+
+	irr::f32 elapsedTime; // keeps track how long the startup screen has been up
 };
 
 #endif //__STARTUP_SCREEN_HPP__
