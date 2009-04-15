@@ -17,14 +17,14 @@ ShaderFactory::ShaderFactory( GameEngine& gameEngine)
 		GPU = driver.getGPUProgrammingServices();
 }
 
-Shader* ShaderFactory::createShader(irr::core::stringc vsFile, irr::core::stringc psFile, irr::u32 textureCount, irr::video::E_MATERIAL_TYPE type)
+Shader* ShaderFactory::createShader(irr::core::stringc vsFile, irr::core::stringc psFile, irr::u32 textureCount, irr::video::E_MATERIAL_TYPE type, irr::core::vector3df* camPos)
 {
 	Shader* shader = shaderPool[vsFile+psFile];
 
 	if( shader )
 		return shader;
 
-	shader = new Shader( textureCount );
+	shader = new Shader( textureCount, camPos );
 
 	if( !shaderAvailable )
 		shader->SetShaderMaterial( type );
