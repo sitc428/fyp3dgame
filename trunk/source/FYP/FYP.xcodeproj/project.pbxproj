@@ -11,6 +11,9 @@
 		9803EA440F9309050041D61B /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9803EA430F9309050041D61B /* Shader.cpp */; };
 		9807F47D0F4FED16008E3E5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F47C0F4FED16008E3E5B /* main.cpp */; };
 		9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7AB0F50645B008E3E5B /* libirrKlang.a */; };
+		980DBDE00F95DDAB0019D252 /* GamePart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 980DBDDE0F95DDAB0019D252 /* GamePart.cpp */; };
+		980DBDEC0F95DE520019D252 /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 980DBDEA0F95DE520019D252 /* libirrklang.dylib */; };
+		980DBE000F95E0B40019D252 /* ikpMP3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 980DBDFF0F95E0B40019D252 /* ikpMP3.dylib */; };
 		9830F63E0F8CBAB5009055BC /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 9830F6390F8CBAB5009055BC /* MainMenu.nib */; };
 		98563E760F1A46370050410E /* libboost_thread-gcc40-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */; };
 		98563E770F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */; };
@@ -23,6 +26,7 @@
 		9868F1220F1306E5004AE96C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF510F130414004AE96C /* Carbon.framework */; };
 		9868F1230F1306E5004AE96C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF520F130414004AE96C /* Cocoa.framework */; };
 		9868F1240F1306E5004AE96C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9868EF530F130414004AE96C /* OpenGL.framework */; };
+		98B885450F963CDE0002A9D5 /* ParticleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98B885430F963CDE0002A9D5 /* ParticleManager.cpp */; };
 		98BF9F360F91144A00561309 /* CollisionHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9ED90F91144900561309 /* CollisionHelper.cpp */; };
 		98BF9F370F91144A00561309 /* DebugInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9EDB0F91144900561309 /* DebugInfo.cpp */; };
 		98BF9F380F91144A00561309 /* Actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9EDE0F91144900561309 /* Actor.cpp */; };
@@ -35,8 +39,6 @@
 		98BF9F480F91144A00561309 /* MainCharacter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F000F91144900561309 /* MainCharacter.cpp */; };
 		98BF9F490F91144A00561309 /* MDiscItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F020F91144900561309 /* MDiscItem.cpp */; };
 		98BF9F4A0F91144A00561309 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F040F91144900561309 /* Monster.cpp */; };
-		98BF9F4B0F91144A00561309 /* ParticleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F070F91144900561309 /* ParticleManager.cpp */; };
-		98BF9F4C0F91144A00561309 /* ParticleSystemEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F090F91144900561309 /* ParticleSystemEngine.cpp */; };
 		98BF9F4D0F91144A00561309 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F0B0F91144900561309 /* Player.cpp */; };
 		98BF9F500F91144A00561309 /* ProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F110F91144A00561309 /* ProgressCircle.cpp */; };
 		98BF9F510F91144A00561309 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BF9F130F91144A00561309 /* Robot.cpp */; };
@@ -61,6 +63,10 @@
 		9803EA430F9309050041D61B /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		9807F47C0F4FED16008E3E5B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
 		9807F7AB0F50645B008E3E5B /* libirrKlang.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libirrKlang.a; path = ../../lib/libirrKlang.a; sourceTree = SOURCE_ROOT; };
+		980DBDDE0F95DDAB0019D252 /* GamePart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePart.cpp; sourceTree = "<group>"; };
+		980DBDDF0F95DDAB0019D252 /* GamePart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePart.hpp; sourceTree = "<group>"; };
+		980DBDEA0F95DE520019D252 /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = ../../libirrklang.dylib; sourceTree = SOURCE_ROOT; };
+		980DBDFF0F95E0B40019D252 /* ikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = ikpMP3.dylib; path = ../../ikpMP3.dylib; sourceTree = SOURCE_ROOT; };
 		9830F6390F8CBAB5009055BC /* MainMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MainMenu.nib; sourceTree = "<group>"; };
 		98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s.a"; path = "../../lib/libboost_thread-gcc40-mt-s.a"; sourceTree = SOURCE_ROOT; };
 		98563E720F1A46370050410E /* libboost_thread-gcc40-mt-s-1_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-gcc40-mt-s-1_37.a"; path = "../../lib/libboost_thread-gcc40-mt-s-1_37.a"; sourceTree = SOURCE_ROOT; };
@@ -77,6 +83,8 @@
 		9868EF530F130414004AE96C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		9868F1060F1305AD004AE96C /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9868F1090F1305AD004AE96C /* FYP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FYP-Info.plist"; sourceTree = "<group>"; };
+		98B885430F963CDE0002A9D5 /* ParticleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleManager.cpp; sourceTree = "<group>"; };
+		98B885440F963CDE0002A9D5 /* ParticleManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParticleManager.hpp; sourceTree = "<group>"; };
 		98BF9ED80F91144900561309 /* Check.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Check.hpp; sourceTree = "<group>"; };
 		98BF9ED90F91144900561309 /* CollisionHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollisionHelper.cpp; sourceTree = "<group>"; };
 		98BF9EDA0F91144900561309 /* CollisionHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CollisionHelper.hpp; sourceTree = "<group>"; };
@@ -104,10 +112,6 @@
 		98BF9F040F91144900561309 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		98BF9F050F91144900561309 /* Monster.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Monster.hpp; sourceTree = "<group>"; };
 		98BF9F060F91144900561309 /* NodeID.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NodeID.hpp; sourceTree = "<group>"; };
-		98BF9F070F91144900561309 /* ParticleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleManager.cpp; sourceTree = "<group>"; };
-		98BF9F080F91144900561309 /* ParticleManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParticleManager.hpp; sourceTree = "<group>"; };
-		98BF9F090F91144900561309 /* ParticleSystemEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystemEngine.cpp; sourceTree = "<group>"; };
-		98BF9F0A0F91144900561309 /* ParticleSystemEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParticleSystemEngine.hpp; sourceTree = "<group>"; };
 		98BF9F0B0F91144900561309 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		98BF9F0C0F91144900561309 /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
 		98BF9F110F91144A00561309 /* ProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressCircle.cpp; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 				98563E7A0F1A46380050410E /* libfreetype.a in Frameworks */,
 				98563E7C0F1A46480050410E /* libIrrlicht.a in Frameworks */,
 				9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */,
+				980DBDEC0F95DE520019D252 /* libirrklang.dylib in Frameworks */,
+				980DBE000F95E0B40019D252 /* ikpMP3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +200,8 @@
 		9868F12B0F1308BC004AE96C /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				980DBDFF0F95E0B40019D252 /* ikpMP3.dylib */,
+				980DBDEA0F95DE520019D252 /* libirrklang.dylib */,
 				9807F7AB0F50645B008E3E5B /* libirrKlang.a */,
 				98563E7B0F1A46480050410E /* libIrrlicht.a */,
 				98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */,
@@ -248,10 +256,6 @@
 				98BF9F040F91144900561309 /* Monster.cpp */,
 				98BF9F050F91144900561309 /* Monster.hpp */,
 				98BF9F060F91144900561309 /* NodeID.hpp */,
-				98BF9F070F91144900561309 /* ParticleManager.cpp */,
-				98BF9F080F91144900561309 /* ParticleManager.hpp */,
-				98BF9F090F91144900561309 /* ParticleSystemEngine.cpp */,
-				98BF9F0A0F91144900561309 /* ParticleSystemEngine.hpp */,
 				98BF9F0B0F91144900561309 /* Player.cpp */,
 				98BF9F0C0F91144900561309 /* Player.hpp */,
 				98BF9F110F91144A00561309 /* ProgressCircle.cpp */,
@@ -276,6 +280,10 @@
 		98BF9F270F91144A00561309 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				98B885430F963CDE0002A9D5 /* ParticleManager.cpp */,
+				98B885440F963CDE0002A9D5 /* ParticleManager.hpp */,
+				980DBDDE0F95DDAB0019D252 /* GamePart.cpp */,
+				980DBDDF0F95DDAB0019D252 /* GamePart.hpp */,
 				9803EA420F9309050041D61B /* Shader.hpp */,
 				9803EA430F9309050041D61B /* Shader.cpp */,
 				9803EA3F0F9308F00041D61B /* ShaderFactory.cpp */,
@@ -371,8 +379,6 @@
 				98BF9F480F91144A00561309 /* MainCharacter.cpp in Sources */,
 				98BF9F490F91144A00561309 /* MDiscItem.cpp in Sources */,
 				98BF9F4A0F91144A00561309 /* Monster.cpp in Sources */,
-				98BF9F4B0F91144A00561309 /* ParticleManager.cpp in Sources */,
-				98BF9F4C0F91144A00561309 /* ParticleSystemEngine.cpp in Sources */,
 				98BF9F4D0F91144A00561309 /* Player.cpp in Sources */,
 				98BF9F500F91144A00561309 /* ProgressCircle.cpp in Sources */,
 				98BF9F510F91144A00561309 /* Robot.cpp in Sources */,
@@ -392,6 +398,8 @@
 				985A49EB0F91E71800C9C0DE /* Tokenizer.cpp in Sources */,
 				9803EA410F9308F00041D61B /* ShaderFactory.cpp in Sources */,
 				9803EA440F9309050041D61B /* Shader.cpp in Sources */,
+				980DBDE00F95DDAB0019D252 /* GamePart.cpp in Sources */,
+				98B885450F963CDE0002A9D5 /* ParticleManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +451,8 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
@@ -450,6 +460,8 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../..\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../..\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../../Irrlicht/irrKlang-1.1.3/bin/macosx-gcc\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -479,6 +491,8 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
@@ -486,6 +500,8 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../..\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../..\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../../Irrlicht/irrKlang-1.1.3/bin/macosx-gcc\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
