@@ -13,6 +13,7 @@ class GameEngine;
 class GameHUD;
 class InteractiveActor;
 class MainCharacter;
+class Monster;
 class Player;
 class Robot;
 
@@ -60,6 +61,8 @@ public:
 	GameHUD* GetGameHUD() { return gameHUD; };
 
 	irr::core::array<irr::scene::IMeshSceneNode*>& GetBlocking() { return blocks; }
+
+	irr::core::array<Monster*>& GetMonsters() { return monsters; }
 
 	// unbuffered mouse input 
 	void OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent );
@@ -117,6 +120,7 @@ private:
 
 	irr::core::array<Actor*> actors; // all the actors that are currently in the world, includes the player and the camera
 	irr::core::array<irr::scene::IMeshSceneNode*> blocks; // all the objects that are blocking the movement, includes the monsters
+	irr::core::array<Monster*> monsters;
 
 	irr::scene::IMetaTriangleSelector* levelTriangleSelector;  // triangle selector for doing collision checks with the level 
 	
