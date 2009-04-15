@@ -516,15 +516,7 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	}
 	else
 	{
-		switch( rand() % 2 )
-		{
-		case 0:
-//			GEngine.GetSoundEngine().play2D("../audio/sfx/playerhurt1.mp3");
-			break;
-		case 1:
-//			GEngine.GetSoundEngine().play2D("../audio/sfx/playerhurt2.mp3");
-			break;
-		}
+		GEngine.PlaySE("media/se/playerhurt.mp3", GetNodePosition());
 	}
 }
 

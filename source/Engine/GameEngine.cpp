@@ -532,7 +532,7 @@ void GameEngine::ChangeBGM( const irr::c8* name )
 
 }
 
-void GameEngine::PlaySE(const irr::c8* SEFilePath)
+void GameEngine::PlaySE(const irr::c8* SEFilePath, irr::core::vector3df pos)
 {
 	if( SEFilePath )
 	{
@@ -540,5 +540,8 @@ void GameEngine::PlaySE(const irr::c8* SEFilePath)
 	else
 	{
 		//irrklang::ISound* se = soundEngine->play3D(SEFilePath
+		irrklang::ISound* se = soundEngine->play3D(SEFilePath, pos, false, false, true);
+		se->setVolume( 0.65f );
+		se->drop();
 	}
 }
