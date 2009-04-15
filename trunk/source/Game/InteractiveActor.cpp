@@ -32,18 +32,9 @@ void InteractiveActor::Tick( irr::f32 delta )
 		{
 			if(node->getPosition().getDistanceFrom(world.GetCurrentPlayer().GetNodePosition()) < acceptableDistance())
 			{
-				/*
-				irr::core::line3df line;
-				line.start = world.GetCurrentPlayer().GetNodePosition();
-				line.end = line.start - world.GetCurrentPlayer().GetAimVector() * 10000;
-				if(world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line) == node)
-				{
-				*/
-					//startAction();
-					interacting = true;
-					world.requestInteracting(true, this);
-					interaction( delta );
-				//}
+				interacting = true;
+				world.requestInteracting(true, this);
+				interaction( delta );
 			}
 		}
 		else if (node->getID()== NODE_ID_TRIGGER_EVENT_ITEM
