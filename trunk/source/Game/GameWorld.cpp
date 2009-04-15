@@ -17,6 +17,7 @@
 #include "ParticleSystemEngine.hpp"
 #include "Player.hpp"
 #include "Robot.hpp"
+#include "ShaderFactory.hpp"
 #include "SellingMachine.hpp"
 #include "TalkativeNPC.hpp"
 #include "TriggerEventItem.hpp"
@@ -240,6 +241,10 @@ void GameWorld::AddScene(irr::s32 sceneType)
 	irr::core::array< irr::scene::ISceneNode* > outNodes;
 
 	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+
+	Shader* shader1 = GEngine.GetShaderFactory().createShader("media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID);
+	irr::video::ITexture* linetext = GEngine.GetDriver().getTexture("media/model/shade_line.png");
+
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
 		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
@@ -257,6 +262,9 @@ void GameWorld::AddScene(irr::s32 sceneType)
 				meshTriangleSelector->drop();
 				meshTriangleSelector = NULL;
 				blocks.push_back( meshNode );
+
+				meshNode->setMaterialTexture( 1, linetext );
+				meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
 				//meshNode->setDebugDataVisible( irr::scene::EDS_BBOX);
 				if (meshNode->getID()==scene_tri_id)
 				{
@@ -285,7 +293,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 void GameWorld::InitMusic()
 {
 	// load and play music
-	//GEngine.ChangeBGM("media/music/scene1.mp3");
+	GEngine.ChangeBGM("media/music/scene1.mp3");
 }
 
 // sets up the light in the world
