@@ -8,8 +8,10 @@ ShaderFactory::ShaderFactory( GameEngine& gameEngine)
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 
 	shaderAvailable =
-		driver.queryFeature(irr::video::EVDF_VERTEX_SHADER_1_1) &&
-		driver.queryFeature(irr::video::EVDF_PIXEL_SHADER_1_1);
+		(driver.queryFeature(irr::video::EVDF_ARB_FRAGMENT_PROGRAM_1) &&
+		driver.queryFeature(irr::video::EVDF_ARB_VERTEX_PROGRAM_1)) ||
+		(driver.queryFeature(irr::video::EVDF_VERTEX_SHADER_1_1) &&
+		driver.queryFeature(irr::video::EVDF_PIXEL_SHADER_1_1));
 	
 	if( shaderAvailable )
 		GPU = driver.getGPUProgrammingServices();

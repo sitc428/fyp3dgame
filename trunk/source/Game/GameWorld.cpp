@@ -286,18 +286,6 @@ void GameWorld::InitMusic()
 {
 	// load and play music
 	GEngine.ChangeBGM("media/music/scene1.mp3");
-
-	/*
-	// play wind sound effect
-	ISound *music = GEngine.GetSoundEngine().play2D("../audio/sfx/wind1.wav", true, false, true);
-	music->setVolume( 1.5f );
-	music->drop();
-
-	// play barking sound effect
-	music = GEngine.GetSoundEngine().play2D("../audio/sfx/barkingdog.mp3", true, false, true);
-	music->setVolume( 1.5f );
-	music->drop();
-	*/
 }
 
 // sets up the light in the world
