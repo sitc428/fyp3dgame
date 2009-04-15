@@ -2,7 +2,7 @@
  *  shader.h
  *  FYP
  *
- *  Created by Mr.JJ on 09Âπ???0??
+ *  Created by Mr.JJ on 09?????0??
  *  Copyright 2009 HKUST. All rights reserved.
  *
  */
