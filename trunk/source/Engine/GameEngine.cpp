@@ -536,12 +536,6 @@ void GameEngine::PlaySE(const irr::c8* SEFilePath, irr::core::vector3df pos)
 {
 	if( SEFilePath )
 	{
-	}
-	else
-	{
-		//irrklang::ISound* se = soundEngine->play3D(SEFilePath
-		irrklang::ISound* se = soundEngine->play3D(SEFilePath, pos, false, false, true);
-		se->setVolume( 0.65f );
-		se->drop();
+		soundEngine->play3D(SEFilePath, pos);
 	}
 }
