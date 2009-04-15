@@ -78,7 +78,12 @@ bool GameEngine::Init()
 	// randomize randomize :)
 	srand( GetRealTime() );
 
+	// create the shader factoty
 	shaderFactory = new ShaderFactory( *this );
+
+	// print out wraning message if the shader is not available
+	if( !shaderFactory->ShaderAvailable() )
+		std::cout << "Shader Not Available, all shadering effect will be disabled." << std::endl;
 
 	// create a particle manager instance
 	particleManager = new ParticleManager( *smgr );
