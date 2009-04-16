@@ -67,6 +67,8 @@ bool GameEngine::Init()
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
 
+	device->getFileSystem()->addZipFileArchive("media.zip");
+
 	fmgr = new FontManager( driver );
 
 	// create sound engine
