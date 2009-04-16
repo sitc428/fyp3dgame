@@ -86,7 +86,7 @@ void GameWorld::InitShader()
 {
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 	//0,20,0
-	ParticleManager* fire = new ParticleManager(&smgr, irr::core::vector3df(38.114258, 40.000000, 194.928589),
+	/*ParticleManager* fire = new ParticleManager(&smgr, irr::core::vector3df(38.114258, 40.000000, 194.928589),
 		irr::core::vector3df(30,2,2),
 		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7));
 
@@ -104,13 +104,13 @@ void GameWorld::InitShader()
 		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"), irr::core::vector3df(0.0f,0.06f,0.0f),
 							10,20,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
-
+*/
 	
-	//ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
-	//													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
-	//std::cout<<"----\n";
-	//Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
-	//							irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
+	ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
+														   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	std::cout<<"----\n";
+	Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
+								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 
 	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
 															core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
@@ -126,7 +126,7 @@ void GameWorld::InitLevel()
 {
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
-	AddScene(NODE_ID_SCENE1);
+	AddScene(NODE_ID_SCENE4);
 
 	// set game state
 	stateTimer = 0;
@@ -170,8 +170,8 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 		case NODE_ID_SCENE4:
 			x_pos = 0;
-			y_pos = 2000;
-			z_pos = -3000;
+			y_pos = -100;//2000;
+			z_pos = 0;//-3000;
 			scene_fall_id = NODE_ID_SCENE4_FALL;
 			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
 			sceneFile = LEVEL_FILE4;
