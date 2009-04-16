@@ -36,6 +36,7 @@ void TriggerEventItem::interaction(irr::f32 delta)
 		boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE2) );
 		//boost::thread addSceneThread3( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE3) );
 		runGameOne();
+		std::cout << "finsihed runGameOne()" << std::endl;
 		finishAction();
 	}
 }
