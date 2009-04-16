@@ -131,12 +131,12 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
 
-	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 70 );
+	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 140 );
 	MagicNode = smgr.addMeshSceneNode( Magicmesh, node );
 	MagicNode->setVisible( false );
 	MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
-	MagicNode->setScale(irr::core::vector3df(0.8,0.8,0.8));
+	//MagicNode->setScale(irr::core::vector3df(0.8,0.8,0.8));
 
 
 	// setup player collision with the world
