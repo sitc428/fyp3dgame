@@ -162,8 +162,8 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 		case NODE_ID_SCENE3:
 			x_pos = 0;
-			y_pos = 2000;
-			z_pos = -2000;
+			y_pos = 0;//2000;
+			z_pos = 0;//-2000;
 			scene_fall_id = NODE_ID_SCENE3_FALL;
 			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
 			sceneFile = LEVEL_FILE3;
