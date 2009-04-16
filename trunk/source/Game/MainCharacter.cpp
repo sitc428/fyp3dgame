@@ -133,12 +133,12 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
 
-	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 140 );
+	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
 	MagicNode = smgr.addMeshSceneNode( Magicmesh, node );
 	MagicNode->setVisible( false );
 	MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
-	//MagicNode->setScale(irr::core::vector3df(0.8,0.8,0.8));
+	MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
 
 	targetIndicator = smgr.addCubeSceneNode(5);
 	targetIndicator->setPosition(irr::core::vector3df(50, 50, 10));
@@ -286,8 +286,9 @@ void MainCharacter::setCasting( bool casting )
 	if( casting )
 	{
 		action = EMCAS_MAGICATTACK;
-		MagicNode->setParent(&(world.GetRobot()->GetNode()));
-		static irr::core::vector3df magicPos = MagicNode->getPosition() + irr::core::vector3df(0,70,0);
+		//MagicNode->setParent(&(world.GetRobot()->GetNode()));
+		static irr::core::vector3df magicPos = MagicNode->getPosition() + irr::core::vector3df(0,10,0);
+		//magicPos = world.GetRobot()->GetNodePosition();
 		MagicNode->setPosition(magicPos);
 		MagicNode->setVisible(true);
 		
@@ -295,7 +296,11 @@ void MainCharacter::setCasting( bool casting )
 
 		irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
 			magicPos,
+			//GetNodePosition(),
 			getTargetPos(),
+			//targetIndicator->getPosition(),
+			//GetNodePosition(),
+			//monsterTarget->GetNode().getPosition(),
 			2000
 			);
 		/*std::cout << "Target X:  " << getTargetPos().X << std::endl;
@@ -313,12 +318,12 @@ void MainCharacter::setCasting( bool casting )
 
 irr::core::vector3df MainCharacter::getTargetPos()
 {
-	irr::core::array<Actor*> actors = world.GetActors();
+	/*irr::core::array<Actor*> actors = world.GetActors();
 	irr::u32 actorsNum = actors.size();
 
-	/*irr::core::line3df line;
+	irr::core::line3df line;
 	line.start = GetNodePosition();
-	line.end = line.start - GetFaceVector() * GetRadius().getLength();*/
+	line.end = line.start - GetFaceVector() * GetRadius().getLength();
 	std::cout << actorsNum << std::endl;
 	for( irr::u32 i=0; i < actorsNum; ++i )
 	{
@@ -352,12 +357,27 @@ irr::core::vector3df MainCharacter::getTargetPos()
 			}
 			irr::s32 offset = damage/5 * (rand()%601)/300;
 			std::cout << "Damage = " << damage-offset << std::endl;
-			actors[i]->ReceiveDamage(damage-offset);*/
+			actors[i]->ReceiveDamage(damage-offset);
 			//return actors[i]->GetNode().getPosition();
 			//return actors[i]->GetNode().getPosition();
 		}
 	}
-	return world.GetRobot()->GetFaceVector() * GetRadius() * 200;
+	return world.GetRobot()->GetFaceVector() * GetRadius() * 200;*/
+	if (targetIndicator->isVisible())
+	{
+		irr::core::vector3df targetPos = monsterTarget->GetNode().getAbsolutePosition();
+		//irr::core::vector3df targetPos = targetIndicator->getPosition();
+		irr::core::vector3df robotPos = world.GetRobot()->GetNodePosition();
+
+		//return robotPos - targetPos;
+		//targetPos.Y -= 5;
+		return targetPos;
+	}
+	else
+	{
+		return world.GetRobot()->GetFaceVector() * GetRadius() * 50;
+	}
+
 }
 
 void MainCharacter::setRunning( bool running )
