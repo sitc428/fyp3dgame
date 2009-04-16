@@ -288,10 +288,9 @@ void MainCharacter::setCasting( bool casting )
 			getTargetPos(),
 			2000
 			);
-
-		std::cout << "X:  " << getTargetPos().X << std::endl;
-		std::cout << "Y:  " << getTargetPos().Y << std::endl;
-		std::cout << "Z:  " << getTargetPos().Z << std::endl;
+		/*std::cout << "Target X:  " << getTargetPos().X << std::endl;
+		std::cout << "Target Y:  " << getTargetPos().Y << std::endl;
+		std::cout << "Target Z:  " << getTargetPos().Z << std::endl;*/
 
 		MagicNode->addAnimator(anim);
 		anim->drop();
@@ -307,20 +306,24 @@ irr::core::vector3df MainCharacter::getTargetPos()
 	irr::core::array<Actor*> actors = world.GetActors();
 	irr::u32 actorsNum = actors.size();
 
-	irr::core::line3df line;
+	/*irr::core::line3df line;
 	line.start = GetNodePosition();
-	line.end = line.start - GetFaceVector() * GetRadius().getLength();
+	line.end = line.start - GetFaceVector() * GetRadius().getLength();*/
 
 	for( irr::u32 i=0; i < actorsNum; ++i )
 	{
 		if( actors[i]->GetActorType() != ACTOR_ENEMY)
 			continue;
 
+		//for testing
+		return actors[i]->GetNode().getPosition();
+
 		if(
 			CollisionHelper::CheckProximity2D(
-				GetNodePosition(),
+				world.GetCurrentPlayer().GetNodePosition(),
 				actors[i]->GetNode().getPosition(),
-				GetRadius().getLength() + actors[i]->GetRadius().getLength() - 20.0
+				//GetRadius().getLength() + actors[i]->GetRadius().getLength() +
+				GetRadius().getLength() * 5
 			)
 			//world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line)
 		)
@@ -337,11 +340,11 @@ irr::core::vector3df MainCharacter::getTargetPos()
 			irr::s32 offset = damage/5 * (rand()%601)/300;
 			std::cout << "Damage = " << damage-offset << std::endl;
 			actors[i]->ReceiveDamage(damage-offset);*/
+			//return actors[i]->GetNode().getPosition();
 			return actors[i]->GetNode().getPosition();
 		}
 	}
-	return world.GetRobot()->GetFaceVector() * GetRadius() * 300;
-	//return GetFaceVector() * GetRadius().getLength() * 30;
+	return world.GetRobot()->GetFaceVector() * GetRadius() * 200;
 }
 
 void MainCharacter::setRunning( bool running )
@@ -434,10 +437,11 @@ void MainCharacter::DoInput()
 	}
 	else if( receiver.keyReleased(irr::KEY_KEY_C) )
 	{
+		if (GetMagicLevel()>=1)
+			setCasting( true );
 		SetCharging( false );
 		SetChargingProgress(0);
 		SetMagicLevel(0);
-		setCasting( true );
 		return;
 	}
 
