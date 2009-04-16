@@ -10,7 +10,7 @@
 static irr::core::vector3df cameraOffset = irr::core::vector3df(0.0f, 50.0f, 100.0f);
 static irr::u32 cameraMaxY = 80;
 static irr::u32 cameraMinY = 20;
-static irr::f32 cameraDefaultZoom = 0.5;
+static irr::f32 cameraDefaultZoom = 0.25;
 static irr::f32 cameraMaxZoom = 2.5;
 static irr::f32 cameraMinZoom = 0.5;
 

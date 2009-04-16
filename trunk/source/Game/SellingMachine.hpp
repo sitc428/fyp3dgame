@@ -12,7 +12,11 @@ public:
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
-	virtual irr::core::vector3df GetRadius() { return node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter(); }
+	virtual irr::core::vector3df GetRadius()
+	{
+		irr::core::vector3df temp = node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter();
+		return irr::core::vector3df(temp.X, 0, temp.Z);
+	}
 
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return (EActorType) (ACTOR_INTERACTIVE | ACTOR_SELLING_MACHINE); }
