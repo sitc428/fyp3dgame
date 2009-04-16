@@ -66,6 +66,7 @@ GameHUD::GameHUD( irr::IrrlichtDevice& device )
 	HP(NULL),
 	HPText(NULL),
 	ConversationTexture(NULL),
+	ConversationHeader(NULL),
 	ConversationString(""),
 	ConversationFont(NULL),
 	PauseMenuTexture(NULL),
@@ -240,6 +241,7 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 void GameHUD::GetConversation(irr::core::stringw string, irr::video::ITexture* actorTexture)
 {
 	ConversationString = string;
+	ConversationHeader = actorTexture;
 }
 
 void GameHUD::DrawConversation()
@@ -250,6 +252,9 @@ void GameHUD::DrawConversation()
 	driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, irr::video::SColor(255,255,255,255), true);
 	if(ConversationString != ""){
 		ConversationFont->draw(ConversationString.c_str(), ConversationRec, irr::video::SColor(255,255,255,255), false, true, 0);
+	}
+	if(ConversationHeader){
+		GEngine->GetDriver().draw2DImage(ConversationHeader, irr::core::position2di(0, 0));
 	}
 }
 

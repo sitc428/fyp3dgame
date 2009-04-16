@@ -106,11 +106,11 @@ void GameWorld::InitShader()
 							10,20,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 */
 	
-	ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
+	/*ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
 														   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	std::cout<<"----\n";
 	Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
-								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
+								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));*/
 
 	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
 															core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
@@ -126,7 +126,7 @@ void GameWorld::InitLevel()
 {
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
-	AddScene(NODE_ID_SCENE4);
+	AddScene(NODE_ID_SCENE1);
 
 	// set game state
 	stateTimer = 0;
@@ -305,15 +305,15 @@ void GameWorld::InitNPC()
 	//TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	//actors.push_back( TriggerEventItem1 );
 
-	//irr::core::array<irr::core::stringw> npc1dialogs;
-	//npc1dialogs.push_back("Testing line 1\n and line 2");
-	//npc1dialogs.push_back("My testing 2");
+	irr::core::array<irr::core::stringw> npc1dialogs;
+	npc1dialogs.push_back("Pedro, you are so smart!");
+	npc1dialogs.push_back("Please, save the world!");
 	//npc1dialogs.push_back("Ha ha ha ~");
-	//irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head.gif");
-	//TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
-	//npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
+	irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head.gif");
+	TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
+	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
-	//actors.push_back(npc1);
+	actors.push_back(npc1);
 }
 
 void GameWorld::InitHUD()
