@@ -122,6 +122,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 		irr::core::vector3df(-3,0,3.5),
 		irr::core::vector3df(-433.5,-1833,-12)
 	);
+	weaponNode->setVisible( false );
 	
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
