@@ -105,8 +105,8 @@ void GameWorld::InitShader()
 	ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
 														   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	std::cout<<"----\n";
-	Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(50.0), irr::core::vector3df(0,0,0),
-								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 100,200,1500,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+	Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
+								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 
 	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
 															core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
