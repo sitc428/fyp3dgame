@@ -144,6 +144,7 @@ private:
 	irr::scene::ISceneNode* weaponNode;
 	irr::scene::ISceneNode* ATFieldNode;
 	irr::scene::ISceneNode* MagicNode;
+	irr::scene::ISceneNode* targetIndicator;
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;

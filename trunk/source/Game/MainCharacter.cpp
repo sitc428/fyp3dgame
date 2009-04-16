@@ -66,7 +66,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_currentMagic(NULL),
 	_combo(false),
 	_comboNum(0),
-	monsterTarget(NULL)
+	monsterTarget(NULL),
+	targetIndicator(NULL)
 {
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
@@ -138,7 +139,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	//MagicNode->setScale(irr::core::vector3df(0.8,0.8,0.8));
 
-	irr::scene::ISceneNode* targetIndicator = smgr.addCubeSceneNode(25);
+	targetIndicator = smgr.addCubeSceneNode(5);
 	targetIndicator->setPosition(irr::core::vector3df(50, 50, 10));
 	targetIndicator->setRotation(irr::core::vector3df(45, 0, 45));
 	targetIndicator->setMaterialFlag( irr::video::EMF_LIGHTING, false );
@@ -648,9 +649,16 @@ void MainCharacter::lockNextTarget()
 		}
 
 		monsterTarget = nextTarget;
+		targetIndicator->setParent( &monsterTarget->GetNode() );
+		targetIndicator->setPosition( irr::core::vector3df(0, monsterTarget->GetNode().getBoundingBox().MaxEdge.Y + 5, 0 ) );
+		targetIndicator->setVisible( true );
 	}
 	else
+	{
 		monsterTarget = NULL;
+		targetIndicator->setParent( world.GetSceneManager().getRootSceneNode() );
+		targetIndicator->setVisible( false );
+	}
 }
 
 void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
