@@ -75,6 +75,7 @@ private:
 	
 	//conversation string
 	irr::core::stringw			ConversationString;
+	irr::video::ITexture*		ConversationHeader;
 	irr::gui::CGUITTFont*		ConversationFont;
 	irr::core::rect<irr::s32>	ConversationRec;
 	
