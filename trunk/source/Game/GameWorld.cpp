@@ -85,28 +85,32 @@ void GameWorld::InitItems()
 void GameWorld::InitShader()
 {
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
-	
-	ParticleManager* fire = new ParticleManager(&smgr, irr::core::vector3df(0,20,0), irr::core::vector3df(2,2,2),
+	//0,20,0
+	ParticleManager* fire = new ParticleManager(&smgr, irr::core::vector3df(38.114258, 40.000000, 194.928589),
+		irr::core::vector3df(30,2,2),
 		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7));
+
 	fire->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 						   50,80,800,1000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 	
-	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(0,20,-100), irr::core::vector3df(2,2,2),
+	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(38.114258, 20.000000, 194.928589),
+		irr::core::vector3df(30,5,2),
 													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire2->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	 
-	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(40,20,0), irr::core::vector3df(2,2,2),
+	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(-186.645462, 0.000000, -0.391444),
+		irr::core::vector3df(2,2,20),
 		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"), irr::core::vector3df(0.0f,0.06f,0.0f),
 							10,20,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 
 	
-	ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
-														   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
-	std::cout<<"----\n";
-	Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
-								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
+	//ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
+	//													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	//std::cout<<"----\n";
+	//Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
+	//							irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 
 	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
 															core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
