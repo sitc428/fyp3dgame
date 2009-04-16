@@ -311,7 +311,7 @@ void GameWorld::InitNPC()
 	//npc1dialogs.push_back("Ha ha ha ~");
 	irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head1.png");
 	TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
-	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
+	//npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
 	actors.push_back(npc1);
 }
