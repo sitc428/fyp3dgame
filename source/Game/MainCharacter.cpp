@@ -19,7 +19,7 @@
 #include "Robot.hpp"
 
 // Parameters specifying default parameters
-static const irr::core::vector3df		defaultPosition = irr::core::vector3df(40,10,10);
+static const irr::core::vector3df		defaultPosition = irr::core::vector3df(40,20,10);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
@@ -112,7 +112,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
-	node->setDebugDataVisible( irr::scene::EDS_BBOX);
+	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	weaponNode = smgr.addMeshSceneNode(
 		smgr.getMesh("media/model/sword.obj"),//Mastersword_v003.obj or sword.obj

@@ -35,7 +35,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
 	_monster->setPosition( defaultPosition );
-	_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
+	//_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
 	//_monster->setMaterialType(irr::video::EMT_SOLID);
 	//_monster->setScale(irr::core::vector3df(1,1,1));
 	//_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
@@ -135,6 +135,8 @@ void Monster::update(Player& _player, irr::f32 delta)
 		}else if(death_timer->elapsed() > 2.0){
 		
 			sparking->resetEmitter();
+			//irr::scene::ISceneManager& smgr = world.GetSceneManager();
+			//smgr.addToDeletionQueue(_monster);
 		}	
 		
 	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)

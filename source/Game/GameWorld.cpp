@@ -298,18 +298,18 @@ void GameWorld::InitNPC()
 	//SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	//actors.push_back( sellingMachine1 );
 
-	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	actors.push_back( TriggerEventItem1 );
+	//TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	//actors.push_back( TriggerEventItem1 );
 
-	irr::core::array<irr::core::stringw> npc1dialogs;
-	npc1dialogs.push_back("Testing line 1\n and line 2");
-	npc1dialogs.push_back("My testing 2");
-	npc1dialogs.push_back("Ha ha ha ~");
-	irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head.gif");
-	TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
-	npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
+	//irr::core::array<irr::core::stringw> npc1dialogs;
+	//npc1dialogs.push_back("Testing line 1\n and line 2");
+	//npc1dialogs.push_back("My testing 2");
+	//npc1dialogs.push_back("Ha ha ha ~");
+	//irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head.gif");
+	//TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(30, 10, 90), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
+	//npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
 	
-	actors.push_back(npc1);
+	//actors.push_back(npc1);
 }
 
 void GameWorld::InitHUD()
