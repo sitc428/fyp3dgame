@@ -59,8 +59,8 @@ void InteractiveActor::Tick( irr::f32 delta )
 
 void InteractiveActor::finishAction()
 {
-	std::cout << "Inside InteractiveActor::finishAction()"; << std::endl;
+	std::cout << "Inside InteractiveActor::finishAction()" << std::endl;
 	world.requestInteracting(false, NULL);
 	interacting = false;
-	std::cout << "End InteractiveActor::finishAction()"; << std::endl;
+	std::cout << "End InteractiveActor::finishAction()" << std::endl;
 }
