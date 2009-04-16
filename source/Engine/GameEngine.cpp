@@ -84,7 +84,7 @@ bool GameEngine::Init()
 	if( !shaderFactory->ShaderAvailable() )
 		std::cout << "Shader Not Available, all shadering effect will be disabled." << std::endl;
 
-	boost::thread textureThread( boost::bind(&GameEngine::PreloadTexture, this) );
+	//boost::thread textureThread( boost::bind(&GameEngine::PreloadTexture, this) );
 
 	// init successfull
 	return true;
@@ -254,7 +254,10 @@ void GameEngine::PreloadTexture()
 			std::getline( textureList, texturePath );
 
 			if( texturePath != "" )
+			{
 				driver->getTexture( texturePath.c_str() );
+				driver->getTexture("media/model/006.png");
+			}
 		}
 	}
 
@@ -267,7 +270,7 @@ void GameEngine::PreloadModel()
 
 	if( modelList )
 	{
-		std::string modelPath = "";
+		std::string modelPath;
 		while( !modelList.eof() )
 		{
 			std::getline( modelList, modelPath );

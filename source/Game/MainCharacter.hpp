@@ -7,12 +7,13 @@
 #include <vector>
 #include <utility>
 
-
 #include "Item.hpp"
 #include "MDiscItem.hpp"
 #include "Player.hpp"
 #include "shader.hpp"
 #include "WeaponItem.hpp"
+
+class Monster;
 
 enum EMainCharacterActionState
 {
@@ -43,7 +44,10 @@ public:
 	
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; }
-	virtual irr::core::vector3df GetRadius() { return node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter(); }
+	virtual irr::core::vector3df GetRadius() {
+		irr::core::vector3df temp = node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter();
+		return irr::core::vector3df(temp.X, 0, temp.Z);
+	}
 	
 	// interface for identifying the type of actor
 	virtual EActorType GetActorType() const { return ACTOR_PLAYER; }
@@ -133,6 +137,8 @@ private:
 	// diallow copy constructor from being invoked
 	MainCharacter( const MainCharacter& other );
 
+	void lockNextTarget();
+
 	// scene graph node for player
 	irr::scene::IAnimatedMeshSceneNode* node;
 	irr::scene::ISceneNode* weaponNode;
@@ -166,9 +172,7 @@ private:
 	MDiscItem* _currentMagic;
 	bool _combo;
 	irr::s32 _comboNum;
-
-	GameWorld& world;
-
+	Monster* monsterTarget;
 
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{
@@ -186,6 +190,8 @@ private:
 	};
 
 	AttackAnimationEndCallBack* attackCallBack;
+
+	friend class AttackAnimationEndCallBack;
 };
 
 #endif //__MAIN_CHARACTER_HPP__

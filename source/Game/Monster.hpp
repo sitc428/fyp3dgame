@@ -51,7 +51,10 @@ public:
 	void update(Player&, irr::f32 delta);
 	void Tick( irr::f32 delta );
 	virtual irr::scene::ISceneNode& GetNode() const {return *_monster;}
-	virtual irr::core::vector3df GetRadius() { return _monster->getBoundingBox().MaxEdge - _monster->getBoundingBox().getCenter(); }
+	virtual irr::core::vector3df GetRadius() {
+		irr::core::vector3df temp = _monster->getBoundingBox().MaxEdge - _monster->getBoundingBox().getCenter();
+		return irr::core::vector3df(temp.X, 0, temp.Z);
+	}
 	EActorType GetActorType() const { return ACTOR_ENEMY; }
 	bool ShouldPerformCollisionCheck() const { return false; }
 	void ReceiveDamage(irr::f32 );

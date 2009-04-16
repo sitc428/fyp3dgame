@@ -52,7 +52,6 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	collisionAnimator(NULL),
 	action(EMCAS_IDLE),
 	bDoFillup( false ),
-	world(gameWorld),
 	_magicChargeProgress(0),
 	attackCallBack(NULL),
 	_level(1),
@@ -66,7 +65,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_currentWeapon(NULL),
 	_currentMagic(NULL),
 	_combo(false),
-	_comboNum(0)
+	_comboNum(0),
+	monsterTarget(NULL)
 {
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
@@ -138,6 +138,14 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	//MagicNode->setScale(irr::core::vector3df(0.8,0.8,0.8));
 
+	irr::scene::ISceneNode* targetIndicator = smgr.addCubeSceneNode(25);
+	targetIndicator->setPosition(irr::core::vector3df(50, 50, 10));
+	targetIndicator->setRotation(irr::core::vector3df(45, 0, 45));
+	targetIndicator->setMaterialFlag( irr::video::EMF_LIGHTING, false );
+	irr::scene::ISceneNodeAnimator* anim = smgr.createRotationAnimator( irr::core::vector3df(5, 0, 5) );
+	targetIndicator->addAnimator( anim );
+	anim->drop();
+	targetIndicator->setVisible( false );
 
 	// setup player collision with the world
 	RecreateCollisionResponseAnimator();
@@ -413,10 +421,10 @@ void MainCharacter::DoInput()
 {
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
-	if( receiver.keyDown(irr::KEY_TAB) )
+	if( receiver.keyReleased(irr::KEY_TAB) )
 	{
-		//lockNextTarget();
-		std::cout<<"TAB"<<std::endl;
+		lockNextTarget();
+		return;
 	}
 
 	if( receiver.keyDown(irr::KEY_KEY_X) )
@@ -595,9 +603,59 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	}
 }
 
+void MainCharacter::lockNextTarget()
+{
+	Monster* nextTarget = NULL;
+	int numberOfMonster = world.GetMonsters().size();
+
+	int currentTargetPos = -1;
+
+	if( monsterTarget )
+	{
+		for(int i = 0; i < numberOfMonster; ++i)
+		{
+			if( monsterTarget == world.GetMonsters()[i] )
+			{
+				currentTargetPos = i;
+				break;
+			}
+		}
+	}
+
+	for(int j = 1; j <= numberOfMonster; ++j)
+	{
+		if( CollisionHelper::CheckProximity2D(
+				world.GetMonsters()[(currentTargetPos+j)%numberOfMonster]->GetNode().getPosition(),
+				node->getPosition(),
+				GetRadius().getLength() * 10)
+		)
+		{
+			nextTarget = world.GetMonsters()[(currentTargetPos+j)%numberOfMonster];
+			break;
+		}
+	}
+
+	if( nextTarget )
+	{
+		irr::core::vector3df diff = nextTarget->GetNode().getPosition() - node->getPosition();
+		if( aimVector.getHorizontalAngle().Y - diff.getHorizontalAngle().Y != 0)
+		{
+			aimVector.rotateXZBy( aimVector.getHorizontalAngle().Y - diff.getHorizontalAngle().Y, irr::core::vector3df(0, 0, 0));
+			aimVector.normalize();
+			faceVector = aimVector;
+			faceVector.normalize();
+			SetRotation( irr::core::vector3df( 0, floor( faceVector.getHorizontalAngle().Y - defaultAimVector.getHorizontalAngle().Y ), 0) );
+		}
+
+		monsterTarget = nextTarget;
+	}
+	else
+		monsterTarget = NULL;
+}
+
 void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
 {
-	irr::core::array<Actor*> actors = world.GetActors();
+	/*irr::core::array<Actor*> actors = world.GetActors();
 	irr::u32 actorsNum = actors.size();
 
 	irr::core::line3df line;
@@ -630,6 +688,31 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 			irr::s32 offset = damage/5 * (rand()%601)/300;
 			std::cout << "Damage = " << damage-offset << std::endl;
 			actors[i]->ReceiveDamage(damage-offset);
+		}
+	}*/
+
+	Monster* theTarget = theMainCharacter.monsterTarget;
+	if( theTarget )
+	{
+		if( CollisionHelper::CheckProximity2D(
+			theTarget->GetNode().getPosition(),
+			theMainCharacter.GetNodePosition(),
+			theTarget->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 5
+			)
+		)
+		{
+			irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
+			irr::s32 monDef = theTarget->GetDef();
+			std::cout << "Player Attk = " << playerAttk << std::endl;
+			std::cout << "Monster Defence = " << monDef << std::endl;
+			irr::s32 damage = 0;
+			if (playerAttk - monDef > 0 )
+			{
+				damage = playerAttk - monDef;
+			}
+			irr::s32 offset = damage/5 * (rand()%601)/300;
+			std::cout << "Damage = " << damage-offset << std::endl;
+			theTarget->ReceiveDamage(damage-offset);
 		}
 	}
 

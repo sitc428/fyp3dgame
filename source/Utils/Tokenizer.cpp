@@ -7,7 +7,7 @@ Tokenizer::Tokenizer(const std::string& str, const std::string& delim)
 	m_delimiter(delim)
 {
 }
-	
+
 void Tokenizer::reset()
 {
 	m_prev = m_cur = 0;
