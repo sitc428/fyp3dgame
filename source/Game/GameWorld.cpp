@@ -148,21 +148,21 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 		case NODE_ID_SCENE2:
 			x_pos = 0;
-			z_pos = 1000;
+			z_pos = -1000;
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
 			sceneFile = LEVEL_FILE2;
 			break;
 		case NODE_ID_SCENE3:
 			x_pos = 0;
-			z_pos = 2000;
+			z_pos = -2000;
 			scene_fall_id = NODE_ID_SCENE3_FALL;
 			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
 			sceneFile = LEVEL_FILE3;
 			break;
 		case NODE_ID_SCENE4:
 			x_pos = 0;
-			z_pos = 3000;
+			z_pos = -3000;
 			scene_fall_id = NODE_ID_SCENE4_FALL;
 			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
 			sceneFile = LEVEL_FILE4;
@@ -176,8 +176,8 @@ void GameWorld::AddScene(irr::s32 sceneType)
 
 	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
 
-	Shader* shader1 = GEngine.GetShaderFactory().createShader("media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID);
-	irr::video::ITexture* linetext = GEngine.GetDriver().getTexture("media/model/shade_line.png");
+	//Shader* shader1 = GEngine.GetShaderFactory().createShader("media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID);
+	//irr::video::ITexture* linetext = GEngine.GetDriver().getTexture("media/model/shade_line.png");
 
 	for( irr::u32 i = 0; i < outNodes.size(); ++i )
 	{
@@ -197,8 +197,8 @@ void GameWorld::AddScene(irr::s32 sceneType)
 				meshTriangleSelector = NULL;
 				blocks.push_back( meshNode );
 
-				meshNode->setMaterialTexture( 1, linetext );
-				meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
+				//meshNode->setMaterialTexture( 1, linetext );
+				//meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
 				if (meshNode->getID()==scene_tri_id)
 				{
 					std::cout << "!!!!" << std::endl;
@@ -286,10 +286,10 @@ void GameWorld::InitEffects()
 
 void GameWorld::InitNPC()
 {
-	SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	actors.push_back( sellingMachine1 );
+	//SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	//actors.push_back( sellingMachine1 );
 
-	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(50, 25, 400), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	actors.push_back( TriggerEventItem1 );
 
 	irr::core::array<irr::core::stringw> npc1dialogs;
