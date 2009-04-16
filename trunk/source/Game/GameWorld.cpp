@@ -25,7 +25,7 @@
 #include "XItem.hpp"
 
 static const irr::c8* LEVEL_FILE1 = "media/model/scene1_new.irr";
-static const irr::c8* LEVEL_FILE2 = "media/model/scene2_new.irr";
+static const irr::c8* LEVEL_FILE2 = "media/model/scene2_new_down.irr";
 static const irr::c8* LEVEL_FILE3 = "media/model/scene3_new.irr";
 static const irr::c8* LEVEL_FILE4 = "media/model/scene4_new.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
@@ -133,6 +133,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 {
 	//smgr.clear();
 	irr::s32 x_pos;
+	irr::s32 y_pos;
 	irr::s32 z_pos;
 	irr::s32 scene_fall_id;
 	irr::s32 scene_tri_id;
@@ -141,6 +142,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 	{
 		case NODE_ID_SCENE1:
 			x_pos = 0;
+			y_pos = 0;
 			z_pos = 0;
 			scene_fall_id = NODE_ID_SCENE1_FALL;
 			scene_tri_id = NODE_ID_SCENE1_TRI_NEEDED;
@@ -148,6 +150,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 		case NODE_ID_SCENE2:
 			x_pos = 0;
+			y_pos = 2000;
 			z_pos = -1000;
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
@@ -155,6 +158,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 		case NODE_ID_SCENE3:
 			x_pos = 0;
+			y_pos = 2000;
 			z_pos = -2000;
 			scene_fall_id = NODE_ID_SCENE3_FALL;
 			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
@@ -162,6 +166,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 		case NODE_ID_SCENE4:
 			x_pos = 0;
+			y_pos = 2000;
 			z_pos = -3000;
 			scene_fall_id = NODE_ID_SCENE4_FALL;
 			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
@@ -189,29 +194,31 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			if (meshNode->getID() != NODE_ID_SCENE1_FALL && meshNode->getID() != NODE_ID_SCENE2_FALL &&
 				meshNode->getID() != NODE_ID_SCENE3_FALL && meshNode->getID() != NODE_ID_SCENE4_FALL)
 			{
-				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
-				check(meshTriangleSelector);
-				meshNode->setTriangleSelector( meshTriangleSelector );
-				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-				meshTriangleSelector->drop();
-				meshTriangleSelector = NULL;
-				blocks.push_back( meshNode );
-
-				//meshNode->setMaterialTexture( 1, linetext );
-				//meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
 				if (meshNode->getID()==scene_tri_id)
 				{
 					std::cout << "!!!!" << std::endl;
 					irr::core::vector3df tmp = meshNode->getPosition();
 					tmp.X += x_pos;
+					tmp.Y += y_pos;
 					tmp.Z += z_pos;
 					meshNode->setPosition(tmp);
+					irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
+					check(meshTriangleSelector);
+					meshNode->setTriangleSelector( meshTriangleSelector );
+					levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+					meshTriangleSelector->drop();
+					meshTriangleSelector = NULL;
+					blocks.push_back( meshNode );
+
+					//meshNode->setMaterialTexture( 1, linetext );
+					//meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
 				}				
 			}
 			else if (meshNode->getID()==scene_fall_id)
 			{
 				irr::core::vector3df tmp = meshNode->getPosition();
 				tmp.X += x_pos;
+				tmp.Y += y_pos;
 				tmp.Z += z_pos;
 				meshNode->setPosition(tmp);
 			}	
