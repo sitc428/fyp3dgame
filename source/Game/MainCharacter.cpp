@@ -19,7 +19,7 @@
 #include "Robot.hpp"
 
 // Parameters specifying default parameters
-static const irr::core::vector3df		defaultPosition = irr::core::vector3df(100,10,0);
+static const irr::core::vector3df		defaultPosition = irr::core::vector3df(40,10,10);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
@@ -309,12 +309,15 @@ irr::core::vector3df MainCharacter::getTargetPos()
 	/*irr::core::line3df line;
 	line.start = GetNodePosition();
 	line.end = line.start - GetFaceVector() * GetRadius().getLength();*/
-
+	std::cout << actorsNum << std::endl;
 	for( irr::u32 i=0; i < actorsNum; ++i )
 	{
 		if( actors[i]->GetActorType() != ACTOR_ENEMY)
 			continue;
-
+		
+		std::cout << "Target X:  " << actors[i]->GetNode().getPosition().X << std::endl;
+		std::cout << "Target Y:  " << actors[i]->GetNode().getPosition().Y << std::endl;
+		std::cout << "Target Z:  " << actors[i]->GetNode().getPosition().Z << std::endl;
 		//for testing
 		return actors[i]->GetNode().getPosition();
 
@@ -341,7 +344,7 @@ irr::core::vector3df MainCharacter::getTargetPos()
 			std::cout << "Damage = " << damage-offset << std::endl;
 			actors[i]->ReceiveDamage(damage-offset);*/
 			//return actors[i]->GetNode().getPosition();
-			return actors[i]->GetNode().getPosition();
+			//return actors[i]->GetNode().getPosition();
 		}
 	}
 	return world.GetRobot()->GetFaceVector() * GetRadius() * 200;

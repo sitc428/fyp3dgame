@@ -262,9 +262,9 @@ void GameWorld::InitRobot()
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
-	Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
-	actors.push_back(m1);
-	m1->ReSetPosition(irr::core::vector3df(120,0,100));
+	//Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
+	//actors.push_back(m1);
+	//m1->ReSetPosition(irr::core::vector3df(120,0,100));
 	
 	
 	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
