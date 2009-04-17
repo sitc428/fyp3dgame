@@ -134,11 +134,12 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
 
 	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
-	MagicNode = smgr.addMeshSceneNode( Magicmesh, node );
+	MagicNode = smgr.addMeshSceneNode( Magicmesh );
 	MagicNode->setVisible( false );
 	MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
-	MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
+	//MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
+	//MagicNode->setScale(irr::core::vector3df(2,2,2));
 
 	targetIndicator = smgr.addCubeSceneNode(5);
 	targetIndicator->setPosition(irr::core::vector3df(50, 50, 10));
@@ -286,26 +287,23 @@ void MainCharacter::setCasting( bool casting )
 	if( casting )
 	{
 		action = EMCAS_MAGICATTACK;
-		//MagicNode->setParent(&(world.GetRobot()->GetNode()));
-		static irr::core::vector3df magicPos = MagicNode->getPosition() + irr::core::vector3df(0,10,0);
-		//magicPos = world.GetRobot()->GetNodePosition();
+		MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
+
+		irr::core::vector3df magicPos = world.GetRobot()->GetNodePosition();
+		magicPos = world.GetRobot()->GetNodePosition();
+
 		MagicNode->setPosition(magicPos);
 		MagicNode->setVisible(true);
 		
 		irr::scene::ISceneManager& smgr = world.GetSceneManager();
-
+		std::cout << "magic X " << magicPos.X << std::endl;
+		std::cout << "magic Y " << magicPos.Y << std::endl;
+		std::cout << "magic Z " << magicPos.Z << std::endl;
 		irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
 			magicPos,
-			//GetNodePosition(),
 			getTargetPos(),
-			//targetIndicator->getPosition(),
-			//GetNodePosition(),
-			//monsterTarget->GetNode().getPosition(),
 			2000
 			);
-		/*std::cout << "Target X:  " << getTargetPos().X << std::endl;
-		std::cout << "Target Y:  " << getTargetPos().Y << std::endl;
-		std::cout << "Target Z:  " << getTargetPos().Z << std::endl;*/
 
 		MagicNode->addAnimator(anim);
 		anim->drop();
@@ -365,17 +363,34 @@ irr::core::vector3df MainCharacter::getTargetPos()
 	return world.GetRobot()->GetFaceVector() * GetRadius() * 200;*/
 	if (targetIndicator->isVisible())
 	{
-		irr::core::vector3df targetPos = monsterTarget->GetNode().getAbsolutePosition();
+		//MagicNode->setParent( &monsterTarget->GetNode() );
+		//irr::core::vector3df targetPos = monsterTarget->GetNode().getAbsolutePosition();
 		//irr::core::vector3df targetPos = targetIndicator->getPosition();
-		irr::core::vector3df robotPos = world.GetRobot()->GetNodePosition();
+		monsterTarget->GetNode().updateAbsolutePosition();
+		irr::core::vector3df targetPos = monsterTarget->GetNode().getAbsolutePosition();
+		std::cout << "monster X :  " << targetPos.X << std::endl;
+		std::cout << "monster Y :  " << targetPos.Y << std::endl;
+		std::cout << "monster Z :  " << targetPos.Z << std::endl;
+		return targetPos;
+		//irr::core::vector3df targetPos = monsterTarget->GetNode().getPosition();
+		//irr::core::vector3df robotPos = world.GetRobot()->GetNodePosition();
 
+		//targetPos.Y = MagicNode->getPosition().Y;
 		//return robotPos - targetPos;
 		//targetPos.Y -= 5;
-		return targetPos;
+		MagicNode->updateAbsolutePosition();
+		std::cout << "MagicNode X :  " << MagicNode->getAbsolutePosition().X << std::endl;
+		std::cout << "MagicNode Y :  " << MagicNode->getAbsolutePosition().Y << std::endl;
+		std::cout << "MagicNode Z :  " << MagicNode->getAbsolutePosition().Z << std::endl;
+		//return (targetPos - MagicNode->getAbsolutePosition());
+		//return monsterTarget->GetNode().getAbsolutePosition();
+		//return targetPos - robotPos;
+		//return robotPos - targetPos;
+
 	}
 	else
 	{
-		return world.GetRobot()->GetFaceVector() * GetRadius() * 50;
+		return world.GetRobot()->GetFaceVector() * GetRadius() * 200;
 	}
 
 }
