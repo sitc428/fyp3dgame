@@ -289,7 +289,7 @@ void MainCharacter::setCasting( bool casting )
 	if( isCasting())
 		return;
 
-	if( casting )
+	if( casting && GetCurrentMagic() != NULL && GetCurrentMagic()->use() )
 	{
 		action = EMCAS_MAGICATTACK;
 		
@@ -320,6 +320,7 @@ void MainCharacter::setCasting( bool casting )
 
 		magic_timer->restart();
 		MagicFired = true;
+
 		setIdle();
 		ATFieldNode->setVisible( false );
 	}

@@ -21,7 +21,7 @@ HPItem::~HPItem()
 {
 }
 
-void HPItem::use()
+bool HPItem::use()
 {
 	//if value + HP > Max HP => set HP = Max HP
 	if (this->getItemValue()+world.GetCurrentPlayer().GetHealth()>world.GetCurrentPlayer().GetMaxHealth())
@@ -35,7 +35,9 @@ void HPItem::use()
 	int tmp = 0;
 	for(int i = 0; i < box.size(); ++i)
 	{
-		if(box[i].first->getItemType() == HPITEM)
+		if(box[i].first->getItemType() == HPITEM &&
+			box[i].first->getItemName() == ((MainCharacter&)world.GetCurrentPlayer()).GetCurrentMagic()->getItemName()
+		)
 		{
 			count++;
 			tmp = i;
@@ -46,6 +48,12 @@ void HPItem::use()
 		box[tmp].second--;
 	}
 	if (box[tmp].second>=0)
+	{
 		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(box);
-
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

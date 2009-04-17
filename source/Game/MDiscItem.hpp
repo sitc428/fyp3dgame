@@ -7,7 +7,7 @@ class MDiscItem : public Item
 public:
 	MDiscItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value,
 		irr::core::stringw des, irr::video::ITexture* text);
-	void use();
+	bool use();
 	void equip();
 	void unEquip();
 protected:

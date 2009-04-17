@@ -4,6 +4,7 @@
 #include <utility>
 #include "Item.hpp"
 #include "MainCharacter.hpp"
+#include <iostream>
 
 //constructor
 MDiscItem::MDiscItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value,
@@ -23,14 +24,16 @@ MDiscItem::~MDiscItem()
 {
 }
 
-void MDiscItem::use()
+bool MDiscItem::use()
 {
 	irr::core::array< std::pair<Item*, int> > box = (((MainCharacter&)world.GetCurrentPlayer()).GetItemBox());
 	int count = 0;
 	int tmp = 0;
-	for(int i = 0; i < box.size(); ++i)
+	for(int i = 0; i < box.size(); i++)
 	{
-		if(box[i].first->getItemType() == MDISCITEM)
+		if(box[i].first->getItemType() == MDISCITEM && 
+			box[i].first->getItemName() == ((MainCharacter&)world.GetCurrentPlayer()).GetCurrentMagic()->getItemName()
+		)
 		{
 			count++;
 			tmp = i;
@@ -39,9 +42,18 @@ void MDiscItem::use()
 	if (count!=0)
 	{
 		box[tmp].second--;
+		std::cout << box[tmp].second << std::endl;
 	}
+
 	if (box[tmp].second>=0)
+	{
 		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(box);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void MDiscItem::equip()

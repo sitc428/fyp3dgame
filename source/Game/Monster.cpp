@@ -114,7 +114,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			{
 				if (_monItemBox[i].first->getItemName() == playerTmpBox[j].first->getItemName())
 				{
-					playerTmpBox[i].second += _monItemBox[j].second;
+					playerTmpBox[j].second += _monItemBox[i].second;
 					newItem = false;
 					break;
 				}
