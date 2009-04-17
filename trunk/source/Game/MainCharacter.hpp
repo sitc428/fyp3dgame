@@ -174,6 +174,8 @@ private:
 	bool _combo;
 	irr::s32 _comboNum;
 	Monster* monsterTarget;
+	bool MagicFired;
+	irr::f32 MagicBonusValue;
 
 	boost::timer* magic_timer;
 	irr::u32 magicFlyTime;
