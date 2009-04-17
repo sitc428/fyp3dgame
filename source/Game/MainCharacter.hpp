@@ -175,6 +175,9 @@ private:
 	irr::s32 _comboNum;
 	Monster* monsterTarget;
 
+	boost::timer* magic_timer;
+	irr::u32 magicFlyTime;
+
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{
 	public:
