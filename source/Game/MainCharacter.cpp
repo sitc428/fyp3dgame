@@ -68,7 +68,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_comboNum(0),
 	monsterTarget(NULL),
 	targetIndicator(NULL),
-	magicFlyTime(0)
+	magicFlyTime(-1),
+	MagicFired(false),
+	MagicBonusValue(1.0)
 {
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
@@ -164,7 +166,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 
 	aimVector = defaultAimVector;
 
-	magic_timer =  new boost::timer();
+	magic_timer = new boost::timer();
 }
 
 // we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
@@ -290,6 +292,9 @@ void MainCharacter::setCasting( bool casting )
 	if( casting )
 	{
 		action = EMCAS_MAGICATTACK;
+		
+		MagicBonusValue = GetMagicLevel();
+
 		MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
 
 		irr::core::vector3df magicPos = world.GetRobot()->GetNodePosition();
@@ -314,7 +319,7 @@ void MainCharacter::setCasting( bool casting )
 		anim->drop();
 
 		magic_timer->restart();
-
+		MagicFired = true;
 		setIdle();
 		ATFieldNode->setVisible( false );
 	}
@@ -336,10 +341,11 @@ irr::core::vector3df MainCharacter::getTargetPos()
 		std::cout << "TargetIndicator is inVisible" << std::endl;
 		//world.GetRobot()->GetNode().updateAbsolutePosition();
 		//world.GetRobot()->GetAimVector().normalize();
-		irr::core::vector3df tmp = GetFaceVector();
-		tmp.normalize();
-		return tmp * GetRadius().getLength() * 10;
-		return world.GetRobot()->GetFaceVector() * GetRadius().getLength() * 10;
+		//irr::core::vector3df tmp = GetFaceVector();
+		//tmp.normalize();
+		//return tmp * GetRadius().getLength() * 10;
+		return GetFaceVector() * GetRadius().getLength() * 10;
+		//return world.GetRobot()->GetFaceVector() * GetRadius().getLength() * 10;
 		//return world.GetRobot()->GetAimVector() * world.GetRobot()->GetRadius().getLength() * 10;
 	}
 }
@@ -408,8 +414,28 @@ void MainCharacter::DoInput()
 
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
-		if (magic_timer->elapsed()*1000 > magicFlyTime)
-		MagicNode->setVisible(false);
+	if (magicFlyTime != -1 && magic_timer->elapsed()*1000 > magicFlyTime)
+	{
+		if (MagicFired)
+		{
+			MagicNode->setVisible(false);
+			Monster* theTarget = monsterTarget;
+			irr::s32 playerMAttk = GetMagicAttackPoint() * MagicBonusValue;
+			irr::s32 monMDef = theTarget->GetMDef();
+			std::cout << "Magic Level = " << GetMagicLevel() << std::endl;
+			std::cout << "Player MAttk = " << playerMAttk << std::endl;
+			std::cout << "Monster MDefence = " << monMDef << std::endl;
+			irr::s32 damage = 0;
+			if (playerMAttk - monMDef > 0 )
+			{
+				damage = playerMAttk - monMDef;
+			}
+			irr::s32 offset = damage/5 * (rand()%601)/300;
+			std::cout << "Damage = " << damage-offset << std::endl;
+			theTarget->ReceiveDamage(damage-offset);
+			MagicFired = false;
+		}
+	}
 	if( receiver.keyReleased(irr::KEY_TAB) )
 	{
 		lockNextTarget();
