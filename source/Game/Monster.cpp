@@ -18,14 +18,15 @@
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
-Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef)
+Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox)
 	: Actor(gameEngine, gameWorld),
 	collisionAnimator(NULL),
 	_exp(exp),
 	_attk(attk),
 	_def(def),
 	_mattk(mattk),
-	_mdef(mdef)
+	_mdef(mdef),
+	_monItemBox(monItemBox)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
@@ -103,6 +104,36 @@ void Monster::update(Player& _player, irr::f32 delta)
 		((MainCharacter&)world.GetCurrentPlayer()).SetEXP(
 			((MainCharacter&)world.GetCurrentPlayer()).GetEXP()+
 			_exp);
+		
+		//+item
+		ItemCollection playerTmpBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+		for (int i=0; i<_monItemBox.size(); i++)
+		{
+			bool newItem = false;
+			for (int j=0; j<playerTmpBox.size(); j++)
+			{
+				if (_monItemBox[i].first->getItemName() == playerTmpBox[j].first->getItemName())
+				{
+					playerTmpBox[i].second += _monItemBox[j].second;
+					newItem = false;
+					break;
+				}
+				else
+				{
+					newItem = true;
+				}
+			}
+			if (newItem)
+			{
+				playerTmpBox.push_back(std::make_pair(_monItemBox[i].first, _monItemBox[i].second));
+			}
+		}
+		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(playerTmpBox);
+		
+
+
+
+
 		//+level
 		irr::s32 playerLevel = ((MainCharacter&)world.GetCurrentPlayer()).GetLevel();
 		irr::s32 playerEXP = ((MainCharacter&)world.GetCurrentPlayer()).GetEXP();
