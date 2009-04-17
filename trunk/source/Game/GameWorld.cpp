@@ -273,11 +273,33 @@ void GameWorld::InitRobot()
 // sets up the enemies in the world
 void GameWorld::InitEnemies()
 {
-	Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
+	typedef irr::core::array< std::pair<Item*, int> > ItemCollection;
+	ItemCollection monItemBox1;
+	ItemCollection monItemBox2;
+//temp use only
+	irr::video::ITexture* text = NULL;
+
+	Item* hp = new HPItem(*this, HPITEM, "HP Medicine", 50, "Recover 50 Health Point", text);
+	Item* md1 = new MDiscItem(*this, MDISCITEM, "Fire", 10, "Fire Magic of 10 Magical Attack point", text);	
+	Item* md2 = new MDiscItem(*this, MDISCITEM, "Ice", 10, "Ice Magic of 10 Magical Attack point", text);
+	Item* md3 = new MDiscItem(*this, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
+	Item* md4 = new MDiscItem(*this, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
+	Item* xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
+	Item* weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text);
+	Item* weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text);
+	Item* weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text);
+	
+	monItemBox1.push_back(std::make_pair(hp, 1));
+	monItemBox1.push_back(std::make_pair(md1, 2));
+
+	monItemBox2.push_back(std::make_pair(md2, 1));
+	monItemBox2.push_back(std::make_pair(md3, 2));
+
+	Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox1);
 	actors.push_back(m1);
 	m1->ReSetPosition(irr::core::vector3df(120,0,100));
 	
-	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20);
+	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox2);
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(100,0,180));
 

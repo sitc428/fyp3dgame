@@ -27,6 +27,7 @@
 #include <math.h>
 #include "MainCharacter.hpp"
 
+
 namespace sc = boost::statechart;
 namespace mpl = boost::mpl;
 
@@ -34,8 +35,8 @@ struct FiniteStateMachine;
 
 class Monster: public Actor{
 public:
-
-	Monster( GameEngine&, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef);
+	typedef irr::core::array< std::pair<Item*, int> > ItemCollection;
+	Monster( GameEngine&, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox);
 	~Monster(){
 		delete FSM;
 		//collisionAnimator->drop();
@@ -79,6 +80,7 @@ private:
 	irr::s32 _mdef;
 	FiniteStateMachine* FSM;
 	irr::scene::IAnimatedMeshSceneNode *_monster;
+	ItemCollection _monItemBox;
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
