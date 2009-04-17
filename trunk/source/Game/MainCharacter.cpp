@@ -67,7 +67,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_combo(false),
 	_comboNum(0),
 	monsterTarget(NULL),
-	targetIndicator(NULL)
+	targetIndicator(NULL),
+	magicFlyTime(0)
 {
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
@@ -162,6 +163,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	attackCallBack = new AttackAnimationEndCallBack( world, *this );
 
 	aimVector = defaultAimVector;
+
+	magic_timer =  new boost::timer();
 }
 
 // we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
@@ -299,15 +302,18 @@ void MainCharacter::setCasting( bool casting )
 		std::cout << "magic X " << magicPos.X << std::endl;
 		std::cout << "magic Y " << magicPos.Y << std::endl;
 		std::cout << "magic Z " << magicPos.Z << std::endl;
+		irr::core::vector3df targetPos = getTargetPos();
+		magicFlyTime = (targetPos - magicPos).getLength() / 0.1;
 		irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
 			magicPos,
-			getTargetPos(),
-			2000
+			targetPos,
+			magicFlyTime
 			);
 
 		MagicNode->addAnimator(anim);
 		anim->drop();
-		//MagicNode->setVisible(false);
+
+		magic_timer->restart();
 
 		setIdle();
 		ATFieldNode->setVisible( false );
@@ -316,83 +322,26 @@ void MainCharacter::setCasting( bool casting )
 
 irr::core::vector3df MainCharacter::getTargetPos()
 {
-	/*irr::core::array<Actor*> actors = world.GetActors();
-	irr::u32 actorsNum = actors.size();
-
-	irr::core::line3df line;
-	line.start = GetNodePosition();
-	line.end = line.start - GetFaceVector() * GetRadius().getLength();
-	std::cout << actorsNum << std::endl;
-	for( irr::u32 i=0; i < actorsNum; ++i )
-	{
-		if( actors[i]->GetActorType() != ACTOR_ENEMY)
-			continue;
-		
-		std::cout << "Target X:  " << actors[i]->GetNode().getPosition().X << std::endl;
-		std::cout << "Target Y:  " << actors[i]->GetNode().getPosition().Y << std::endl;
-		std::cout << "Target Z:  " << actors[i]->GetNode().getPosition().Z << std::endl;
-		//for testing
-		return actors[i]->GetNode().getPosition();
-
-		if(
-			CollisionHelper::CheckProximity2D(
-				world.GetCurrentPlayer().GetNodePosition(),
-				actors[i]->GetNode().getPosition(),
-				//GetRadius().getLength() + actors[i]->GetRadius().getLength() +
-				GetRadius().getLength() * 5
-			)
-			//world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line)
-		)
-		{
-			/*irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
-			irr::s32 monDef = ((Monster*)actors[i])->GetDef();
-			std::cout << "Player Attk = " << playerAttk << std::endl;
-			std::cout << "Monster Defence = " << monDef << std::endl;
-			irr::s32 damage = 0;
-			if (playerAttk - monDef > 0 )
-			{
-				damage = playerAttk - monDef;
-			}
-			irr::s32 offset = damage/5 * (rand()%601)/300;
-			std::cout << "Damage = " << damage-offset << std::endl;
-			actors[i]->ReceiveDamage(damage-offset);
-			//return actors[i]->GetNode().getPosition();
-			//return actors[i]->GetNode().getPosition();
-		}
-	}
-	return world.GetRobot()->GetFaceVector() * GetRadius() * 200;*/
 	if (targetIndicator->isVisible())
 	{
-		//MagicNode->setParent( &monsterTarget->GetNode() );
-		//irr::core::vector3df targetPos = monsterTarget->GetNode().getAbsolutePosition();
-		//irr::core::vector3df targetPos = targetIndicator->getPosition();
 		monsterTarget->GetNode().updateAbsolutePosition();
 		irr::core::vector3df targetPos = monsterTarget->GetNode().getAbsolutePosition();
 		std::cout << "monster X :  " << targetPos.X << std::endl;
 		std::cout << "monster Y :  " << targetPos.Y << std::endl;
 		std::cout << "monster Z :  " << targetPos.Z << std::endl;
 		return targetPos;
-		//irr::core::vector3df targetPos = monsterTarget->GetNode().getPosition();
-		//irr::core::vector3df robotPos = world.GetRobot()->GetNodePosition();
-
-		//targetPos.Y = MagicNode->getPosition().Y;
-		//return robotPos - targetPos;
-		//targetPos.Y -= 5;
-		MagicNode->updateAbsolutePosition();
-		std::cout << "MagicNode X :  " << MagicNode->getAbsolutePosition().X << std::endl;
-		std::cout << "MagicNode Y :  " << MagicNode->getAbsolutePosition().Y << std::endl;
-		std::cout << "MagicNode Z :  " << MagicNode->getAbsolutePosition().Z << std::endl;
-		//return (targetPos - MagicNode->getAbsolutePosition());
-		//return monsterTarget->GetNode().getAbsolutePosition();
-		//return targetPos - robotPos;
-		//return robotPos - targetPos;
-
 	}
 	else
 	{
-		return world.GetRobot()->GetFaceVector() * GetRadius() * 200;
+		std::cout << "TargetIndicator is inVisible" << std::endl;
+		//world.GetRobot()->GetNode().updateAbsolutePosition();
+		//world.GetRobot()->GetAimVector().normalize();
+		irr::core::vector3df tmp = GetFaceVector();
+		tmp.normalize();
+		return tmp * GetRadius().getLength() * 10;
+		return world.GetRobot()->GetFaceVector() * GetRadius().getLength() * 10;
+		//return world.GetRobot()->GetAimVector() * world.GetRobot()->GetRadius().getLength() * 10;
 	}
-
 }
 
 void MainCharacter::setRunning( bool running )
@@ -456,8 +405,11 @@ void MainCharacter::Tick( irr::f32 delta )
 
 void MainCharacter::DoInput()
 {
+
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
+		if (magic_timer->elapsed()*1000 > magicFlyTime)
+		MagicNode->setVisible(false);
 	if( receiver.keyReleased(irr::KEY_TAB) )
 	{
 		lockNextTarget();
