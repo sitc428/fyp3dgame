@@ -65,7 +65,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_currentWeapon(NULL),
 	_currentMagic(NULL),
 	_combo(false),
-	_comboNum(0),
+	_comboNum(1),
 	monsterTarget(NULL),
 	targetIndicator(NULL),
 	magicFlyTime(-1),
@@ -169,6 +169,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	aimVector = defaultAimVector;
 
 	magic_timer = new boost::timer();
+
+	combo_timer = new boost::timer();
 }
 
 // we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
@@ -414,13 +416,28 @@ void MainCharacter::Tick( irr::f32 delta )
 
 void MainCharacter::DoInput()
 {
-
+			irr::f32 comboValue;
+			switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
+			{
+				case 2:
+					comboValue = 1.2;
+					break;
+				case 3:
+					comboValue = 1.5;
+					break;
+				case 4:
+					comboValue = 2;
+					break;
+				default:
+					comboValue = 1.0;
+			}
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if (magicFlyTime != -1 && magic_timer->elapsed()*1000 > magicFlyTime)
 	{
 		if (MagicFired)
 		{
+
 			MagicNode->setVisible(false);
 			Monster* theTarget = monsterTarget;
 			irr::s32 playerMAttk = GetMagicAttackPoint() * MagicBonusValue;
@@ -434,8 +451,11 @@ void MainCharacter::DoInput()
 				damage = playerMAttk - monMDef;
 			}
 			irr::s32 offset = damage/5 * (rand()%601)/300;
-			std::cout << "Damage = " << damage-offset << std::endl;
-			theTarget->ReceiveDamage(damage-offset);
+			std::cout << "Combo = " << GetComboNum() << std::endl;
+			std::cout << "Damage = " << (damage-offset) * comboValue << std::endl;
+			theTarget->ReceiveDamage( (damage-offset) * comboValue);
+			SetCombo(false);
+			SetComboNum(1);
 			MagicFired = false;
 		}
 	}
@@ -466,8 +486,11 @@ void MainCharacter::DoInput()
 	}
 	else if( receiver.keyReleased(irr::KEY_KEY_C) )
 	{
-		if (GetMagicLevel()>=1)
+		if (GetMagicLevel()>=1 && targetIndicator->isVisible())
+		{
+			SetComboNum( GetComboNum() + 1);
 			setCasting( true );
+		}
 		SetCharging( false );
 		SetChargingProgress(0);
 		SetMagicLevel(0);
@@ -476,6 +499,33 @@ void MainCharacter::DoInput()
 
 	if( receiver.keyReleased(irr::KEY_KEY_Z) )
 	{
+		if (!GetCombo())
+		{
+			SetCombo(true);
+			combo_timer->restart();
+		}
+		else
+		{
+			if (combo_timer->elapsed() < 1.0)
+			{
+				if (GetComboNum() <= 3)
+				{
+					SetComboNum( GetComboNum() + 1);
+					combo_timer->restart();
+				}
+				else
+				{
+					SetCombo(false);
+					SetComboNum(1);
+				}
+			}
+			else
+			{
+				SetCombo(false);
+				SetComboNum(1);
+			}
+		}
+
 		setAttacking( true );
 		return;
 	}
@@ -736,8 +786,26 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 				damage = playerAttk - monDef;
 			}
 			irr::s32 offset = damage/5 * (rand()%601)/300;
-			std::cout << "Damage = " << damage-offset << std::endl;
-			theTarget->ReceiveDamage(damage-offset);
+
+			irr::f32 comboValue;
+			switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
+			{
+				case 2:
+					comboValue = 1.2;
+					break;
+				case 3:
+					comboValue = 1.5;
+					break;
+				case 4:
+					comboValue = 2;
+					break;
+				default:
+					comboValue = 1.0;
+			}
+
+			std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
+			std::cout << "Damage = " << (damage-offset) * comboValue << std::endl;
+			theTarget->ReceiveDamage( (damage-offset) * comboValue);
 		}
 	}
 

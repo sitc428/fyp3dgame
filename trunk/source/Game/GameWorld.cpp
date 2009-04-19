@@ -156,9 +156,9 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			sceneFile = LEVEL_FILE1;
 			break;
 		case NODE_ID_SCENE2:
-			x_pos = -100;
+			x_pos = -80;
 			y_pos = 2000;
-			z_pos = -1000;
+			z_pos = -1006.9999;
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
 			sceneFile = LEVEL_FILE2;
@@ -166,7 +166,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 		case NODE_ID_SCENE3:
 			x_pos = 0;
 			y_pos = 2000;
-			z_pos = -2000;
+			z_pos = -2013.9999;
 			scene_fall_id = NODE_ID_SCENE3_FALL;
 			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
 			sceneFile = LEVEL_FILE3;
@@ -174,7 +174,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 		case NODE_ID_SCENE4:
 			x_pos = 0;
 			y_pos = 2000;
-			z_pos = -3000;
+			z_pos = -3020.9999;
 			scene_fall_id = NODE_ID_SCENE4_FALL;
 			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
 			sceneFile = LEVEL_FILE4;
