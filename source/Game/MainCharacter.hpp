@@ -180,6 +180,8 @@ private:
 	boost::timer* magic_timer;
 	irr::u32 magicFlyTime;
 
+	boost::timer* combo_timer;
+
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{
 	public:
