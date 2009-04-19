@@ -254,7 +254,7 @@ void GameHUD::DrawConversation()
 		ConversationFont->draw(ConversationString.c_str(), ConversationRec, irr::video::SColor(255,255,255,255), false, true, 0);
 	}
 	if(ConversationHeader){
-		GEngine->GetDriver().draw2DImage(ConversationHeader, irr::core::position2di(40, 520));
+		GEngine->GetDriver().draw2DImage(ConversationHeader, irr::core::position2di(40, 465));
 	}
 }
 
