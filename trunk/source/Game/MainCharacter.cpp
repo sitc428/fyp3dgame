@@ -133,6 +133,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball.vert", "media/shader/fireball.frag", 2, irr::video::EMT_SOLID);
 	Ice = GEngine.GetShaderFactory().createShader( "media/shader/Ice.vert", "media/shader/Ice.frag", 0, irr::video::EMT_SOLID);
+	Lightning = GEngine.GetShaderFactory().createShader( "media/shader/Lightning.vert", "media/shader/Lightning.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
@@ -849,14 +850,14 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Ice->GetShaderMaterial());
 			else
 				MagicNode->setMaterialType(irr::video::EMT_SOLID);
-		}else if( _currentMagic->getItemName() == "Fire" ){
-			std::cout<<"Lighting\n";
+		}else if( _currentMagic->getItemName() == "Lightning" ){
+			std::cout<<"Lightning\n";
 			if(GEngine.GetShaderFactory().ShaderAvailable())
-				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)FireBall->GetShaderMaterial());
+				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Lightning->GetShaderMaterial());
 			else
-				MagicNode->setMaterialType(irr::video::EMT_SOLID);
-			MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
-			MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
+				MagicNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+			MagicNode->setMaterialTexture(0, driver.getTexture("media/model/base.tga"));
+			
 		}else if( _currentMagic->getItemName() == "Ice" ){
 			std::cout<<"Cyclone\n";
 			if(GEngine.GetShaderFactory().ShaderAvailable())
