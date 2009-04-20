@@ -125,7 +125,7 @@ public:
 	void SetItemBox(ItemCollection itemBox) {_itemBox = itemBox;};
 	void SetEXP(irr::s32 exp) {_exp = exp;}
 	void SetCurrentWeapon(WeaponItem* currentWeapon) { _currentWeapon = currentWeapon;}
-	void SetCurrentMagic(MDiscItem* currentMagic) { _currentMagic = currentMagic;}
+	void SetCurrentMagic(MDiscItem* currentMagic) ;
 	void SetCombo(bool combo) {_combo = combo;};
 	void SetComboNum(irr::s32 comboNum) {_comboNum = comboNum;};
 
@@ -181,6 +181,10 @@ private:
 	irr::u32 magicFlyTime;
 
 	boost::timer* combo_timer;
+	
+	
+	Shader* FireBall;
+	Shader* Ice;
 
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{
