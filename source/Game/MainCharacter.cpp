@@ -114,6 +114,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setRotation( defaultRotation );
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, true );
 	node->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
+	//node->setMaterialType(irr::video::EMT_SOLID);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
 	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
 	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
@@ -130,6 +131,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	Shader* FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball.vert", "media/shader/fireball.frag", 2, irr::video::EMT_SOLID);
+	Shader* Ice = GEngine.GetShaderFactory().createShader( "media/shader/Ice.vert", "media/shader/Ice.frag", 0, irr::video::EMT_SOLID);
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
@@ -139,8 +141,11 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 
 	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
 	MagicNode = smgr.addMeshSceneNode( Magicmesh );
-	MagicNode->setVisible( false );
-	MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)FireBall->GetShaderMaterial());
+	MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+	MagicNode->setVisible( false );	
+	if(GEngine.GetShaderFactory().ShaderAvailable())
+		MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)FireBall->GetShaderMaterial());
+	else MagicNode->setMaterialType(irr::video::EMT_SOLID);
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
 	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
 	//MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
