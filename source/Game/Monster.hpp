@@ -44,6 +44,7 @@ public:
 		
 	//	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	//	smgr.addToDeletionQueue( _monster );
+		world.GetSceneManager().addToDeletionQueue(_monster);
 	};
 	// we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
 	virtual void RecreateCollisionResponseAnimator();

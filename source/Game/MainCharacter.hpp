@@ -108,6 +108,9 @@ public:
 	WeaponItem* GetCurrentWeapon() const {return _currentWeapon;};
 	MDiscItem* GetCurrentMagic() const {return _currentMagic;};
 	irr::scene::ISceneNode* getWeaponNode() { return weaponNode; }
+	Monster* GetTarget() { return monsterTarget; }
+	void SetTarget( Monster* newTarget );
+	
 	bool GetCombo() const {return _combo;};
 	irr::s32 GetComboNum() const {return _comboNum;};
 	

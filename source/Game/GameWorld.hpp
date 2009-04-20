@@ -105,6 +105,9 @@ private:
 	// updates and plays 3d audio effects
 	void DoAudio();
 
+	// clean out the dead actors
+	void DoCleanUp();
+
 	virtual void SetNumLives( irr::s32 lives ) { numLives = lives; }
 	virtual irr::s32 GetNumLives() { return numLives; }
 
