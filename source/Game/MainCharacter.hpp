@@ -185,6 +185,7 @@ private:
 	irr::f32 timeElapsed;
 	Shader* FireBall;
 	Shader* Ice;
+	Shader* Lightning;
 
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{
