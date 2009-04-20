@@ -148,6 +148,8 @@ void GameWorld::AddScene(irr::s32 sceneType)
 	irr::s32 scene_fall_id;
 	irr::s32 scene_tri_id;
 	const irr::c8* sceneFile;
+	TriggerEventItem* TriggerEventItemLoadScene3;
+	TriggerEventItem* TriggerEventItemLoadScene4;
 	switch  (sceneType)
 	{
 		case NODE_ID_SCENE1:
@@ -157,14 +159,28 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			scene_fall_id = NODE_ID_SCENE1_FALL;
 			scene_tri_id = NODE_ID_SCENE1_TRI_NEEDED;
 			sceneFile = LEVEL_FILE1;
+			TriggerEventItemLoadScene3 = new TriggerEventItem( GEngine, *this,
+				irr::core::vector3df(-57.939693,-8,-409.886017),
+				irr::core::vector3df(-90,0,0),
+				irr::core::vector3df(16.4, 15, 10),
+				SCENE3
+			);
+			actors.push_back( TriggerEventItemLoadScene3 );
 			break;
 		case NODE_ID_SCENE2:
-			x_pos = -80;
+			x_pos = 0;//-80;
 			y_pos = 2000;
 			z_pos = -1006.9999;
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
 			sceneFile = LEVEL_FILE2;
+			TriggerEventItemLoadScene4 = new TriggerEventItem( GEngine, *this,
+				irr::core::vector3df(-45.325108, -6, -1472.658073),
+				irr::core::vector3df(-90,0,0),
+				irr::core::vector3df(17.5,15,7.615808),
+				SCENE4
+			);
+			actors.push_back( TriggerEventItemLoadScene3 );
 			break;
 		case NODE_ID_SCENE3:
 			x_pos = 0;
@@ -175,7 +191,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			sceneFile = LEVEL_FILE3;
 			break;
 		case NODE_ID_SCENE4:
-			x_pos = 0;
+			x_pos = 0;//-350;
 			y_pos = 2000;
 			z_pos = -3020.9999;
 			scene_fall_id = NODE_ID_SCENE4_FALL;
