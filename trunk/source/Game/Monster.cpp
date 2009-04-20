@@ -40,7 +40,10 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	//_monster->setMaterialType(irr::video::EMT_SOLID);
 	//_monster->setScale(irr::core::vector3df(1,1,1));
 	//_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
-	_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
+	if(GEngine.GetShaderFactory().ShaderAvailable())
+		_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
+	else
+		_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.png"));
 	_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
 	//_monster->setMaterialTexture(1, driver.getTexture("media/model/shade_line.jpg" ));
@@ -192,7 +195,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			|| _player.GetNodePosition().getDistanceFrom(pos)< 80.0f )
 	{
 		mon_timer->restart();
-		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/100.0f);
+		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
 		CheckActorPosition(targetPos, _player);
 		
 		if( targetPos.getDistanceFrom(original) < 120.0f )
