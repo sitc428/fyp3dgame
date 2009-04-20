@@ -8,13 +8,14 @@ varying vec3  vViewVec;
 
 void main(void)
 {
-	float n_specular = 7.0;
+	float n_specular = 10.0;
 	float Ks = 1.0;
 	float Ka = 1.0;
 	float Kd = 0.8;
 	vec4 diffuse = vec4(0.84,0.86,0.89,1.0);
 	vec4 specular = vec4(1.0,0.95,0.67,1.0);
 	vec4 ambient = vec4(0.92,0.93,0.93,1.0);
+	
    // Compute the reflection vector:
    vec3 vReflect = normalize( 2.0 * dot( vNormal, vLightVec) * vNormal - vLightVec );       
 

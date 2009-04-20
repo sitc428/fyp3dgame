@@ -1,8 +1,5 @@
 uniform float time_0_X;
 
-
-
-
 varying vec2  vTexCoord;
 varying vec3  vNormal;
 varying vec3  vLightVec;
@@ -11,8 +8,8 @@ varying vec3  vViewVec;
 void main(void)
 {
 	vec4 lightDir = vec4(-.0403,-0.294,0.866,1.0);
-	float scroll_speed_X = 6.0;
-	float scroll_speed_Y = -8.0;
+	float scroll_speed_X = 22.0;
+	float scroll_speed_Y = -12.0;
    // Output transformed vertex position:
    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 
