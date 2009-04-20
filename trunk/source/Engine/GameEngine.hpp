@@ -144,8 +144,8 @@ private:
 
 	irr::u32 lastTime; // used to get elapsed time
 
-	//std::map< std::string, irr::video::ITexture*> texturePool;
-	//std::map< std::string, irr::scene::IMesh*> modelMeshPool;
+	irr::core::array<irr::video::ITexture*> texturePool;
+	irr::core::array<irr::scene::IMesh*> modelMeshPool;
 
 	EEngineState state; // the state the engine is in
 	EEngineState requestedNextState; // requested next state we want to transition to 
