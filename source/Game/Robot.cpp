@@ -31,7 +31,10 @@ Robot::Robot( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setPosition( defaultPosition );
 	node->setID( 999 );
 	node->setRotation( defaultRotation );
-	node->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial());
+	if(GEngine.GetShaderFactory().ShaderAvailable())
+		node->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial());
+	else 
+		node->setMaterialType(irr::video::EMT_SOLID);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture0 ));
 	node->setMaterialTexture(1, driver.getTexture( defaultTexture1 ));
 	//node->setMaterialFlag(irr::video::EMF_LIGHTING, true);
