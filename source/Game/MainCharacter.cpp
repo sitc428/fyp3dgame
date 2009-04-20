@@ -492,7 +492,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 		if (GetMagicLevel()<3)
 		{
 			timeElapsed += delta;
-			if (timeElapsed > 0.0001)
+			if (timeElapsed > 0.0001 / (1 + _magiclevel))
 			{
 				SetChargingProgress(GetChargingProgress()+1);
 				if (GetChargingProgress()%100 == 0)
