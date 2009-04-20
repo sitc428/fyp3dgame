@@ -23,7 +23,7 @@ static const irr::core::vector3df		defaultPosition = irr::core::vector3df(40,20,
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
 
 static const irr::c8*		MAIN_CHARACTER_MODEL  = "media/model/Pedro.x";
-static const irr::c8*		defaultTexture = "media/model/PedroTexture.png";
+static const irr::c8*		defaultTexture = "media/model/PedroTexture.tga";
 static const irr::f32		ANIMATION_SPEED = 24;
 
 static irr::core::vector3df defaultAimVector = irr::core::vector3df(0, 0, -1.0);
@@ -117,7 +117,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
 	//node->setMaterialType(irr::video::EMT_SOLID);
 	node->setMaterialTexture(0, driver.getTexture( defaultTexture ));
-	node->setMaterialTexture(1, driver.getTexture( "media/model/shade_line.png" ));
+	node->setMaterialTexture(1, driver.getTexture( "media/model/PedroTextureShade.tga" ));
 	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	weaponNode = smgr.addMeshSceneNode(
