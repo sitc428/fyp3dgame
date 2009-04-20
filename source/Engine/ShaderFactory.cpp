@@ -6,7 +6,7 @@ ShaderFactory::ShaderFactory( GameEngine& gameEngine)
 	: GEngine(gameEngine)
 {
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
-
+/*
 	shaderAvailable =
 		(driver.queryFeature(irr::video::EVDF_ARB_FRAGMENT_PROGRAM_1) &&
 		driver.queryFeature(irr::video::EVDF_ARB_VERTEX_PROGRAM_1)) ||
@@ -15,16 +15,26 @@ ShaderFactory::ShaderFactory( GameEngine& gameEngine)
 	
 	if( shaderAvailable )
 		GPU = driver.getGPUProgrammingServices();
+*/	
+	shaderAvailable = driver.queryFeature(irr::video::EVDF_ARB_GLSL);
+	if(shaderAvailable)
+		GPU = driver.getGPUProgrammingServices();
+	
+	
 }
 
 Shader* ShaderFactory::createShader(irr::core::stringc vsFile, irr::core::stringc psFile, irr::u32 textureCount, irr::video::E_MATERIAL_TYPE type, irr::core::vector3df* camPos)
 {
+	if(!shaderAvailable) std::cout<<"No GLSL\n";
+	else std::cout<<"Have GLSL!\n";
+	
 	Shader* shader = shaderPool[vsFile+psFile];
 
 	if( shader )
 		return shader;
 
 	shader = new Shader( textureCount, camPos );
+	irr::video::SMaterial* m = new irr::video::SMaterial();
 
 	if( !shaderAvailable )
 		shader->SetShaderMaterial( type );
