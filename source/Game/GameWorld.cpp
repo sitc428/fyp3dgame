@@ -127,9 +127,8 @@ void GameWorld::InitLevel()
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
 	AddScene(NODE_ID_SCENE1);
-
-#ifndef _IRR_WINDOWS_
 	AddScene(NODE_ID_SCENE2);
+#ifndef _IRR_WINDOWS_
 	AddScene(NODE_ID_SCENE3);
 	AddScene(NODE_ID_SCENE4);
 #endif
@@ -159,6 +158,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			scene_fall_id = NODE_ID_SCENE1_FALL;
 			scene_tri_id = NODE_ID_SCENE1_TRI_NEEDED;
 			sceneFile = LEVEL_FILE1;
+			#ifdef _IRR_WINDOWS_
 			TriggerEventItemLoadScene3 = new TriggerEventItem( GEngine, *this,
 				irr::core::vector3df(-57.939693,-8,-409.886017),
 				irr::core::vector3df(-90,0,0),
@@ -166,6 +166,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 				SCENE3
 			);
 			actors.push_back( TriggerEventItemLoadScene3 );
+			#endif
 			break;
 		case NODE_ID_SCENE2:
 			x_pos = 0;//-80;
@@ -174,6 +175,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
 			sceneFile = LEVEL_FILE2;
+			#ifdef _IRR_WINDOWS_
 			TriggerEventItemLoadScene4 = new TriggerEventItem( GEngine, *this,
 				irr::core::vector3df(-45.325108, -6, -1472.658073),
 				irr::core::vector3df(-90,0,0),
@@ -181,6 +183,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 				SCENE4
 			);
 			actors.push_back( TriggerEventItemLoadScene3 );
+			#endif
 			break;
 		case NODE_ID_SCENE3:
 			x_pos = 0;
