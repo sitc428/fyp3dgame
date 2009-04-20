@@ -36,6 +36,7 @@ private:
 	irr::u32 NumOfTexture;
 	irr::s32 shaderMaterial;
 	irr::f32 offset;
+	irr::f32 offset_time;
 	irr::f32 factor;
 	boost::timer* mtimer;
 	irr::core::vector3df* camPos;

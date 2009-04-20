@@ -8,6 +8,7 @@
  */
 
 #include "Shader.hpp"
+#include <iostream>
 
 // Shader material definitions
 
@@ -19,9 +20,11 @@ Shader::Shader( int numOfTexture, irr::core::vector3df* camPosition )
 	camPos(camPosition)
 {
 	offset = 0;
+	offset_time = 0;
 	factor=0.01;
 
 	mtimer = new boost::timer();
+	mtimer->restart();
 	/*
 	if(nodeType=="field"){
 			SHADER_MATERIAL_BASE = driver->addMaterialRenderer(this, "SHADER_MATERIAL_BASE");
@@ -75,8 +78,14 @@ void Shader::OnSetConstants(irr::video::IMaterialRendererServices* services, irr
 
 	if(mtimer->elapsed() > 120.0)
 		mtimer->restart();
+	//std::cout<<mtimer->elapsed()<<"\n";
+	//std::cout<<"offset: "<<offset<<"\n";
 	float tim = mtimer->elapsed();
-	services->setVertexShaderConstant("time_0_X", reinterpret_cast<irr::f32*>(&tim), 3);
+	offset_time+=0.3;
+	if(offset_time>120.0)
+		offset_time = 0.0;
+	services->setVertexShaderConstant("Time0_X", reinterpret_cast<irr::f32*>(&offset_time), 3);
+	services->setVertexShaderConstant("time_0_X", reinterpret_cast<irr::f32*>(&offset_time), 3);
 	
 	if(camPos){
 		services->setVertexShaderConstant("view_inverse_matrix", reinterpret_cast<irr::f32*>(camPos), 3);
