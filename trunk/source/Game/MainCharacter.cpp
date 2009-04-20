@@ -70,7 +70,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	targetIndicator(NULL),
 	magicFlyTime(-1),
 	MagicFired(false),
-	MagicBonusValue(1.0)
+	MagicBonusValue(1.0),
+	timeElapsed(0)
 {
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
@@ -412,7 +413,7 @@ bool MainCharacter::isRunning() const
 void MainCharacter::Tick( irr::f32 delta )
 {
 	if( !(isAttacking() || IsDead()) )
-		DoInput();
+		DoInput(delta);
 
 	node->setRotation( rotation );
 	irr::core::vector3df playerPos = node->getPosition();
@@ -421,7 +422,7 @@ void MainCharacter::Tick( irr::f32 delta )
 	translation.Z = 0;
 }
 
-void MainCharacter::DoInput()
+void MainCharacter::DoInput(irr::f32 delta)
 {
 	irr::f32 comboValue;
 	switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
@@ -486,9 +487,15 @@ void MainCharacter::DoInput()
 		SetCharging( true );
 		if (GetMagicLevel()<3)
 		{
-			SetChargingProgress(GetChargingProgress()+1);
-			if (GetChargingProgress()%100 == 0)
-				SetMagicLevel(GetMagicLevel()+1);
+			timeElapsed += delta;
+			if (timeElapsed > 0.0001)
+			{
+				SetChargingProgress(GetChargingProgress()+1);
+				if (GetChargingProgress()%100 == 0)
+					SetMagicLevel(GetMagicLevel()+1);
+
+				timeElapsed = 0;
+			}
 		}
 	}
 	else if( receiver.keyReleased(irr::KEY_KEY_C) )

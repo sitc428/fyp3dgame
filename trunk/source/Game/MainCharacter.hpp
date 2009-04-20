@@ -53,7 +53,7 @@ public:
 	virtual EActorType GetActorType() const { return ACTOR_PLAYER; }
 
 	// get the user input for the player
-	void DoInput();
+	void DoInput(irr::f32 delta);
 
 	// set the movement translation vector for player
 	virtual void SetTranslation( const irr::core::vector3df& trans );
@@ -182,7 +182,7 @@ private:
 
 	boost::timer* combo_timer;
 	
-	
+	irr::f32 timeElapsed;
 	Shader* FireBall;
 	Shader* Ice;
 
