@@ -251,7 +251,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}
 			else
 			{
-				if( mon_timer->elapsed() > timeout )
+				if( mon_timer->elapsed() > 1.0 )
 				{
 					if( (target - pos) < irr::core::vector3df(10.0, 0.0, 10.0) || target ==pos||mon_timer->elapsed() > 7.0  )
 					{
@@ -262,9 +262,9 @@ void Monster::update(Player& _player, irr::f32 delta)
 							float x = ((float)(rand() % 20 + 1))-10;
 							float z = ((float)(rand() % 20 + 1))-10;
 							float y = _monster->getPosition().Y;
-							target.X = pos.X+x;
+							target.X = original.X+x;
 							target.Y = y;
-							target.Z = pos.Z+z;
+							target.Z = original.Z+z;
 							irr::core::vector3df direction = pos-target;
 							_monster->setRotation(direction.getHorizontalAngle());
 							FSM->IdleTooLong(_monster,_player, target);
