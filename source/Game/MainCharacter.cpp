@@ -65,7 +65,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	_currentWeapon(NULL),
 	_currentMagic(NULL),
 	_combo(false),
-	_comboNum(1),
+	_comboNum(0),
 	monsterTarget(NULL),
 	targetIndicator(NULL),
 	magicFlyTime(-1),
@@ -323,7 +323,8 @@ void MainCharacter::setCasting( bool casting )
 		anim->drop();
 
 		magic_timer->restart();
-		MagicFired = true;
+		if (monsterTarget)
+			MagicFired = true;
 
 		setIdle();
 		ATFieldNode->setVisible( false );
@@ -349,7 +350,7 @@ irr::core::vector3df MainCharacter::getTargetPos()
 		//irr::core::vector3df tmp = GetFaceVector();
 		//tmp.normalize();
 		//return tmp * GetRadius().getLength() * 10;
-		return GetFaceVector() * GetRadius().getLength() * 10;
+		return world.GetRobot()->GetNode().getAbsolutePosition() + GetFaceVector() * GetRadius().getLength() * 10;
 		//return world.GetRobot()->GetFaceVector() * GetRadius().getLength() * 10;
 		//return world.GetRobot()->GetAimVector() * world.GetRobot()->GetRadius().getLength() * 10;
 	}
@@ -416,21 +417,21 @@ void MainCharacter::Tick( irr::f32 delta )
 
 void MainCharacter::DoInput()
 {
-			irr::f32 comboValue;
-			switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
-			{
-				case 2:
-					comboValue = 1.2;
-					break;
-				case 3:
-					comboValue = 1.5;
-					break;
-				case 4:
-					comboValue = 2;
-					break;
-				default:
-					comboValue = 1.0;
-			}
+	irr::f32 comboValue;
+	switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
+	{
+		case 2:
+			comboValue = 1.2;
+			break;
+		case 3:
+			comboValue = 1.5;
+			break;
+		case 4:
+			comboValue = 2;
+			break;
+		default:
+			comboValue = 1.0;
+	}
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if (magicFlyTime != -1 && magic_timer->elapsed()*1000 > magicFlyTime)
@@ -455,7 +456,7 @@ void MainCharacter::DoInput()
 			std::cout << "Damage = " << (damage-offset) * comboValue << std::endl;
 			theTarget->ReceiveDamage( (damage-offset) * comboValue);
 			SetCombo(false);
-			SetComboNum(1);
+			SetComboNum(0);
 			MagicFired = false;
 		}
 	}
@@ -486,7 +487,7 @@ void MainCharacter::DoInput()
 	}
 	else if( receiver.keyReleased(irr::KEY_KEY_C) )
 	{
-		if (GetMagicLevel()>=1 && targetIndicator->isVisible())
+		if (GetMagicLevel()>=1)// && targetIndicator->isVisible())
 		{
 			SetComboNum( GetComboNum() + 1);
 			setCasting( true );
@@ -502,6 +503,7 @@ void MainCharacter::DoInput()
 		if (!GetCombo())
 		{
 			SetCombo(true);
+			SetComboNum(1);
 			combo_timer->restart();
 		}
 		else
@@ -516,13 +518,13 @@ void MainCharacter::DoInput()
 				else
 				{
 					SetCombo(false);
-					SetComboNum(1);
+					SetComboNum(0);
 				}
 			}
 			else
 			{
 				SetCombo(false);
-				SetComboNum(1);
+				SetComboNum(0);
 			}
 		}
 
