@@ -7,11 +7,12 @@
 #include <boost/thread.hpp>
 
 static const irr::f32		acceptable_Distance = 30.0;
-static const irr::c8*		TRIGGER_EVENT_ITEM_MODEL  = "media/model/sellingmachine08.x";
+static const irr::c8*		TRIGGER_EVENT_ITEM_MODEL  = "media/model/obstacle.obj";
 
-TriggerEventItem::TriggerEventItem( GameEngine& gameEngine, GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale )
+TriggerEventItem::TriggerEventItem( GameEngine& gameEngine, GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale, TriggerEventItemType type )
 	: InteractiveActor(gameEngine, gameWorld),
-	enabled(false)
+	enabled(false),
+	_type(type)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	node = smgr.addMeshSceneNode(smgr.getMesh(TRIGGER_EVENT_ITEM_MODEL), smgr.getRootSceneNode());
@@ -31,12 +32,39 @@ void TriggerEventItem::interaction(irr::f32 delta)
 {
 	if (!getEnabled())
 	{
-		std::cout << "----- Mini Game Start -----" << std::endl;
 		setEnabled(true);
-		boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE2) );
-		//boost::thread addSceneThread3( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE3) );
-		runGameOne();
-		std::cout << "finsihed runGameOne()" << std::endl;
+		std::cout << _type << std::endl;
+		if (_type == SCENE1)
+		{
+			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE1) );
+		}
+		else if (_type == SCENE2)
+		{
+			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE2) );
+		}
+		else if (_type == SCENE3)
+		{
+			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE3) );
+		}
+		else if (_type == SCENE4)
+		{
+			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE4) );
+		}
+		else if (_type == MINIGAME1)
+		{
+			std::cout << "----- Mini Game 1 Start -----" << std::endl;
+		}
+		else if (_type == MINIGAME2)
+		{
+			std::cout << "----- Mini Game 2 Start -----" << std::endl;
+		}
+		else if (_type == MINIGAME3)
+		{
+			std::cout << "----- Mini Game 3 Start -----" << std::endl;
+		}
+
+		//runGameOne();
+		std::cout << "===== Finsihed TriggerEventItem =====" << std::endl;
 		finishAction();
 	}
 }
@@ -51,17 +79,5 @@ void TriggerEventItem::runGameOne()
 	static bool finish = false;
 	std::cout << "========== Game One ==========" << std::endl;
 	int tmp = 0;
-	do
-	{
-		/*int random = rand()%3+1;
-		std::cout << random << std::endl;
-		int input;
-		std::cin >> input;
-
-		if (input == random)*/
-		//if (tmp > 200)
-			finish = true;
-		//tmp++;
-	}while(!finish);
 	
 }

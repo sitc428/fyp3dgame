@@ -3,11 +3,22 @@
 
 #include "InteractiveActor.hpp"
 
+enum TriggerEventItemType
+{
+	SCENE1,
+	SCENE2,
+	SCENE3,
+	SCENE4,
+	MINIGAME1,
+	MINIGAME2,
+	MINIGAME3
+};
+
 class TriggerEventItem: public InteractiveActor
 {
 public:
 	//! Constructor
-	TriggerEventItem( GameEngine&, GameWorld&, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df );
+	TriggerEventItem( GameEngine&, GameWorld&, const irr::core::vector3df, const irr::core::vector3df, const irr::core::vector3df, TriggerEventItemType );
 
 	// returns the graph node of the actor by const reference
 	virtual irr::scene::ISceneNode& GetNode() const { return *node; };
@@ -33,6 +44,7 @@ protected:
 
 private:
 	bool enabled;
+	TriggerEventItemType _type;
 };
 
 #endif
