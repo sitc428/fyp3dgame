@@ -29,5 +29,5 @@ void main(void)
    
    vec4 FinalColor = (AmbientColor + DiffuseColor) * texture2D( myTexture0, vTexCoord) + SpecularColor;
    
-   gl_FragColor = FinalColor+vec4(0,0,0,1);
+   gl_FragColor = FinalColor+vec4(0.5,0,0.5,1);
 }
