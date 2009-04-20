@@ -127,9 +127,12 @@ void GameWorld::InitLevel()
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
 	AddScene(NODE_ID_SCENE1);
+
+#ifndef _IRR_WINDOWS_
 	AddScene(NODE_ID_SCENE2);
 	AddScene(NODE_ID_SCENE3);
 	AddScene(NODE_ID_SCENE4);
+#endif
 
 	// set game state
 	stateTimer = 0;

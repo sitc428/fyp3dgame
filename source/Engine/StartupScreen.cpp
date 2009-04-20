@@ -126,11 +126,11 @@ void StartupScreen::Exit()
 // perform an tick of the input system
 void StartupScreen::DoInput()
 {
-	// allow for skippking over the startup screen if user presses space or enter
+	/*// allow for skippking over the startup screen if user presses space or enter
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if( receiver.keyDown(irr::KEY_SPACE) || receiver.mousePressed(InputEventReceiver::LEFT) )
 	{
 		GEngine.RequestStateChange(state_FRONTEND);
-	}
+	}*/
 }
