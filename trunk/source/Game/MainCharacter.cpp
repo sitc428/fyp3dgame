@@ -121,13 +121,13 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	weaponNode = smgr.addMeshSceneNode(
-		smgr.getMesh("media/model/sword.obj"),//Mastersword_v003.obj or sword.obj
+		smgr.getMesh("media/model/swordyy.obj"),//Mastersword_v003.obj or sword.obj
 		node->getJointNode("RightFingerBase"),
 		0,
-		irr::core::vector3df(-3,0,3.5),
-		irr::core::vector3df(-433.5,-1833,-12)
+		irr::core::vector3df(0,0,0),
+		irr::core::vector3df(0,0,0)
 	);
-	weaponNode->setVisible( false );
+	//weaponNode->setVisible( false );
 	
 	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
@@ -873,3 +873,22 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 			
 	
 }
+
+void MainCharacter::SetTarget( Monster* newTarget )
+	{
+		if( monsterTarget )
+		{
+			monsterTarget = newTarget;
+			if( monsterTarget )
+			{
+				targetIndicator->setParent( &monsterTarget->GetNode() );
+				targetIndicator->setPosition( irr::core::vector3df(0, monsterTarget->GetNode().getBoundingBox().MaxEdge.Y + 5, 0 ) );
+			}
+			else
+			{
+				targetIndicator->setParent( world.GetSceneManager().getRootSceneNode() );
+				targetIndicator->setVisible( false );
+			}
+		}
+	}
+

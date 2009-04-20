@@ -672,6 +672,9 @@ void GameWorld::DoGameplay( irr::f32 delta )
 
 	// update 3d audio information
 	DoAudio();
+
+	// clean up
+	DoCleanUp();
 }
 
 // perform an tick of the input system
@@ -784,5 +787,32 @@ void GameWorld::OnMouseEvent( const irr::SEvent::SMouseInput& mouseEvent )
 	if( mainCharacter )
 	{
 		GetCurrentPlayer().OnMouseEvent( mouseEvent );
+	}
+}
+
+void GameWorld::DoCleanUp()
+{
+	irr::s32 numberOfActor = actors.size();
+	for(irr::s32 i = numberOfActor - 1; i > 0; --i)
+	{
+		if( actors[i]->GetActorState() == state_ACTOR_DEAD )
+		{
+			if( actors[i]->GetActorType() & ACTOR_ENEMY )
+			{
+				std::cout<<"We get the monsters !"<<std::endl;
+				irr::u32 j = monsters.linear_search( (Monster*) actors[i] );
+				if( j != -1 )
+				{
+					if( mainCharacter->GetTarget() == monsters[j] )
+					{
+						mainCharacter->SetTarget( NULL );
+					}
+					GetLevelTriangleSelector().removeTriangleSelector( monsters[j]->GetNode().getTriangleSelector() );
+					monsters.erase( j );
+				}
+			}
+			Actor::DestroyActor( actors[i] );
+			actors.erase( i );
+		}
 	}
 }

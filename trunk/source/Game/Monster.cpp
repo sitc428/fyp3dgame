@@ -169,6 +169,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 		}else if(death_timer->elapsed() > 2.0){
 		
 			sparking->resetEmitter();
+			state = state_ACTOR_DEAD;
 			//irr::scene::ISceneManager& smgr = world.GetSceneManager();
 			//smgr.addToDeletionQueue(_monster);
 		}	
