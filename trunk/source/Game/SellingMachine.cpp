@@ -12,7 +12,7 @@ SellingMachine::SellingMachine( GameEngine& gameEngine, GameWorld& gameWorld, co
 	:InteractiveActor(gameEngine, gameWorld)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-	node = smgr.addMeshSceneNode(smgr.getMesh(SELLING_MACHINE_MODEL), smgr.getRootSceneNode());
+	node = smgr.addAnimatedMeshSceneNode(smgr.getMesh(SELLING_MACHINE_MODEL), smgr.getRootSceneNode());
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	node->setPosition(defaultPosition);
 	node->setRotation(defaultRotation);

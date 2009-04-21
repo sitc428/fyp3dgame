@@ -41,7 +41,7 @@ protected:
 	virtual ~InteractiveActor();
 
 	// the node
-	irr::scene::ISceneNode* node;
+	irr::scene::IAnimatedMeshSceneNode* node;
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
