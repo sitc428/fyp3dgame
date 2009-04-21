@@ -254,6 +254,8 @@ void GameWorld::AddScene(irr::s32 sceneType)
 		}
 	}
 	outNodes.clear();
+
+	smgr.addLightSceneNode(0, irr::core::vector3df(x_pos, 500, z_pos), irr::video::SColorf(1,1,1,1), 1000);
 	
 	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 }
