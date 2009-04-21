@@ -12,6 +12,7 @@
 		9803EA440F9309050041D61B /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9803EA430F9309050041D61B /* Shader.cpp */; };
 		9807F47D0F4FED16008E3E5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F47C0F4FED16008E3E5B /* main.cpp */; };
 		9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9807F7AB0F50645B008E3E5B /* libirrKlang.a */; };
+		980AE6360F9E7AFA009BF936 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 980AE6340F9E7AFA009BF936 /* Utils.cpp */; };
 		980DBDE00F95DDAB0019D252 /* GamePart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 980DBDDE0F95DDAB0019D252 /* GamePart.cpp */; };
 		980DBDEC0F95DE520019D252 /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 980DBDEA0F95DE520019D252 /* libirrklang.dylib */; };
 		980DBE000F95E0B40019D252 /* ikpMP3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 980DBDFF0F95E0B40019D252 /* ikpMP3.dylib */; };
@@ -65,6 +66,8 @@
 		9803EA430F9309050041D61B /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
 		9807F47C0F4FED16008E3E5B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
 		9807F7AB0F50645B008E3E5B /* libirrKlang.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libirrKlang.a; path = ../../lib/libirrKlang.a; sourceTree = SOURCE_ROOT; };
+		980AE6340F9E7AFA009BF936 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		980AE6350F9E7AFA009BF936 /* Utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
 		980DBDDE0F95DDAB0019D252 /* GamePart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePart.cpp; sourceTree = "<group>"; };
 		980DBDDF0F95DDAB0019D252 /* GamePart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePart.hpp; sourceTree = "<group>"; };
 		980DBDEA0F95DE520019D252 /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = ../../libirrklang.dylib; sourceTree = SOURCE_ROOT; };
@@ -223,6 +226,8 @@
 		98BF9ED70F91144900561309 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				980AE6340F9E7AFA009BF936 /* Utils.cpp */,
+				980AE6350F9E7AFA009BF936 /* Utils.hpp */,
 				98BF9ED80F91144900561309 /* Check.hpp */,
 				98BF9ED90F91144900561309 /* CollisionHelper.cpp */,
 				98BF9EDA0F91144900561309 /* CollisionHelper.hpp */,
@@ -404,6 +409,7 @@
 				9803EA440F9309050041D61B /* Shader.cpp in Sources */,
 				980DBDE00F95DDAB0019D252 /* GamePart.cpp in Sources */,
 				98B885450F963CDE0002A9D5 /* ParticleManager.cpp in Sources */,
+				980AE6360F9E7AFA009BF936 /* Utils.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,9 +419,11 @@
 		9868EF460F1303F5004AE96C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = ../../;
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include\"";
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				LIBRARY_SEARCH_PATHS = ../../lib;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Debug;
 		};
@@ -427,10 +435,10 @@
 				HEADER_SEARCH_PATHS = ../../include;
 				LIBRARY_SEARCH_PATHS = ../../lib;
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Release;
 		};
