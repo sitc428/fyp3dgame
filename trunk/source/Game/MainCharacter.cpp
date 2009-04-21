@@ -125,7 +125,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 		node->getJointNode("RightFingerBase"),
 		0,
 		irr::core::vector3df(0,0,0),
-		irr::core::vector3df(0,0,0)
+		irr::core::vector3df(0,0,0),
+		irr::core::vector3df(0.05, 0.05, 0.05)
 	);
 	//weaponNode->setVisible( false );
 	
