@@ -79,8 +79,9 @@ public:
 	// add scene to the world
 	void AddScene(irr::s32);
 
-	// load scene to the world
+	// config files loader
 	void LoadSceneConfig(irr::u32);
+	void LoadNPCConfig(irr::u32);
 
 	void LoadScene(const irr::c8*, irr::core::vector3df, irr::s32, irr::s32, irr::s32);
 

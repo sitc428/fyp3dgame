@@ -1,4 +1,4 @@
-NPC
+BEGINNPC
 MODEL:media/model/slime08.x
 DIALOG:Pedro, you are so smart!
 DIALOG:Please, save the world!
@@ -7,7 +7,7 @@ ACCEPTABLE:20
 POS:0,10,0
 ROT:0,60,0
 SCALE:1,1,1
-NPC
+ADDNPC
 MODEL:media/model/slime08.x
 DIALOG:Here!
 DIALOG:There are so many monster!
@@ -16,3 +16,5 @@ ACCEPTABLE:20
 POS:20,10,30
 ROT:0,0,0
 SCALE:1,1,1
+ADDNPC
+ENDNPC
