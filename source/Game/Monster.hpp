@@ -36,7 +36,7 @@ struct FiniteStateMachine;
 class Monster: public Actor{
 public:
 	typedef irr::core::array< std::pair<Item*, int> > ItemCollection;
-	Monster( GameEngine&, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox);
+	Monster( GameEngine&, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox, irr::core::stringw );
 	~Monster(){
 		delete FSM;
 		//collisionAnimator->drop();
@@ -79,6 +79,7 @@ private:
 	irr::s32 _def;
 	irr::s32 _mattk;
 	irr::s32 _mdef;
+	irr::core::stringw Type;
 	FiniteStateMachine* FSM;
 	irr::scene::IAnimatedMeshSceneNode *_monster;
 	ItemCollection _monItemBox;

@@ -18,7 +18,7 @@
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
-Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox)
+Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox, irr::core::stringw type)
 	: Actor(gameEngine, gameWorld),
 	collisionAnimator(NULL),
 	_exp(exp),
@@ -30,22 +30,25 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
-
-	Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
-		//new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
-	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
-	_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
+	if(type=="Type1"){
+		Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
+		_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
+		else
+			_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.png"));
+		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+	}
 	_monster->setPosition( defaultPosition );
+	//new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
+	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
+	
 	//_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
 	//_monster->setMaterialType(irr::video::EMT_SOLID);
 	//_monster->setScale(irr::core::vector3df(1,1,1));
 	//_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
-	if(GEngine.GetShaderFactory().ShaderAvailable())
-		_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
-	else
-		_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-	_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.png"));
-	_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+	
 	//_monster->setMaterialTexture(1, driver.getTexture("media/model/shade_line.jpg" ));
 	//RecreateCollisionResponseAnimator();
 	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
@@ -75,6 +78,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	death_timer->restart();
 	mon_timer->restart();
 	attack_timer->restart();
+	Type= type;
 }
 
 
@@ -158,7 +162,8 @@ void Monster::update(Player& _player, irr::f32 delta)
 			
 			sparking= new ParticleManager(&smgr, pos, irr::core::vector3df(2,2,2),
 											   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
-			sparking->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),irr::core::vector3df(0.0f,0.06f,0.0f),
+			if(Type=="Type1")
+				sparking->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),irr::core::vector3df(0.0f,0.06f,0.0f),
 										20,50,200,700, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 			death_timer->restart();
 
@@ -174,7 +179,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			//smgr.addToDeletionQueue(_monster);
 		}	
 		
-	}else if(_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
+	}else if(Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM->GetName() != "Attacking"){
@@ -192,7 +197,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}
 		}
 	}
-	else if( _player.GetNodePosition().getDistanceFrom(original)< 150.0f
+	else if( Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(original)< 150.0f
 		//	|| _player.GetNodePosition().getDistanceFrom(pos)< 80.0f 
 		)
 	{
@@ -200,7 +205,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
 		CheckActorPosition(targetPos, _player);
 		
-		if( targetPos.getDistanceFrom(original) < 150.0f )
+		if(Type=="Type1"&& targetPos.getDistanceFrom(original) < 150.0f )
 		{
 			//Tracing mode
 			//if(FSM->GetName() != "Tracing"){
