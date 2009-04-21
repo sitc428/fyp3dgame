@@ -4,14 +4,14 @@
 
 static const irr::c8* STARTUP_GROUP_TEXTURE = "media/StartupScreen/psan2logo.png";
 static const irr::c8* STARTUP_IRRLICHT_TEXTURE = "media/StartupScreen/irrLogo.png";
-static const irr::f32 STARTUP_SCREEN_TIME_MAX = 14.5f;  // end of irr logo duration
-static const irr::f32 STARTUP_GROUP_LOGO_START_TIME = 0.5f;
-static const irr::f32 STARTUP_GROUP_LOGO_FADE_DURATION = 2.5f;
-static const irr::f32 STARTUP_GROUP_LOGO_DURATION = 7.f;
+static const irr::f32 STARTUP_SCREEN_TIME_MAX = 8.5f;  // end of irr logo duration
+static const irr::f32 STARTUP_GROUP_LOGO_START_TIME = 2.5f;
+static const irr::f32 STARTUP_GROUP_LOGO_FADE_DURATION = 1.f;
+static const irr::f32 STARTUP_GROUP_LOGO_DURATION = 3.f;
 
-static const irr::f32 STARTUP_IRR_LOGO_START_TIME = 7.5f;
-static const irr::f32 STARTUP_IRR_LOGO_FADE_DURATION = 2.5f;
-static const irr::f32 STARTUP_IRR_LOGO_DURATION = 7.f;
+static const irr::f32 STARTUP_IRR_LOGO_START_TIME = 5.5f;
+static const irr::f32 STARTUP_IRR_LOGO_FADE_DURATION = 1.f;
+static const irr::f32 STARTUP_IRR_LOGO_DURATION = 3.f;
 
 // constructor
 StartupScreen::StartupScreen(GameEngine& gameEngine)
