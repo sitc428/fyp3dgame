@@ -126,7 +126,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	weaponNode = smgr.addMeshSceneNode(
-		smgr.getMesh("media/model/swordyy.obj"),//Mastersword_v003.obj or sword.obj
+		smgr.getMesh("media/model/sword.obj"),//Mastersword_v003.obj or sword.obj
 		//node->getJointNode("RightFingerBase"),
 		node->getJointNode("WeaponNode"),
 		0,
@@ -699,20 +699,24 @@ void MainCharacter::DoInput(irr::f32 delta)
 
 void MainCharacter::ReceiveDamage( irr::f32 value )
 {
+	// if the player is in god mode, no damage will be received.
 	if( godMode )
 		return;
 
+	// boundary check
 	if( health - value < 0 )
 		health = 0;
 	else
 		health -= value;
 
+	// the player death
 	if( health <= 0 )
 	{
 		action = EMCAS_DEAD;
 	}
 	else
 	{
+		// randomly shout for hurt.
 		switch( rand() % 3 )
 		{
 			case 0:
@@ -749,7 +753,7 @@ void MainCharacter::lockNextTarget()
 		if( CollisionHelper::CheckProximity2D(
 				world.GetMonsters()[(currentTargetPos+j)%numberOfMonster]->GetNode().getPosition(),
 				node->getPosition(),
-				GetRadius().getLength() * 10)
+				world.GetMonsters()[(currentTargetPos+j)%numberOfMonster]->GetRadius().getLength() + GetRadius().getLength() * 10)
 		)
 		{
 			nextTarget = world.GetMonsters()[(currentTargetPos+j)%numberOfMonster];
@@ -825,6 +829,45 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 			std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
 			std::cout << "Damage = " << (damage-offset) * comboValue << std::endl;
 			theTarget->ReceiveDamage( (damage-offset) * comboValue);
+		}
+	}
+	else
+	{
+		irr::u32 numberOfActors = world.GetActors().size();
+		irr::core::array<Actor*> actors = world.GetActors();
+
+		for( irr::u32 i = 0; i < numberOfActors; ++i )
+		{
+			if( CollisionHelper::CheckProximity2D(
+				actors[i]->GetNode().getPosition(),
+				theMainCharacter.GetNodePosition(),
+				actors[i]->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 1
+				)
+			)
+			{
+				irr::s32 damage = theMainCharacter.GetLevel();
+				irr::s32 offset = damage / 10 * ( rand()%601 ) / 300;
+
+				irr::f32 comboValue;
+				switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
+				{
+					case 2:
+						comboValue = 1.2;
+						break;
+					case 3:
+						comboValue = 1.5;
+						break;
+					case 4:
+						comboValue = 2;
+						break;
+					default:
+						comboValue = 1.0;
+				}
+
+				std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
+				std::cout << "Damage = " << (damage - offset) * comboValue << std::endl;
+				theTarget->ReceiveDamage( (damage-offset) * comboValue );
+			}
 		}
 	}
 

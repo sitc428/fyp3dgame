@@ -27,6 +27,8 @@ FontManager::FontManager(irr::video::IVideoDriver* videoDriver)
 		createNewFont(fontName, 16);
 		createNewFont(fontName, 24);
 	}
+
+	fontConfig.close();
 }
 
 FontManager::~FontManager()

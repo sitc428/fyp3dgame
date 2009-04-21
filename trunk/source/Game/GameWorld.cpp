@@ -1,4 +1,6 @@
 #include <cmath>
+#include <fstream>
+#include <iostream>
 
 #include <boost/thread.hpp>
 
@@ -20,6 +22,7 @@
 #include "ShaderFactory.hpp"
 #include "SellingMachine.hpp"
 #include "TalkativeNPC.hpp"
+#include "Tokenizer.hpp"
 #include "TriggerEventItem.hpp"
 #include "WeaponItem.hpp"
 #include "XItem.hpp"
@@ -126,16 +129,153 @@ void GameWorld::InitLevel()
 {
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
-	AddScene(NODE_ID_SCENE1);
-	AddScene(NODE_ID_SCENE2);
+	LoadSceneConfig(1);
+	LoadSceneConfig(2);
+	//AddScene(NODE_ID_SCENE1);
+	//AddScene(NODE_ID_SCENE2);
 #ifndef _IRR_WINDOWS_
-	AddScene(NODE_ID_SCENE3);
-	AddScene(NODE_ID_SCENE4);
+	//AddScene(NODE_ID_SCENE3);
+	//AddScene(NODE_ID_SCENE4);
 #endif
 
 	// set game state
 	stateTimer = 0;
 	gameState = state_START_LEVEL;
+}
+
+static float toFloat(const std::string& s)
+{
+	std::istringstream iss(s);
+	float f;
+	return (iss >> f).fail() ? 0.0 : f;
+}
+
+static int toInt(const std::string& s)
+{
+	std::istringstream iss(s);
+	int i;
+	return (iss >> i).fail() ? 0 : i;
+}
+
+static std::string sceneNumberString(irr::u32 sceneNum)
+{
+	if(sceneNum < 10 )
+	{
+		std::string ret = "000";
+		return ret.append( irr::core::stringc(sceneNum).c_str() );
+	}
+}
+
+void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
+{
+	std::string sceneFileName = "media/scenes/s" + sceneNumberString(sceneNum) + ".rxw";
+	std::ifstream sceneFile(sceneFileName.c_str());
+
+	if( sceneFile )
+	{
+		std::string lines;
+		irr::core::stringc sceneIRRFilePath = "";
+		irr::core::vector3df pos;
+		irr::s32 fallID = -1;
+		irr::s32 triID = -1;
+		irr::s32 houseID = -1;
+		while( !sceneFile.eof() )
+		{
+			std::getline( sceneFile, lines );
+
+			if( lines != "")
+			{
+				if( lines == "BEGINSCENE" )
+				{
+					continue;
+				}
+				else if( lines == "ENDSCENE" )
+				{
+					sceneFile.close();
+					break;
+				}
+				else if( lines.substr(0, 3) == "IRR" )
+				{
+					sceneIRRFilePath = lines.substr(4, lines.length()).c_str();
+				}
+				else if( lines.substr(0, 3) == "POS" )
+				{
+					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
+
+					pos.X = toFloat(tokenizer.getNextToken());
+					pos.Y = toFloat(tokenizer.getNextToken());
+					pos.Z = toFloat(tokenizer.getNextToken());
+				}
+				else if( lines.substr(0, 4) == "FALL" )
+				{
+					fallID = toInt( lines.substr(5, lines.length()) );
+				}
+				else if( lines.substr(0, 3) == "TRI" )
+				{
+					triID = toInt( lines.substr(4, lines.length()) );
+				}
+				else if( lines.substr(0, 5) == "HOUSE" )
+				{
+					houseID = toInt( lines.substr(6, lines.length()) );
+				}
+			}
+		}
+
+		LoadScene(sceneIRRFilePath.c_str(), pos, fallID, triID, houseID);
+	}
+	else
+	{
+		std::cout << "Error loading scene " << sceneNum << " file: " << sceneFileName << ", aborting!" << std::endl;
+		exit( -1 );
+	}
+}
+
+void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset, irr::s32 fallID, irr::s32 triID, irr::s32 houseID)
+{
+	smgr.loadScene(sceneFile);
+
+	// add triangle selectors for every mesh node in the level
+	irr::core::array< irr::scene::ISceneNode* > outNodes;
+
+	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+
+	for( irr::u32 i = 0; i < outNodes.size(); ++i )
+	{
+		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
+
+		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
+		if( meshNode->getMesh() )
+		{
+			if( meshNode->getID() != fallID )
+			{
+				if (meshNode->getID() == triID || meshNode->getID() == houseID)
+				{
+					std::cout << "!!!!" << std::endl;
+					meshNode->setPosition(meshNode->getPosition() + offset);
+					
+					irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
+					meshNode->setTriangleSelector( meshTriangleSelector );
+					levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+					meshTriangleSelector->drop();
+					meshTriangleSelector = NULL;
+					blocks.push_back( meshNode );
+				}
+			}
+			else if (meshNode->getID() == fallID)
+			{
+				meshNode->setPosition(meshNode->getPosition() + offset);
+			}	
+		}
+	}
+
+	outNodes.clear();
+
+	// set the world's triangleSelector
+	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+
+	// add a light for the scene
+	offset.Y += 500;
+	smgr.addLightSceneNode(0, offset, irr::video::SColorf(1,1,1,1), 1000);
 }
 
 void GameWorld::AddScene(irr::s32 sceneType)
@@ -208,61 +348,61 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			break;
 	}
 
-	smgr.loadScene(sceneFile);
+	//smgr.loadScene(sceneFile);
 
-	// add triangle selectors for every mesh node in the level
-	irr::core::array< irr::scene::ISceneNode* > outNodes;
+	//// add triangle selectors for every mesh node in the level
+	//irr::core::array< irr::scene::ISceneNode* > outNodes;
 
-	smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
+	//smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
 
-	//Shader* shader1 = GEngine.GetShaderFactory().createShader("media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID);
-	//irr::video::ITexture* linetext = GEngine.GetDriver().getTexture("media/model/shade_line.png");
+	////Shader* shader1 = GEngine.GetShaderFactory().createShader("media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID);
+	////irr::video::ITexture* linetext = GEngine.GetDriver().getTexture("media/model/shade_line.png");
 
-	for( irr::u32 i = 0; i < outNodes.size(); ++i )
-	{
-		irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
+	//for( irr::u32 i = 0; i < outNodes.size(); ++i )
+	//{
+	//	irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
 
-		// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
-		if( meshNode->getMesh() )
-		{
-			if (meshNode->getID() != NODE_ID_SCENE1_FALL && meshNode->getID() != NODE_ID_SCENE2_FALL &&
-				meshNode->getID() != NODE_ID_SCENE3_FALL && meshNode->getID() != NODE_ID_SCENE4_FALL)
-			{
-				if (meshNode->getID()==scene_tri_id || meshNode->getID()==scene1_house_id)
-				{
-					std::cout << "!!!!" << std::endl;
-					irr::core::vector3df tmp = meshNode->getPosition();
-					tmp.X += x_pos;
-					tmp.Y += y_pos;
-					tmp.Z += z_pos;
-					meshNode->setPosition(tmp);
-					irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
-					check(meshTriangleSelector);
-					meshNode->setTriangleSelector( meshTriangleSelector );
-					levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-					meshTriangleSelector->drop();
-					meshTriangleSelector = NULL;
-					blocks.push_back( meshNode );
+	//	// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
+	//	if( meshNode->getMesh() )
+	//	{
+	//		if (meshNode->getID() != NODE_ID_SCENE1_FALL && meshNode->getID() != NODE_ID_SCENE2_FALL &&
+	//			meshNode->getID() != NODE_ID_SCENE3_FALL && meshNode->getID() != NODE_ID_SCENE4_FALL)
+	//		{
+	//			if (meshNode->getID()==scene_tri_id || meshNode->getID()==scene1_house_id)
+	//			{
+	//				std::cout << "!!!!" << std::endl;
+	//				irr::core::vector3df tmp = meshNode->getPosition();
+	//				tmp.X += x_pos;
+	//				tmp.Y += y_pos;
+	//				tmp.Z += z_pos;
+	//				meshNode->setPosition(tmp);
+	//				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
+	//				check(meshTriangleSelector);
+	//				meshNode->setTriangleSelector( meshTriangleSelector );
+	//				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
+	//				meshTriangleSelector->drop();
+	//				meshTriangleSelector = NULL;
+	//				blocks.push_back( meshNode );
 
-					//meshNode->setMaterialTexture( 1, linetext );
-					//meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
-				}				
-			}
-			else if (meshNode->getID()==scene_fall_id)
-			{
-				irr::core::vector3df tmp = meshNode->getPosition();
-				tmp.X += x_pos;
-				tmp.Y += y_pos;
-				tmp.Z += z_pos;
-				meshNode->setPosition(tmp);
-			}	
-		}
-	}
-	outNodes.clear();
+	//				//meshNode->setMaterialTexture( 1, linetext );
+	//				//meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
+	//			}				
+	//		}
+	//		else if (meshNode->getID()==scene_fall_id)
+	//		{
+	//			irr::core::vector3df tmp = meshNode->getPosition();
+	//			tmp.X += x_pos;
+	//			tmp.Y += y_pos;
+	//			tmp.Z += z_pos;
+	//			meshNode->setPosition(tmp);
+	//		}	
+	//	}
+	//}
+	//outNodes.clear();
 
-	smgr.addLightSceneNode(0, irr::core::vector3df(x_pos, 500, z_pos), irr::video::SColorf(1,1,1,1), 1000);
-	
-	smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
+	//smgr.addLightSceneNode(0, irr::core::vector3df(x_pos, 500, z_pos), irr::video::SColorf(1,1,1,1), 1000);
+	//
+	//smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
 }
 
 // initializes level sounds
@@ -353,21 +493,21 @@ void GameWorld::InitEffects()
 
 void GameWorld::InitNPC()
 {
-	//SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	//actors.push_back( sellingMachine1 );
+	////SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	////actors.push_back( sellingMachine1 );
 
-	//TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
-	//actors.push_back( TriggerEventItem1 );
+	////TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
+	////actors.push_back( TriggerEventItem1 );
 
-	irr::core::array<irr::core::stringw> npc1dialogs;
-	npc1dialogs.push_back("Pedro, you are so smart!");
-	npc1dialogs.push_back("Please, save the world!");
-	//npc1dialogs.push_back("Ha ha ha ~");
-	irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head1.png");
-	TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
-	//npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
-	
-	actors.push_back(npc1);
+	//irr::core::array<irr::core::stringw> npc1dialogs;
+	//npc1dialogs.push_back("Pedro, you are so smart!");
+	//npc1dialogs.push_back("Please, save the world!");
+	////npc1dialogs.push_back("Ha ha ha ~");
+	//irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head1.png");
+	//TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
+	////npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
+	//
+	//actors.push_back(npc1);
 }
 
 void GameWorld::InitHUD()
