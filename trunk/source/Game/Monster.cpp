@@ -197,15 +197,15 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}
 		}
 	}
-	else if( Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(original)< 150.0f
-		//	|| _player.GetNodePosition().getDistanceFrom(pos)< 80.0f 
+	else if( Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(original)< 160.0f
+			|| Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(pos)< 100.0f 
 		)
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
 		CheckActorPosition(targetPos, _player);
 		
-		if(Type=="Type1"&& targetPos.getDistanceFrom(original) < 150.0f )
+		if(Type=="Type1"&& targetPos.getDistanceFrom(pos) < 100.0f )
 		{
 			//Tracing mode
 			//if(FSM->GetName() != "Tracing"){
@@ -266,9 +266,9 @@ void Monster::update(Player& _player, irr::f32 delta)
 							float x = ((float)(rand() % 20 + 1))-10;
 							float z = ((float)(rand() % 20 + 1))-10;
 							float y = _monster->getPosition().Y;
-							target.X = original.X+x;
+							target.X = pos.X+x;
 							target.Y = y;
-							target.Z = original.Z+z;
+							target.Z = pos.Z+z;
 							irr::core::vector3df direction = pos-target;
 							_monster->setRotation(direction.getHorizontalAngle());
 							FSM->IdleTooLong(_monster,_player, target);
