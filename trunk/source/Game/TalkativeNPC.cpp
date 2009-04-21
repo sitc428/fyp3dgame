@@ -4,7 +4,7 @@
 #include "InputEventReceiver.hpp"
 #include "TalkativeNPC.hpp"
 
-TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, irr::core::array<irr::core::stringw>& dialogs, const irr::c8* mesh, irr::video::ITexture* header,irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
+TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, const irr::c8* mesh, irr::core::array<irr::core::stringw>& dialogs, irr::video::ITexture* header,irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
 	: InteractiveActor(gameEngine, gameWorld),
 	_header(header),
 	acceptable_Distance(acceptableDistance)

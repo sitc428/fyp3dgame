@@ -131,6 +131,7 @@ void GameWorld::InitLevel()
 	levelTriangleSelector = smgr.createMetaTriangleSelector();
 
 	LoadSceneConfig(1);
+	LoadNPCConfig(1);
 	LoadSceneConfig(2);
 	//AddScene(NODE_ID_SCENE1);
 	//AddScene(NODE_ID_SCENE2);
@@ -169,10 +170,10 @@ static std::string sceneNumberString(irr::u32 sceneNum)
 
 void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 {
-	std::string sceneFileName = "media/scenes/s" + Utils::toString(sceneNum) + ".rxw";
-	std::ifstream sceneFile(sceneFileName.c_str());
+	std::string sceneConfigFileName = "media/scenes/s" + Utils::toString(sceneNum) + ".rxw";
+	std::ifstream sceneConfigFile(sceneConfigFileName.c_str());
 
-	if( sceneFile )
+	if( sceneConfigFile )
 	{
 		std::string lines;
 		irr::core::stringc sceneIRRFilePath = "";
@@ -180,9 +181,9 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 		irr::s32 fallID = -1;
 		irr::s32 triID = -1;
 		irr::s32 houseID = -1;
-		while( !sceneFile.eof() )
+		while( !sceneConfigFile.eof() )
 		{
-			std::getline( sceneFile, lines );
+			std::getline( sceneConfigFile, lines );
 
 			if( lines != "")
 			{
@@ -192,7 +193,7 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 				}
 				else if( lines == "ENDSCENE" )
 				{
-					sceneFile.close();
+					sceneConfigFile.close();
 					break;
 				}
 				else if( lines.substr(0, 3) == "IRR" )
@@ -226,7 +227,88 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 	}
 	else
 	{
-		std::cout << "Error loading scene " << sceneNum << " file: " << sceneFileName << ", aborting!" << std::endl;
+		std::cout << "Error loading scene config file: " << sceneConfigFileName << ", aborting!" << std::endl;
+		exit( -1 );
+	}
+}
+
+void GameWorld::LoadNPCConfig(irr::u32 sceneNum)
+{
+	std::string NPCConfigFileName = "media/scenes/n" + Utils::toString(sceneNum) + ".rxw";
+	std::ifstream NPCConfigFile(NPCConfigFileName.c_str());
+
+	if( NPCConfigFile )
+	{
+		std::string lines;
+		irr::core::stringc modelFilePath = "";
+		irr::core::array<irr::core::stringw> dialogs;
+		irr::video::ITexture* headerImage;
+		irr::u32 acceptable = 20;
+		irr::core::vector3df pos;
+		irr::core::vector3df rot;
+		irr::core::vector3df scale;
+		while( !NPCConfigFile.eof() )
+		{
+			std::getline( NPCConfigFile, lines );
+
+			if( lines != "")
+			{
+				if( lines == "BEGINNPC" )
+				{
+					continue;
+				}
+				else if( lines == "ENDNPC" )
+				{
+					NPCConfigFile.close();
+					break;
+				}
+				else if( lines.substr(0, 5) == "MODEL" )
+				{
+					modelFilePath = lines.substr(6, lines.length()).c_str();
+				}
+				else if( lines.substr(0, 6) == "DIALOG" )
+				{
+					dialogs.push_back( lines.substr(7, lines.length()).c_str() );
+				}
+				else if( lines.substr(0, 6) == "HEADER" )
+				{
+					headerImage = GEngine.GetDriver().getTexture( lines.substr(7, lines.length()).c_str() );
+				}
+				else if( lines.substr(0, 3) == "POS" )
+				{
+					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
+
+					pos.X = Utils::toFloat(tokenizer.getNextToken());
+					pos.Y = Utils::toFloat(tokenizer.getNextToken());
+					pos.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if( lines.substr(0, 3) == "ROT" )
+				{
+					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
+
+					rot.X = Utils::toFloat(tokenizer.getNextToken());
+					rot.Y = Utils::toFloat(tokenizer.getNextToken());
+					rot.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if( lines.substr(0, 5) == "SCALE" )
+				{
+					Tokenizer tokenizer( lines.substr(6, lines.length()), "," );
+
+					scale.X = Utils::toFloat(tokenizer.getNextToken());
+					scale.Y = Utils::toFloat(tokenizer.getNextToken());
+					scale.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if( lines == "ADDNPC" )
+				{
+					TalkativeNPC* newNPC = new TalkativeNPC(GEngine, *this, modelFilePath.c_str(), dialogs, headerImage, acceptable, pos, rot, scale);
+					actors.push_back( newNPC );
+				}
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Error loading NPC config file: " << NPCConfigFileName << ", aborting!" << std::endl;
 		exit( -1 );
 	}
 }
