@@ -41,7 +41,7 @@ static const irr::u32 MAX_SNOWBALL_EXPLOSION_EFFECTS = 20;
 static const irr::u32 MAX_DYNAMITE_EXPLOSION_EFFECTS = 20;
 static const irr::u32 MAX_ENEMY_DEATH_EFFECTS = 20;
 static const irr::f32 PLAYER_DEATH_STATE_TIMER = 3.0f;
-static const irr::f32 START_LEVEL_STATE_TIMER = 3.0f;
+static const irr::f32 START_LEVEL_STATE_TIMER = 25.0f;
 static const irr::f32 GAME_OVER_STATE_TIMER = 5.0f;
 static const irr::f32 FENCE_FALL_TIME = 3.f;
 
@@ -651,6 +651,10 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 				gameHUD->DrawPauseMenu(GetCurrentPlayer());
 				gameHUD->DrawConversation();
 			}break;
+		case state_START_LEVEL:
+		{
+			gameHUD->gameStart(delta);
+		}break;
 		default:
 			break;
 	}
@@ -800,6 +804,7 @@ void GameWorld::Tick( irr::f32 delta )
 			}break;
 		case state_START_LEVEL:
 			{
+				/*
 				if( gameMessage == NULL )
 				{
 					camera->Tick(delta);
@@ -813,18 +818,13 @@ void GameWorld::Tick( irr::f32 delta )
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
 					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 				}
-				/*else if( stateTimer < START_LEVEL_STATE_TIMER )
+				 */
+				if( stateTimer < START_LEVEL_STATE_TIMER )
 				{
 					stateTimer += delta;
-				}*/
+				}
 				else
 				{
-					gameMessage->remove();
-					gameMessage = NULL;
-
-					stateTimer = 0;
-					// make the player visible
-					GetCurrentPlayer().GetNode().setVisible(true);
 					gameState = state_GAMEPLAY;
 				}
 
