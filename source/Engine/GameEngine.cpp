@@ -273,6 +273,8 @@ void GameEngine::PreloadTexture()
 		}
 	}
 
+	textureList.close();
+
 #ifdef _IRR_WINDOWS_
 	//boost::thread modelThread( boost::bind(&GameEngine::PreloadModel, this) );
 #endif
@@ -296,6 +298,8 @@ void GameEngine::PreloadModel()
 			}
 		}
 	}
+
+	modelList.close();
 }
 
 void GameEngine::TickHUD(irr::f32 delta)
