@@ -28,6 +28,8 @@ public:
 	// return the acceptable interactive distance
 	virtual irr::f32 acceptableDistance();
 
+	virtual void RecreateCollisionResponseAnimator();
+
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
 	virtual ~TalkativeNPC();

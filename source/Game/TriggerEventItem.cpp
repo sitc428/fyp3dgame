@@ -15,7 +15,7 @@ TriggerEventItem::TriggerEventItem( GameEngine& gameEngine, GameWorld& gameWorld
 	_type(type)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-	node = smgr.addMeshSceneNode(smgr.getMesh(TRIGGER_EVENT_ITEM_MODEL), smgr.getRootSceneNode());
+	node = smgr.addAnimatedMeshSceneNode(smgr.getMesh(TRIGGER_EVENT_ITEM_MODEL), smgr.getRootSceneNode());
 	node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	node->setPosition(defaultPosition);
 	node->setRotation(defaultRotation);

@@ -26,10 +26,35 @@ TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, const 
 	{
 		_dialogs.push_back(dialogs[i]);
 	}
+
+	this->RecreateCollisionResponseAnimator();
 }
 
 TalkativeNPC::~TalkativeNPC()
 {
+}
+
+void TalkativeNPC::RecreateCollisionResponseAnimator()
+{
+	// drop the current collision response animator
+	if( collisionAnimator )  // soft fail which allows us to call RecreateCollisionResponseAnimator to first initialize the non-existing animator
+	{
+		node->removeAnimator( collisionAnimator );
+		collisionAnimator->drop();
+		collisionAnimator = NULL;
+	}
+
+	// setup torso collision with the world
+	irr::core::aabbox3df box = node->getMesh()->getBoundingBox();
+	irr::core::vector3df radius = box.MaxEdge - box.getCenter();
+
+	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
+		&world.GetLevelTriangleSelector(), node, radius,
+		irr::core::vector3df(0,-.08f,0), // gravity
+		irr::core::vector3df(0, 0, 0), // ellipsoid translation
+		0.0001f); // sliding value
+
+	node->addAnimator(collisionAnimator);
 }
 
 void TalkativeNPC::interaction(irr::f32 delta)
