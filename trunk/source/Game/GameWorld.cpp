@@ -146,6 +146,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 	irr::s32 z_pos;
 	irr::s32 scene_fall_id;
 	irr::s32 scene_tri_id;
+	irr::s32 scene1_house_id;
 	const irr::c8* sceneFile;
 	TriggerEventItem* TriggerEventItemLoadScene3;
 	TriggerEventItem* TriggerEventItemLoadScene4;
@@ -158,6 +159,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			scene_fall_id = NODE_ID_SCENE1_FALL;
 			scene_tri_id = NODE_ID_SCENE1_TRI_NEEDED;
 			sceneFile = LEVEL_FILE1;
+			scene1_house_id = 113;
 			#ifdef _IRR_WINDOWS_
 			TriggerEventItemLoadScene3 = new TriggerEventItem( GEngine, *this,
 				irr::core::vector3df(-57.939693,-8,-409.886017),
@@ -175,6 +177,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			scene_fall_id = NODE_ID_SCENE2_FALL;
 			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
 			sceneFile = LEVEL_FILE2;
+			scene1_house_id = 0;
 			#ifdef _IRR_WINDOWS_
 			TriggerEventItemLoadScene4 = new TriggerEventItem( GEngine, *this,
 				irr::core::vector3df(-45.325108, -6, -1472.658073),
@@ -192,6 +195,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			scene_fall_id = NODE_ID_SCENE3_FALL;
 			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
 			sceneFile = LEVEL_FILE3;
+			scene1_house_id = 0;
 			break;
 		case NODE_ID_SCENE4:
 			x_pos = 0;//-350;
@@ -200,6 +204,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			scene_fall_id = NODE_ID_SCENE4_FALL;
 			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
 			sceneFile = LEVEL_FILE4;
+			scene1_house_id = 0;
 			break;
 	}
 
@@ -223,7 +228,7 @@ void GameWorld::AddScene(irr::s32 sceneType)
 			if (meshNode->getID() != NODE_ID_SCENE1_FALL && meshNode->getID() != NODE_ID_SCENE2_FALL &&
 				meshNode->getID() != NODE_ID_SCENE3_FALL && meshNode->getID() != NODE_ID_SCENE4_FALL)
 			{
-				if (meshNode->getID()==scene_tri_id)
+				if (meshNode->getID()==scene_tri_id || meshNode->getID()==scene1_house_id)
 				{
 					std::cout << "!!!!" << std::endl;
 					irr::core::vector3df tmp = meshNode->getPosition();
