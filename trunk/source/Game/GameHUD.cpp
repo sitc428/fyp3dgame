@@ -451,6 +451,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 			}	
 		}
 	}
+	
 		
 	/**********
 	 Start drawing the layout and the text
@@ -498,6 +499,12 @@ void GameHUD::DrawPauseMenu(Player& player)
 		outputString+= ((MainCharacter&)player).GetMagicDefencePoint();
 		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*6, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	
+		//Magic Defence
+		outputString = L"Money: ";
+		outputString+= ((MainCharacter&)player).GetMoney();
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*7, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	
+	
 	}
 	else if ( MenuSelected == ITEM){
 		irr::core::stringw outputString = L"";
@@ -516,6 +523,13 @@ void GameHUD::DrawPauseMenu(Player& player)
 				//output quantity
 				outputString = ItemBox[i].second;
 				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+				
+				//get the description of the item
+				if(SubMenuIndex == j)
+				{
+					GetConversation(ItemBox[i].first->getItemDescription());
+				}
+				
 				j++;
 			}
 		}
@@ -523,6 +537,9 @@ void GameHUD::DrawPauseMenu(Player& player)
 		if (SubMenuIndex != -1){
 			driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 		}
+		else
+			GetConversation("");
+		
 	}
 	else if ( MenuSelected == EQUIP){
 		irr::core::stringw outputString = L"";
@@ -543,12 +560,21 @@ void GameHUD::DrawPauseMenu(Player& player)
 				//output quantity
 				outputString = ItemBox[i].second;
 				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+				
+				//get the description of the item
+				if(SubMenuIndex == j)
+				{
+					GetConversation(ItemBox[i].first->getItemDescription());
+				}
+				
 				j++;
 			}
 		}
 		if (SubMenuIndex != -1){
 			driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 		}
+		else
+			GetConversation("");
 	}
 	else if ( MenuSelected == MAGIC){
 		irr::core::stringw outputString = L"";
@@ -570,12 +596,23 @@ void GameHUD::DrawPauseMenu(Player& player)
 				//output quantity
 				outputString = ItemBox[i].second;
 				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+				
+				
+				//get the description of the item
+				if(SubMenuIndex == j)
+				{
+					GetConversation(ItemBox[i].first->getItemDescription());
+				}
+					
+					
 				j++;
 			}
 		}
 		if (SubMenuIndex != -1){
 			driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 		}
+		else
+			GetConversation("");
 	}
 	else if ( MenuSelected == SAVE){
 	}

@@ -415,6 +415,7 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 		case state_PAUSED:
 			{
 				gameHUD->DrawPauseMenu(GetCurrentPlayer());
+				gameHUD->DrawConversation();
 			}break;
 		default:
 			break;
