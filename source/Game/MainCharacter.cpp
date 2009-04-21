@@ -129,9 +129,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	);
 	//weaponNode->setVisible( false );
 	
-	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
+//	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
-	FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball.vert", "media/shader/fireball.frag", 2, irr::video::EMT_SOLID);
+	FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball_2.vert", "media/shader/fireball_2.frag", 1, irr::video::EMT_SOLID);
 	Ice = GEngine.GetShaderFactory().createShader( "media/shader/Ice.vert", "media/shader/Ice.frag", 0, irr::video::EMT_SOLID);
 	Lightning = GEngine.GetShaderFactory().createShader( "media/shader/Lightning.vert", "media/shader/Lightning.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
@@ -843,7 +843,7 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 			else
 				MagicNode->setMaterialType(irr::video::EMT_SOLID);
 			MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
-			MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
+		//	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
 		}else if( _currentMagic->getItemName() == "Ice" ){
 			std::cout<<"Ice\n";
 			if(GEngine.GetShaderFactory().ShaderAvailable())

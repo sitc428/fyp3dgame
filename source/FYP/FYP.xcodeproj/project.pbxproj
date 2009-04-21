@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0571AB0F9654930033DCAD /* libikpMP3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0571AA0F9654930033DCAD /* libikpMP3.dylib */; };
 		9803EA410F9308F00041D61B /* ShaderFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9803EA3F0F9308F00041D61B /* ShaderFactory.cpp */; };
 		9803EA440F9309050041D61B /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9803EA430F9309050041D61B /* Shader.cpp */; };
 		9807F47D0F4FED16008E3E5B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9807F47C0F4FED16008E3E5B /* main.cpp */; };
@@ -57,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E0571AA0F9654930033DCAD /* libikpMP3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libikpMP3.dylib; path = ../libikpMP3.dylib; sourceTree = SOURCE_ROOT; };
 		9803EA3F0F9308F00041D61B /* ShaderFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderFactory.cpp; sourceTree = "<group>"; };
 		9803EA400F9308F00041D61B /* ShaderFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderFactory.hpp; sourceTree = "<group>"; };
 		9803EA420F9309050041D61B /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				9807F7AC0F50645B008E3E5B /* libirrKlang.a in Frameworks */,
 				980DBDEC0F95DE520019D252 /* libirrklang.dylib in Frameworks */,
 				980DBE000F95E0B40019D252 /* ikpMP3.dylib in Frameworks */,
+				8E0571AB0F9654930033DCAD /* libikpMP3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +205,7 @@
 			children = (
 				980DBDFF0F95E0B40019D252 /* ikpMP3.dylib */,
 				980DBDEA0F95DE520019D252 /* libirrklang.dylib */,
+				8E0571AA0F9654930033DCAD /* libikpMP3.dylib */,
 				9807F7AB0F50645B008E3E5B /* libirrKlang.a */,
 				98563E7B0F1A46480050410E /* libIrrlicht.a */,
 				98563E710F1A46370050410E /* libboost_thread-gcc40-mt-s.a */,
@@ -453,6 +457,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
@@ -462,6 +467,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../..\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../../Irrlicht/irrKlang-1.1.3/bin/macosx-gcc\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/..\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,
@@ -493,6 +499,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
@@ -502,6 +509,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../../lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7 = "\"$(SRCROOT)/../..\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(SRCROOT)/../../../Irrlicht/irrKlang-1.1.3/bin/macosx-gcc\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(SRCROOT)/..\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Carbon,

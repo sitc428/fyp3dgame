@@ -15,18 +15,15 @@ ShaderFactory::ShaderFactory( GameEngine& gameEngine)
 	
 	if( shaderAvailable )
 		GPU = driver.getGPUProgrammingServices();
-*/	
+*/
 	shaderAvailable = driver.queryFeature(irr::video::EVDF_ARB_GLSL);
 	if(shaderAvailable)
 		GPU = driver.getGPUProgrammingServices();
-	
-	
 }
 
 Shader* ShaderFactory::createShader(irr::core::stringc vsFile, irr::core::stringc psFile, irr::u32 textureCount, irr::video::E_MATERIAL_TYPE type, irr::core::vector3df* camPos)
 {
-	if(!shaderAvailable) std::cout<<"No GLSL\n";
-	else std::cout<<"Have GLSL!\n";
+
 	
 	Shader* shader = shaderPool[vsFile+psFile];
 
