@@ -15,6 +15,9 @@
 #define NODE_ID_PLAYERSPAWN_TWO 8
 #define NODE_ID_TRI_NEEDED 2
 
+//skybox
+#define NODE_ID_SKYBOX -999
+
 //Scene 1
 #define NODE_ID_SCENE1 110
 #define NODE_ID_SCENE1_TRI_NEEDED 112
