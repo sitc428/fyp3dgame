@@ -22,6 +22,7 @@ static const irr::c8*	CONVERSATION_TEXTURE = "media/HUD/conversation.png";
 static const irr::c8*	PAUSE_MENU_TEXTURE = "media/HUD/pause_menu.png";
 static const irr::c8*	SELECT_ICON_TEXTURE = "media/HUD/cd_icon.png";
 
+
 static const irr::video::SColor	HUD_FONT_OVERRIDE_COLOR =  irr::video::SColor(255,14,0,89);
 
 static const irr::u32			ELEMENT_HEIGHT = 32;
@@ -53,6 +54,9 @@ static const irr::u32			ITEM_QUANTITY_Y1 = 70;
 static const irr::u32			MENU_WINDOW_YOFFSET = 40;
 static const irr::u32			CD_WIDTH = 30;
 static const irr::u32			CD_HEIGTH = 30;
+static const irr::u32			GAME_START_TIME = 25;
+static const irr::u32			FADE_TIME = 4;
+static const irr::u32			START_TIME = 4;
 
 extern GameEngine* GEngine;
 
@@ -104,6 +108,19 @@ GameHUD::GameHUD( irr::IrrlichtDevice& device )
 	HPText = GEngine->GetFontManager()->getFont("IMPACT", 24);
 	ConversationFont = GEngine->GetFontManager()->getFont("IMPACT", 24);
 	MenuFont = GEngine->GetFontManager()->getFont("IMPACT", 24);
+	
+	
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
 }
 
 // destructor
@@ -616,4 +633,25 @@ void GameHUD::DrawPauseMenu(Player& player)
 	}
 	else if ( MenuSelected == SAVE){
 	}
+}
+
+void GameHUD::gameStart(irr::f32 delta){
+	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
+	GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255,0,0,0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height) );
+	if(timeElapsed < GAME_START_TIME){
+		if( timeElapsed > START_TIME){
+			for (int i = 0; i < startGameText.size() ; i++){
+				std::cout<<startGameText[i].c_str()<<std::endl;
+				MenuFont->draw(startGameText[i].c_str(), irr::core::rect<irr::s32>(50, scrSize.Height+MENU_ITEM_YOFFSET*i-(timeElapsed-START_TIME)*MENU_ITEM_YOFFSET, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+				//MenuFont->draw(startGameText[i].c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);		
+			}
+		}
+		
+		timeElapsed += delta;
+	
+	}
+	else
+		timeElapsed = 0;
+	
+	
 }

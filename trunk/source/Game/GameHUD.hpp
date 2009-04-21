@@ -43,6 +43,8 @@ public:
 	
 	//drawing pause menu, for gameworld to call during pause state
 	void DrawPauseMenu(Player& player);	
+	
+	void gameStart(irr::f32 delta);
 private:
 
 	//HP, Magic Frame
@@ -96,6 +98,8 @@ private:
 
 	// cached video driver
 	irr::video::IVideoDriver& driver;
+	
+	irr::core::array<irr::core::stringw> startGameText;
 };
 
 #endif //GameHUD_h
