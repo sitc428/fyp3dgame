@@ -322,11 +322,11 @@ void GameWorld::InitEnemies()
 	monItemBox2.push_back(std::make_pair(md2, 1));
 	monItemBox2.push_back(std::make_pair(md3, 2));
 
-	Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox1, "Type1");
+	Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox1, "Type1", 1000);
 	actors.push_back(m1);
 	m1->ReSetPosition(irr::core::vector3df(120,0,100));
 	
-	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox2, "Type1");
+	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox2, "Type1", 2000);
 	actors.push_back(m2);
 	m2->ReSetPosition(irr::core::vector3df(100,0,180));
 
