@@ -833,15 +833,15 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 	}
 	else
 	{
-		irr::u32 numberOfActors = world.GetActors().size();
-		irr::core::array<Actor*> actors = world.GetActors();
+		irr::core::array<Monster*> monsters = world.GetMonsters();
+		irr::u32 numberOfMonsters = monsters.size();
 
-		for( irr::u32 i = 0; i < numberOfActors; ++i )
+		for( irr::u32 i = 0; i < numberOfMonsters; ++i )
 		{
 			if( CollisionHelper::CheckProximity2D(
-				actors[i]->GetNode().getPosition(),
+				monsters[i]->GetNode().getPosition(),
 				theMainCharacter.GetNodePosition(),
-				actors[i]->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 1
+				monsters[i]->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 1
 				)
 			)
 			{
@@ -866,7 +866,7 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 
 				std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
 				std::cout << "Damage = " << (damage - offset) * comboValue << std::endl;
-				theTarget->ReceiveDamage( (damage-offset) * comboValue );
+				monsters[i]->ReceiveDamage( (damage-offset) * comboValue );
 			}
 		}
 	}
