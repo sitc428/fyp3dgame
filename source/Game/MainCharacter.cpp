@@ -144,7 +144,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 		ATFieldNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
-
+/*
 	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
 	MagicNode = smgr.addMeshSceneNode( Magicmesh );
 	MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
@@ -155,6 +155,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 		MagicNode->setMaterialType(irr::video::EMT_SOLID);
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
 	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
+ */
 	//MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
 	//MagicNode->setScale(irr::core::vector3df(2,2,2));
 
@@ -836,9 +837,14 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {	
 	_currentMagic = currentMagic;
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
+	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	if(_currentMagic != NULL){
 		if( _currentMagic->getItemName() == "Fire" ){
 			std::cout<<"Fire\n";
+			irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
+			MagicNode = smgr.addMeshSceneNode( Magicmesh );
+			MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+			MagicNode->setVisible( false );	
 			if(GEngine.GetShaderFactory().ShaderAvailable())
 				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)FireBall->GetShaderMaterial());
 			else
@@ -847,24 +853,28 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 		//	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
 		}else if( _currentMagic->getItemName() == "Ice" ){
 			std::cout<<"Ice\n";
+			
+			irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/ice.obj" ));
+			MagicNode = smgr.addMeshSceneNode( Magicmesh );
+			MagicNode->setScale(irr::core::vector3df(100.0,100.0,100.0) );
+			MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+			MagicNode->setVisible( false );	
 			if(GEngine.GetShaderFactory().ShaderAvailable())
 				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Ice->GetShaderMaterial());
 			else
 				MagicNode->setMaterialType(irr::video::EMT_SOLID);
 		}else if( _currentMagic->getItemName() == "Lightning" ){
 			std::cout<<"Lightning\n";
+			irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
+			MagicNode = smgr.addMeshSceneNode( Magicmesh );
+			MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+			MagicNode->setVisible( false );	
 			if(GEngine.GetShaderFactory().ShaderAvailable())
 				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Lightning->GetShaderMaterial());
 			else
 				MagicNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 			MagicNode->setMaterialTexture(0, driver.getTexture("media/model/base.tga"));
 			
-		}else if( _currentMagic->getItemName() == "Ice" ){
-			std::cout<<"Cyclone\n";
-			if(GEngine.GetShaderFactory().ShaderAvailable())
-				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Ice->GetShaderMaterial());
-			else
-				MagicNode->setMaterialType(irr::video::EMT_SOLID);
 		}
 		
 	
