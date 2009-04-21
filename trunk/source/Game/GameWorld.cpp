@@ -302,6 +302,12 @@ void GameWorld::LoadNPCConfig(irr::u32 sceneNum)
 				{
 					TalkativeNPC* newNPC = new TalkativeNPC(GEngine, *this, modelFilePath.c_str(), dialogs, headerImage, acceptable, pos, rot, scale);
 					actors.push_back( newNPC );
+
+					dialogs.clear();
+					headerImage = NULL;
+					modelFilePath = "";
+					acceptable = 20;
+					pos = rot = scale = irr::core::vector3df(0, 0, 0);
 				}
 			}
 		}
