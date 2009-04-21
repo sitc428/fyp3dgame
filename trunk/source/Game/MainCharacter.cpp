@@ -71,7 +71,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	magicFlyTime(-1),
 	MagicFired(false),
 	MagicBonusValue(1.0),
-	timeElapsed(0)
+	timeElapsed(0),
+	_money(1000)
 {
 	test1 = GEngine.GetShaderFactory().createShader( "media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID );
 
