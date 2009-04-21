@@ -38,9 +38,49 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 			_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
 		else
 			_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.png"));
+		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.tga"));
 		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+	}else if( type == "Type2"){
+		
+			Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_2.vert", "media/shader/Monster_shader_2.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
+			_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
+		
+			if(GEngine.GetShaderFactory().ShaderAvailable())
+				_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
+			else
+				_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+		
+			_monster->setMaterialTexture(0, driver.getTexture("media/model/slime2.tga"));
+			_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+		
+	}else if( type == "Type3"){
+		
+		Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_3.vert", "media/shader/Monster_shader_3.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
+		_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
+		
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
+		else
+			_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+		
+		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime3.tga"));
+		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+		
+	}else if( type == "Type4"){
+		
+		Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_4.vert", "media/shader/Monster_shader_4.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
+		_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
+		
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
+		else
+			_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+		
+		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime1.tga"));
+		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+		
 	}
+	
 	_monster->setPosition( defaultPosition );
 	//new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
@@ -185,7 +225,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			//smgr.addToDeletionQueue(_monster);
 		}	
 		
-	}else if(Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
+	}else if((Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM->GetName() != "Attacking"){
@@ -203,15 +243,15 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}
 		}
 	}
-	else if( Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(original)< 160.0f
-			|| Type=="Type1"&&_player.GetNodePosition().getDistanceFrom(pos)< 100.0f 
+	else if( (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(original)< 160.0f
+			|| (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 100.0f 
 		)
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
 		CheckActorPosition(targetPos, _player);
 		
-		if(Type=="Type1"&& targetPos.getDistanceFrom(pos) < 100.0f )
+		if((Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&& targetPos.getDistanceFrom(pos) < 100.0f )
 		{
 			//Tracing mode
 			//if(FSM->GetName() != "Tracing"){
