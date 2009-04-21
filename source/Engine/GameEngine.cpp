@@ -67,7 +67,7 @@ bool GameEngine::Init()
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
 
-	//device->getFileSystem()->addZipFileArchive("media.zip");
+	device->getFileSystem()->addZipFileArchive("media.zip");
 
 	fmgr = new FontManager( driver );
 
@@ -86,6 +86,7 @@ bool GameEngine::Init()
 	if( !shaderFactory->ShaderAvailable() )
 		std::cout << "Shader Not Available, all shadering effect will be disabled." << std::endl;
 
+	// start preloading all the media into cache, using thread if possible
 #ifdef _IRR_WINDOWS_
 	boost::thread textureThread( boost::bind(&GameEngine::PreloadTexture, this) );
 #else
@@ -264,6 +265,7 @@ void GameEngine::PreloadTexture()
 
 			if( texturePath != "" )
 			{
+				driver->getTexture( texturePath.c_str() );
 				texturePool.push_back( driver->getTexture( texturePath.c_str() ) );
 			}
 		}
@@ -287,6 +289,7 @@ void GameEngine::PreloadModel()
 
 			if( modelPath != "")
 			{
+				smgr->getMesh( modelPath.c_str() );
 				modelMeshPool.push_back( smgr->getMesh( modelPath.c_str() ) );
 			}
 		}
