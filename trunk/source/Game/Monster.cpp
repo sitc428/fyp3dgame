@@ -18,7 +18,7 @@
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
-Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox, irr::core::stringw type)
+Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox, irr::core::stringw type, irr::u32 money)
 	: Actor(gameEngine, gameWorld),
 	collisionAnimator(NULL),
 	_exp(exp),
@@ -26,7 +26,8 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	_def(def),
 	_mattk(mattk),
 	_mdef(mdef),
-	_monItemBox(monItemBox)
+	_monItemBox(monItemBox),
+	_money(money)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
@@ -112,6 +113,10 @@ void Monster::update(Player& _player, irr::f32 delta)
 			((MainCharacter&)world.GetCurrentPlayer()).GetEXP()+
 			_exp);
 		
+
+		//+$$$
+		((MainCharacter&)world.GetCurrentPlayer()).SetMoney(
+			((MainCharacter&)world.GetCurrentPlayer()).GetMoney() + _money);
 		//+item
 		ItemCollection playerTmpBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
 		for (int i=0; i<_monItemBox.size(); i++)
@@ -144,6 +149,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 		//+level
 		irr::s32 playerLevel = ((MainCharacter&)world.GetCurrentPlayer()).GetLevel();
 		irr::s32 playerEXP = ((MainCharacter&)world.GetCurrentPlayer()).GetEXP();
+		
 		if ( playerEXP >= (playerLevel)*(playerLevel)*100)
 		{
 			((MainCharacter&)world.GetCurrentPlayer()).SetLevel(playerLevel+1);

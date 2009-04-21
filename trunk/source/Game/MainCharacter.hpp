@@ -110,6 +110,7 @@ public:
 	irr::scene::ISceneNode* getWeaponNode() { return weaponNode; }
 	Monster* GetTarget() { return monsterTarget; }
 	void SetTarget( Monster* newTarget );
+	irr::u32 GetMoney() {return _money;};
 	
 	bool GetCombo() const {return _combo;};
 	irr::s32 GetComboNum() const {return _comboNum;};
@@ -131,6 +132,7 @@ public:
 	void SetCurrentMagic(MDiscItem* currentMagic) ;
 	void SetCombo(bool combo) {_combo = combo;};
 	void SetComboNum(irr::s32 comboNum) {_comboNum = comboNum;};
+	void SetMoney(irr::u32 money) {_money = money;};
 
 protected:
 	// destructor, protected to force user to call Actor::DestroyActor
@@ -161,7 +163,7 @@ private:
 	/*********************
 	 Player Attributes
 	 **********************/
-	
+	irr::u32 _money;	
 	irr::s32 _level;
 	irr::s32 _attack;
 	irr::s32 _defence;
