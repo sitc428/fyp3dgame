@@ -134,9 +134,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 		irr::core::vector3df(0,0,0),
 		irr::core::vector3df(0.05, 0.05, 0.05)
 	);
-	//weaponNode->setVisible( false );
-	
-//	weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
+
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball_2.vert", "media/shader/fireball_2.frag", 1, irr::video::EMT_SOLID);
 	Ice = GEngine.GetShaderFactory().createShader( "media/shader/Ice.vert", "media/shader/Ice.frag", 0, irr::video::EMT_SOLID);
@@ -144,10 +142,12 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
+	
 	if(GEngine.GetShaderFactory().ShaderAvailable())
 		ATFieldNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Field->GetShaderMaterial());
 	else 
 		ATFieldNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+	
 	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
 /*
@@ -162,8 +162,6 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
 	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
  */
-	//MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
-	//MagicNode->setScale(irr::core::vector3df(2,2,2));
 
 	targetIndicator = smgr.addCubeSceneNode(5);
 	targetIndicator->setPosition(irr::core::vector3df(50, 50, 10));
@@ -505,30 +503,38 @@ void MainCharacter::DoInput(irr::f32 delta)
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
-		SetCharging( true );
-		if (GetMagicLevel()<3)
+		if( monsterTarget )
 		{
-			timeElapsed += delta;
-			if (timeElapsed > 0.0001 / (1 + _magiclevel))
+			SetCharging( true );
+			if (_magiclevel < 3)
 			{
-				SetChargingProgress(GetChargingProgress()+1);
-				if (GetChargingProgress()%100 == 0)
-					SetMagicLevel(GetMagicLevel()+1);
+				timeElapsed += delta;
+				if (timeElapsed > 0.0001 / (1 + _magiclevel))
+				{
+					/*SetChargingProgress(GetChargingProgress()+1);
+					if (GetChargingProgress()%100 == 0)
+						SetMagicLevel(GetMagicLevel()+1);*/
 
-				timeElapsed = 0;
+					if( ++_charging % 100 == 0)
+						++_magiclevel;
+
+					timeElapsed = 0;
+				}
 			}
 		}
 	}
 	else if( receiver.keyReleased(irr::KEY_KEY_C) )
 	{
-		if (GetMagicLevel()>=1)// && targetIndicator->isVisible())
+		if(_magiclevel >= 1)
 		{
-			SetComboNum( GetComboNum() + 1);
+			//SetComboNum( GetComboNum() + 1);
+			++_comboNum;
 			setCasting( true );
 		}
 		SetCharging( false );
-		SetChargingProgress(0);
-		SetMagicLevel(0);
+		/*SetChargingProgress(0);
+		SetMagicLevel(0);*/
+		_charging = _magiclevel = 0;
 		return;
 	}
 
@@ -537,28 +543,32 @@ void MainCharacter::DoInput(irr::f32 delta)
 		if (!GetCombo())
 		{
 			SetCombo(true);
-			SetComboNum(1);
+			//SetComboNum(1);
+			++_comboNum;
 			combo_timer->restart();
 		}
 		else
 		{
 			if (combo_timer->elapsed() < 1.0)
 			{
-				if (GetComboNum() <= 3)
+				if (_comboNum <= 3)
 				{
-					SetComboNum( GetComboNum() + 1);
+					//SetComboNum( GetComboNum() + 1);
+					++_comboNum;
 					combo_timer->restart();
 				}
 				else
 				{
 					SetCombo(false);
-					SetComboNum(0);
+					//SetComboNum(0);
+					_comboNum = 0;
 				}
 			}
 			else
 			{
 				SetCombo(false);
-				SetComboNum(0);
+				//SetComboNum(0);
+				_comboNum = 0;
 			}
 		}
 
@@ -566,14 +576,16 @@ void MainCharacter::DoInput(irr::f32 delta)
 		return;
 	}
 
-	irr::core::vector3df playerTranslation(0, 0, 0);
-	irr::core::vector3df playerRotation(0, 0, 0);
+	irr::core::vector3df playerTranslation(0, 0, 0); // translation vector
+	irr::core::vector3df playerRotation(0, 0, 0); // rotation vector
 
-	bool move = false;
-	bool backward = false;
+	bool move = false; // need to update the player's position?
+	bool backward = false; // moving backward?
 
+	//! moving forward if up arrow is hold down.
 	if( receiver.keyDown(irr::KEY_UP) )
 	{
+		//! moving forward left.
 		if( receiver.keyDown(irr::KEY_LEFT) && receiver.keyUp(irr::KEY_RIGHT) )
 		{
 			if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != 45 )
@@ -582,9 +594,8 @@ void MainCharacter::DoInput(irr::f32 delta)
 				faceVector.rotateXZBy( 45, irr::core::vector3df(0, 0, 0) );
 				faceVector.normalize();
 			}
-
-			move = true;
 		}
+		//! moving forward right.
 		else if( receiver.keyDown(irr::KEY_RIGHT) && receiver.keyUp(irr::KEY_LEFT) )
 		{
 			if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != -45 )
@@ -594,8 +605,8 @@ void MainCharacter::DoInput(irr::f32 delta)
 				faceVector.normalize();
 			}
 
-			move = true;
 		}
+		//! moving forward directly
 		else
 		{
 			if(faceVector != aimVector)
@@ -603,10 +614,10 @@ void MainCharacter::DoInput(irr::f32 delta)
 				faceVector = aimVector;
 				faceVector.normalize();
 			}
-
-			move = true;
 		}
+		move = true;
 	}
+	//! moving backward if down arrow is hold down.
 	else if( receiver.keyDown(irr::KEY_DOWN) )
 	{
 		if( faceVector != aimVector )
@@ -617,6 +628,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 
 		backward = move = true;
 	}
+	// moving left if left arrow is hold down
 	else if( receiver.keyDown(irr::KEY_LEFT) )
 	{
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != 90 )
@@ -628,6 +640,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 
 		move = true;
 	}
+	// moving right if right arrow is hold down
 	else if( receiver.keyDown(irr::KEY_RIGHT) )
 	{
 		if( aimVector.getHorizontalAngle().Y - faceVector.getHorizontalAngle().Y != -90 )
@@ -640,23 +653,26 @@ void MainCharacter::DoInput(irr::f32 delta)
 		move = true;
 	}
 
+	// rotate the view as well as the player to right if D is hold down.
 	if( receiver.keyDown(irr::KEY_KEY_D) )
 	{
 		aimVector.rotateXZBy(-5, irr::core::vector3df(0, 0, 0) );
 		aimVector.normalize();
 	}
-
-	if( receiver.keyDown(irr::KEY_KEY_A) )
+	// rotate the view as well as the player to left if A is hold down.
+	else if( receiver.keyDown(irr::KEY_KEY_A) )
 	{
 		aimVector.rotateXZBy(5, irr::core::vector3df(0, 0, 0) );
 		aimVector.normalize();
 	}
 
+	// rotate the player
 	playerRotation.Y = floor( faceVector.getHorizontalAngle().Y - defaultAimVector.getHorizontalAngle().Y );
 	SetRotation( playerRotation );
 
 	if(move)
 	{
+		// run in the determinted direction if SPACEBAR is hold down.
 		if( receiver.keyDown(irr::KEY_SPACE) && !backward )
 		{
 			playerTranslation.Z = 45;
@@ -668,6 +684,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 			setMoving( true, backward );
 		}
 
+		// make the player move backward by inversing the translation speed.
 		if( backward )
 			playerTranslation.Z = -playerTranslation.Z;
 
@@ -676,6 +693,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 		return;
 	}
 
+	// if now control key is hold down or pressed, set the player back to idle.
 	setIdle();
 }
 
