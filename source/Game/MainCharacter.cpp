@@ -525,7 +525,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 	}
 	else if( receiver.keyReleased(irr::KEY_KEY_C) )
 	{
-		if(_magiclevel >= 1)
+		if(_magiclevel >= 1 && targetIndicator->isVisible())
 		{
 			//SetComboNum( GetComboNum() + 1);
 			++_comboNum;
@@ -551,7 +551,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 		{
 			if (combo_timer->elapsed() < 1.0)
 			{
-				if (_comboNum <= 3)
+				if (_comboNum < 3)
 				{
 					//SetComboNum( GetComboNum() + 1);
 					++_comboNum;
