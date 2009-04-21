@@ -88,7 +88,9 @@ bool GameEngine::Init()
 
 	// start preloading all the media into cache, using thread if possible
 #ifdef _IRR_WINDOWS_
-	boost::thread textureThread( boost::bind(&GameEngine::PreloadTexture, this) );
+	//boost::thread textureThread( boost::bind(&GameEngine::PreloadTexture, this) );
+	PreloadTexture();
+	PreloadModel();
 #else
 	#ifdef MACOSX
 	PreloadTexture();
@@ -272,7 +274,7 @@ void GameEngine::PreloadTexture()
 	}
 
 #ifdef _IRR_WINDOWS_
-	boost::thread modelThread( boost::bind(&GameEngine::PreloadModel, this) );
+	//boost::thread modelThread( boost::bind(&GameEngine::PreloadModel, this) );
 #endif
 }
 
