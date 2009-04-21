@@ -192,14 +192,15 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}
 		}
 	}
-	else if( _player.GetNodePosition().getDistanceFrom(original)< 120.0f
-			|| _player.GetNodePosition().getDistanceFrom(pos)< 80.0f )
+	else if( _player.GetNodePosition().getDistanceFrom(original)< 150.0f
+		//	|| _player.GetNodePosition().getDistanceFrom(pos)< 80.0f 
+		)
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
 		CheckActorPosition(targetPos, _player);
 		
-		if( targetPos.getDistanceFrom(original) < 120.0f )
+		if( targetPos.getDistanceFrom(original) < 150.0f )
 		{
 			//Tracing mode
 			//if(FSM->GetName() != "Tracing"){
@@ -215,6 +216,16 @@ void Monster::update(Player& _player, irr::f32 delta)
 			target = pos;
 
 
+			//for jumping
+			irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 1)*0.5, 0);
+			if((_monster->getAbsolutePosition()+offset).Y < 0 ){
+				irr::core::vector3df v = _monster->getAbsolutePosition()+offset;
+				v.Y = 0.0;
+				_monster->setPosition(v);
+			}else 
+				_monster->setPosition(_monster->getAbsolutePosition()+offset);
+			_monster->setRotation(_monster->getRotation()+offset);
+			
 		}
 		else
 		{
@@ -222,20 +233,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			FSM->reaction(_monster, _player,target, this);
 		}
 
-		//for jumping
-		irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 1)*0.5, 0);
-		if((_monster->getAbsolutePosition()+offset).Y < 0 ){
-			irr::core::vector3df v = _monster->getAbsolutePosition()+offset;
-			v.Y = 0.0;
-			_monster->setPosition(v);
-		}else 
-			_monster->setPosition(_monster->getAbsolutePosition()+offset);
-		_monster->setRotation(_monster->getRotation()+offset);
-		//pos= _monster->getAbsolutePosition() - offset;
-
-	}else if ( pos.getDistanceFrom(original) > 120.0f){
-			//std::cout<<"Out of range !!\n";
-
+				//pos= _monster->getAbsolutePosition() - offset;
 
 	}else{
 			//Idle	
@@ -252,7 +250,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}
 			else
 			{
-				if( mon_timer->elapsed() > 1.0 )
+				if( mon_timer->elapsed() > 2.0 )
 				{
 					if( (target - pos) < irr::core::vector3df(10.0, 0.0, 10.0) || target ==pos||mon_timer->elapsed() > 7.0  )
 					{
