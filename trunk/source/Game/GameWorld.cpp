@@ -24,6 +24,7 @@
 #include "TalkativeNPC.hpp"
 #include "Tokenizer.hpp"
 #include "TriggerEventItem.hpp"
+#include "Utils.hpp"
 #include "WeaponItem.hpp"
 #include "XItem.hpp"
 
@@ -168,7 +169,7 @@ static std::string sceneNumberString(irr::u32 sceneNum)
 
 void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 {
-	std::string sceneFileName = "media/scenes/s" + sceneNumberString(sceneNum) + ".rxw";
+	std::string sceneFileName = "media/scenes/s" + Utils::toString(sceneNum) + ".rxw";
 	std::ifstream sceneFile(sceneFileName.c_str());
 
 	if( sceneFile )
@@ -202,21 +203,21 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 				{
 					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
 
-					pos.X = toFloat(tokenizer.getNextToken());
-					pos.Y = toFloat(tokenizer.getNextToken());
-					pos.Z = toFloat(tokenizer.getNextToken());
+					pos.X = Utils::toFloat(tokenizer.getNextToken());
+					pos.Y = Utils::toFloat(tokenizer.getNextToken());
+					pos.Z = Utils::toFloat(tokenizer.getNextToken());
 				}
 				else if( lines.substr(0, 4) == "FALL" )
 				{
-					fallID = toInt( lines.substr(5, lines.length()) );
+					fallID = Utils::toInt( lines.substr(5, lines.length()) );
 				}
 				else if( lines.substr(0, 3) == "TRI" )
 				{
-					triID = toInt( lines.substr(4, lines.length()) );
+					triID = Utils::toInt( lines.substr(4, lines.length()) );
 				}
 				else if( lines.substr(0, 5) == "HOUSE" )
 				{
-					houseID = toInt( lines.substr(6, lines.length()) );
+					houseID = Utils::toInt( lines.substr(6, lines.length()) );
 				}
 			}
 		}

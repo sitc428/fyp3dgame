@@ -336,6 +336,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Utils\Utils.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Game\WeaponItem.hpp"
 				>
 			</File>
@@ -517,6 +521,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\TriggerEventItem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Utils\Utils.cpp"
 				>
 			</File>
 			<File
