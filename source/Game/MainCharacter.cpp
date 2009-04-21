@@ -312,7 +312,7 @@ void MainCharacter::setCasting( bool casting )
 		
 		MagicBonusValue = GetMagicLevel();
 
-		MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
+		//MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
 
 		irr::core::vector3df magicPos = world.GetRobot()->GetNodePosition();
 		magicPos = world.GetRobot()->GetNodePosition();
@@ -856,7 +856,7 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 			
 			irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/ice.obj" ));
 			MagicNode = smgr.addMeshSceneNode( Magicmesh );
-			MagicNode->setScale(irr::core::vector3df(100.0,100.0,100.0) );
+			MagicNode->setScale(irr::core::vector3df(10.0,10.0,10.0) );
 			MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
 			MagicNode->setVisible( false );	
 			if(GEngine.GetShaderFactory().ShaderAvailable())
