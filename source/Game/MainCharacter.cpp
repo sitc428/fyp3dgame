@@ -37,10 +37,14 @@ static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_START = 38;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_WALK_BACK_END = 63;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_START = 80;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_RUN_END = 97;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_START = 126;
-static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK_END = 139;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_START = 104;
 static const irr::u32		MAIN_CHARACTER_ANIMATION_DEAD_END = 124;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK1_START = 126;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK1_END = 139;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK2_START = 140;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK2_END = 154;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK3_START = 155;
+static const irr::u32		MAIN_CHARACTER_ANIMATION_ATTACK3_END = 167;
 
 // constructor
 MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
@@ -123,7 +127,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 
 	weaponNode = smgr.addMeshSceneNode(
 		smgr.getMesh("media/model/swordyy.obj"),//Mastersword_v003.obj or sword.obj
-		node->getJointNode("RightFingerBase"),
+		//node->getJointNode("RightFingerBase"),
+		node->getJointNode("WeaponNode"),
 		0,
 		irr::core::vector3df(0,0,0),
 		irr::core::vector3df(0,0,0),
@@ -287,14 +292,39 @@ void MainCharacter::setMoving( bool moving, bool backward )
 
 void MainCharacter::setAttacking( bool attacking )
 {
-	if( isAttacking())
+	static irr::s32 lastCombo = -1;
+
+	if( isAttacking() && lastCombo == GetCombo() )
 		return;
 
 	if( attacking )
 	{
 		action = EMCAS_ATTACK;
-		node->setCurrentFrame( MAIN_CHARACTER_ANIMATION_ATTACK_START );
-		node->setFrameLoop( MAIN_CHARACTER_ANIMATION_ATTACK_START, MAIN_CHARACTER_ANIMATION_ATTACK_END );
+
+		irr::s32 startAttackFrame = -1;
+		irr::s32 endAttackFrame = -1;
+		switch( GetComboNum() )
+		{
+		case 1:
+			startAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK1_START;
+			endAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK1_END;
+			break;
+		case 2:
+			startAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK2_START;
+			endAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK2_END;
+			break;
+		case 3:
+			startAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK3_START;
+			endAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK3_END;
+			break;
+		default:
+			startAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK1_START;
+			endAttackFrame = MAIN_CHARACTER_ANIMATION_ATTACK1_END;
+			break;
+		}
+		
+		node->setCurrentFrame( startAttackFrame );
+		node->setFrameLoop( startAttackFrame, endAttackFrame );
 		node->setLoopMode( false );
 		node->setAnimationEndCallback( attackCallBack );
 
@@ -313,8 +343,6 @@ void MainCharacter::setCasting( bool casting )
 		
 		MagicBonusValue = GetMagicLevel();
 
-		//MagicNode->setScale(irr::core::vector3df(0.25,0.25,0.25));
-
 		irr::core::vector3df magicPos = world.GetRobot()->GetNodePosition();
 		magicPos = world.GetRobot()->GetNodePosition();
 
@@ -322,9 +350,6 @@ void MainCharacter::setCasting( bool casting )
 		MagicNode->setVisible(true);
 		
 		irr::scene::ISceneManager& smgr = world.GetSceneManager();
-		std::cout << "magic X " << magicPos.X << std::endl;
-		std::cout << "magic Y " << magicPos.Y << std::endl;
-		std::cout << "magic Z " << magicPos.Z << std::endl;
 		irr::core::vector3df targetPos = getTargetPos();
 		magicFlyTime = (targetPos - magicPos).getLength() / 0.1;
 		irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
@@ -351,22 +376,11 @@ irr::core::vector3df MainCharacter::getTargetPos()
 	{
 		monsterTarget->GetNode().updateAbsolutePosition();
 		irr::core::vector3df targetPos = monsterTarget->GetNode().getAbsolutePosition();
-		std::cout << "monster X :  " << targetPos.X << std::endl;
-		std::cout << "monster Y :  " << targetPos.Y << std::endl;
-		std::cout << "monster Z :  " << targetPos.Z << std::endl;
 		return targetPos;
 	}
 	else
 	{
-		std::cout << "TargetIndicator is inVisible" << std::endl;
-		//world.GetRobot()->GetNode().updateAbsolutePosition();
-		//world.GetRobot()->GetAimVector().normalize();
-		//irr::core::vector3df tmp = GetFaceVector();
-		//tmp.normalize();
-		//return tmp * GetRadius().getLength() * 10;
 		return world.GetRobot()->GetNode().getAbsolutePosition() + GetFaceVector() * GetRadius().getLength() * 10;
-		//return world.GetRobot()->GetFaceVector() * GetRadius().getLength() * 10;
-		//return world.GetRobot()->GetAimVector() * world.GetRobot()->GetRadius().getLength() * 10;
 	}
 }
 
@@ -728,6 +742,7 @@ void MainCharacter::lockNextTarget()
 	if( nextTarget )
 	{
 		irr::core::vector3df diff = nextTarget->GetNode().getPosition() - node->getPosition();
+
 		if( aimVector.getHorizontalAngle().Y - diff.getHorizontalAngle().Y != 0)
 		{
 			aimVector.rotateXZBy( aimVector.getHorizontalAngle().Y - diff.getHorizontalAngle().Y, irr::core::vector3df(0, 0, 0));
@@ -752,42 +767,6 @@ void MainCharacter::lockNextTarget()
 
 void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
 {
-	/*irr::core::array<Actor*> actors = world.GetActors();
-	irr::u32 actorsNum = actors.size();
-
-	irr::core::line3df line;
-	line.start = theMainCharacter.GetNodePosition();
-	line.end = line.start - theMainCharacter.GetFaceVector() * theMainCharacter.GetRadius().getLength();
-
-	for( irr::u32 i=0; i < actorsNum; ++i )
-	{
-		if( actors[i]->GetActorType() != ACTOR_ENEMY)
-			continue;
-
-		if(
-			CollisionHelper::CheckProximity2D(
-				theMainCharacter.GetNodePosition(),
-				actors[i]->GetNode().getPosition(),
-				theMainCharacter.GetRadius().getLength() + actors[i]->GetRadius().getLength() - 1.0
-			)
-			//world.GetSceneManager().getSceneCollisionManager()->getSceneNodeFromRayBB(line)
-		)
-		{
-			irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
-			irr::s32 monDef = ((Monster*)actors[i])->GetDef();
-			std::cout << "Player Attk = " << playerAttk << std::endl;
-			std::cout << "Monster Defence = " << monDef << std::endl;
-			irr::s32 damage = 0;
-			if (playerAttk - monDef > 0 )
-			{
-				damage = playerAttk - monDef;
-			}
-			irr::s32 offset = damage/5 * (rand()%601)/300;
-			std::cout << "Damage = " << damage-offset << std::endl;
-			actors[i]->ReceiveDamage(damage-offset);
-		}
-	}*/
-
 	Monster* theTarget = theMainCharacter.monsterTarget;
 	if( theTarget )
 	{
@@ -839,68 +818,61 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 	_currentMagic = currentMagic;
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
-	if(_currentMagic != NULL){
-		if( _currentMagic->getItemName() == "Fire" ){
-			std::cout<<"Fire\n";
-			irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
-			MagicNode = smgr.addMeshSceneNode( Magicmesh );
-			MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
-			MagicNode->setVisible( false );	
-			if(GEngine.GetShaderFactory().ShaderAvailable())
-				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)FireBall->GetShaderMaterial());
-			else
-				MagicNode->setMaterialType(irr::video::EMT_SOLID);
-			MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
-		//	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
-		}else if( _currentMagic->getItemName() == "Ice" ){
-			std::cout<<"Ice\n";
-			
-			irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/ice.obj" ));
-			MagicNode = smgr.addMeshSceneNode( Magicmesh );
-			MagicNode->setScale(irr::core::vector3df(10.0,10.0,10.0) );
-			MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
-			MagicNode->setVisible( false );	
-			if(GEngine.GetShaderFactory().ShaderAvailable())
-				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Ice->GetShaderMaterial());
-			else
-				MagicNode->setMaterialType(irr::video::EMT_SOLID);
-		}else if( _currentMagic->getItemName() == "Lightning" ){
-			std::cout<<"Lightning\n";
-			irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
-			MagicNode = smgr.addMeshSceneNode( Magicmesh );
-			MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
-			MagicNode->setVisible( false );	
-			if(GEngine.GetShaderFactory().ShaderAvailable())
-				MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Lightning->GetShaderMaterial());
-			else
-				MagicNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-			MagicNode->setMaterialTexture(0, driver.getTexture("media/model/base.tga"));
-			
-		}
+	if(_currentMagic == NULL)
+		return;
+
+	if( _currentMagic->getItemName() == "Fire" ){
+		std::cout<<"Fire\n";
+		irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
+		MagicNode = smgr.addMeshSceneNode( Magicmesh );
+		MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+		MagicNode->setVisible( false );	
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)FireBall->GetShaderMaterial());
+		else
+			MagicNode->setMaterialType(irr::video::EMT_SOLID);
+		MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
+	//	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
+	}else if( _currentMagic->getItemName() == "Ice" ){
+		std::cout<<"Ice\n";
 		
-	
-	
+		irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/ice.obj" ));
+		MagicNode = smgr.addMeshSceneNode( Magicmesh );
+		MagicNode->setScale(irr::core::vector3df(10.0,10.0,10.0) );
+		MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+		MagicNode->setVisible( false );	
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Ice->GetShaderMaterial());
+		else
+			MagicNode->setMaterialType(irr::video::EMT_SOLID);
+	}else if( _currentMagic->getItemName() == "Lightning" ){
+		std::cout<<"Lightning\n";
+		irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
+		MagicNode = smgr.addMeshSceneNode( Magicmesh );
+		MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+		MagicNode->setVisible( false );	
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Lightning->GetShaderMaterial());
+		else
+			MagicNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+		MagicNode->setMaterialTexture(0, driver.getTexture("media/model/base.tga"));
 	}
-	
-			
-	
 }
 
 void MainCharacter::SetTarget( Monster* newTarget )
+{
+	if( monsterTarget )
 	{
+		monsterTarget = newTarget;
 		if( monsterTarget )
 		{
-			monsterTarget = newTarget;
-			if( monsterTarget )
-			{
-				targetIndicator->setParent( &monsterTarget->GetNode() );
-				targetIndicator->setPosition( irr::core::vector3df(0, monsterTarget->GetNode().getBoundingBox().MaxEdge.Y + 5, 0 ) );
-			}
-			else
-			{
-				targetIndicator->setParent( world.GetSceneManager().getRootSceneNode() );
-				targetIndicator->setVisible( false );
-			}
+			targetIndicator->setParent( &monsterTarget->GetNode() );
+			targetIndicator->setPosition( irr::core::vector3df(0, monsterTarget->GetNode().getBoundingBox().MaxEdge.Y + 5, 0 ) );
+		}
+		else
+		{
+			targetIndicator->setParent( world.GetSceneManager().getRootSceneNode() );
+			targetIndicator->setVisible( false );
 		}
 	}
-
+}
