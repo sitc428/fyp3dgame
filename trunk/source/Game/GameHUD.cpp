@@ -641,7 +641,7 @@ void GameHUD::gameStart(irr::f32 delta){
 	if(timeElapsed < GAME_START_TIME){
 		if( timeElapsed > START_TIME){
 			for (int i = 0; i < startGameText.size() ; i++){
-				std::cout<<startGameText[i].c_str()<<std::endl;
+				//std::cout<<startGameText[i].c_str()<<std::endl;
 				MenuFont->draw(startGameText[i].c_str(), irr::core::rect<irr::s32>(50, scrSize.Height+MENU_ITEM_YOFFSET*i-(timeElapsed-START_TIME)*MENU_ITEM_YOFFSET, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 				//MenuFont->draw(startGameText[i].c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);		
 			}
