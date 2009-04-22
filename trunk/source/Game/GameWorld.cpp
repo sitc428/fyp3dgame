@@ -133,6 +133,7 @@ void GameWorld::InitLevel()
 	LoadSceneConfig(1);
 	LoadNPCConfig(1);
 	LoadSceneConfig(2);
+	LoadMonsterConfig(2);
 	//AddScene(NODE_ID_SCENE1);
 	//AddScene(NODE_ID_SCENE2);
 #ifndef _IRR_WINDOWS_
@@ -315,6 +316,114 @@ void GameWorld::LoadNPCConfig(irr::u32 sceneNum)
 	else
 	{
 		std::cout << "Error loading NPC config file: " << NPCConfigFileName << ", aborting!" << std::endl;
+		exit( -1 );
+	}
+}
+
+void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
+{
+	typedef irr::core::array< std::pair<Item*, int> > ItemCollection;
+	
+	std::string MonsterConfigFileName = "media/scenes/m" + Utils::toString(sceneNum) + ".rxw";
+	std::ifstream MonsterConfigFile(MonsterConfigFileName.c_str());
+
+	if( MonsterConfigFile )
+	{
+		std::string lines;
+		irr::core::stringc modelFilePath = "";
+		irr::core::vector3df pos;
+		irr::core::vector3df rot;
+		irr::core::vector3df scale;
+		irr::u32 exp, attk, def, mattk, mdef, money;
+
+		exp = attk = def = mattk = mdef = money = 0;
+		pos = rot = scale = irr::core::vector3df(0, 0, 0);
+
+		ItemCollection monItemBox;
+		while( !MonsterConfigFile.eof() )
+		{
+			std::getline( MonsterConfigFile, lines );
+
+			if( lines != "")
+			{
+				if( lines == "BEGINMONSTER" )
+				{
+					continue;
+				}
+				else if( lines == "ENDMONSTER" )
+				{
+					MonsterConfigFile.close();
+					break;
+				}
+				else if( lines.substr(0, 5) == "MODEL" )
+				{
+					modelFilePath = lines.substr(6, lines.length()).c_str();
+				}
+				else if( lines.substr(0, 3) == "POS" )
+				{
+					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
+
+					pos.X = Utils::toFloat(tokenizer.getNextToken());
+					pos.Y = Utils::toFloat(tokenizer.getNextToken());
+					pos.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if( lines.substr(0, 3) == "ROT" )
+				{
+					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
+
+					rot.X = Utils::toFloat(tokenizer.getNextToken());
+					rot.Y = Utils::toFloat(tokenizer.getNextToken());
+					rot.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if( lines.substr(0, 5) == "SCALE" )
+				{
+					Tokenizer tokenizer( lines.substr(6, lines.length()), "," );
+
+					scale.X = Utils::toFloat(tokenizer.getNextToken());
+					scale.Y = Utils::toFloat(tokenizer.getNextToken());
+					scale.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if( lines.substr(0, 3) == "EXP" )
+				{
+					exp = Utils::toInt( lines.substr(4, lines.length()) );
+				}
+				else if( lines.substr(0, 4) == "ATTK" )
+				{
+					attk = Utils::toInt( lines.substr(5, lines.length()) );
+				}
+				else if( lines.substr(0, 3) == "DEF" )
+				{
+					def = Utils::toInt( lines.substr(4, lines.length()) );
+				}
+				else if( lines.substr(0, 5) == "MATTK" )
+				{
+					mattk = Utils::toInt( lines.substr(6, lines.length()) );
+				}
+				else if( lines.substr(0, 4) == "MDEF" )
+				{
+					mdef = Utils::toInt( lines.substr(5, lines.length()) );
+				}
+				else if( lines.substr(0, 5) == "MONEY" )
+				{
+					money = Utils::toInt( lines.substr(6, lines.length()) );
+				}
+				else if( lines == "ADDMONSTER" )
+				{
+					Monster* m = new Monster( GEngine, *this, exp, attk, def, mattk, mdef, monItemBox, "Type1", money);
+					actors.push_back(m);
+					monsters.push_back(m);
+					m->ReSetPosition(pos);
+
+					modelFilePath = "";
+					exp = attk = def = mattk = mdef = money = 0;
+					pos = rot = scale = irr::core::vector3df(0, 0, 0);
+				}
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Error loading monster config file: " << MonsterConfigFileName << ", aborting!" << std::endl;
 		exit( -1 );
 	}
 }
