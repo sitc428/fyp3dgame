@@ -469,8 +469,18 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 			{
 				meshNode->setPosition(meshNode->getPosition() + offset);
 			}
-			if (meshNode->getID() != NODE_ID_SCENE1_HOUSE)
-				meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);
+			/*
+			 if(meshNode->getID() == NODE_ID_SCENE1_HOUSE){
+			 Shader*	test1 = GEngine.GetShaderFactory().createShader( "media/shader/house.vert", "media/shader/house.frag", 2, irr::video::EMT_SOLID );
+			 meshNode->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
+			 //node->setMaterialType(irr::video::EMT_SOLID);
+			 meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);
+			 meshNode->setMaterialTexture(0, driver.getTexture( "media/model/N2d_000.tga" ));
+			 meshNode->setMaterialTexture(1, driver.getTexture( "media/model/Maison Texture.png" ));
+			 
+			 
+			 }
+			 */
 		}
 	}
 
