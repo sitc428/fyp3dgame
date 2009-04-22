@@ -334,6 +334,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 		irr::core::vector3df pos;
 		irr::core::vector3df rot;
 		irr::core::vector3df scale;
+		irr::core::stringw type;
 		irr::u32 exp, attk, def, mattk, mdef, money;
 
 		exp = attk = def = mattk = mdef = money = 0;
@@ -403,13 +404,18 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				{
 					mdef = Utils::toInt( lines.substr(5, lines.length()) );
 				}
+				else if( lines.substr(0, 4) == "TYPE" )
+				{
+					type = lines.substr(5, lines.length()).c_str();
+				}
+				
 				else if( lines.substr(0, 5) == "MONEY" )
 				{
 					money = Utils::toInt( lines.substr(6, lines.length()) );
 				}
 				else if( lines == "ADDMONSTER" )
 				{
-					Monster* m = new Monster( GEngine, *this, exp, attk, def, mattk, mdef, monItemBox,pos, "Type1", money);
+					Monster* m = new Monster( GEngine, *this, exp, attk, def, mattk, mdef, monItemBox,pos, type, money);
 					actors.push_back(m);
 					monsters.push_back(m);
 					m->ReSetPosition(pos);
