@@ -288,6 +288,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\MonsterGenerator.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Game\NodeID.hpp"
 				>
 			</File>
@@ -325,6 +329,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\TalkativeNPC.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\TimedActor.hpp"
 				>
 			</File>
 			<File
@@ -444,6 +452,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game\MonsterGenerator.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Engine\ParticleManager.cpp"
 				>
 			</File>
@@ -513,6 +525,10 @@
 			</File>
 			<File
 				RelativePath=".\Game\TalkativeNPC.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Game\TimedActor.cpp"
 				>
 			</File>
 			<File
