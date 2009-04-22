@@ -95,7 +95,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 		
 	}
 	
-	_monster->setPosition( defaultPosition );
+	//_monster->setPosition( defaultPosition );
 	//new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
 	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
 	
