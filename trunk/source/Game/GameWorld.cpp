@@ -43,7 +43,7 @@ static const irr::u32 MAX_ENEMY_DEATH_EFFECTS = 20;
 static const irr::f32 PLAYER_DEATH_STATE_TIMER = 3.0f;
 static const irr::f32 START_LEVEL_STATE_TIMER = 25.0f;
 static const irr::f32 GAME_OVER_STATE_TIMER = 8.0f;
-static const irr::f32 FENCE_FALL_TIME = 3.f;
+static const irr::f32 GAME_WIN_STATE_TIMER = 60.0f;
 
 GameWorld::GameWorld( GameEngine& gameEngine )
 	: GamePart( gameEngine ),
@@ -503,133 +503,6 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 	smgr.addLightSceneNode(0, irr::core::vector3df(0,300,0), irr::video::SColorf(255,255,255,1), 600);
 }
 
-void GameWorld::AddScene(irr::s32 sceneType)
-{
-	//smgr.clear();
-	irr::s32 x_pos;
-	irr::s32 y_pos;
-	irr::s32 z_pos;
-	irr::s32 scene_fall_id;
-	irr::s32 scene_tri_id;
-	irr::s32 scene1_house_id;
-	const irr::c8* sceneFile;
-	TriggerEventItem* TriggerEventItemLoadScene3;
-	TriggerEventItem* TriggerEventItemLoadScene4;
-	switch  (sceneType)
-	{
-		case NODE_ID_SCENE1:
-			x_pos = 0;
-			y_pos = 2000;
-			z_pos = 0;
-			scene_fall_id = NODE_ID_SCENE1_FALL;
-			scene_tri_id = NODE_ID_SCENE1_TRI_NEEDED;
-			sceneFile = LEVEL_FILE1;
-			scene1_house_id = 113;
-			#ifdef _IRR_WINDOWS_
-			TriggerEventItemLoadScene3 = new TriggerEventItem( GEngine, *this,
-				irr::core::vector3df(-57.939693,-8,-409.886017),
-				irr::core::vector3df(-90,0,0),
-				irr::core::vector3df(16.4, 15, 10),
-				SCENE3
-			);
-			actors.push_back( TriggerEventItemLoadScene3 );
-			#endif
-			break;
-		case NODE_ID_SCENE2:
-			x_pos = 0;//-80;
-			y_pos = 2000;
-			z_pos = -1006.9999;
-			scene_fall_id = NODE_ID_SCENE2_FALL;
-			scene_tri_id = NODE_ID_SCENE2_TRI_NEEDED;
-			sceneFile = LEVEL_FILE2;
-			scene1_house_id = 0;
-			#ifdef _IRR_WINDOWS_
-			TriggerEventItemLoadScene4 = new TriggerEventItem( GEngine, *this,
-				irr::core::vector3df(-45.325108, -6, -1472.658073),
-				irr::core::vector3df(-90,0,0),
-				irr::core::vector3df(17.5,15,7.615808),
-				SCENE4
-			);
-			actors.push_back( TriggerEventItemLoadScene3 );
-			#endif
-			break;
-		case NODE_ID_SCENE3:
-			x_pos = 0;
-			y_pos = 2000;
-			z_pos = -2013.9999;
-			scene_fall_id = NODE_ID_SCENE3_FALL;
-			scene_tri_id = NODE_ID_SCENE3_TRI_NEEDED;
-			sceneFile = LEVEL_FILE3;
-			scene1_house_id = 0;
-			break;
-		case NODE_ID_SCENE4:
-			x_pos = 0;//-350;
-			y_pos = 2000;
-			z_pos = -3020.9999;
-			scene_fall_id = NODE_ID_SCENE4_FALL;
-			scene_tri_id = NODE_ID_SCENE4_TRI_NEEDED;
-			sceneFile = LEVEL_FILE4;
-			scene1_house_id = 0;
-			break;
-	}
-
-	//smgr.loadScene(sceneFile);
-
-	//// add triangle selectors for every mesh node in the level
-	//irr::core::array< irr::scene::ISceneNode* > outNodes;
-
-	//smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
-
-	////Shader* shader1 = GEngine.GetShaderFactory().createShader("media/shader/opengl.vert", "media/shader/opengl.frag", 2, irr::video::EMT_SOLID);
-	////irr::video::ITexture* linetext = GEngine.GetDriver().getTexture("media/model/shade_line.png");
-
-	//for( irr::u32 i = 0; i < outNodes.size(); ++i )
-	//{
-	//	irr::scene::IMeshSceneNode* meshNode = (irr::scene::IMeshSceneNode*)(outNodes[i]);
-
-	//	// some mesh nodes in the level don't have meshes assigned to them, display a warning when this occurs
-	//	if( meshNode->getMesh() )
-	//	{
-	//		if (meshNode->getID() != NODE_ID_SCENE1_FALL && meshNode->getID() != NODE_ID_SCENE2_FALL &&
-	//			meshNode->getID() != NODE_ID_SCENE3_FALL && meshNode->getID() != NODE_ID_SCENE4_FALL)
-	//		{
-	//			if (meshNode->getID()==scene_tri_id || meshNode->getID()==scene1_house_id)
-	//			{
-	//				std::cout << "!!!!" << std::endl;
-	//				irr::core::vector3df tmp = meshNode->getPosition();
-	//				tmp.X += x_pos;
-	//				tmp.Y += y_pos;
-	//				tmp.Z += z_pos;
-	//				meshNode->setPosition(tmp);
-	//				irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( meshNode->getMesh(), meshNode );
-	//				check(meshTriangleSelector);
-	//				meshNode->setTriangleSelector( meshTriangleSelector );
-	//				levelTriangleSelector->addTriangleSelector( meshTriangleSelector );
-	//				meshTriangleSelector->drop();
-	//				meshTriangleSelector = NULL;
-	//				blocks.push_back( meshNode );
-
-	//				//meshNode->setMaterialTexture( 1, linetext );
-	//				//meshNode->setMaterialType( (irr::video::E_MATERIAL_TYPE) shader1->GetShaderMaterial() );
-	//			}				
-	//		}
-	//		else if (meshNode->getID()==scene_fall_id)
-	//		{
-	//			irr::core::vector3df tmp = meshNode->getPosition();
-	//			tmp.X += x_pos;
-	//			tmp.Y += y_pos;
-	//			tmp.Z += z_pos;
-	//			meshNode->setPosition(tmp);
-	//		}	
-	//	}
-	//}
-	//outNodes.clear();
-
-	//smgr.addLightSceneNode(0, irr::core::vector3df(x_pos, 500, z_pos), irr::video::SColorf(1,1,1,1), 1000);
-	//
-	//smgr.getRootSceneNode()->setTriangleSelector( levelTriangleSelector );
-}
-
 // initializes level sounds
 void GameWorld::InitMusic()
 {
@@ -789,6 +662,10 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 		{
 			gameHUD->gameOver(delta);
 		}break;
+		case state_GAME_VICTORY:
+		{
+			gameHUD->gameVictory(delta);
+		}break;
 		default:
 			break;
 	}
@@ -811,6 +688,11 @@ void GameWorld::requestInteracting(bool on, InteractiveActor* currentInteracting
 void GameWorld::requestGameOver()
 {
 	gameState = state_GAME_OVER;
+}
+
+void GameWorld::requestGameVictory()
+{
+	gameState = state_GAME_VICTORY;
 }
 
 // called every frame with the frame's elapsed time
@@ -868,49 +750,6 @@ void GameWorld::Tick( irr::f32 delta )
 					GEngine.RequestStateChange( state_FRONTEND );
 				}
 			}break;
-		case state_RESTART_LEVEL:
-			{
-				// check for game over
-				if( GetNumLives() < 0 )
-				{
-					gameState = state_GAME_OVER;
-					stateTimer = 0;
-					return;
-				}
-
-				if( gameMessage == NULL )
-				{
-					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
-					scrSize.Width /= 2;
-					scrSize.Height /= 2;
-
-					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( L"Get Ready",
-							irr::core::rect<irr::s32>(scrSize.Width-64, scrSize.Height-32, scrSize.Width+128, scrSize.Height+48) );
-					check(gameMessage);
-					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
-					//RestartLevel();
-					//camera->SetPosition( GetCurrentPlayer().GetNodePosition() - GetCurrentPlayer().GetAimVector() * -5.0f );
-					camera->Tick(delta);
-				}
-				else if( stateTimer < START_LEVEL_STATE_TIMER )
-				{
-					stateTimer += delta;
-				}
-				else
-				{
-					check(gameMessage);
-					gameMessage->remove();
-					gameMessage = NULL;
-
-					// make the player visible
-					GetCurrentPlayer().GetNode().setVisible(true);
-
-					stateTimer = 0;
-					gameState = state_GAMEPLAY;
-				}
-
-			}break;
 		case state_START_LEVEL:
 			{
 				/*
@@ -948,47 +787,12 @@ void GameWorld::Tick( irr::f32 delta )
 			}break;
 		case state_GAME_VICTORY:
 			{
-				if( gameMessage == NULL )
-				{
-					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
-
-					irr::gui::IGUIEnvironment* env = GEngine.GetDevice().getGUIEnvironment();
-					check(env);
-					gameOverImg = env->addImage(irr::core::rect<int>(0,0,scrSize.Width,scrSize.Height));
-					gameOverImg->setImage( GEngine.GetDriver().getTexture("../art/UI/GameOver/gameover.jpg") );
-					gameOverImg->draw();
-
-
-					irr::scene::ISceneNode* rootNode = smgr.getRootSceneNode();
-					// GEngine.ChangeMusic( "../audio/music/plowmusic.mp3" );
-
-					scrSize.Width /= 2;
-					scrSize.Height /= 2;
-
-					irr::core::stringw msgString;
-					msgString += "                      YOU WIN!\n";
-					msgString += "\n\nCREDITS:\n\n";
-
-
-					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( msgString.c_str(),
-							irr::core::rect<irr::s32>(scrSize.Width-256, scrSize.Height-128, scrSize.Width+256, scrSize.Height+128) );
-					check(gameMessage);
-					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
-				}
-				else if( stateTimer < 13 )
+				if( stateTimer < GAME_WIN_STATE_TIMER )
 				{
 					stateTimer += delta;
 				}
 				else
 				{
-					check(gameMessage);
-					gameMessage->remove();
-					gameMessage = NULL;
-
-					gameOverImg->remove();
-					gameOverImg = 0;
-
 					stateTimer = 0;
 					GEngine.RequestStateChange( state_FRONTEND );
 				}

@@ -76,11 +76,11 @@ public:
 	// interface for the main character request the world change into game over mode
 	void requestGameOver();
 
+	// interface for the main character request the world change into game victory mode
+	void requestGameVictory();
+
 	// tell the world and actors is the world in interactive mode
 	bool isInteracting() const { return gameState == state_INTERACTING; };
-
-	// add scene to the world
-	void AddScene(irr::s32);
 
 	// config files loader
 	void LoadSceneConfig(irr::u32);
