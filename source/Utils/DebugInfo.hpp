@@ -20,6 +20,7 @@ public:
 	static void mainCharacterFrameNum( MainCharacter& );
 	static void enableDebugCamera( GameWorld&, Camera* );
 	static void disableDebugCamera( GameWorld& );
+	static void killMainCharacter( MainCharacter& );
 
 private:
 	static bool enabledDebugBBox;
