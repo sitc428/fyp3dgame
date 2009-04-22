@@ -503,23 +503,20 @@ void MainCharacter::DoInput(irr::f32 delta)
 
 	if( receiver.keyDown(irr::KEY_KEY_C) )
 	{
-		if( monsterTarget )
+		SetCharging( true );
+		if (_magiclevel < 3)
 		{
-			SetCharging( true );
-			if (_magiclevel < 3)
+			timeElapsed += delta;
+			if (timeElapsed > 0.0001 / (1 + _magiclevel))
 			{
-				timeElapsed += delta;
-				if (timeElapsed > 0.0001 / (1 + _magiclevel))
-				{
-					/*SetChargingProgress(GetChargingProgress()+1);
-					if (GetChargingProgress()%100 == 0)
-						SetMagicLevel(GetMagicLevel()+1);*/
+				/*SetChargingProgress(GetChargingProgress()+1);
+				if (GetChargingProgress()%100 == 0)
+					SetMagicLevel(GetMagicLevel()+1);*/
 
-					if( ++_charging % 100 == 0)
-						++_magiclevel;
+				if( ++_magicChargeProgress % 100 == 0)
+					++_magiclevel;
 
-					timeElapsed = 0;
-				}
+				timeElapsed = 0;
 			}
 		}
 	}
@@ -531,10 +528,10 @@ void MainCharacter::DoInput(irr::f32 delta)
 			++_comboNum;
 			setCasting( true );
 		}
-		SetCharging( false );
+		//SetCharging( false );
 		/*SetChargingProgress(0);
 		SetMagicLevel(0);*/
-		_charging = _magiclevel = 0;
+		_charging = _magiclevel = _magicChargeProgress = 0;
 		return;
 	}
 

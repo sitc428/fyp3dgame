@@ -587,16 +587,6 @@ void GameWorld::InitNPC()
 
 	////TriggerEventItem* TriggerEventItem1 = new TriggerEventItem( GEngine, *this, irr::core::vector3df(0, 30, 0), irr::core::vector3df(0, 0, 0), irr::core::vector3df(10, 10, 10) );
 	////actors.push_back( TriggerEventItem1 );
-
-	//irr::core::array<irr::core::stringw> npc1dialogs;
-	//npc1dialogs.push_back("Pedro, you are so smart!");
-	//npc1dialogs.push_back("Please, save the world!");
-	////npc1dialogs.push_back("Ha ha ha ~");
-	//irr::video::ITexture* npc1header = GEngine.GetDriver().getTexture("media/image/head1.png");
-	//TalkativeNPC* npc1 = new TalkativeNPC( GEngine, *this, npc1dialogs, "media/model/slime08.x", npc1header, 20.0, irr::core::vector3df(0, 10, 0), irr::core::vector3df(0, 60, 0), irr::core::vector3df(1, 1, 1));
-	////npc1->GetNode().setDebugDataVisible(irr::scene::EDS_BBOX);
-	//
-	//actors.push_back(npc1);
 }
 
 void GameWorld::InitHUD()
@@ -626,7 +616,7 @@ void GameWorld::Exit()
 	}
 
 	// stop and clean up background audio
-	// GEngine.GetSoundEngine().removeAllSoundSources();
+	GEngine.GetSoundEngine().removeAllSoundSources();
 
 	delete gameHUD;
 	gameHUD = NULL;
