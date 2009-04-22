@@ -128,7 +128,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	weaponNode = smgr.addMeshSceneNode(
 		smgr.getMesh("media/model/sword.obj"),//Mastersword_v003.obj or sword.obj
 		//node->getJointNode("RightFingerBase"),
-		node->getJointNode("WeaponNode"),
+		node->getJointNode("RightHandThumb3"),
 		0,
 		irr::core::vector3df(0,0,0),
 		irr::core::vector3df(0,0,0),
@@ -735,6 +735,8 @@ void MainCharacter::lockNextTarget()
 
 	if( monsterTarget )
 	{
+		monsterTarget->setHealthBarVisible( false );
+
 		for(int i = 0; i < numberOfMonster; ++i)
 		{
 			if( monsterTarget == world.GetMonsters()[i] )
@@ -775,6 +777,8 @@ void MainCharacter::lockNextTarget()
 		targetIndicator->setParent( &monsterTarget->GetNode() );
 		targetIndicator->setPosition( irr::core::vector3df(0, monsterTarget->GetNode().getBoundingBox().MaxEdge.Y + 5, 0 ) );
 		targetIndicator->setVisible( true );
+
+		nextTarget->setHealthBarVisible( true );
 	}
 	else
 	{

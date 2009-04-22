@@ -12,6 +12,7 @@
 #include "GameWorld.hpp"
 #include "NodeID.hpp"
 #include "MainCharacter.hpp"
+#include "ProgressCircle.hpp"
 //#include "shader.hpp"
 #include "ShaderFactory.hpp"
 
@@ -28,7 +29,9 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	_mattk(mattk),
 	_mdef(mdef),
 	_monItemBox(monItemBox),
-	_money(money)
+	_money(money),
+	health(attk*5),
+	maxhealth(health)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	irr::video::IVideoDriver& driver = GEngine.GetDriver();
@@ -95,19 +98,6 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 		
 	}
 	
-	//_monster->setPosition( defaultPosition );
-	//new Shader(&(GEngine.GetDevice()),"media/shader/Monster_shader.vert", "media/shader/Monster_shader.frag",1 , video::EMT_TRANSPARENT_ADD_COLOR, "Monster");
-	//_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode(), ACTOR_ENEMY);
-	
-	//_monster->setDebugDataVisible( irr::scene::EDS_BBOX);
-	//_monster->setMaterialType(irr::video::EMT_SOLID);
-	//_monster->setScale(irr::core::vector3df(1,1,1));
-	//_monster->setMaterialType((video::E_MATERIAL_TYPE)SHADER_MATERIAL_BASE);
-	
-	//_monster->setMaterialTexture(1, driver.getTexture("media/model/shade_line.jpg" ));
-	//RecreateCollisionResponseAnimator();
-
-
 	irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( _monster->getMesh(), _monster );
 	check(meshTriangleSelector);
 	_monster->setTriangleSelector( meshTriangleSelector );
@@ -122,7 +112,6 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	pos = defaultPosition;
 	target = pos;
 	moved = false;
-	health = 100;
 	timeout = 5.0;
 	mon_timer = new boost::timer();
 	attack_timer = new boost::timer();
@@ -146,6 +135,8 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	_monster->setLoopMode(false);
 	
 	
+	healthBar = new ProgressCircle( _monster, &(world.GetSceneManager()), -1, world.GetSceneManager().getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 25, 0));
+	healthBar->setVisible( false );
 }
 
 
@@ -168,8 +159,6 @@ void Monster::update(Player& _player, irr::f32 delta)
 	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 	if(health <= 0)
 	{
-		
-		
 		//Death;
 		if( FSM->GetName() != "Death" )
 		{
@@ -207,10 +196,6 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}
 		}
 		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(playerTmpBox);
-		
-
-
-
 
 		//+level
 		irr::s32 playerLevel = ((MainCharacter&)world.GetCurrentPlayer()).GetLevel();
@@ -247,8 +232,6 @@ void Monster::update(Player& _player, irr::f32 delta)
 		
 			sparking->resetEmitter();
 			state = state_ACTOR_DEAD;
-			//irr::scene::ISceneManager& smgr = world.GetSceneManager();
-			//smgr.addToDeletionQueue(_monster);
 		}	
 		
 	}else if(	(Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f||
@@ -395,7 +378,13 @@ void Monster::RecreateCollisionResponseAnimator()
 }
 
 void Monster::ReceiveDamage(irr::f32 damage){
-	health -= damage;
+	if( health - damage > 0 )
+		health -= damage;
+	else
+		health = 0;
+
+	healthBar->setProgress( 100 * ( health / maxhealth ) );
+
 	std::cout<<"Health: "<<health<<std::endl;
 }
 
@@ -562,4 +551,9 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 	//std::cout<<"min: "<<min<<"\n";
 	next_pos.Y = _monster->getPosition().Y;
 	target = next_pos;
+}
+
+void Monster::setHealthBarVisible( bool isVisible )
+{
+	healthBar->setVisible( isVisible );
 }

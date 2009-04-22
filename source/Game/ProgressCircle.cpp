@@ -48,7 +48,7 @@ void ProgressCircle::render()
 	if(!_coll)
 		return;
 
-	if(!_isVisible)
+	if(!IsVisible)
 		return;
 
 	irr::video::IVideoDriver* driver = SceneManager->getVideoDriver();

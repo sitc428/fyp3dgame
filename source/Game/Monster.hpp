@@ -27,6 +27,7 @@
 #include <math.h>
 #include "MainCharacter.hpp"
 
+class ProgressCircle;
 
 namespace sc = boost::statechart;
 namespace mpl = boost::mpl;
@@ -73,6 +74,8 @@ public:
 	irr::u32 GetMoney() {return _money;};
 
 	irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
+
+	void setHealthBarVisible( bool isVisible );
 		
 private:
 	irr::u32 _money;
@@ -91,6 +94,7 @@ private:
 
 	float _speed; 
 	irr::f32 health;
+	irr::f32 maxhealth;
 	boost::timer* mon_timer;
 	boost::timer* attack_timer;
 	boost::timer* death_timer;
@@ -102,6 +106,8 @@ private:
 	//int  Health;
 
 	ParticleManager* sparking;
+
+	ProgressCircle* healthBar;
 };
 
 //EVENT-------------------------------------------------------------
