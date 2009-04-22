@@ -335,7 +335,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 		irr::core::vector3df rot;
 		irr::core::vector3df scale;
 		irr::core::stringw type;
-		irr::u32 exp, attk, def, mattk, mdef, money;
+		irr::u32 exp, hp, attk, def, mattk, mdef, money;
 
 		exp = attk = def = mattk = mdef = money = 0;
 		pos = rot = scale = irr::core::vector3df(0, 0, 0);
@@ -388,6 +388,10 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				{
 					exp = Utils::toInt( lines.substr(4, lines.length()) );
 				}
+				else if( lines.substr(0, 2) == "HP" )
+				{
+					hp = Utils::toInt( lines.substr(3, lines.length()) );
+				}
 				else if( lines.substr(0, 4) == "ATTK" )
 				{
 					attk = Utils::toInt( lines.substr(5, lines.length()) );
@@ -415,7 +419,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				}
 				else if( lines == "ADDMONSTER" )
 				{
-					Monster* m = new Monster( GEngine, *this, exp, attk, def, mattk, mdef, monItemBox,pos, type, money);
+					Monster* m = new Monster( GEngine, *this, exp, hp, attk, def, mattk, mdef, monItemBox,pos, type, money);
 					actors.push_back(m);
 					monsters.push_back(m);
 					m->ReSetPosition(pos);
@@ -683,11 +687,11 @@ void GameWorld::InitEnemies()
 	monItemBox2.push_back(std::make_pair(md2, 1));
 	monItemBox2.push_back(std::make_pair(md3, 2));
 
-	Monster* m1 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox1,irr::core::vector3df(120,10,100), "Type1", 1000);
+	Monster* m1 = new Monster( GEngine, *this, 50, 200, 100, 20, 100, 20, monItemBox1,irr::core::vector3df(120,10,100), "Type1", 1000);
 	
 	//m1->ReSetPosition(irr::core::vector3df(120,10,100));
 	
-	Monster* m2 = new Monster( GEngine, *this, 50, 100, 20, 100, 20, monItemBox2,irr::core::vector3df(100,10,180), "Type2", 2000);
+	Monster* m2 = new Monster( GEngine, *this, 50, 300, 100, 20, 100, 20, monItemBox2,irr::core::vector3df(100,10,180), "Type2", 2000);
 	
 	//m2->ReSetPosition(irr::core::vector3df(100,10,180));
 	actors.push_back(m1);
