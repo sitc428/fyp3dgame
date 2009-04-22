@@ -42,7 +42,7 @@ static const irr::u32 MAX_DYNAMITE_EXPLOSION_EFFECTS = 20;
 static const irr::u32 MAX_ENEMY_DEATH_EFFECTS = 20;
 static const irr::f32 PLAYER_DEATH_STATE_TIMER = 3.0f;
 static const irr::f32 START_LEVEL_STATE_TIMER = 25.0f;
-static const irr::f32 GAME_OVER_STATE_TIMER = 5.0f;
+static const irr::f32 GAME_OVER_STATE_TIMER = 8.0f;
 static const irr::f32 FENCE_FALL_TIME = 3.f;
 
 GameWorld::GameWorld( GameEngine& gameEngine )
@@ -682,9 +682,12 @@ void GameWorld::InitEnemies()
 	Item* md3 = new MDiscItem(*this, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
 	Item* md4 = new MDiscItem(*this, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
 	Item* xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
-	Item* weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text);
-	Item* weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text);
-	Item* weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text);
+	Item* weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
+	Item* weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/swordyy.obj");
+	Item* weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/swordyy.obj");
+	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
 	
 	monItemBox1.push_back(std::make_pair(hp, 1));
 	monItemBox1.push_back(std::make_pair(md1, 2));
@@ -782,6 +785,10 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 		{
 			gameHUD->gameStart(delta);
 		}break;
+		case state_GAME_OVER:
+		{
+			gameHUD->gameOver(delta);
+		}break;
 		default:
 			break;
 	}
@@ -799,6 +806,11 @@ void GameWorld::requestInteracting(bool on, InteractiveActor* currentInteracting
 		gameState = state_GAMEPLAY;
 		interactingActor = NULL;
 	}
+}
+
+void GameWorld::requestGameOver()
+{
+	gameState = state_GAME_OVER;
 }
 
 // called every frame with the frame's elapsed time
@@ -821,6 +833,7 @@ void GameWorld::Tick( irr::f32 delta )
 			break;
 		case state_GAME_OVER:
 			{
+				/*
 				if( gameMessage == NULL )
 				{
 					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
@@ -844,47 +857,16 @@ void GameWorld::Tick( irr::f32 delta )
 					check(gameMessage);
 					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
 					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
-				}
-				else if( stateTimer < GAME_OVER_STATE_TIMER )
+				}*/
+				if( stateTimer < GAME_OVER_STATE_TIMER )
 				{
 					stateTimer += delta;
 				}
 				else
 				{
-					check(gameMessage);
-					gameMessage->remove();
-					gameMessage = NULL;
-
-					gameOverImg->remove();
-					gameOverImg = 0;
-
 					stateTimer = 0;
 					GEngine.RequestStateChange( state_FRONTEND );
 				}
-			}break;
-		case state_WAVE_FINISHED:
-			{
-				if( gameMessage == NULL )
-				{
-					camera->Tick(delta);
-
-					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
-					scrSize.Width /= 2;
-					scrSize.Height /= 2;
-
-					irr::core::stringw waveString;
-					//waveString += curEnemyWave+1;
-					waveString += "/";
-					// waveString += enemyWaves.size();
-					waveString += " WAVES COMPLETED!";
-					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( waveString.c_str(),
-							irr::core::rect<irr::s32>(scrSize.Width-128, scrSize.Height-128, scrSize.Width+256, scrSize.Height+48) );
-					check(gameMessage);
-					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
-				}
-
-				DoGameplay( delta );
 			}break;
 		case state_RESTART_LEVEL:
 			{
@@ -957,8 +939,6 @@ void GameWorld::Tick( irr::f32 delta )
 				{
 					stateTimer += delta;
 				}
-				
-				
 				else
 				{
 					stateTimer = 0;
@@ -1037,9 +1017,6 @@ void GameWorld::DoGameplay( irr::f32 delta )
 		}
 		else
 		{
-			/*for( irr::u32 i=0; i < actors.size(); ++i )
-				if(actors[i]->GetActorType() & ACTOR_INTERACTIVE)
-					actors[i]->Tick( delta );*/
 			interactingActor->Tick( delta );
 		}		
 	}

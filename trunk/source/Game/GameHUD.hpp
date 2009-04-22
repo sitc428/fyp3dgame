@@ -1,5 +1,5 @@
-#ifndef GameHUD_h
-#define GameHUD_h
+#ifndef __GAME_HUD_HPP__
+#define __GAME_HUD_HPP__
 
 #include <irrlicht/irrlicht.h>
 
@@ -44,7 +44,11 @@ public:
 	//drawing pause menu, for gameworld to call during pause state
 	void DrawPauseMenu(Player& player);	
 	
+	//drawing the starting story script
 	void gameStart(irr::f32 delta);
+
+	//drawing the game over
+	void gameOver(irr::f32 delta);
 private:
 
 	//HP, Magic Frame
@@ -99,7 +103,12 @@ private:
 	// cached video driver
 	irr::video::IVideoDriver& driver;
 	
+	// start game script
 	irr::core::array<irr::core::stringw> startGameText;
+
+	// GameOver
+	irr::core::dimension2di gameOverTextSize;
+	irr::gui::CGUITTFont* GameOverFont;
 };
 
-#endif //GameHUD_h
+#endif // __GAME_HUD_HPP__
