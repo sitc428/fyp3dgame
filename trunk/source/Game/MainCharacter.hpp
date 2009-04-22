@@ -191,6 +191,7 @@ private:
 	Shader* FireBall;
 	Shader* Ice;
 	Shader* Lightning;
+	Shader* Cyclone;
 
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{

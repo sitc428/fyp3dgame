@@ -427,6 +427,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 	// smgr.getSceneNodesFromType( irr::scene::ESNT_MESH, outNodes );
 	float min = 9999.99;
 	irr::core::vector3df next_pos = target;
+	float meshSize = 40.0;
 
 	irr::core::array<irr::scene::IMeshSceneNode*>& blocks = world.GetBlocking();
 	irr::u32 blocking_size = blocks.size();
@@ -436,7 +437,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 		if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
 			min = pos.getDistanceFrom(meshNode->getPosition() );
 		//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
-		if(pos.getDistanceFrom(meshNode->getPosition() ) < 50.0){
+		if(pos.getDistanceFrom(meshNode->getPosition() ) < meshSize){
 			//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
 			irr::core::vector3df directionM = meshNode->getPosition()-_player.GetNodePosition();
 			irr::core::vector3df directionT = meshNode->getPosition() - _monster->getPosition();
@@ -487,7 +488,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 
 					irr::core::vector3df next_pos1 = target;
 					next_pos1.X+=mov_x;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > meshSize){
 						found = true;
 					}
 					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos1.getDistanceFrom(_player.GetNodePosition())){
@@ -498,7 +499,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 
 					irr::core::vector3df next_pos2 = target;
 					next_pos2.Z +=mov_z;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > meshSize){
 						found = true;
 					}
 					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos2.getDistanceFrom(_player.GetNodePosition())){
@@ -512,7 +513,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 					mov_z=-mov_z;
 					next_pos3 = target;
 					next_pos3.X+=mov_x;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > meshSize){
 						found = true;
 
 
@@ -526,7 +527,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 					irr::core::vector3df next_pos4 = target;
 
 					next_pos4.Z +=mov_z;
-					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > 40.0){
+					if(next_pos.getDistanceFrom(meshNode->getPosition() ) > meshSize){
 						found = true;
 					}
 					if(next_pos.getDistanceFrom(_player.GetNodePosition()) > next_pos4.getDistanceFrom(_player.GetNodePosition())){
