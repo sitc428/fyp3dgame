@@ -78,5 +78,15 @@ void DebugInfo::enableDebugCamera( GameWorld& world, Camera* norCam)
 void DebugInfo::disableDebugCamera(GameWorld & world)
 {
 	world.GetSceneManager().setActiveCamera( normalCamera );
+	if( debugCamera == NULL)
+	{
+		debugCamera = world.GetSceneManager().addCameraSceneNodeFPS(0, 100, 1000, -1);
+		debugCamera->setPosition(irr::core::vector3df(0, 500, 0));
+		debugCamera->setTarget(irr::core::vector3df(0, 0, 0));
+	}
 }
 
+void DebugInfo::killMainCharacter( MainCharacter& mainCharacter )
+{
+	mainCharacter.ReceiveDamage( mainCharacter.GetHealth() + 1 );
+}

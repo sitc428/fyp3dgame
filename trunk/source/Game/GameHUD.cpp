@@ -659,7 +659,7 @@ void GameHUD::gameStart(irr::f32 delta){
 void GameHUD::gameOver(irr::f32 delta){
 	irr::core::dimension2di scrSize = GEngine->GetScreenSize();
 
-	if( timeElapsed <= GAME_OVER_SHOW_TIME / 2 )
+	if( timeElapsed < GAME_OVER_SHOW_TIME / 2 )
 	{
 		GEngine->GetDriver().draw2DRectangle(
 			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 0, 0, 0),
@@ -674,7 +674,7 @@ void GameHUD::gameOver(irr::f32 delta){
 			true
 		);
 	}
-	else if( timeElapsed <= GAME_OVER_SHOW_TIME )
+	else if( timeElapsed < GAME_OVER_SHOW_TIME )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
@@ -700,57 +700,57 @@ void GameHUD::gameVictory(irr::f32 delta)
 	irr::core::dimension2di scrSize = GEngine->GetScreenSize();
 
 	// fade in You Saved the world!
-	if( timeElapsed <= GAME_WIN_SHOW_TIME / 12 )
+	if( timeElapsed < GAME_WIN_SHOW_TIME / 12 )
 	{
 		GEngine->GetDriver().draw2DRectangle(
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 12), 0, 0, 0),
+			irr::video::SColor(255 * timeElapsed / (GAME_WIN_SHOW_TIME / 12), 0, 0, 0),
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height)
 		);
 
 		WinFont->draw(
 			L"You Saved The World!",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 12), 255, 255, 255),
+			irr::video::SColor(255 * timeElapsed / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade out You Saved the world!
-	else if( timeElapsed <= GAME_WIN_SHOW_TIME / 6 )
+	else if( timeElapsed < GAME_WIN_SHOW_TIME / 6 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
 			L"You Saved The World!",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 6 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade in credit 1
-	else if( timeElapsed <= GAME_WIN_SHOW_TIME / 4 )
+	else if( timeElapsed < GAME_WIN_SHOW_TIME / 4 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
 			L"Credit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 
 		WinFont->draw(
-			L"",
+			L"1",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade out credit 1
-	else if( timeElapsed <= GAME_WIN_SHOW_TIME / 3 )
+	else if( timeElapsed < GAME_WIN_SHOW_TIME / 3 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
@@ -763,15 +763,15 @@ void GameHUD::gameVictory(irr::f32 delta)
 		);
 
 		WinFont->draw(
-			L"",
+			L"1",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade in credit 2
-	else if( timeElapsed <= 5 * GAME_WIN_SHOW_TIME / 12 )
+	else if( timeElapsed < 5 * GAME_WIN_SHOW_TIME / 12 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
@@ -784,15 +784,15 @@ void GameHUD::gameVictory(irr::f32 delta)
 		);
 
 		WinFont->draw(
-			L"",
+			L"2",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			irr::video::SColor(255 * (5 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade out credit 2
-	else if( timeElapsed <= GAME_WIN_SHOW_TIME / 2 )
+	else if( timeElapsed < GAME_WIN_SHOW_TIME / 2 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
@@ -805,15 +805,15 @@ void GameHUD::gameVictory(irr::f32 delta)
 		);
 
 		WinFont->draw(
-			L"",
+			L"2",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 2 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade in credit 3
-	else if( timeElapsed <= 7 * GAME_WIN_SHOW_TIME / 12 )
+	else if( timeElapsed < 7 * GAME_WIN_SHOW_TIME / 12 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
@@ -826,15 +826,15 @@ void GameHUD::gameVictory(irr::f32 delta)
 		);
 
 		WinFont->draw(
-			L"",
+			L"3",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			irr::video::SColor(255 * (7 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade out credit 3
-	else if( timeElapsed <= 2 * GAME_WIN_SHOW_TIME / 3 )
+	else if( timeElapsed < 2 * GAME_WIN_SHOW_TIME / 3 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
@@ -847,21 +847,21 @@ void GameHUD::gameVictory(irr::f32 delta)
 		);
 
 		WinFont->draw(
-			L"",
+			L"3",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (2 * GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	else if( timeElapsed <= 3 * GAME_WIN_SHOW_TIME / 4 )
+	else if( timeElapsed < 3 * GAME_WIN_SHOW_TIME / 4 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
 			L"Special Thank",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			irr::video::SColor(255 * (3 * GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
@@ -869,19 +869,19 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Prof. Predo V. Sander",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			irr::video::SColor(255 * (3 * GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	else if( timeElapsed <= 5 * GAME_WIN_SHOW_TIME / 6 )
+	else if( timeElapsed < 5 * GAME_WIN_SHOW_TIME / 6 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
 			L"Special Thank",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (5 * GAME_WIN_SHOW_TIME / 6 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
@@ -889,33 +889,33 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Prof. Predo V. Sander",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (5 * GAME_WIN_SHOW_TIME / 6 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade in Please longed for the release
-	else if( timeElapsed <= 11 * GAME_WIN_SHOW_TIME / 12 )
+	else if( timeElapsed < 11 * GAME_WIN_SHOW_TIME / 12 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
 			L"Please longed for the release!",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			irr::video::SColor(255 * (11 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
 	// fade out Please longed for the release
-	else if( timeElapsed <= GAME_WIN_SHOW_TIME )
+	else if( timeElapsed < GAME_WIN_SHOW_TIME )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
 			L"Please longed for the release!",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);

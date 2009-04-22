@@ -28,18 +28,8 @@
 #include "WeaponItem.hpp"
 #include "XItem.hpp"
 
-static const irr::c8* LEVEL_FILE1 = "media/model/scene1_new.irr";
-static const irr::c8* LEVEL_FILE2 = "media/model/scene2_new_down.irr";
-static const irr::c8* LEVEL_FILE3 = "media/model/scene3_new.irr";
-static const irr::c8* LEVEL_FILE4 = "media/model/scene4_new.irr";
 static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector3df(90.0f,0.0f,0.f);
 
-static const irr::u32 MAX_SNOWBALLS = 20;
-static const irr::u32 MAX_DYNAMITE = 20;
-static const irr::u32 MAX_LANDMINES = 0;
-static const irr::u32 MAX_SNOWBALL_EXPLOSION_EFFECTS = 20;
-static const irr::u32 MAX_DYNAMITE_EXPLOSION_EFFECTS = 20;
-static const irr::u32 MAX_ENEMY_DEATH_EFFECTS = 20;
 static const irr::f32 PLAYER_DEATH_STATE_TIMER = 3.0f;
 static const irr::f32 START_LEVEL_STATE_TIMER = 25.0f;
 static const irr::f32 GAME_OVER_STATE_TIMER = 8.0f;
@@ -715,31 +705,6 @@ void GameWorld::Tick( irr::f32 delta )
 			break;
 		case state_GAME_OVER:
 			{
-				/*
-				if( gameMessage == NULL )
-				{
-					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
-
-					irr::gui::IGUIEnvironment* env = GEngine.GetDevice().getGUIEnvironment();
-					check(env);
-					gameOverImg = env->addImage(irr::core::rect<int>(0,0,scrSize.Width,scrSize.Height));
-					gameOverImg->setImage( GEngine.GetDriver().getTexture("../art/UI/GameOver/gameover.jpg") );
-					gameOverImg->draw();
-
-					// GEngine.GetSoundEngine().play2D("../audio/sfx/gameover.mp3");
-
-					irr::scene::ISceneNode* rootNode = smgr.getRootSceneNode();
-
-
-					scrSize.Width /= 2;
-					scrSize.Height /= 2;
-
-					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( L"GAME OVER",
-							irr::core::rect<irr::s32>(scrSize.Width-64, scrSize.Height-32, scrSize.Width+128, scrSize.Height+48) );
-					check(gameMessage);
-					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
-				}*/
 				if( stateTimer < GAME_OVER_STATE_TIMER )
 				{
 					stateTimer += delta;
@@ -752,21 +717,6 @@ void GameWorld::Tick( irr::f32 delta )
 			}break;
 		case state_START_LEVEL:
 			{
-				/*
-				if( gameMessage == NULL )
-				{
-					camera->Tick(delta);
-
-					irr::core::dimension2d<irr::s32> scrSize = GEngine.GetScreenSize();
-					scrSize.Width /= 2;
-					scrSize.Height /= 2;
-
-					gameMessage = GEngine.GetDevice().getGUIEnvironment()->addStaticText( L"It Begins...",
-							irr::core::rect<irr::s32>(scrSize.Width-64, scrSize.Height-32, scrSize.Width+128, scrSize.Height+48) );
-					gameMessage->setOverrideColor( irr::video::SColor(255, 255, 255, 255) );
-					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
-				}
-				 */
 				if(  GEngine.GetReceiver().keyReleased(irr::KEY_SPACE) )
 				{
 					stateTimer = 0;
@@ -879,6 +829,10 @@ void GameWorld::DoInput()
 				DebugInfo::disableDebugCamera( *this );
 			
 			debugCamera = !debugCamera;
+		}
+		if( receiver.keyReleased(irr::KEY_KEY_5) )
+		{
+			DebugInfo::killMainCharacter( *mainCharacter );
 		}
 	}
 
