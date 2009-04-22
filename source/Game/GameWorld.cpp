@@ -473,6 +473,11 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 			{
 				meshNode->setPosition(meshNode->getPosition() + offset);
 			}
+
+			if (meshNode->getID() != NODE_ID_SCENE1_HOUSE)
+			{
+				meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);	
+			}
 			/*
 			 if(meshNode->getID() == NODE_ID_SCENE1_HOUSE){
 			 Shader*	test1 = GEngine.GetShaderFactory().createShader( "media/shader/house.vert", "media/shader/house.frag", 2, irr::video::EMT_SOLID );
