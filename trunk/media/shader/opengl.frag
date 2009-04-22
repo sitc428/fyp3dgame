@@ -22,12 +22,12 @@ void main (void)
       
       if (ina > 0.05)
          intensityMod = 1.0; 
-      else if (ina > 0.02)
-         intensityMod = 0.88;
-      else if (ina > 0.005)
-         intensityMod = 0.66;
+      else if (ina > 0.002)
+         intensityMod = 0.99;
+      else if (ina > 0.0005)
+         intensityMod = 0.98;
       else
-         intensityMod = 0.6;
+         intensityMod = 0.97;
 		 
 	
 	float Intensity = normalize( vNormal ).z * 0.5 + 0.5;
