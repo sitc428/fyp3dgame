@@ -126,7 +126,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
 	weaponNode = smgr.addMeshSceneNode(
-		smgr.getMesh("media/model/sword.obj"),//Mastersword_v003.obj or sword.obj
+		smgr.getMesh("media/model/swordyy.obj"),//Mastersword_v003.obj or sword.obj
 		//node->getJointNode("RightFingerBase"),
 		node->getJointNode("RightHandThumb3"),
 		0,
