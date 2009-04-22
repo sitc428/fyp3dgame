@@ -925,15 +925,25 @@ void GameWorld::Tick( irr::f32 delta )
 					gameMessage->setOverrideFont( GEngine.GetDevice().getGUIEnvironment()->getFont( "../art/fonts/comicsans.png" ) );
 				}
 				 */
+				if(  GEngine.GetReceiver().keyReleased(irr::KEY_SPACE) )
+				{
+					stateTimer = 0;
+					gameState = state_GAMEPLAY;
+					gameHUD->GetConversation(L"");
+				}
+				
 				if( stateTimer < START_LEVEL_STATE_TIMER )
 				{
 					stateTimer += delta;
 				}
+				
+				
 				else
 				{
+					stateTimer = 0;
 					gameState = state_GAMEPLAY;
+					gameHUD->GetConversation(L"");				
 				}
-
 			}break;
 		case state_GAME_VICTORY:
 			{
