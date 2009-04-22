@@ -16,9 +16,10 @@
 #include "ShaderFactory.hpp"
 
 static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
+static const irr::c8* BOSS_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
-Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox, irr::core::stringw type, irr::u32 money)
+Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox,irr::core::vector3df NewPosition, irr::core::stringw type, irr::u32 money)
 	: Actor(gameEngine, gameWorld),
 	collisionAnimator(NULL),
 	_exp(exp),
@@ -79,6 +80,19 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime1.tga"));
 		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
 		
+	} if( type == "Boss"){
+		
+		Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_Boss.vert", "media/shader/Monster_shader_Boss.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
+		_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
+		
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
+		else
+			_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+		
+		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime1.tga"));
+		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+		
 	}
 	
 	_monster->setPosition( defaultPosition );
@@ -92,10 +106,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	
 	//_monster->setMaterialTexture(1, driver.getTexture("media/model/shade_line.jpg" ));
 	//RecreateCollisionResponseAnimator();
-	//irr::scene::ITriangleSelector* triangleSelector = world.GetSceneManager().createTriangleSelectorFromBoundingBox( _monster );
-	//_monster->setTriangleSelector( triangleSelector );
-	//triangleSelector->drop();
-	//triangleSelector = NULL;
+
 
 	irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( _monster->getMesh(), _monster );
 	check(meshTriangleSelector);
@@ -120,6 +131,21 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	mon_timer->restart();
 	attack_timer->restart();
 	Type= type;
+	
+	
+	original = NewPosition;
+	pos = NewPosition;
+	target = NewPosition;
+	_monster->setPosition(NewPosition); 
+	_monster->updateAbsolutePosition();
+	//	RecreateCollisionResponseAnimator();
+	
+	//std::cout<<original.X<<" "<<original.Y<<" "<<original.Z<<"\n";
+	pos = _monster->getAbsolutePosition();
+
+	_monster->setLoopMode(false);
+	
+	
 }
 
 
@@ -225,7 +251,9 @@ void Monster::update(Player& _player, irr::f32 delta)
 			//smgr.addToDeletionQueue(_monster);
 		}	
 		
-	}else if((Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f)
+	}else if(	(Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f||
+				Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 40.0f
+			 )
 	{
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM->GetName() != "Attacking"){
@@ -244,14 +272,17 @@ void Monster::update(Player& _player, irr::f32 delta)
 		}
 	}
 	else if( (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(original)< 160.0f
-			|| (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 100.0f 
+			|| (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 100.0f ||
+			( Type == "Boss" && _player.GetNodePosition().getDistanceFrom(original)< 200.0f || Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 140.0f )
 		)
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
 		CheckActorPosition(targetPos, _player);
 		
-		if((Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&& targetPos.getDistanceFrom(pos) < 100.0f )
+		if( (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&& targetPos.getDistanceFrom(pos) < 100.0f ||
+			Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 140.0f
+			)
 		{
 			//Tracing mode
 			//if(FSM->GetName() != "Tracing"){
@@ -374,11 +405,14 @@ void  Monster::Tick(irr::f32 delta){
 }
 
 void Monster::ReSetPosition(irr::core::vector3df NewPosition){
+	
 	original = NewPosition;
 	pos = NewPosition;
 	target = NewPosition;
 	_monster->setPosition(NewPosition); 
 	_monster->updateAbsolutePosition();
+//	RecreateCollisionResponseAnimator();
+
 	//std::cout<<original.X<<" "<<original.Y<<" "<<original.Z<<"\n";
 	pos = _monster->getAbsolutePosition();
 	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
