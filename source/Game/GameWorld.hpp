@@ -73,6 +73,9 @@ public:
 	// interface for interactive actor to request the world change into interactive mode
 	void requestInteracting(bool, InteractiveActor*);
 
+	// interface for the main character request the world change into game over mode
+	void requestGameOver();
+
 	// tell the world and actors is the world in interactive mode
 	bool isInteracting() const { return gameState == state_INTERACTING; };
 

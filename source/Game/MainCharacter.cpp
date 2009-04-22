@@ -58,6 +58,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	bDoFillup( false ),
 	_magicChargeProgress(0),
 	attackCallBack(NULL),
+	endCallBack(NULL),
 	_level(1),
 	_exp(0),
 	_attack(80),
@@ -92,9 +93,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	Item* md3 = new MDiscItem(world, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
 	Item* md4 = new MDiscItem(world, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
 	Item* xItem = new XItem(world, XITEM, "X Item", 1, "Special Item", text);
-	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text);
-	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text);
-	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text);
+	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
+	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/swordyy.obj");
+	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/swordyy.obj");
 	tmpBox.push_back(std::make_pair(hp, 2));
 	tmpBox.push_back(std::make_pair(md1, 5));
 	tmpBox.push_back(std::make_pair(md2, 10));
@@ -135,6 +136,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 		irr::core::vector3df(0.05, 0.05, 0.05)
 	);
 
+	irr::scene::ISceneNode* sss = smgr.addSphereSceneNode(0.5);
+	sss->setParent(node->getJointNode("RightHandThumb3"));
+
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball_2.vert", "media/shader/fireball_2.frag", 1, irr::video::EMT_SOLID);
 	Ice = GEngine.GetShaderFactory().createShader( "media/shader/Ice.vert", "media/shader/Ice.frag", 0, irr::video::EMT_SOLID);
@@ -151,18 +155,6 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	
 	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
-/*
-	irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
-	MagicNode = smgr.addMeshSceneNode( Magicmesh );
-	MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
-	MagicNode->setVisible( false );	
-	if(GEngine.GetShaderFactory().ShaderAvailable())
-		MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)FireBall->GetShaderMaterial());
-	else
-		MagicNode->setMaterialType(irr::video::EMT_SOLID);
-	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/FireBase.tga"));
-	MagicNode->setMaterialTexture(1, driver.getTexture("media/model/Flame.tga"));
- */
 
 	targetIndicator = smgr.addCubeSceneNode(5);
 	targetIndicator->setPosition(irr::core::vector3df(50, 50, 10));
@@ -183,6 +175,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	triangleSelector = NULL;
 
 	attackCallBack = new AttackAnimationEndCallBack( world, *this );
+	endCallBack = new DeathAnimationEndCallBack( world, *this );
 
 	aimVector = defaultAimVector;
 
@@ -229,6 +222,22 @@ MainCharacter::~MainCharacter()
 	node->setAnimationEndCallback( NULL );
 
 	attackCallBack->drop();
+}
+
+void MainCharacter::SetCurrentWeapon(WeaponItem* currentWeapon)
+{
+	if( weaponNode )
+			weaponNode->setVisible( false );
+
+	if( currentWeapon )
+	{
+		_currentWeapon = currentWeapon;
+
+		weaponNode = _currentWeapon->GetNode();
+		weaponNode->setParent( node->getJointNode("RightHandThumb3") );
+		weaponNode->setVisible( true );
+		weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
+	}
 }
 
 // set the translation vector for player
@@ -429,11 +438,33 @@ bool MainCharacter::isRunning() const
 	return action == EMCAS_RUNNING;
 }
 
+bool MainCharacter::isDieing() const
+{
+	return action == EMCAS_DIEING;
+}
+
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
-	if( !(isAttacking() || IsDead()) )
+	if( IsDead() )
+	{
+		action = EMCAS_DIEING;
+		node->setLoopMode( false );
+		node->setCurrentFrame(MAIN_CHARACTER_ANIMATION_DEAD_START);
+		node->setFrameLoop(MAIN_CHARACTER_ANIMATION_DEAD_START, MAIN_CHARACTER_ANIMATION_DEAD_END);
+		node->setAnimationEndCallback(endCallBack);
+
+		return;
+	}
+	else if( isDieing() )
+	{
+		return;
+	}
+
+	if( !isAttacking() )
+	{
 		DoInput(delta);
+	}
 
 	node->setRotation( rotation );
 	irr::core::vector3df playerPos = node->getPosition();
@@ -525,13 +556,9 @@ void MainCharacter::DoInput(irr::f32 delta)
 	{
 		if(_magiclevel >= 1 && targetIndicator->isVisible())
 		{
-			//SetComboNum( GetComboNum() + 1);
 			++_comboNum;
 			setCasting( true );
 		}
-		//SetCharging( false );
-		/*SetChargingProgress(0);
-		SetMagicLevel(0);*/
 		_charging = _magiclevel = _magicChargeProgress = 0;
 		return;
 	}
@@ -541,7 +568,6 @@ void MainCharacter::DoInput(irr::f32 delta)
 		if (!GetCombo())
 		{
 			SetCombo(true);
-			//SetComboNum(1);
 			++_comboNum;
 			combo_timer->restart();
 		}
@@ -551,21 +577,18 @@ void MainCharacter::DoInput(irr::f32 delta)
 			{
 				if (_comboNum < 3)
 				{
-					//SetComboNum( GetComboNum() + 1);
 					++_comboNum;
 					combo_timer->restart();
 				}
 				else
 				{
 					SetCombo(false);
-					//SetComboNum(0);
 					_comboNum = 0;
 				}
 			}
 			else
 			{
 				SetCombo(false);
-				//SetComboNum(0);
 				_comboNum = 0;
 			}
 		}
@@ -703,17 +726,16 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 
 	// boundary check
 	if( health - value < 0 )
-		health = 0;
-	else
-		health -= value;
-
-	// the player death
-	if( health <= 0 )
 	{
+		health = 0;
+
+		// the player died
 		action = EMCAS_DEAD;
 	}
 	else
 	{
+		health -= value;
+
 		// randomly shout for hurt.
 		switch( rand() % 3 )
 		{
@@ -729,13 +751,18 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 
 void MainCharacter::lockNextTarget()
 {
+	// the next target to be locked
 	Monster* nextTarget = NULL;
+
+	// get all the monsters
 	int numberOfMonster = world.GetMonsters().size();
 
 	int currentTargetPos = -1;
 
+	// find the current target in the monster array, if needed
 	if( monsterTarget )
 	{
+		// hide the health bar as the next target is possibly not the current target.
 		monsterTarget->setHealthBarVisible( false );
 
 		for(int i = 0; i < numberOfMonster; ++i)
@@ -787,94 +814,6 @@ void MainCharacter::lockNextTarget()
 		targetIndicator->setParent( world.GetSceneManager().getRootSceneNode() );
 		targetIndicator->setVisible( false );
 	}
-}
-
-void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
-{
-	Monster* theTarget = theMainCharacter.monsterTarget;
-	if( theTarget )
-	{
-		if( CollisionHelper::CheckProximity2D(
-			theTarget->GetNode().getPosition(),
-			theMainCharacter.GetNodePosition(),
-			theTarget->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 5
-			)
-		)
-		{
-			irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
-			irr::s32 monDef = theTarget->GetDef();
-			std::cout << "Player Attk = " << playerAttk << std::endl;
-			std::cout << "Monster Defence = " << monDef << std::endl;
-			irr::s32 damage = 0;
-			if (playerAttk - monDef > 0 )
-			{
-				damage = playerAttk - monDef;
-			}
-			irr::s32 offset = damage/5 * (rand()%601)/300;
-
-			irr::f32 comboValue;
-			switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
-			{
-				case 2:
-					comboValue = 1.2;
-					break;
-				case 3:
-					comboValue = 1.5;
-					break;
-				case 4:
-					comboValue = 2;
-					break;
-				default:
-					comboValue = 1.0;
-			}
-
-			std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
-			std::cout << "Damage = " << (damage-offset) * comboValue << std::endl;
-			theTarget->ReceiveDamage( (damage-offset) * comboValue);
-		}
-	}
-	else
-	{
-		irr::core::array<Monster*> monsters = world.GetMonsters();
-		irr::u32 numberOfMonsters = monsters.size();
-
-		for( irr::u32 i = 0; i < numberOfMonsters; ++i )
-		{
-			if( CollisionHelper::CheckProximity2D(
-				monsters[i]->GetNode().getPosition(),
-				theMainCharacter.GetNodePosition(),
-				monsters[i]->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 1
-				)
-			)
-			{
-				irr::s32 damage = theMainCharacter.GetLevel();
-				irr::s32 offset = damage / 10 * ( rand()%601 ) / 300;
-
-				irr::f32 comboValue;
-				switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
-				{
-					case 2:
-						comboValue = 1.2;
-						break;
-					case 3:
-						comboValue = 1.5;
-						break;
-					case 4:
-						comboValue = 2;
-						break;
-					default:
-						comboValue = 1.0;
-				}
-
-				std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
-				std::cout << "Damage = " << (damage - offset) * comboValue << std::endl;
-				monsters[i]->ReceiveDamage( (damage-offset) * comboValue );
-			}
-		}
-	}
-
-	theMainCharacter.setIdle();
-	theNode->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
 }
 
 void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {	
@@ -949,4 +888,116 @@ void MainCharacter::SetTarget( Monster* newTarget )
 			targetIndicator->setVisible( false );
 		}
 	}
+}
+
+void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
+{
+	Monster* theTarget = theMainCharacter.monsterTarget;
+	if( theTarget )
+	{
+		if( CollisionHelper::CheckProximity2D(
+			theTarget->GetNode().getPosition(),
+			theMainCharacter.GetNodePosition(),
+			theTarget->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 5
+			)
+		)
+		{
+			irr::s32 playerAttk = theMainCharacter.GetAttackPoint();
+			irr::s32 monDef = theTarget->GetDef();
+			std::cout << "Player Attk = " << playerAttk << std::endl;
+			std::cout << "Monster Defence = " << monDef << std::endl;
+			irr::s32 damage = 0;
+			if (playerAttk - monDef > 0 )
+			{
+				damage = playerAttk - monDef;
+			}
+			irr::s32 offset = damage/5 * (rand()%601)/300;
+
+			irr::f32 comboValue;
+			switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
+			{
+				case 2:
+					comboValue = 1.2;
+					break;
+				case 3:
+					comboValue = 1.5;
+					break;
+				case 4:
+					comboValue = 2;
+					break;
+				default:
+					comboValue = 1.0;
+			}
+
+			std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
+			std::cout << "Damage = " << (damage-offset) * comboValue << std::endl;
+			theTarget->ReceiveDamage( (damage-offset) * comboValue);
+		}
+	}
+	else
+	{
+		irr::core::array<Monster*> monsters = world.GetMonsters();
+		irr::u32 numberOfMonsters = monsters.size();
+
+		irr::core::vector3df diff;
+		irr::core::vector3df faceVector = theMainCharacter.GetFaceVector();
+		irr::s32 faceVectorHY = faceVector.getHorizontalAngle().Y;
+		irr::s32 angleDiff = -40;
+		irr::s32 damageByLevel = theMainCharacter.GetLevel();
+		irr::s32 damage = damageByLevel;
+
+		for( irr::u32 i = 0; i < numberOfMonsters; ++i )
+		{
+			if( CollisionHelper::CheckProximity2D(
+				monsters[i]->GetNode().getPosition(),
+				theMainCharacter.GetNodePosition(),
+				monsters[i]->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 1
+				)
+			)
+			{
+				diff = monsters[i]->GetNode().getPosition() - theMainCharacter.GetNodePosition();
+
+				angleDiff = faceVectorHY - diff.getHorizontalAngle().Y;
+				
+				if( angleDiff < 10 && angleDiff > -10 )
+				{
+					damage = damageByLevel * 2;
+				}
+				else
+				{
+					damage = damageByLevel;
+				}
+				
+				irr::s32 offset = damage / 5 * ( rand()%601 ) / 300;
+
+				irr::f32 comboValue;
+				switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
+				{
+					case 2:
+						comboValue = 1.2;
+						break;
+					case 3:
+						comboValue = 1.5;
+						break;
+					case 4:
+						comboValue = 2;
+						break;
+					default:
+						comboValue = 1.0;
+				}
+
+				std::cout << "Combo = " << ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() << std::endl;
+				std::cout << "Damage = " << (damage - offset) * comboValue << std::endl;
+				monsters[i]->ReceiveDamage( (damage-offset) * comboValue );
+			}
+		}
+	}
+
+	theMainCharacter.setIdle();
+	theNode->setCurrentFrame( MAIN_CHARACTER_ANIMATION_IDLE_START );
+}
+
+void MainCharacter::DeathAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
+{
+	world.requestGameOver();
 }

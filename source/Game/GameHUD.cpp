@@ -57,6 +57,7 @@ static const irr::u32			CD_HEIGTH = 30;
 static const irr::u32			GAME_START_TIME = 25;
 static const irr::u32			FADE_TIME = 4;
 static const irr::u32			START_TIME = 4;
+static const irr::u32			GAME_OVER_SHOW_TIME = 8;
 
 extern GameEngine* GEngine;
 
@@ -108,8 +109,8 @@ GameHUD::GameHUD( irr::IrrlichtDevice& device )
 	HPText = GEngine->GetFontManager()->getFont("IMPACT", 24);
 	ConversationFont = GEngine->GetFontManager()->getFont("IMPACT", 24);
 	MenuFont = GEngine->GetFontManager()->getFont("IMPACT", 24);
+	GameOverFont = GEngine->GetFontManager()->getFont("IMPACT", 60);
 	
-	
 	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -120,7 +121,6 @@ GameHUD::GameHUD( irr::IrrlichtDevice& device )
 	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
 }
 
 // destructor
@@ -161,7 +161,9 @@ void GameHUD::Init()
 	CDRec = irr::core::rect<irr::s32>(0, 0, MAGIC_CHARGE_WIDTH,  MAGIC_CHARGE_HEIGHT);
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
 	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
-	ConversationRec = irr::core::rect<irr::s32>(CONVERSATION_X1, CONVERSATION_Y1, CONVERSATION_X2, CONVERSATION_Y2);	
+	ConversationRec = irr::core::rect<irr::s32>(CONVERSATION_X1, CONVERSATION_Y1, CONVERSATION_X2, CONVERSATION_Y2);
+
+	gameOverTextSize = GameOverFont->getDimension(L"Game Over");
 }
 
 void GameHUD::Update( irr::f32 delta , Player& player)
@@ -646,12 +648,54 @@ void GameHUD::gameStart(irr::f32 delta){
 				//MenuFont->draw(startGameText[i].c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);		
 			}
 		}
-		
 		timeElapsed += delta;
-	
 	}
 	else
 		timeElapsed = 0;
-	
-	
+}
+
+void GameHUD::gameOver(irr::f32 delta){
+	irr::core::dimension2di scrSize = GEngine->GetScreenSize();
+
+	if( timeElapsed < GAME_OVER_SHOW_TIME / 2 )
+	{
+		GEngine->GetDriver().draw2DRectangle(
+			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 0, 0, 0),
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height)
+		);
+
+		GameOverFont->draw(
+			L"Game Over",
+			irr::core::rect<irr::s32>(
+				(scrSize.Width - gameOverTextSize.Width) / 2,
+				(scrSize.Height - gameOverTextSize.Height) / 2,
+				0, 0
+			),
+			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
+			true,
+			true
+		);
+	}
+	else if( timeElapsed < GAME_OVER_SHOW_TIME )
+	{
+		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
+
+		GameOverFont->draw(
+			L"Game Over",
+			irr::core::rect<irr::s32>(
+				0,0,
+				(scrSize.Width - gameOverTextSize.Width) / 2,
+				(scrSize.Height - gameOverTextSize.Height) / 2
+			),
+			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			true,
+			true
+		);
+	}
+	else
+	{
+		return;
+	}
+
+	timeElapsed += delta;
 }

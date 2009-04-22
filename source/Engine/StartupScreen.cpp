@@ -61,7 +61,7 @@ void StartupScreen::Init()
 // called every frame with the frame's elapsed time
 void StartupScreen::Tick( irr::f32 delta )
 {
-	//DoInput();
+	DoInput();
 
 	elapsedTime += delta;
 	//std::cout<<elapsedTime<<" "<<delta<<std::endl;

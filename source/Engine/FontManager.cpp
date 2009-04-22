@@ -80,7 +80,7 @@ irr::gui::CGUITTFont* FontManager::createNewFont(std::string fontName, int fontS
 
 	if( font->attach( _faces[fontName], fontSize ) )
 	{
-		font->AntiAlias = true;
+		font->TransParency = font->AntiAlias = true;
 		_fonts.insert( std::make_pair( std::make_pair(fontName, fontSize), font ) );
 	}
 	else

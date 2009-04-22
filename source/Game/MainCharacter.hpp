@@ -22,9 +22,10 @@ enum EMainCharacterActionState
 	EMCAS_ROTATE = 2,
 	EMCAS_JUMP = 4,
 	EMCAS_ATTACK = 8,
-	EMCAS_MAGICATTACK = 9,
-	EMCAS_DEFEND = 16,
-	EMCAS_RUNNING = 32,
+	EMCAS_MAGICATTACK = 16,
+	EMCAS_DEFEND = 32,
+	EMCAS_RUNNING = 64,
+	EMCAS_DIEING = 128, // XD
 	EMCAS_DEAD = 1 << 31
 };
 
@@ -78,6 +79,7 @@ public:
 	bool isCasting() const;
 	bool isMoving() const;
 	bool isRunning() const;
+	bool isDieing() const;
 
 	irr::core::vector3df getTargetPos();
 
@@ -128,7 +130,7 @@ public:
 	void SetChargingProgress(irr::u32 magicChargeProgress) {_magicChargeProgress = magicChargeProgress;}
 	void SetItemBox(ItemCollection itemBox) {_itemBox = itemBox;};
 	void SetEXP(irr::s32 exp) {_exp = exp;}
-	void SetCurrentWeapon(WeaponItem* currentWeapon) { _currentWeapon = currentWeapon;}
+	void SetCurrentWeapon(WeaponItem* currentWeapon);
 	void SetCurrentMagic(MDiscItem* currentMagic) ;
 	void SetCombo(bool combo) {_combo = combo;};
 	void SetComboNum(irr::s32 comboNum) {_comboNum = comboNum;};
@@ -206,11 +208,25 @@ private:
 	private:
 		MainCharacter& theMainCharacter;
 		GameWorld& world;
-	};
+	}* attackCallBack;
 
-	AttackAnimationEndCallBack* attackCallBack;
+	class DeathAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
+	{
+	public:
+		explicit DeathAnimationEndCallBack( GameWorld& gameWorld, MainCharacter& m ) :
+		theMainCharacter(m),
+		world(gameWorld)
+		{
+		}
+
+		virtual void OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode);
+	private:
+		MainCharacter& theMainCharacter;
+		GameWorld& world;
+	}* endCallBack;
 
 	friend class AttackAnimationEndCallBack;
+	friend class DeathAnimationEndCallBack;
 };
 
 #endif //__MAIN_CHARACTER_HPP__

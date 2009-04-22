@@ -4,20 +4,24 @@
 
 //constructor
 WeaponItem::WeaponItem(GameWorld& gameWorld, EItemType type, irr::core::stringw name, irr::u32 value,
-					   irr::core::stringw des, irr::video::ITexture* text)
+					   irr::core::stringw des, irr::video::ITexture* text, irr::c8* meshFile)
 	:Item(gameWorld),
-	world(gameWorld)
+	world(gameWorld),
+	node(NULL)
 {
 	setItemType(type);
 	setItemName(name);
 	setItemValue(value);
 	setItemDescription(des);
 	setItemTexture(text);
+	node = world.GetSceneManager().addAnimatedMeshSceneNode(
+		world.GetSceneManager().getMesh(meshFile));
 }
 
 //destructor
 WeaponItem::~WeaponItem()
 {
+	world.GetSceneManager().addToDeletionQueue( node );
 }
 
 void WeaponItem::equip()
