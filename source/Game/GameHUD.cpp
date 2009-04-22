@@ -57,7 +57,7 @@ static const irr::u32			CD_HEIGTH = 30;
 static const irr::u32			GAME_START_TIME = 25;
 static const irr::u32			FADE_TIME = 4;
 static const irr::u32			START_TIME = 4;
-static const irr::u32			GAME_OVER_SHOW_TIME = 8;
+static const irr::u32			GAME_OVER_SHOW_TIME = 9;
 
 extern GameEngine* GEngine;
 
@@ -657,7 +657,7 @@ void GameHUD::gameStart(irr::f32 delta){
 void GameHUD::gameOver(irr::f32 delta){
 	irr::core::dimension2di scrSize = GEngine->GetScreenSize();
 
-	if( timeElapsed < GAME_OVER_SHOW_TIME / 2 )
+	if( timeElapsed <= GAME_OVER_SHOW_TIME / 2 )
 	{
 		GEngine->GetDriver().draw2DRectangle(
 			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 0, 0, 0),
@@ -666,27 +666,19 @@ void GameHUD::gameOver(irr::f32 delta){
 
 		GameOverFont->draw(
 			L"Game Over",
-			irr::core::rect<irr::s32>(
-				(scrSize.Width - gameOverTextSize.Width) / 2,
-				(scrSize.Height - gameOverTextSize.Height) / 2,
-				0, 0
-			),
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * timeElapsed / (GAME_OVER_SHOW_TIME / 2), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	else if( timeElapsed < GAME_OVER_SHOW_TIME )
+	else if( timeElapsed <= GAME_OVER_SHOW_TIME )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		GameOverFont->draw(
 			L"Game Over",
-			irr::core::rect<irr::s32>(
-				0,0,
-				(scrSize.Width - gameOverTextSize.Width) / 2,
-				(scrSize.Height - gameOverTextSize.Height) / 2
-			),
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
 			true,
 			true
