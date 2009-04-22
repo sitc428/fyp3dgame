@@ -96,6 +96,11 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
 	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/swordyy.obj");
 	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/swordyy.obj");
+
+	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
+
 	tmpBox.push_back(std::make_pair(hp, 2));
 	tmpBox.push_back(std::make_pair(md1, 5));
 	tmpBox.push_back(std::make_pair(md2, 10));
@@ -999,5 +1004,6 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 
 void MainCharacter::DeathAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
 {
-	world.requestGameOver();
+	//world.requestGameOver();
+	world.requestGameVictory();
 }

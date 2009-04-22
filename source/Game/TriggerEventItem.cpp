@@ -36,19 +36,23 @@ void TriggerEventItem::interaction(irr::f32 delta)
 		std::cout << _type << std::endl;
 		if (_type == SCENE1)
 		{
-			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE1) );
+			//boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE1) );
+			boost::thread LoadSceneThread( boost::bind(&GameWorld::LoadSceneConfig, &world, 1) );
 		}
 		else if (_type == SCENE2)
 		{
-			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE2) );
+			//boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE2) );
+			boost::thread LoadSceneThread( boost::bind(&GameWorld::LoadSceneConfig, &world, 2) );
 		}
 		else if (_type == SCENE3)
 		{
-			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE3) );
+			//boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE3) );
+			boost::thread LoadSceneThread( boost::bind(&GameWorld::LoadSceneConfig, &world, 3) );
 		}
 		else if (_type == SCENE4)
 		{
-			boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE4) );
+			//boost::thread addSceneThread1( boost::bind(&GameWorld::AddScene, &world, NODE_ID_SCENE4) );
+			boost::thread LoadSceneThread( boost::bind(&GameWorld::LoadSceneConfig, &world, 4) );
 		}
 		else if (_type == MINIGAME1)
 		{

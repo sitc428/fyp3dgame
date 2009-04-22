@@ -49,6 +49,10 @@ public:
 
 	//drawing the game over
 	void gameOver(irr::f32 delta);
+
+	// drawing the game victory
+	void gameVictory(irr::f32 delta);
+
 private:
 
 	//HP, Magic Frame
@@ -109,6 +113,9 @@ private:
 	// GameOver
 	irr::core::dimension2di gameOverTextSize;
 	irr::gui::CGUITTFont* GameOverFont;
+
+	// WinText
+	irr::gui::CGUITTFont* WinFont;
 };
 
 #endif // __GAME_HUD_HPP__
