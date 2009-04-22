@@ -20,7 +20,7 @@ static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
 static const irr::c8* BOSS_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
-Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox,irr::core::vector3df NewPosition, irr::core::stringw type, irr::u32 money)
+Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 hp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox,irr::core::vector3df NewPosition, irr::core::stringw type, irr::u32 money)
 	: Actor(gameEngine, gameWorld),
 	collisionAnimator(NULL),
 	_exp(exp),
@@ -30,7 +30,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	_mdef(mdef),
 	_monItemBox(monItemBox),
 	_money(money),
-	health(attk*5),
+	health(hp),
 	maxhealth(health)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
