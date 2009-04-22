@@ -139,6 +139,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball_2.vert", "media/shader/fireball_2.frag", 1, irr::video::EMT_SOLID);
 	Ice = GEngine.GetShaderFactory().createShader( "media/shader/Ice.vert", "media/shader/Ice.frag", 0, irr::video::EMT_SOLID);
 	Lightning = GEngine.GetShaderFactory().createShader( "media/shader/Lightning.vert", "media/shader/Lightning.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
+	Cyclone = GEngine.GetShaderFactory().createShader( "media/shader/Cyclone.vert", "media/shader/Cyclone.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	irr::scene::IMesh* ATmesh = smgr.addSphereMesh("", (node->getBoundingBox().MaxEdge - node->getBoundingBox().getCenter()).getLength() + 1 );
 	ATFieldNode = smgr.addMeshSceneNode( ATmesh, node );
 	ATFieldNode->setVisible( false );
@@ -918,6 +919,17 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 		else
 			MagicNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 		MagicNode->setMaterialTexture(0, driver.getTexture("media/model/base.tga"));
+	}else if( _currentMagic->getItemName() == "Cyclone" ){
+		std::cout<<"Cyclone\n";
+		irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
+		MagicNode = smgr.addMeshSceneNode( Magicmesh );
+		MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+		MagicNode->setVisible( false );	
+		if(GEngine.GetShaderFactory().ShaderAvailable())
+			MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Cyclone->GetShaderMaterial());
+		else
+			MagicNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+		MagicNode->setMaterialTexture(0, driver.getTexture("media/model/water.jpg"));
 	}
 }
 

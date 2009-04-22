@@ -271,7 +271,7 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 
 struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 	Idle(){
-		//std::cout<<"Idle\n"; /*std::cout<<GetName(1);*/
+		std::cout<<"Idle\n"; /*std::cout<<GetName(1);*/
 	};
 	virtual ~Idle() {};
 	
