@@ -468,7 +468,9 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 			else if (meshNode->getID() == fallID)
 			{
 				meshNode->setPosition(meshNode->getPosition() + offset);
-			}	
+			}
+			if (meshNode->getID() != NODE_ID_SCENE1_HOUSE)
+				meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);
 		}
 	}
 
@@ -479,7 +481,7 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 
 	// add a light for the scene
 	offset.Y += 500;
-	smgr.addLightSceneNode(0, offset, irr::video::SColorf(1,1,1,1), 1000);
+	smgr.addLightSceneNode(0, irr::core::vector3df(0,300,0), irr::video::SColorf(255,255,255,1), 600);
 }
 
 void GameWorld::AddScene(irr::s32 sceneType)
@@ -621,7 +623,7 @@ void GameWorld::InitLight()
 {
 	// Setup the directional light information
 	irr::video::SLight lightInfo;
-	lightInfo.CastShadows = false;
+	lightInfo.CastShadows = true;
 	lightInfo.Type = irr::video::ELT_DIRECTIONAL;
 	lightInfo.DiffuseColor = irr::video::SColorf(0.5f,0.5f,0.5f);
 
