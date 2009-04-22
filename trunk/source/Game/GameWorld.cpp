@@ -409,7 +409,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				}
 				else if( lines == "ADDMONSTER" )
 				{
-					Monster* m = new Monster( GEngine, *this, exp, attk, def, mattk, mdef, monItemBox, "Type1", money);
+					Monster* m = new Monster( GEngine, *this, exp, attk, def, mattk, mdef, monItemBox,pos, "Type1", money);
 					actors.push_back(m);
 					monsters.push_back(m);
 					m->ReSetPosition(pos);
