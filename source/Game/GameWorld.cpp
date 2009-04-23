@@ -721,14 +721,13 @@ void GameWorld::InitEnemies()
 	ItemCollection itemsToSell;
 
 	itemsToSell.push_back( std::make_pair(hp, 100) );
-	itemsToSell.push_back( std::make_pair(md1, 100) );
-	itemsToSell.push_back( std::make_pair(md2, 100) );
-	itemsToSell.push_back( std::make_pair(md3, 100) );
-	itemsToSell.push_back( std::make_pair(md4, 100) );
-	itemsToSell.push_back( std::make_pair(hp, 100) );
-	itemsToSell.push_back( std::make_pair(hp, 100) );
+	itemsToSell.push_back( std::make_pair(md1, 1000) );
+	itemsToSell.push_back( std::make_pair(md2, 2000) );
+	itemsToSell.push_back( std::make_pair(md3, 3000) );
+	itemsToSell.push_back( std::make_pair(md4, 4000) );
 
-	SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(110, 10, 180), irr::core::vector3df(0, 0, 0), irr::core::vector3df(4, 4, 4), itemsToSell );
+	SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(110, 200, 180), irr::core::vector3df(0, 0, 0), irr::core::vector3df(4, 4, 4), itemsToSell );
+	actors.push_back( sellingMachine1 );
 }
 
 // sets up the camera to be able to look at the scene

@@ -19,7 +19,7 @@ SellingMachine::SellingMachine( GameEngine& gameEngine, GameWorld& gameWorld, co
 	node->setRotation(defaultRotation);
 	node->setScale(defaultScale);
 
-	irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( ((irr::scene::IMeshSceneNode*)node)->getMesh(), node );
+	irr::scene::ITriangleSelector* meshTriangleSelector = smgr.createOctTreeTriangleSelector( ((irr::scene::IAnimatedMeshSceneNode*)node)->getMesh(), node );
 	node->setTriangleSelector( meshTriangleSelector );
 	world.GetLevelTriangleSelector().addTriangleSelector( meshTriangleSelector );
 	meshTriangleSelector->drop();
