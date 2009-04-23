@@ -68,26 +68,30 @@ void TalkativeNPC::interaction(irr::f32 delta)
 		for(irr::u32 i = 0; i < theBox.size(); ++i)
 		{
 			if(
-				theBox[i].first->getItemType() == WEAPONITEM1 && 
+				(theBox[i].first->getItemType() == WEAPONITEM1 && 
 				theBox[i].first->getItemName() == "Sword" &&
-				theBox[i].second >= 1
+				theBox[i].second >= 1)
+			||
+				(theBox[i].first->getItemType() == MDISCITEM && 
+				theBox[i].first->getItemName() == "Fire" &&
+				theBox[i].second >= 1)
+			||
+				(theBox[i].first->getItemType() == MDISCITEM && 
+				theBox[i].first->getItemName() == "Ice" &&
+				theBox[i].second >= 1)
+			||
+				(theBox[i].first->getItemType() == MDISCITEM && 
+				theBox[i].first->getItemName() == "Lightning" &&
+				theBox[i].second >= 1)
+			||
+				(theBox[i].first->getItemType() == MDISCITEM && 
+				theBox[i].first->getItemName() == "Cyclone" &&
+				theBox[i].second >= 1)
 			)
-			{
-				++needed;
-			}
-			if(
-				theBox[i].first->getItemType() == MDISCITEM && 
-				theBox[i].first->getItemName() == "Sword" &&
-				theBox[i].second >= 1
-			)
-			{
-				++needed;
-			}
+			++needed;
 		}
 		if( needed == 5 )
-		{
 			return;
-		}
 	}
 	else if(_type == 2)
 	{
