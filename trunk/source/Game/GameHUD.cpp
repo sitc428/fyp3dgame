@@ -58,7 +58,7 @@ static const irr::u32			GAME_START_TIME = 25;
 static const irr::u32			FADE_TIME = 4;
 static const irr::u32			START_TIME = 4;
 static const irr::u32			GAME_OVER_SHOW_TIME = 9;
-static const irr::u32			GAME_WIN_SHOW_TIME = 61;
+static const irr::u32			GAME_WIN_SHOW_TIME = 31;
 
 extern GameEngine* GEngine;
 
@@ -694,7 +694,7 @@ void GameHUD::gameOver(irr::f32 delta){
 		GameOverFont->draw(
 			L"Game Over",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - timeElapsed / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (GAME_OVER_SHOW_TIME - timeElapsed) / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
 			true,
 			true
 		);
@@ -741,13 +741,13 @@ void GameHUD::gameVictory(irr::f32 delta)
 			true
 		);
 	}
-	// fade in Cast 1
+	// fade in Credit 1
 	else if( timeElapsed < GAME_WIN_SHOW_TIME / 4 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Cast",
+			L"Credit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
@@ -764,19 +764,19 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"3D Scene by Vincent Sit",
-			irr::core::rect<irr::s32>(0, 2 * 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::core::rect<irr::s32>(0, 3 * 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	// fade out Cast 1
+	// fade out Credit 1
 	else if( timeElapsed < GAME_WIN_SHOW_TIME / 3 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Cast",
+			L"Credit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
@@ -785,7 +785,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"3D Model by Kiron Tsang",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
+			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
@@ -793,7 +793,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"3D Scene by Vincent Sit",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
+			irr::core::rect<irr::s32>(0, 3 * 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
@@ -805,7 +805,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Cast",
+			L"Credit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
@@ -822,19 +822,19 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"Sound Effect by Oz Lam",
-			irr::core::rect<irr::s32>(0, 2 * 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::core::rect<irr::s32>(0, 3 * 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (1 - (5 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	// fade out Cast 2
+	// fade out Credit 2
 	else if( timeElapsed < GAME_WIN_SHOW_TIME / 2 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Cast",
+			L"Credit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
@@ -851,19 +851,19 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"Sound Effect by Oz Lam",
-			irr::core::rect<irr::s32>(0, 2 * 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::core::rect<irr::s32>(0, 3 * 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 2 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	// fade in Cast 3
+	// fade in Credit 3
 	else if( timeElapsed < 7 * GAME_WIN_SHOW_TIME / 12 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Cast",
+			L"Credit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
@@ -880,19 +880,19 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"Plot by PSAN2",
-			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::core::rect<irr::s32>(0, 3 * 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (1 - (7 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	// fade out cast 3
+	// fade out Credit 3
 	else if( timeElapsed < 2 * GAME_WIN_SHOW_TIME / 3 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Cast",
+			L"Credit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
@@ -909,7 +909,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"Plot by PSAN2",
-			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::core::rect<irr::s32>(0, 3 * 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (1 - (2 * GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
