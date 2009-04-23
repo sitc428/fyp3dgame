@@ -18,7 +18,7 @@
 #include "ShaderFactory.hpp"
 
 static const irr::c8* MONSTER_MODEL = "media/model/slime.x";
-static const irr::c8* BOSS_MODEL = "media/model/slime08.x";
+static const irr::c8* BOSS_MODEL = "media/model/kingslime.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
 
 static const irr::u32		MONSTER_ANIMATION_WALK_FORWARD_START = 1;
@@ -51,6 +51,8 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 			_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime.tga"));
 		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+		timeout = 5.0;
+		_monster->setScale(irr::core::vector3df(1,0.554,1));
 	}else if( type == "Type2"){
 		
 			Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_2.vert", "media/shader/Monster_shader_2.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
@@ -63,7 +65,8 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 		
 			_monster->setMaterialTexture(0, driver.getTexture("media/model/slime2.tga"));
 			_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
-		
+			timeout = 5.0;
+			_monster->setScale(irr::core::vector3df(1,0.554,1));
 	}else if( type == "Type3"){
 		
 		Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_3.vert", "media/shader/Monster_shader_3.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
@@ -76,7 +79,8 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 		
 		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime3.tga"));
 		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
-		
+		_monster->setScale(irr::core::vector3df(1,0.554,1));
+		timeout = 5.0;
 	}else if( type == "Type4"){
 		
 		Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_4.vert", "media/shader/Monster_shader_4.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
@@ -89,19 +93,21 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 		
 		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime1.tga"));
 		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
-		
+		_monster->setScale(irr::core::vector3df(1,0.554,1));
+		timeout = 5.0;
 	} if( type == "Boss"){
 		
 		Shader* shader = GEngine.GetShaderFactory().createShader( "media/shader/Monster_shader_Boss.vert", "media/shader/Monster_shader_Boss.frag", 2 , irr::video::EMT_TRANSPARENT_ADD_COLOR );
-		_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(MONSTER_MODEL), smgr.getRootSceneNode());
+		_monster = smgr.addAnimatedMeshSceneNode(smgr.getMesh(BOSS_MODEL), smgr.getRootSceneNode());
 		
 		if(GEngine.GetShaderFactory().ShaderAvailable())
 			_monster->setMaterialType((irr::video::E_MATERIAL_TYPE) shader->GetShaderMaterial() );
 		else
 			_monster->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-		
+		_monster->setScale(irr::core::vector3df(2.7,1.5,2.7));
 		_monster->setMaterialTexture(0, driver.getTexture("media/model/slime1.tga"));
 		_monster->setMaterialTexture(1, driver.getTexture("media/model/black.png"));
+		timeout = 1.0;
 		
 	}
 	
@@ -119,7 +125,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	pos = defaultPosition;
 	target = pos;
 	moved = false;
-	timeout = 5.0;
+	
 	mon_timer = new boost::timer();
 	attack_timer = new boost::timer();
 	death_timer =  new boost::timer();
@@ -145,7 +151,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	_monster->setFrameLoop(1, 30 );
 	_monster->setLoopMode(true);
 	
-	_monster->setScale(irr::core::vector3df(1,0.554,1));
+	
 	
 	
 	
@@ -256,7 +262,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 		}	
 		
 	}else if(	(Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f||
-				Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 40.0f
+				Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 50.0f
 			 )
 	{
 		
@@ -296,8 +302,11 @@ void Monster::update(Player& _player, irr::f32 delta)
 			_monster->setFrameLoop(1, 30 );
 			_monster->setLoopMode(true);
 		}
-		
-		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/100.0f);
+		irr::core::vector3df targetPos;
+		if( Type=="Boss")
+			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/50.0f);
+		else 
+			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/100.0f);
 		targetPos.Y = -10.0;
 		CheckActorPosition(targetPos, _player);
 		
