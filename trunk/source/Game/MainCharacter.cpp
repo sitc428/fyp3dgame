@@ -4,6 +4,7 @@
 
 #include "CollisionHelper.hpp"
 #include "FloorDecalSceneNode.hpp"
+#include "FontManager.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
 #include "HPItem.hpp"
@@ -770,6 +771,22 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 	// if the player is in god mode, no damage will be received.
 	if( godMode )
 		return;
+
+	irr::core::stringw theValue = L"-";
+	theValue = theValue + (int)value;
+
+	irr::scene::ITextSceneNode* textNode = world.GetSceneManager().addTextSceneNode(
+		(irr::gui::IGUIFont*)GEngine.GetFontManager()->getFont("IMPACT", 16), theValue.c_str(),
+		irr::video::SColor(200, 255, rand() % 255, 0), node, irr::core::vector3df(0, 10, 0));
+
+	irr::scene::ISceneNodeAnimator* anim = world.GetSceneManager().createFlyStraightAnimator(
+		textNode->getPosition(),
+		textNode->getPosition()+irr::core::vector3df(5 + rand() % 5, 5 + rand() % 5, 0), 500 + rand() % 1000);
+	textNode->addAnimator(anim);
+	anim->drop();
+	anim = world.GetSceneManager().createDeleteAnimator(1500);
+	textNode->addAnimator(anim);
+	anim->drop();
 
 	// boundary check
 	if( health - value < 0 )

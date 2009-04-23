@@ -8,6 +8,7 @@
  */
 //1-30
 //31-60
+#include "FontManager.hpp"
 #include "Monster.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
@@ -417,7 +418,24 @@ void Monster::RecreateCollisionResponseAnimator()
 	_monster->addAnimator(collisionAnimator);
 }
 
-void Monster::ReceiveDamage(irr::f32 damage){
+void Monster::ReceiveDamage(irr::f32 damage)
+{
+	irr::core::stringw theValue = L"-";
+	theValue = theValue + (int)damage;
+
+	irr::scene::ITextSceneNode* textNode = world.GetSceneManager().addTextSceneNode(
+		(irr::gui::IGUIFont*)GEngine.GetFontManager()->getFont("IMPACT", 16), theValue.c_str(),
+		irr::video::SColor(200, 0, rand() % 255, 255), _monster, irr::core::vector3df(0, 10, 0));
+
+	irr::scene::ISceneNodeAnimator* anim = world.GetSceneManager().createFlyStraightAnimator(
+		textNode->getPosition(),
+		textNode->getPosition()+irr::core::vector3df(-5 + rand() % 10, -5 + rand() % 10, 0), 500 + rand() % 1000);
+	textNode->addAnimator(anim);
+	anim->drop();
+	anim = world.GetSceneManager().createDeleteAnimator(1500);
+	textNode->addAnimator(anim);
+	anim->drop();
+
 	if( health - damage > 0 )
 		health -= damage;
 	else
