@@ -14,9 +14,9 @@ void main (void)
 {
 	vec4 Color1 = vec4(0.2,0.09,0.0,1.0);
 	vec4 Color2 = vec4(0.8,0.8,0.8,1.0);
-   float ErosionFactor = 0.45;//0.35->0.47
+   float ErosionFactor = 0.46;//0.35->0.47
    float IntensityFactor1 =  0.77;//0.75
-   float IntensityFactor2 =  4.95;//1.95->4.95
+   float IntensityFactor2 =  4.8;//1.95->4.95
     vec3 offset     = vec3(- ErosionFactor, - ErosionFactor + 0.06, - ErosionFactor * 0.92);
     vec3 color;   
     
@@ -42,6 +42,6 @@ void main (void)
     color *= LightIntensity;
     color = clamp(color, 0.0, 1.0); 
 
-    gl_FragColor = vec4 (color, 1.0);
+    gl_FragColor = vec4 (color, 1.0)*texture2D(myTexture1, noiseCoord.yz);
     
 }
