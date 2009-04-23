@@ -959,10 +959,14 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 	Monster* theTarget = theMainCharacter.monsterTarget;
 	if( theTarget )
 	{
+		int adjust = 5;
+		if( theTarget->GetType() == "Boss" )
+			adjust = 40;
+
 		if( CollisionHelper::CheckProximity2D(
 			theTarget->GetNode().getPosition(),
 			theMainCharacter.GetNodePosition(),
-			theTarget->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - 5
+			theTarget->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - adjust
 			)
 		)
 		{
@@ -1067,10 +1071,10 @@ void MainCharacter::DeathAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnima
 	//world.requestGameVictory();
 }
 
-void MainCharacter::SetEXP(irr::s32 exp)
+void MainCharacter::SetEXP(irr::u32 exp)
 {
 	_exp = exp;
-	if ( _exp >= _level*_level*100 )
+	if ( _exp >= _level * _level * 100 )
 	{
 		++_level;
 		_attack = 80 + _level * 9.2;

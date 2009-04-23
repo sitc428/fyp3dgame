@@ -106,7 +106,7 @@ public:
 	irr::u32 GetChargingProgress() const {return _magicChargeProgress;}
 	bool GetCharging() const {return _charging;} //to get whether the player is charging for Magic
 	ItemCollection& GetItemBox() {return _itemBox;}
-	irr::s32 GetEXP() const {return _exp;}
+	irr::u32 GetEXP() const {return _exp;}
 	WeaponItem* GetCurrentWeapon() const {return _currentWeapon;};
 	MDiscItem* GetCurrentMagic() const {return _currentMagic;};
 	irr::scene::ISceneNode* getWeaponNode() { return weaponNode; }
@@ -129,7 +129,7 @@ public:
 	void SetCharging(bool charging) { _charging = charging;} //to get whether the player is charging for Magic
 	void SetChargingProgress(irr::u32 magicChargeProgress) {_magicChargeProgress = magicChargeProgress;}
 	void SetItemBox(ItemCollection itemBox) {_itemBox = itemBox;};
-	void SetEXP(irr::s32 exp);
+	void SetEXP(irr::u32 exp);
 	void SetCurrentWeapon(WeaponItem* currentWeapon);
 	void SetCurrentMagic(MDiscItem* currentMagic) ;
 	void SetCombo(bool combo) {_combo = combo;};
@@ -175,7 +175,7 @@ private:
 	irr::u32 _magicChargeProgress;
 	bool _charging;
 	ItemCollection _itemBox;
-	irr::s32 _exp;
+	irr::u32 _exp;
 	WeaponItem* _currentWeapon;
 	MDiscItem* _currentMagic;
 	bool _combo;
