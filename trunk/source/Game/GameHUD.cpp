@@ -164,6 +164,7 @@ void GameHUD::Init()
 	HPBar = irr::core::rect<irr::s32>(0, 0, HP_WIDTH,  HP_HEIGHT);
 	HPTextRec = irr::core::rect<irr::s32>(HP_TEXT_X1, HP_TEXT_Y1, HP_TEXT_X2, HP_TEXT_Y2);
 	ConversationRec = irr::core::rect<irr::s32>(CONVERSATION_X1, CONVERSATION_Y1, CONVERSATION_X2, CONVERSATION_Y2);
+	ComboRec = irr::core::rect<irr::s32>(650, 200, 0, 0);
 
 	gameOverTextSize = GameOverFont->getDimension(L"Game Over");
 }
@@ -249,11 +250,23 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 		HPText->draw(outputString.c_str(), irr::core::rect<irr::s32>(150, 20, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	}
 	
-	//	virtual void draw(const wchar_t* text, const core::rect<irr::s32>& position, irr::video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<irr::s32>* clip=0);
 	
-	//driver.draw2DImage(ConversationTexture,	irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, irr::video::SColor(255,255,255,255), true);
+	if( ((MainCharacter&)player).GetCombo() ){
+		int combonumber = ((MainCharacter&)player).GetComboNum();
+
+		if (combonumber >= 2){
+		
+			outputString = L"";
+			outputString += combonumber;
+			irr::core::stringw outputString1 = L"  Combo";
+			//std::cout<< combonumber <<" COMBO!"<<std::endl;
+			HPText->draw(outputString.c_str(), ComboRec, irr::video::SColor(255,255,0,0), false, false, 0);
+			HPText->draw(outputString1.c_str(), ComboRec, irr::video::SColor(255,255,255,255), false, false, 0);
+		}
+		
+	}
+
 	
-	//reseting the selected menu item
 	MenuSelected = STATUS;
 	SubMenuIndex = -1;
 }
