@@ -15,7 +15,7 @@ void main (void)
 	float ina;
    vec3 n = normalize(vNormal);
       
-   ina = dot(vec3(light),n);
+   ina = dot(vec3(gl_LightSource[0].position),n);
 				
    float intensityMod = 0.0;
      // vec3 Scolor= vec3(0.5,0.4,0.3);
