@@ -8,7 +8,7 @@
 FontManager::FontManager(irr::video::IVideoDriver* videoDriver)
 	: driver(videoDriver)
 {
-	std::ifstream fontConfig("font.fyp");
+	std::ifstream fontConfig("font.rxw");
 
 	while(!fontConfig.eof())
 	{

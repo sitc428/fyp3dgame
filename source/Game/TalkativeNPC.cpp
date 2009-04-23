@@ -85,11 +85,11 @@ void TalkativeNPC::interaction(irr::f32 delta)
 		{
 			if(currentline <= _dialogs[talking].size())
 			{
-				if(timeElapsed > 0.05)
+				if(timeElapsed > 0.025)
 				{
 					irr::core::stringw temp  = _dialogs[talking].subString(0, currentline);
 					world.GetGameHUD()->GetConversation(temp, _header);
-					currentline += (timeElapsed / 0.05);
+					currentline += (timeElapsed / 0.025);
 					timeElapsed = 0;
 				}
 			}
