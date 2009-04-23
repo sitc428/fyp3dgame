@@ -44,8 +44,6 @@ void SellingMachine::interaction(irr::f32 delta)
 	else if(state == 1)
 	{
 		std::cout << "Processing" << std::endl;
-		BuyItem(0);
-		finishBuying();
 	}
 	else
 	{
