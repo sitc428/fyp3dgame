@@ -26,6 +26,7 @@
 #include "ParticleManager.hpp"
 #include <math.h>
 #include "MainCharacter.hpp"
+#include "ShaderFactory.hpp"
 
 class ProgressCircle;
 
@@ -72,6 +73,9 @@ public:
 	irr::s32 GetMAttk() {return _mattk;};
 	irr::s32 GetMDef() {return _mdef;};
 	irr::u32 GetMoney() {return _money;};
+	irr::f32 GetHealth(){return health;};
+	irr::f32 GetMaxHealth(){return maxhealth;};
+	irr::core::stringw GetType(){return Type;};
 
 	irr::scene::IAnimatedMeshSceneNode& GetMeshNode(){ return *_monster;}
 
@@ -88,6 +92,8 @@ private:
 	FiniteStateMachine* FSM;
 	irr::scene::IAnimatedMeshSceneNode *_monster;
 	ItemCollection _monItemBox;
+	irr::scene::ISceneNode* MagicNode;
+	Shader* Cyclone;
 
 	// cached collision response animator
 	irr::scene::ISceneNodeAnimatorCollisionResponse* collisionAnimator;
@@ -238,9 +244,28 @@ struct Attacking :Name_test, sc::simple_state< Attacking, NotDeath>{
 		//irr::s32 monAttk = _mon->GetAttk();
 		irr::s32 monAttk = _monster->GetAttk();
 		irr::s32 playerDef = ((MainCharacter&)_player).GetDefencePoint();
+		irr::s32 magicAttk = _monster->GetMAttk();
+		irr::s32 playerMDef = ((MainCharacter&)_player).GetMagicDefencePoint();
 		std::cout << "Monster Attk = " << monAttk << std::endl;
 		std::cout << "Player Defence = " << playerDef << std::endl;
 		irr::s32 damage = 0;
+		//std::cout<<_monster->health<<"\n";
+		if( _monster->GetType() == "Boss" && _monster->GetHealth()/_monster->GetMaxHealth() < 2 ){
+			if (((MainCharacter&)_player).isDefending())
+			{
+				if (magicAttk - playerMDef*2/3 > 0)
+				{
+					damage = magicAttk - (playerMDef*2/3) * 2;
+				}
+			}
+			else
+			{
+				if (magicAttk - (playerMDef*2/3)*2 >0 )
+				{
+					damage = magicAttk - playerMDef*2/3;
+				}
+			}
+		}else 
 		if (((MainCharacter&)_player).isDefending())
 		{
 			if (monAttk - playerDef*2/3 > 0)
