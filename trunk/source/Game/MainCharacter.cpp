@@ -474,6 +474,11 @@ bool MainCharacter::isDieing() const
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
+	if (combo_timer->elapsed() > 1.0)
+	{
+		SetCombo(false);
+		_comboNum=0;
+	}
 	if( IsDead() )
 	{
 		action = EMCAS_DIEING;
@@ -510,8 +515,6 @@ void MainCharacter::Tick( irr::f32 delta )
 
 void MainCharacter::DoInput(irr::f32 delta)
 {
-	if (combo_timer->elapsed() > 1.0)
-		SetCombo(false);
 	irr::f32 comboValue;
 	switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
 	{
