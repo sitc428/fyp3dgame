@@ -91,19 +91,21 @@ void GameWorld::InitShader()
 		irr::core::vector3df(5,4,4),
 													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire1->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
-							500,530,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+							500,530,1500,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+//	fire1->CreateSmokeEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
+//							500,530,1500,2000, GEngine.GetDriver().getTexture("media/model/black.png"));
 	
 	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(-110, 0.000000, -80.928589),
 												 irr::core::vector3df(6,6,6),
 												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire2->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
-							500,530,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+							500,530,1500,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 
 	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(145, 0.000000, 15.928589),
 												 irr::core::vector3df(6,8,6),
 												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire3->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
-							400,420,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+							400,420,1500,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	ParticleManager* fire4 = new ParticleManager(&smgr, irr::core::vector3df(70, 0.000000, -210.928589),
 												 irr::core::vector3df(7,7,7),
 												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
@@ -115,7 +117,14 @@ void GameWorld::InitShader()
 	std::cout<<"----\n";
 	Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
 								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
+	
+	ParticleManager* Smoke1 = new ParticleManager(&smgr, irr::core::vector3df(40, 100.000000, 120.928589),
+												 irr::core::vector3df(3,3,3),
+												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	Smoke1->CreateSmokeEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
+							   100,300,100,1000, GEngine.GetDriver().getTexture("media/model/black.png"));
 
+	
 	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
 															core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
 															core::vector3df(0.0f,0.06f,0.0f),
