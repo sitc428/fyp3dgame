@@ -26,9 +26,11 @@ public:
 							   irr::u32 , irr::u32 , 
 							   irr::u32, irr::u32, irr::video::ITexture*);
 	
+	void CreateSmokeEmitter(irr::core::vector3df, irr::u32, irr::u32, irr::u32, irr::u32, irr::video::ITexture*);
 	
 	irr::scene::IParticleSystemSceneNode* GetParticleSystemNode();
 	irr::scene::IParticleEmitter* GetEmitter();
+	
 
 	void resetEmitter()
 	{
