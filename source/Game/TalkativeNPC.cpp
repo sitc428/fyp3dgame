@@ -9,7 +9,8 @@ TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, const 
 	: InteractiveActor(gameEngine, gameWorld),
 	_header(header),
 	acceptable_Distance(acceptableDistance),
-	_type(type)
+	_type(type),
+	itemTrigger(false)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	node = smgr.addAnimatedMeshSceneNode(smgr.getMesh(mesh), smgr.getRootSceneNode());
@@ -61,12 +62,14 @@ void TalkativeNPC::RecreateCollisionResponseAnimator()
 
 void TalkativeNPC::interaction(irr::f32 delta)
 {
+	std::cout << "Check Type" << std::endl;
 	MainCharacter::ItemCollection theBox;
-	static bool itemTrigger = false;
 
 	if( itemTrigger == true )
+	{
+		finishAction();
 			return;
-
+	}
 	if(_type == 1)
 	{
 		int needed = 0;
@@ -312,11 +315,11 @@ void TalkativeNPC::interaction(irr::f32 delta)
 					)
 					{
 						theBox[i].second += 5;
-		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
-									world.GetActors().erase( world.GetActors().linear_search( this ) );
-					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
-					node->setVisible( false );
-					itemTrigger = true;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+						world.GetActors().erase( world.GetActors().linear_search( this ) );
+						world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+						node->setVisible( false );
+						itemTrigger = true;
 					}
 				}
 			}
