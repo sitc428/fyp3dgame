@@ -211,7 +211,9 @@ void GameHUD::Update( irr::f32 delta , Player& player)
 		//std::cout<<"TRUE"<<std::endl;
 		timeElapsed += delta;
 		if(timeElapsed > 0.01){
-			modTime ++;
+			modTime += (irr::u32)(timeElapsed / 0.01);
+			if(modTime > 20)
+				modTime = 20;
 			//reseting timeElapsed
 			timeElapsed = 0;
 		}
