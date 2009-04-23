@@ -710,13 +710,25 @@ void GameWorld::InitEnemies()
 	
 	//m1->ReSetPosition(irr::core::vector3df(120,10,100));
 	
-	Monster* m2 = new Monster( GEngine, *this, 50, 300, 100, 20, 100, 20, monItemBox2,irr::core::vector3df(100,10,180), "Type2", 2000);
+	Monster* m2 = new Monster( GEngine, *this, 50, 300, 100, 20, 100, 20, monItemBox2,irr::core::vector3df(100,500,180), "Type2", 2000);
 	
 	//m2->ReSetPosition(irr::core::vector3df(100,10,180));
 	actors.push_back(m1);
 	actors.push_back(m2);
 	monsters.push_back( m1 );
 	monsters.push_back( m2 );
+
+	ItemCollection itemsToSell;
+
+	itemsToSell.push_back( std::make_pair(hp, 100) );
+	itemsToSell.push_back( std::make_pair(md1, 100) );
+	itemsToSell.push_back( std::make_pair(md2, 100) );
+	itemsToSell.push_back( std::make_pair(md3, 100) );
+	itemsToSell.push_back( std::make_pair(md4, 100) );
+	itemsToSell.push_back( std::make_pair(hp, 100) );
+	itemsToSell.push_back( std::make_pair(hp, 100) );
+
+	SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this, irr::core::vector3df(110, 10, 180), irr::core::vector3df(0, 0, 0), irr::core::vector3df(4, 4, 4), itemsToSell );
 }
 
 // sets up the camera to be able to look at the scene
@@ -987,9 +999,13 @@ void GameWorld::DoInput()
 			
 			debugCamera = !debugCamera;
 		}
-		if( receiver.keyPressed(irr::KEY_KEY_3) )
+		if( receiver.keyReleased(irr::KEY_KEY_3) )
 		{
 			DebugInfo::teleportPlayer( *mainCharacter );
+		}
+		if( receiver.keyReleased(irr::KEY_KEY_4) )
+		{
+			DebugInfo::addExp( *mainCharacter );
 		}
 		if( receiver.keyReleased(irr::KEY_KEY_9) )
 		{

@@ -221,17 +221,6 @@ void Monster::update(Player& _player, irr::f32 delta)
 		//+level
 		irr::s32 playerLevel = ((MainCharacter&)world.GetCurrentPlayer()).GetLevel();
 		irr::s32 playerEXP = ((MainCharacter&)world.GetCurrentPlayer()).GetEXP();
-		
-		if ( playerEXP >= (playerLevel)*(playerLevel)*100)
-		{
-			((MainCharacter&)world.GetCurrentPlayer()).SetLevel(playerLevel+1);
-			((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(80+(playerLevel)*9.2);
-			((MainCharacter&)world.GetCurrentPlayer()).SetDefencePoint(50+450*(playerLevel)/99);
-			((MainCharacter&)world.GetCurrentPlayer()).SetMagicAttackPoint(100+(playerLevel)*9);
-			((MainCharacter&)world.GetCurrentPlayer()).SetMagicDefencePoint(30+270*(playerLevel)/99);
-			((MainCharacter&)world.GetCurrentPlayer()).SetMaxHealth(1000+(playerLevel)*90);
-			((MainCharacter&)world.GetCurrentPlayer()).SetHealth(1000+(playerLevel)*90);
-		}
 
 
 			FSM->process_event( EvDie() );
