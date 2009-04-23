@@ -194,7 +194,7 @@ struct Death :Name_test,sc::simple_state< Death, FiniteStateMachine>{
 	virtual ~Death() {};
 };
 
-struct NotDeath :Name_test, sc::simple_state<NotDeath, FiniteStateMachine, Idle >{
+struct NotDeath :Name_test, sc::simple_state<NotDeath, FiniteStateMachine, Tracing >{
 	NotDeath(){};
 	virtual ~ NotDeath() {};
 	virtual std::string GetName() const
