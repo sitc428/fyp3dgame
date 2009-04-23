@@ -105,7 +105,7 @@ void GameWorld::InitShader()
 	fire3->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 							400,420,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	ParticleManager* fire4 = new ParticleManager(&smgr, irr::core::vector3df(70, 0.000000, -210.928589),
-												 irr::core::vector3df(9,8,9),
+												 irr::core::vector3df(7,7,7),
 												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire4->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 							420,450,1600,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
