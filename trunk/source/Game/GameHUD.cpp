@@ -1007,11 +1007,11 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 	{	
 		if( receiver.keyReleased( irr::KEY_UP) ){
 			if( MenuSelected == STATUS )
-				MenuSelected++;
+				MenuSelected = ITEM;
 		}
 		else if( receiver.keyReleased( irr::KEY_DOWN) ){
 			if( MenuSelected == ITEM )
-				MenuSelected--;
+				MenuSelected = STATUS;
 		}
 		
 		//BUY IN BUYING MENU
@@ -1073,7 +1073,8 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 		driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
 		GetConversation(ItemBox[SubMenuIndex].first->getItemDescription(), ItemBox[SubMenuIndex].first->getItemTexture());
 	}
-	
+	else
+		GetConversation("");
 	
 	irr::core::stringw outputString = L"";
 	
@@ -1092,6 +1093,5 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 		
 	
 	
-	else
-		GetConversation("");
+	
 }
