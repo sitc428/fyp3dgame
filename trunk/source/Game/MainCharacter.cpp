@@ -94,8 +94,8 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	Item* md4 = new MDiscItem(world, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
 	Item* xItem = new XItem(world, XITEM, "X Item", 1, "Special Item", text);
 	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
-	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/swordyy.obj");
-	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/swordyy.obj");
+	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
+	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
 
 	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
