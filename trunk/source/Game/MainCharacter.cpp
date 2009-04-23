@@ -592,9 +592,12 @@ void MainCharacter::DoInput(irr::f32 delta)
 	{
 		if (!GetCombo())
 		{
-			SetCombo(true);
-			++_comboNum;
-			combo_timer->restart();
+			if (targetIndicator->isVisible())
+			{
+				SetCombo(true);
+				++_comboNum;
+				combo_timer->restart();
+			}
 		}
 		else
 		{
