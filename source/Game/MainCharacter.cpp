@@ -101,7 +101,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
 
-	tmpBox.push_back(std::make_pair(hp, 2));
+	/*tmpBox.push_back(std::make_pair(hp, 2));
 	tmpBox.push_back(std::make_pair(md1, 5));
 	tmpBox.push_back(std::make_pair(md2, 10));
 	tmpBox.push_back(std::make_pair(md3, 12));
@@ -109,7 +109,18 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	tmpBox.push_back(std::make_pair(xItem, 0));
 	tmpBox.push_back(std::make_pair(weapon1, 1));
 	tmpBox.push_back(std::make_pair(weapon2, 2));
-	tmpBox.push_back(std::make_pair(weapon3, 1));
+	tmpBox.push_back(std::make_pair(weapon3, 1));*/
+
+	tmpBox.push_back(std::make_pair(hp, 0));
+	tmpBox.push_back(std::make_pair(md1, 0));
+	tmpBox.push_back(std::make_pair(md2, 0));
+	tmpBox.push_back(std::make_pair(md3, 0));
+	tmpBox.push_back(std::make_pair(md4, 0));
+	tmpBox.push_back(std::make_pair(xItem, 0));
+	tmpBox.push_back(std::make_pair(weapon1, 0));
+	tmpBox.push_back(std::make_pair(weapon2, 0));
+	tmpBox.push_back(std::make_pair(weapon3, 0));
+
 	this->SetItemBox(tmpBox);
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	// load the animated mesh, and add a new scene graph node for it

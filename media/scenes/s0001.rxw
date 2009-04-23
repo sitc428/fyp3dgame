@@ -3,5 +3,6 @@ IRR:media/model/scene1_new_new.irr
 POS:0,2000,0
 FALL:-111
 TRI:112
-HOUSE:113
+HOUSE1:113
+HOUSE2:114
 ENDSCENE

@@ -833,7 +833,8 @@ void GameWorld::Tick( irr::f32 delta )
 	switch( gameState )
 	{
 		case state_GAMEPLAY:
-		case state_INTERACTING:
+		case (state_INTERACTING | state_TALKING):
+			case (state_INTERACTING | state_BUYING):
 		case state_PAUSED:
 			DoGameplay( delta );
 			break;
