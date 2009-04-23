@@ -1,11 +1,11 @@
 BEGINNPC
 MODEL:media/model/hill.obj
 DIALOG:I need to find something to destroy this obstacle...
-DIALOG:Let's find some items in the viaalge.
+DIALOG:Let's find some items in the village.
 HEADER:media/image/head1.png
-ACCEPTABLE:300
+ACCEPTABLE:40
 POS:-96.992966,-0.926392,-408.416046
 ROT:0.000000,180.000000,0.000000
-SCALE:8.852482,16.164818,1.000000
+SCALE:8.852482,16.164818,5.000000
 ADDNPC
 ENDNPC
