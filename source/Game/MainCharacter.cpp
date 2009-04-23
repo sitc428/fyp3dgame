@@ -93,7 +93,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	Item* md3 = new MDiscItem(world, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
 	Item* md4 = new MDiscItem(world, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
 	Item* xItem = new XItem(world, XITEM, "X Item", 1, "Special Item", text);
-	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
+	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.x");
 	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
 	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
 
@@ -241,7 +241,7 @@ void MainCharacter::SetCurrentWeapon(WeaponItem* currentWeapon)
 		weaponNode = _currentWeapon->GetNode();
 		weaponNode->setParent( node->getJointNode("RightHandThumb3") );
 		weaponNode->setVisible( true );
-		weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
+		//weaponNode->setScale(irr::core::vector3df(0.05, 0.05, 0.05));
 	}
 }
 
