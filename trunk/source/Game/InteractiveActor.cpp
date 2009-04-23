@@ -10,6 +10,7 @@
 InteractiveActor::InteractiveActor( GameEngine& gameEngine, GameWorld& gameWorld )
 	: Actor(gameEngine, gameWorld),
 	collisionAnimator(NULL),
+	node(NULL),
 	interacting(false)
 {
 }
