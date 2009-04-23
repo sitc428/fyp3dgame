@@ -501,7 +501,6 @@ void MainCharacter::DoInput(irr::f32 delta)
 	{
 		if (MagicFired)
 		{
-
 			MagicNode->setVisible(false);
 			Monster* theTarget = monsterTarget;
 			irr::s32 playerMAttk = GetMagicAttackPoint() * MagicBonusValue;
