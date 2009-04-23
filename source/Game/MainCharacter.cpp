@@ -546,7 +546,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 			timeElapsed += delta;
 			if (timeElapsed > 0.0001 / (1 + _magiclevel))
 			{
-				if( _magicChargeProgress % 100 == 0)
+				if( ++_magicChargeProgress % 100 == 0)
 					++_magiclevel;
 
 				timeElapsed = 0;
