@@ -6,7 +6,8 @@
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
-
+//1-30
+//31-60
 #include "Monster.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
@@ -16,9 +17,15 @@
 //#include "shader.hpp"
 #include "ShaderFactory.hpp"
 
-static const irr::c8* MONSTER_MODEL = "media/model/slime08.x";
+static const irr::c8* MONSTER_MODEL = "media/model/slime.x";
 static const irr::c8* BOSS_MODEL = "media/model/slime08.x";
 static const irr::core::vector3df defaultPosition = irr::core::vector3df(-40,0,180);
+
+static const irr::u32		MONSTER_ANIMATION_WALK_FORWARD_START = 1;
+static const irr::u32		MONSTER_ANIMATION_WALK_FORWARD_END = 30;
+static const irr::u32		MONSTER_ANIMATION_ATTACK1_START = 31;
+static const irr::u32		MONSTER_ANIMATION_ATTACK1_END = 60;
+
 
 Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr::s32 hp, irr::s32 attk, irr::s32 def, irr::s32 mattk, irr::s32 mdef, ItemCollection monItemBox,irr::core::vector3df NewPosition, irr::core::stringw type, irr::u32 money)
 	: Actor(gameEngine, gameWorld),
@@ -125,14 +132,21 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	original = NewPosition;
 	pos = NewPosition;
 	target = NewPosition;
-	_monster->setPosition(NewPosition); 
+	_monster->setPosition(NewPosition);
 	_monster->updateAbsolutePosition();
 	RecreateCollisionResponseAnimator();
 	
 	//std::cout<<original.X<<" "<<original.Y<<" "<<original.Z<<"\n";
 	pos = _monster->getAbsolutePosition();
 
+
 	_monster->setLoopMode(false);
+	_monster->setCurrentFrame( MONSTER_ANIMATION_WALK_FORWARD_START );
+	_monster->setFrameLoop(1, 30 );
+	_monster->setLoopMode(true);
+	
+	_monster->setScale(irr::core::vector3df(1,0.554,1));
+	
 	
 	
 	healthBar = new ProgressCircle( _monster, &(world.GetSceneManager()), -1, world.GetSceneManager().getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 25, 0));
@@ -159,6 +173,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 	//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
 	if(health <= 0)
 	{
+		_monster->setLoopMode(false);
 		//Death;
 		if( FSM->GetName() != "Death" )
 		{
@@ -244,20 +259,29 @@ void Monster::update(Player& _player, irr::f32 delta)
 				Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 40.0f
 			 )
 	{
+		
 		//std::cout<<"Attack_timer: "<<attack_timer->elapsed()<<"\n";
 		if(FSM->GetName() != "Attacking"){
 			FSM->process_event( EvWithinAttackRange());
 			if(attack_timer->elapsed() > timeout){
 				attack_timer->restart();
 				FSM->reaction(_monster, _player,target, this);
+				_monster->setLoopMode(false);
+				_monster->setCurrentFrame( MONSTER_ANIMATION_ATTACK1_START );
+				_monster->setFrameLoop( MONSTER_ANIMATION_ATTACK1_START,MONSTER_ANIMATION_ATTACK1_END );
+				_monster->setLoopMode(true);
 			}
 		}else{
 
 			if(attack_timer->elapsed() > timeout){
 				//	std::cout<<"Mon_timer:------------"<<"\n";
 				attack_timer->restart();
+				_monster->setLoopMode(false);
+				_monster->setCurrentFrame( MONSTER_ANIMATION_WALK_FORWARD_START );
+				_monster->setFrameLoop( MONSTER_ANIMATION_ATTACK1_START,MONSTER_ANIMATION_ATTACK1_END );
+				_monster->setLoopMode(true);
 				FSM->reaction(_monster, _player,target, this);			
-			}
+			}else _monster->setLoopMode(false);
 		}
 	}
 	else if( (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(original)< 160.0f
@@ -266,6 +290,13 @@ void Monster::update(Player& _player, irr::f32 delta)
 		)
 	{
 		mon_timer->restart();
+		if(FSM->GetName() != "Tracing"){
+			_monster->setLoopMode(false);
+			_monster->setCurrentFrame( MONSTER_ANIMATION_WALK_FORWARD_START );
+			_monster->setFrameLoop(1, 30 );
+			_monster->setLoopMode(true);
+		}
+		
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
 		targetPos.Y = -10.0;
 		CheckActorPosition(targetPos, _player);
@@ -274,6 +305,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 140.0f
 			)
 		{
+			
 			//Tracing mode
 			//if(FSM->GetName() != "Tracing"){
 			if(FSM->GetName() == "Attacking")
@@ -313,6 +345,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			//Idle	
 			//std::cout<<"Mon_timer: "<<mon_timer->elapsed()<<"\n";
 			//irr::u32 current = mon_timer->getTime();
+			_monster->setLoopMode(false);
 			if( FSM->GetName() != "Idle" )
 			{
 				mon_timer->restart();
