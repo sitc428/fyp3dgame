@@ -27,24 +27,18 @@ WeaponItem::~WeaponItem()
 void WeaponItem::equip()
 {
 	((MainCharacter&)world.GetCurrentPlayer()).SetCurrentWeapon(this);
-	/*if (!getEquipState())
-	{
-		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
-			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() + getItemValue()
-			);
-		setEquipState(true);
-	}*/
+	((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
+		((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() + getItemValue()
+	);
 }
 
 void WeaponItem::unEquip()
 {
 	if ( ((MainCharacter&)world.GetCurrentPlayer()).GetCurrentWeapon() == this)
-		((MainCharacter&)world.GetCurrentPlayer()).SetCurrentWeapon(NULL);
-	/*if (getEquipState())
 	{
+		((MainCharacter&)world.GetCurrentPlayer()).SetCurrentWeapon(NULL);
 		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
 			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() - getItemValue()
-			);
-		setEquipState(false);
-	}*/
+		);
+	}
 }

@@ -59,24 +59,18 @@ bool MDiscItem::use()
 void MDiscItem::equip()
 {
 	((MainCharacter&)world.GetCurrentPlayer()).SetCurrentMagic(this);
-	/*if (!getEquipState())
-	{
-		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
-			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() + getItemValue()
-			);
-		setEquipState(true);
-	}*/
+	((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
+		((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() + getItemValue()
+	);
 }
 
 void MDiscItem::unEquip()
 {
 	if ( ((MainCharacter&)world.GetCurrentPlayer()).GetCurrentMagic() == this)
-		((MainCharacter&)world.GetCurrentPlayer()).SetCurrentMagic(NULL);
-	/*if (getEquipState())
 	{
+		((MainCharacter&)world.GetCurrentPlayer()).SetCurrentMagic(NULL);
 		((MainCharacter&)world.GetCurrentPlayer()).SetAttackPoint(
 			((MainCharacter&)world.GetCurrentPlayer()).GetAttackPoint() - getItemValue()
-			);
-		setEquipState(false);
-	}*/
+		);
+	}
 }
