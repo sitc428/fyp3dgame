@@ -153,7 +153,17 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	_monster->setLoopMode(true);
 	
 	
-	
+	Cyclone = GEngine.GetShaderFactory().createShader( "media/shader/Cyclone.vert", "media/shader/Cyclone.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
+
+	irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/cyclone.x" ));
+	MagicNode = smgr.addMeshSceneNode( Magicmesh );
+	MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
+	MagicNode->setVisible( false );	
+	if(GEngine.GetShaderFactory().ShaderAvailable())
+		MagicNode->setMaterialType((irr::video::E_MATERIAL_TYPE)Cyclone->GetShaderMaterial());
+	else
+		MagicNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
+	MagicNode->setMaterialTexture(0, driver.getTexture("media/model/water.jpg"));
 	
 	
 	healthBar = new ProgressCircle( _monster, &(world.GetSceneManager()), -1, world.GetSceneManager().getSceneCollisionManager(), 100, 10, 100, irr::core::vector3df(0, 25, 0));
@@ -173,7 +183,17 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 }
 void Monster::update(Player& _player, irr::f32 delta)
 {
-	
+	irr::core::vector3df magicPos = pos;
+	magicPos = pos;
+	irr::scene::ISceneManager& smgr = world.GetSceneManager();
+	MagicNode->setPosition(magicPos);
+
+	irr::core::vector3df targetPos = _player.GetNodePosition();
+	irr::u32 magicFlyTime = (targetPos - magicPos).getLength() / 0.1;
+	if(Type == "Boss" && health/maxhealth<2){
+		if(attack_timer->elapsed() >= 0.4 )
+			MagicNode->setVisible(false);
+	}
 	//std::cout<<"origin: "<<_player.GetNodePosition().getDistanceFrom(original)<<"\n";
 	//std::cout<<"pos : "<<_player.GetNodePosition().getDistanceFrom(pos)<<"\n";
 	//std::cout<<_player.GetNodePosition().X<<" "<<_player.GetNodePosition().Y<<" "<<_player.GetNodePosition().Z<<"\n";
@@ -262,10 +282,29 @@ void Monster::update(Player& _player, irr::f32 delta)
 			if(attack_timer->elapsed() > timeout){
 				attack_timer->restart();
 				FSM->reaction(_monster, _player,target, this);
-				_monster->setLoopMode(false);
-				_monster->setCurrentFrame( MONSTER_ANIMATION_ATTACK1_START );
-				_monster->setFrameLoop( MONSTER_ANIMATION_ATTACK1_START,MONSTER_ANIMATION_ATTACK1_END );
-				_monster->setLoopMode(true);
+				if(Type == "Boss" && health/maxhealth<2){
+					irr::core::vector3df magicPos = pos;
+					magicPos = pos;
+					irr::scene::ISceneManager& smgr = world.GetSceneManager();
+					MagicNode->setPosition(magicPos);
+					MagicNode->setVisible(true);
+					irr::core::vector3df targetPos = _player.GetNodePosition();
+					
+					irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
+																						  magicPos,
+																						  targetPos,
+																						  magicFlyTime
+																						  );
+					MagicNode->addAnimator(anim);
+					anim->drop();
+					
+				}else{
+					_monster->setLoopMode(false);
+					_monster->setCurrentFrame( MONSTER_ANIMATION_ATTACK1_START );
+					_monster->setFrameLoop( MONSTER_ANIMATION_ATTACK1_START,MONSTER_ANIMATION_ATTACK1_END );
+					_monster->setLoopMode(true);
+				}
+				
 			}
 		}else{
 
