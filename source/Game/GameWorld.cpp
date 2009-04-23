@@ -80,31 +80,41 @@ void GameWorld::InitShader()
 {
 	//mainCharacter->InitShader( & (light->getAbsolutePosition()) );
 	//0,20,0
-	/*ParticleManager* fire = new ParticleManager(&smgr, irr::core::vector3df(38.114258, 40.000000, 194.928589),
+/*	ParticleManager* fire = new ParticleManager(&smgr, irr::core::vector3df(38.114258, 40.000000, 194.928589),
 		irr::core::vector3df(30,2,2),
 		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7));
 
 	fire->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 						   50,80,800,1000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
-	
-	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(38.114258, 20.000000, 194.928589),
-		irr::core::vector3df(30,5,2),
+*/	
+	ParticleManager* fire1 = new ParticleManager(&smgr, irr::core::vector3df(40, 20.000000, 120.928589),
+		irr::core::vector3df(5,5,2),
 													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	fire1->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
+							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+	
+	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(-130, 20.000000, -8.928589),
+												 irr::core::vector3df(6,6,6),
+												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire2->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
-	 
-	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(-186.645462, 0.000000, -0.391444),
-		irr::core::vector3df(2,2,20),
-		irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
-	fire3->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"), irr::core::vector3df(0.0f,0.06f,0.0f),
-							10,20,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
-*/
-	
-	/*ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
+
+	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(140, 20.000000, 0.928589),
+												 irr::core::vector3df(8,8,8),
+												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	fire3->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
+							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+	ParticleManager* fire4 = new ParticleManager(&smgr, irr::core::vector3df(70, 20.000000, -210.928589),
+												 irr::core::vector3df(9,8,9),
+												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+	fire4->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
+							520,550,1600,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+
+	ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
 														   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	std::cout<<"----\n";
 	Snow->CreateCylinderEmitter(irr::core::vector3df(0,50,0), irr::f32(500.0), irr::core::vector3df(0,0,0),
-								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));*/
+								irr::f32(200.0), irr::core::vector3df(0.0f,-0.03f,0.0f), 400,500,2500,3000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 
 	/*	irr::scene::IParticleEmitter* em = ps->createBoxEmitter(
 															core::aabbox3d<irr::f32>(-7,0,-7,7,1,7),
@@ -124,6 +134,7 @@ void GameWorld::InitLevel()
 	LoadNPCConfig(1);
 	LoadSceneConfig(2);
 	LoadMonsterConfig(2);
+	//LoadParticleConfig(1);
 	//AddScene(NODE_ID_SCENE1);
 	//AddScene(NODE_ID_SCENE2);
 #ifndef _IRR_WINDOWS_
@@ -219,6 +230,108 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 	else
 	{
 		std::cout << "Error loading scene config file: " << sceneConfigFileName << ", aborting!" << std::endl;
+		exit( -1 );
+	}
+}
+
+void GameWorld::LoadParticleConfig(irr::u32 sceneNum)
+{
+	std::string ParticleConfigFileName = "media/scenes/p" + Utils::toString(sceneNum) + ".rxw";
+	std::ifstream ParticleConfigFile(ParticleConfigFileName.c_str());
+	
+	if( ParticleConfigFile )
+	{
+		std::string lines;
+		irr::core::stringc TexturePath = "";
+		std::string type;
+		irr::core::vector3df direction;
+		irr::core::vector3df pos;
+		irr::core::vector3df center;
+		float radius;
+		
+		while( !ParticleConfigFile.eof() )
+		{
+			std::cout<<"new\n";
+			std::getline( ParticleConfigFile, lines );
+			
+			if( lines != "")
+			{
+				std::cout<<lines<<"\n";
+				if( lines == "BEGINPARTICLE" )
+				{
+					continue;
+				}
+				else if( lines == "ENDPARTICLE" )
+				{
+					ParticleConfigFile.close();
+					break;
+				}
+				else if( lines.substr(0, 3) == "POS" )
+				{
+					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
+					
+					pos.X = Utils::toFloat(tokenizer.getNextToken());
+					pos.Y = Utils::toFloat(tokenizer.getNextToken());
+					pos.Z = Utils::toFloat(tokenizer.getNextToken());
+					//std::cout<<pos.X<<" "<<pos.Y<<" "<<pos.Z<<"\n";
+				}
+				else if( lines.substr(0, 5) == "MODEL" )
+				{
+					TexturePath = lines.substr(6, lines.length()).c_str();
+					//std::cout<<lines.substr(6, lines.length()).c_str()<<"\n";
+				}
+				else if( lines.substr(0, 9) == "DIRECTION" )
+				{
+					Tokenizer tokenizer( lines.substr(10, lines.length()), "," );
+					
+					direction.X = Utils::toFloat(tokenizer.getNextToken());
+					direction.Y = Utils::toFloat(tokenizer.getNextToken());
+					direction.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if( lines.substr(0, 6) == "CENTER" )
+				{
+					Tokenizer tokenizer( lines.substr(7, lines.length()), "," );
+					
+					center.X = Utils::toFloat(tokenizer.getNextToken());
+					center.Y = Utils::toFloat(tokenizer.getNextToken());
+					center.Z = Utils::toFloat(tokenizer.getNextToken());
+				}
+				else if(lines.substr(0,4) == "TYPE"){
+					type = lines.substr(5, lines.length()).c_str();
+					std::cout<<type<<"\n";
+				}
+				else if( lines.substr(0, 6) == "RADIUS" )
+				{
+					radius = Utils::toFloat( lines.substr(7, lines.length()) );
+				}
+				
+				/*	else if( lines.substr(0, 5) == "SCALE" )
+				 {
+				 Tokenizer tokenizer( lines.substr(6, lines.length()), "," );
+				 
+				 scale.X = Utils::toFloat(tokenizer.getNextToken());
+				 scale.Y = Utils::toFloat(tokenizer.getNextToken());
+				 scale.Z = Utils::toFloat(tokenizer.getNextToken());
+				 }*/
+				else if( lines == "ADDPARTICLE" )
+				{
+					
+					std::cout<<"new1\n";
+					ParticleManager* newParticle = new ParticleManager(&smgr, pos, irr::core::vector3df(2,2,2),
+																	   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+					if(type == "Box"){
+						newParticle->CreateBoxEmitter(direction, 20,50,400,500,  GEngine.GetDriver().getTexture(TexturePath.c_str()));
+						std::cout<<"new2\n";
+					}else if( type == "Cylinder")
+						newParticle->CreateCylinderEmitter(center, radius, center, 500, direction, 500,600, 1000,2000,  GEngine.GetDriver().getTexture(TexturePath.c_str()));
+					
+				}
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Error loading NPC config file: " << ParticleConfigFileName << ", aborting!" << std::endl;
 		exit( -1 );
 	}
 }
@@ -486,7 +599,7 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 				 meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);
 				 meshNode->setMaterialTexture(0, driver.getTexture( "media/model/N2d_000.tga" ));
 		
-				 meshNode->setMaterialTexture(1, driver.getTexture( "media/model/Maison Texture.png" ));
+				 meshNode->setMaterialTexture(1, driver.getTexture( "media/model/WOOD058.png" ));
 			 
 			 
 			 }
