@@ -3,11 +3,13 @@
 #include "GameWorld.hpp"
 #include "InputEventReceiver.hpp"
 #include "TalkativeNPC.hpp"
+#include "MainCharacter.hpp"
 
-TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, const irr::c8* mesh, irr::core::array<irr::core::stringw>& dialogs, irr::video::ITexture* header,irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale)
+TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, const irr::c8* mesh, irr::core::array<irr::core::stringw>& dialogs, irr::video::ITexture* header,irr::f32 acceptableDistance, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale, irr::u32 type)
 	: InteractiveActor(gameEngine, gameWorld),
 	_header(header),
-	acceptable_Distance(acceptableDistance)
+	acceptable_Distance(acceptableDistance),
+	_type(type)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	node = smgr.addAnimatedMeshSceneNode(smgr.getMesh(mesh), smgr.getRootSceneNode());
@@ -59,6 +61,39 @@ void TalkativeNPC::RecreateCollisionResponseAnimator()
 
 void TalkativeNPC::interaction(irr::f32 delta)
 {
+	if(_type == 1)
+	{
+		int needed = 0;
+		MainCharacter::ItemCollection theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+		for(irr::u32 i = 0; i < theBox.size(); ++i)
+		{
+			if(
+				theBox[i].first->getItemType() == WEAPONITEM1 && 
+				theBox[i].first->getItemName() == "Sword" &&
+				theBox[i].second >= 1
+			)
+			{
+				++needed;
+			}
+			if(
+				theBox[i].first->getItemType() == MDISCITEM && 
+				theBox[i].first->getItemName() == "Sword" &&
+				theBox[i].second >= 1
+			)
+			{
+				++needed;
+			}
+		}
+		if( needed == 5 )
+		{
+			return;
+		}
+	}
+	else if(_type == 2)
+	{
+	}
+
+
 	static int state = 0;
 	static int talking = 0;
 	static int currentline = 1;

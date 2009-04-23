@@ -234,7 +234,7 @@ void GameWorld::LoadNPCConfig(irr::u32 sceneNum)
 		irr::core::stringc modelFilePath = "";
 		irr::core::array<irr::core::stringw> dialogs;
 		irr::video::ITexture* headerImage;
-		irr::u32 acceptable = 20;
+		irr::u32 acceptable = 20, type = 0;
 		irr::core::vector3df pos;
 		irr::core::vector3df rot;
 		irr::core::vector3df scale;
@@ -293,15 +293,20 @@ void GameWorld::LoadNPCConfig(irr::u32 sceneNum)
 					scale.Y = Utils::toFloat(tokenizer.getNextToken());
 					scale.Z = Utils::toFloat(tokenizer.getNextToken());
 				}
+				else if( lines.substr(0, 4) == "TYPE" )
+				{
+					type = Utils::toInt( lines.substr(5, lines.length()) );
+				}
 				else if( lines == "ADDNPC" )
 				{
-					TalkativeNPC* newNPC = new TalkativeNPC(GEngine, *this, modelFilePath.c_str(), dialogs, headerImage, acceptable, pos, rot, scale);
+					TalkativeNPC* newNPC = new TalkativeNPC(GEngine, *this, modelFilePath.c_str(), dialogs, headerImage, acceptable, pos, rot, scale, type);
 					actors.push_back( newNPC );
 
 					dialogs.clear();
 					headerImage = NULL;
 					modelFilePath = "";
 					acceptable = 20;
+					type = 0;
 					pos = rot = scale = irr::core::vector3df(0, 0, 0);
 				}
 			}

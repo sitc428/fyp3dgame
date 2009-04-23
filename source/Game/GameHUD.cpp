@@ -728,42 +728,58 @@ void GameHUD::gameVictory(irr::f32 delta)
 			true
 		);
 	}
-	// fade in credit 1
+	// fade in Cast 1
 	else if( timeElapsed < GAME_WIN_SHOW_TIME / 4 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Credit",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
+			L"Cast",
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 
 		WinFont->draw(
-			L"1",
+			L"3D Model by Kiron Tsang",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
+
+		WinFont->draw(
+			L"3D Scene by Vincent Sit",
+			irr::core::rect<irr::s32>(0, 2 * 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			true,
+			true
+		);
 	}
-	// fade out credit 1
+	// fade out Cast 1
 	else if( timeElapsed < GAME_WIN_SHOW_TIME / 3 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Credit",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
+			L"Cast",
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
 			true
 		);
 
 		WinFont->draw(
-			L"1",
+			L"3D Model by Kiron Tsang",
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
+			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
+			true,
+			true
+		);
+
+		WinFont->draw(
+			L"3D Scene by Vincent Sit",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
@@ -776,70 +792,94 @@ void GameHUD::gameVictory(irr::f32 delta)
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Credit",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
+			L"Cast",
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
 			true
 		);
 
 		WinFont->draw(
-			L"2",
+			L"Shader Effect by Jerry Ip",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (5 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (5 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			true,
+			true
+		);
+
+		WinFont->draw(
+			L"Sound Effect by Oz Lam",
+			irr::core::rect<irr::s32>(0, 2 * 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::video::SColor(255 * (1 - (5 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	// fade out credit 2
+	// fade out Cast 2
 	else if( timeElapsed < GAME_WIN_SHOW_TIME / 2 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Credit",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
+			L"Cast",
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
 			true
 		);
 
 		WinFont->draw(
-			L"2",
+			L"Shader Effect by Jerry Ip",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME / 2 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 2 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
+			true,
+			true
+		);
+
+		WinFont->draw(
+			L"Sound Effect by Oz Lam",
+			irr::core::rect<irr::s32>(0, 2 * 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME / 2 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	// fade in credit 3
+	// fade in Cast 3
 	else if( timeElapsed < 7 * GAME_WIN_SHOW_TIME / 12 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Credit",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
+			L"Cast",
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
 			true
 		);
 
 		WinFont->draw(
-			L"3",
+			L"Program by Oz Lam and Jerry Ip",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (7 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (7 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			true,
+			true
+		);
+
+		WinFont->draw(
+			L"Plot by PSAN2",
+			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::video::SColor(255 * (1 - (7 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
 	}
-	// fade out credit 3
+	// fade out cast 3
 	else if( timeElapsed < 2 * GAME_WIN_SHOW_TIME / 3 )
 	{
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
 
 		WinFont->draw(
-			L"Credit",
+			L"Cast",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
@@ -847,7 +887,15 @@ void GameHUD::gameVictory(irr::f32 delta)
 		);
 
 		WinFont->draw(
-			L"3",
+			L"Program by Oz Lam and Jerry Ip",
+			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
+			irr::video::SColor(255 * (1 - (2 * GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			true,
+			true
+		);
+
+		WinFont->draw(
+			L"Plot by PSAN2",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
 			irr::video::SColor(255 * (1 - (2 * GAME_WIN_SHOW_TIME / 3 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
@@ -861,7 +909,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Special Thank",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
-			irr::video::SColor(255 * (3 * GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (3 * GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
@@ -869,7 +917,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Prof. Predo V. Sander",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (3 * GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (3 * GAME_WIN_SHOW_TIME / 4 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
@@ -881,7 +929,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Special Thank",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
-			irr::video::SColor(255 * (1 - (5 * GAME_WIN_SHOW_TIME / 6 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			irr::video::SColor(255 * (5 * GAME_WIN_SHOW_TIME / 6 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
@@ -889,7 +937,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Prof. Predo V. Sander",
 			irr::core::rect<irr::s32>(0, 48 * 1.5, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - (5 * GAME_WIN_SHOW_TIME / 6 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			irr::video::SColor(255 * (5 * GAME_WIN_SHOW_TIME / 6 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
@@ -902,7 +950,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Please longed for the release!",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (11 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
+			irr::video::SColor(255 * (1 - (11 * GAME_WIN_SHOW_TIME / 12 - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
 			true,
 			true
 		);
@@ -915,7 +963,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 		WinFont->draw(
 			L"Please longed for the release!",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - (GAME_WIN_SHOW_TIME - timeElapsed) / (GAME_WIN_SHOW_TIME / 12)), 255, 255, 255),
+			irr::video::SColor(255 * (GAME_WIN_SHOW_TIME - timeElapsed) / (GAME_WIN_SHOW_TIME / 12), 255, 255, 255),
 			true,
 			true
 		);
