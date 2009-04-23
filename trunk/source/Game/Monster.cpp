@@ -127,7 +127,7 @@ Monster::Monster(GameEngine& gameEngine, GameWorld& gameWorld, irr::s32 exp, irr
 	target = NewPosition;
 	_monster->setPosition(NewPosition); 
 	_monster->updateAbsolutePosition();
-	//	RecreateCollisionResponseAnimator();
+	RecreateCollisionResponseAnimator();
 	
 	//std::cout<<original.X<<" "<<original.Y<<" "<<original.Z<<"\n";
 	pos = _monster->getAbsolutePosition();
@@ -216,12 +216,18 @@ void Monster::update(Player& _player, irr::f32 delta)
 			FSM->process_event( EvDie() );
 			FSM->reaction(_monster, _player,target, this);
 			irr::scene::ISceneManager& smgr = world.GetSceneManager();
-			
+			pos.Y=8.0;
 			sparking= new ParticleManager(&smgr, pos, irr::core::vector3df(2,2,2),
 											   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
-			if(Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")
+			if(Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4"){
 				sparking->CreateMeshEmitter(smgr.getMesh("media/model/slime08.x"),irr::core::vector3df(0.0f,0.06f,0.0f),
-										20,50,200,700, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+										20,50,200,700, GEngine.GetDriver().getTexture("media/model/particlewhite.bmp"));
+			
+				
+			}else if(Type=="Boss"){
+				
+				world.requestGameVictory();
+			}
 			death_timer->restart();
 
 			/*irr::core::array<Actor*> actors = world.GetActors();
@@ -261,6 +267,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 	{
 		mon_timer->restart();
 		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
+		targetPos.Y = -10.0;
 		CheckActorPosition(targetPos, _player);
 		
 		if( (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&& targetPos.getDistanceFrom(pos) < 100.0f ||
@@ -275,13 +282,14 @@ void Monster::update(Player& _player, irr::f32 delta)
 			//irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
 			//if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
 			target = targetPos;
-
+			target.Y=-10.0;
 			FSM->reaction(_monster, _player,target,this);
 			pos = _monster->getPosition();
 			target = pos;
 
 
 			//for jumping
+			/*
 			irr::core::vector3df offset = irr::core::vector3df( 0, floating( delta, 1)*0.5, 0);
 			if((_monster->getAbsolutePosition()+offset).Y < 0 ){
 				irr::core::vector3df v = _monster->getAbsolutePosition()+offset;
@@ -290,6 +298,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			}else 
 				_monster->setPosition(_monster->getAbsolutePosition()+offset);
 			_monster->setRotation(_monster->getRotation()+offset);
+			 */
 			
 		}
 		else
@@ -317,7 +326,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			{
 				if( mon_timer->elapsed() > 2.0 )
 				{
-					if( (target - pos) < irr::core::vector3df(10.0, 0.0, 10.0) || target ==pos||mon_timer->elapsed() > 7.0  )
+					if( (target - pos) < irr::core::vector3df(10.0, -10.0, 10.0) || target ==pos||mon_timer->elapsed() > 7.0  )
 					{
 						if(!moved )
 						{
@@ -327,7 +336,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 							float z = ((float)(rand() % 20 + 1))-10;
 							float y = _monster->getPosition().Y;
 							target.X = pos.X+x;
-							target.Y = y;
+							target.Y = -10.0;
 							target.Z = pos.Z+z;
 							irr::core::vector3df direction = pos-target;
 							_monster->setRotation(direction.getHorizontalAngle());
@@ -428,6 +437,7 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 	float min = 9999.99;
 	irr::core::vector3df next_pos = target;
 	float meshSize = 40.0;
+	float angleX = 60.0;
 
 	irr::core::array<irr::scene::IMeshSceneNode*>& blocks = world.GetBlocking();
 	irr::u32 blocking_size = blocks.size();
@@ -436,6 +446,13 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 		irr::scene::IMeshSceneNode* meshNode = blocks[i];
 		if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
 			min = pos.getDistanceFrom(meshNode->getPosition() );
+		if(meshNode->getID() == NODE_ID_SCENE1_HOUSE){
+			meshSize = 140.0;
+			angleX = 20.0;
+		}else{
+			meshSize = 40.0;
+			angleX = 60.0;
+		}
 		//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
 		if(pos.getDistanceFrom(meshNode->getPosition() ) < meshSize){
 			//std::cout<< pos.getDistanceFrom(meshNode->getPosition() )<<"\n";
@@ -446,18 +463,18 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 			angle = acos(angle)*180.0/ PI;
 			//std::cout<<"angle: "<<floor(angle)<<"\n";
 
-			if(floor(angle) > 60 ){
+			if(floor(angle) > angleX && directionT.getLength() <= directionM.getLength() ){
 				//std::cout<<"-------------------------\n";
 				bool found = false;
 				float mov_x, mov_z;
 				if(_player.GetNodePosition().X > _monster->getPosition().X)
-					mov_x = 5.0;
+					mov_x = 3.0;
 				else
-					mov_x = -5.0;
+					mov_x = -3.0;
 				if(_player.GetNodePosition().Z > _monster->getPosition().Z)
-					mov_z = 5.0;
+					mov_z = 3.0;
 				else
-					mov_z = -5.0;
+					mov_z = -3.0;
 				next_pos = target;
 				if(last_move != 0){
 					switch (last_move){

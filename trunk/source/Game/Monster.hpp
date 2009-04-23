@@ -299,6 +299,7 @@ struct Idle :Name_test,  sc::simple_state< Idle, NotDeath> {
 		//std::cout<<targetPos<<"\n";
 		
 		irr::core::vector3df direction = _mon->getPosition()-targetPos;
+		direction.Y = 0.0;
 		_mon->setRotation(direction.getHorizontalAngle());
 		_mon->setPosition(_mon->getPosition()+(targetPos-_mon->getPosition())/5.0f);
 		_mon->updateAbsolutePosition();
@@ -337,6 +338,7 @@ struct Tracing :Name_test, sc::simple_state< Tracing, NotDeath> {
 			//targetPos.Y = y;
 			targetPos = target;
 			irr::core::vector3df direction = _mon->getPosition()-targetPos;
+			direction.Y = 0.0;
 			_mon->setRotation(direction.getHorizontalAngle());
 			//std::cout<<targetPos<<"\n";
 			_mon->setPosition(targetPos);
