@@ -265,6 +265,10 @@ void GameWorld::LoadNPCConfig(irr::u32 sceneNum)
 				{
 					headerImage = GEngine.GetDriver().getTexture( lines.substr(7, lines.length()).c_str() );
 				}
+				else if( lines.substr(0, 10) == "ACCEPTABLE" )
+				{
+					acceptable = atoi(lines.substr(11, lines.length()).c_str());
+				}
 				else if( lines.substr(0, 3) == "POS" )
 				{
 					Tokenizer tokenizer( lines.substr(4, lines.length()), "," );
