@@ -20,15 +20,17 @@ class Robot;
 // different states for the game
 enum EGameState
 {
-	state_START_LEVEL, // level is starting
-	state_RESTART_LEVEL, // level is restarting
-	state_GAME_OVER, // game over screen
-	state_GAMEPLAY, // game is actively playing
-	state_PLAYER_DEAD, // player has died
-	state_WAVE_FINISHED, // a wave was completed
-	state_GAME_VICTORY, // player has finished game
-	state_INTERACTING,
-	state_PAUSED
+	state_START_LEVEL = 1, // level is starting
+	state_RESTART_LEVEL = 2, // level is restarting
+	state_GAME_OVER = 4, // game over screen
+	state_GAMEPLAY = 8, // game is actively playing
+	state_PLAYER_DEAD = 16, // player has died
+	state_WAVE_FINISHED = 32, // a wave was completed
+	state_GAME_VICTORY = 64, // player has finished game
+	state_INTERACTING = 128,
+	state_PAUSED = 256,
+	state_BUYING = 512,
+	state_TALKING = 1024
 };
 
 class GameWorld : public GamePart
@@ -72,6 +74,12 @@ public:
 
 	// interface for interactive actor to request the world change into interactive mode
 	void requestInteracting(bool, InteractiveActor*);
+	
+	// interface for talkative NPC to request the HUD to change into talking mode
+	void requestTalking();
+
+	// interface for selling machine to request the HUD to change into selling mode
+	void requestBuying();
 
 	// interface for the main character request the world change into game over mode
 	void requestGameOver();

@@ -36,6 +36,7 @@ void SellingMachine::interaction(irr::f32 delta)
 	if(state == 0)
 	{
 		std::cout << "Activated" << std::endl;
+		world.requestBuying();
 		++state;
 	}
 	else if(state >= 1 && state <= 100)

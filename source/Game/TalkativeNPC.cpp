@@ -108,6 +108,26 @@ void TalkativeNPC::interaction(irr::f32 delta)
 	}
 	else if(_type == 2)
 	{
+		int needed = 0;
+		MainCharacter::ItemCollection theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+		for(irr::u32 i = 0; i < theBox.size(); ++i)
+		{
+			if(
+				(theBox[i].first->getItemType() == XITEM && 
+				theBox[i].second >= 1)
+			)
+			needed += theBox[i].second;
+		}
+		if( needed >= 3 )
+		{
+			world.GetActors().erase( world.GetActors().linear_search( this ) );
+			world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+			node->setVisible( false );
+			itemTrigger = true;
+
+			finishAction();
+			return;
+		}
 	}
 
 	static int state = 0;
@@ -116,6 +136,11 @@ void TalkativeNPC::interaction(irr::f32 delta)
 	static double timeElapsed = 0;
 	
 	if(state == 0)
+	{
+		world.requestTalking();
+		++state;
+	}
+	else if(state == 1)
 	{
 		if(talking < _dialogs.size())
 		{
@@ -132,7 +157,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			else
 			{
 				++talking;
-				state = 1;
+				++state;
 				currentline = 1;
 			}
 		}
@@ -144,13 +169,13 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			talking = 0;
 		}
 	}
-	else if(state == 1)
+	else if(state == 2)
 	{
 		InputEventReceiver& receiver = GEngine.GetReceiver();
 
 		if(receiver.keyReleased(irr::KEY_KEY_V))
 		{
-			state = 0;
+			state = 1;
 		}
 	}
 
