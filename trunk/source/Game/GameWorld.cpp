@@ -468,18 +468,20 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 			{
 				meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);	
 			}
-			/*
+			
 			 if(meshNode->getID() == NODE_ID_SCENE1_HOUSE){
-			 Shader*	test1 = GEngine.GetShaderFactory().createShader( "media/shader/house.vert", "media/shader/house.frag", 2, irr::video::EMT_SOLID );
-			 meshNode->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
-			 //node->setMaterialType(irr::video::EMT_SOLID);
-			 meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);
-			 meshNode->setMaterialTexture(0, driver.getTexture( "media/model/N2d_000.tga" ));
-			 meshNode->setMaterialTexture(1, driver.getTexture( "media/model/Maison Texture.png" ));
+				 irr::video::IVideoDriver& driver = GEngine.GetDriver();
+				 Shader*	test1 = GEngine.GetShaderFactory().createShader( "media/shader/house.vert", "media/shader/house.frag", 2, irr::video::EMT_SOLID );
+				 meshNode->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
+				 //node->setMaterialType(irr::video::EMT_SOLID);
+				 meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);
+				 meshNode->setMaterialTexture(0, driver.getTexture( "media/model/N2d_000.tga" ));
+		
+				 meshNode->setMaterialTexture(1, driver.getTexture( "media/model/Maison Texture.png" ));
 			 
 			 
 			 }
-			 */
+			 
 		}
 	}
 
@@ -546,8 +548,8 @@ void GameWorld::InitEnemies()
 	Item* md4 = new MDiscItem(*this, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
 	Item* xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
 	Item* weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
-	Item* weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/swordyy.obj");
-	Item* weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/swordyy.obj");
+	Item* weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
+	Item* weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
 	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
