@@ -40,6 +40,11 @@ private:
 	irr::f32 acceptable_Distance;
 	irr::u32 _type;
 	bool itemTrigger;
+	int state;
+	int talking;
+	int currentline;
+	double timeElapsed;
+	
 };
 
 #endif // __TALKATIVE_NPC_HPP__
