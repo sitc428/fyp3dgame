@@ -365,14 +365,19 @@ void MainCharacter::setCasting( bool casting )
 		irr::scene::ISceneManager& smgr = world.GetSceneManager();
 		irr::core::vector3df targetPos = getTargetPos();
 		magicFlyTime = (targetPos - magicPos).getLength() / 0.1;
-		irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
-			magicPos,
-			targetPos,
-			magicFlyTime
-			);
+		if(_currentMagic->getItemName() != "Ice"){
+			irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
+				magicPos,
+				targetPos,
+				magicFlyTime
+				);
+			MagicNode->addAnimator(anim);
+			anim->drop();
+		}else{
+			MagicNode->setPosition(targetPos);
+		}
 
-		MagicNode->addAnimator(anim);
-		anim->drop();
+		
 
 		magic_timer->restart();
 		if (monsterTarget)
@@ -470,7 +475,14 @@ void MainCharacter::Tick( irr::f32 delta )
 	{
 		DoInput(delta);
 	}
-
+	if(MagicNode != NULL && _currentMagic->getItemName() == "Ice"){
+		if(magic_timer->elapsed()<=5.0)
+			MagicNode->setScale(irr::core::vector3df(20,20,20)* magic_timer->elapsed()*5 );
+	
+		if(magic_timer->elapsed()>7.0){
+			MagicNode->setVisible(false);
+		}
+	}
 	node->setRotation( rotation );
 	irr::core::vector3df playerPos = node->getPosition();
 	playerPos += faceVector * delta * translation.Z;
