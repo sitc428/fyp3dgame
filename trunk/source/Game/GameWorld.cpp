@@ -780,6 +780,7 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 			}break;
 		case (state_INTERACTING | state_BUYING):
 			{
+				// not implement yet
 			}break;
 		case state_PAUSED:
 			{
@@ -819,12 +820,12 @@ void GameWorld::requestInteracting(bool on, InteractiveActor* currentInteracting
 
 void GameWorld::requestBuying()
 {
-	gameState = (EGameState) (gameState | state_BUYING);
+	gameState = (EGameState) (state_INTERACTING | state_BUYING);
 }
 
 void GameWorld::requestTalking()
 {
-	gameState = (EGameState) (gameState | state_TALKING);
+	gameState = (EGameState) (state_INTERACTING | state_TALKING);
 }
 
 void GameWorld::requestGameOver()
