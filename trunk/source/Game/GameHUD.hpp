@@ -17,8 +17,7 @@ enum E_MENU_SELECTED{
 	ITEM = 1,
 	EQUIP = 2,
 	MAGIC = 3,
-	SAVE = 4,
-	EMS_COUNT = 5
+	EMS_COUNT = 4
 };
 
 /**

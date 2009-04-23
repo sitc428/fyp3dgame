@@ -306,7 +306,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 	MenuFont->draw(L"Item", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	MenuFont->draw(L"Equip", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*2, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	MenuFont->draw(L"Magic", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*3, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
-	MenuFont->draw(L"Save", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*4, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	//MenuFont->draw(L"Save", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*4, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 	
 	/*******
 	 GETTING USER INPUT
@@ -316,7 +316,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 	{	
 		if( receiver.keyReleased( irr::KEY_UP) ){
 			if( MenuSelected == STATUS )
-				MenuSelected = SAVE;
+				MenuSelected = MAGIC;
 			else
 				MenuSelected = (E_MENU_SELECTED)((MenuSelected - 1 )% EMS_COUNT);
 			
@@ -651,8 +651,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 		else
 			GetConversation("");
 	}
-	else if ( MenuSelected == SAVE){
-	}
+	
 }
 
 void GameHUD::gameStart(irr::f32 delta){
@@ -1006,12 +1005,12 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 	if( SubMenuIndex == -1 )
 	{	
 		if( receiver.keyReleased( irr::KEY_UP) ){
-			if( MenuSelected == STATUS )
-				MenuSelected = ITEM;
-		}
-		else if( receiver.keyReleased( irr::KEY_DOWN) ){
 			if( MenuSelected == ITEM )
 				MenuSelected = STATUS;
+		}
+		else if( receiver.keyReleased( irr::KEY_DOWN) ){
+			if( MenuSelected == STATUS )
+				MenuSelected = ITEM;
 		}
 		
 		//BUY IN BUYING MENU
