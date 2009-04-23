@@ -157,7 +157,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			else
 			{
 				++talking;
-				++state;
+				state = 2;
 				currentline = 1;
 			}
 		}

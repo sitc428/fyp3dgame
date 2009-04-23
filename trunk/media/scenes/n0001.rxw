@@ -2,7 +2,7 @@ BEGINNPC
 MODEL:media/model/hill.obj
 DIALOG:I need to find something to destroy this obstacle...
 DIALOG:Let's find some items in the village.
-HEADER:media/image/head1.png
+HEADER:media/image/pedro_head.png
 ACCEPTABLE:40
 TYPE:1
 POS:-96.992966,-0.926392,-408.416046
@@ -14,43 +14,43 @@ DIALOG:You found a Sword! (Sword +1)
 HEADER:media/image/head1.png
 ACCEPTABLE:20
 TYPE:2
-POS:-118.736954, -1994.771484, 125.553551
+POS:-118.736954, 6.771484, 125.553551
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
 DIALOG:You found Fire Magic Discs! (Fire +3)
-HEADER:media/image/head1.png
+HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:20
 TYPE:3
-POS:154.995575, -1994.771484, 125.553551
+POS:154.995575, 6.771484, 125.553551
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
 DIALOG:You found Ice Magic Discs! (Ice +3)
-HEADER:media/image/head1.png
+HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:20
 TYPE:4
-POS:154.995575, -1994.771484, -107.423943
+POS:154.995575, 6.771484, -107.423943
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
 DIALOG:You found Lightning Discs! (Lightning +3)
-HEADER:media/image/head1.png
+HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:20
 TYPE:5
-POS:183.853287, -1994.771484, -360.756317
+POS:183.853287, 6.771484, -360.756317
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)
-HEADER:media/image/head1.png
+HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:20
 TYPE:6
-POS:-14.489673, -1994.771484, -198.455048
+POS:-14.489673, 6.771484, -198.455048
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
