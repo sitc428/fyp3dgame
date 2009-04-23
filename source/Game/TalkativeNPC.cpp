@@ -61,6 +61,11 @@ void TalkativeNPC::RecreateCollisionResponseAnimator()
 
 void TalkativeNPC::interaction(irr::f32 delta)
 {
+	static bool itemTrigger = false;
+
+	if( itemTrigger == true )
+			return;
+
 	if(_type == 1)
 	{
 		int needed = 0;
@@ -91,12 +96,19 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			++needed;
 		}
 		if( needed == 5 )
+		{
+			world.GetActors().erase( world.GetActors().linear_search( this ) );
+			world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+			node->setVisible( false );
+			itemTrigger = true;
+
+			finishAction();
 			return;
+		}
 	}
 	else if(_type == 2)
 	{
 	}
-
 
 	static int state = 0;
 	static int talking = 0;
