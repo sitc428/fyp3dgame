@@ -706,7 +706,7 @@ void GameWorld::InitEnemies()
 	monItemBox2.push_back(std::make_pair(md2, 1));
 	monItemBox2.push_back(std::make_pair(md3, 2));
 
-	Monster* m1 = new Monster( GEngine, *this, 50, 200, 100, 20, 100, 20, monItemBox1,irr::core::vector3df(120,10,100), "Type1", 1000);
+	Monster* m1 = new Monster( GEngine, *this, 50, 200, 100, 20, 1000, 20, monItemBox1,irr::core::vector3df(120,10,100), "Boss", 1000);
 	
 	//m1->ReSetPosition(irr::core::vector3df(120,10,100));
 	
