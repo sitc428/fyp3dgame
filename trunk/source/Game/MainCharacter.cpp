@@ -176,7 +176,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	else 
 		ATFieldNode->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	
-	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.bmp"));
+	ATFieldNode->setMaterialTexture(0, driver.getTexture("media/model/portal7.tga"));
 	ATFieldNode->setRotation(irr::core::vector3df(90,-90,0));
 
 	targetIndicator = smgr.addCubeSceneNode(5);
