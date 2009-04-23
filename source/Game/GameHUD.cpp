@@ -1024,43 +1024,31 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 		sellingmachine->BuyItem(SubMenuIndex);
 	}	
 	
-	
+	else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
+		
+		sellingmachine->BuyItem(SubMenuIndex);
+	}	
 	
 	
 	/******DRAWING THE GRAPHICS********/
 	
 	irr::core::stringw outputString = L"";
 
-	for (int i = 0, j = 0; i < ItemBox.size() ; i++){
+	for (int i = 0; i < ItemBox.size() ; i++){
 		if(ItemBox[i].first->getItemType() == WEAPONITEM1){
 			//output item name
 			outputString = ItemBox[i].first->getItemName();
-			if(((MainCharacter&)player).GetCurrentWeapon() != NULL){
-				if(outputString == ((MainCharacter&)player).GetCurrentWeapon()->getItemName())
-					MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,0,0), false, false, 0);
-				else
-					MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
-			}
-			else
-				MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+			MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 			
-			//output quantity
+					
+			//output cost
 			outputString = ItemBox[i].second;
-			MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*j, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+			MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1-30, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 			
 			//get the description of the item
-			if(SubMenuIndex == j)
-			{
-				GetConversation(ItemBox[i].first->getItemDescription(), ItemBox[i].first->getItemTexture());
-			}
-			
-			j++;
+			GetConversation(ItemBox[i].first->getItemDescription(), ItemBox[i].first->getItemTexture());
+
 		}
 	}
-	if (SubMenuIndex != -1){
-		driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
-	}
-	else
-		GetConversation("");
 	
 }
