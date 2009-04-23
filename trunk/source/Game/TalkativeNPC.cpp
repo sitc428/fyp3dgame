@@ -61,6 +61,7 @@ void TalkativeNPC::RecreateCollisionResponseAnimator()
 
 void TalkativeNPC::interaction(irr::f32 delta)
 {
+	MainCharacter::ItemCollection theBox;
 	static bool itemTrigger = false;
 
 	if( itemTrigger == true )
@@ -69,7 +70,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 	if(_type == 1)
 	{
 		int needed = 0;
-		MainCharacter::ItemCollection theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+		theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
 		for(irr::u32 i = 0; i < theBox.size(); ++i)
 		{
 			if(
@@ -106,10 +107,10 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			return;
 		}
 	}
-	else if(_type == 2)
+	else if(_type == 10)
 	{
 		int needed = 0;
-		MainCharacter::ItemCollection theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+		theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
 		for(irr::u32 i = 0; i < theBox.size(); ++i)
 		{
 			if(
@@ -157,7 +158,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			else
 			{
 				++talking;
-				state = 2;
+				++state;
 				currentline = 1;
 			}
 		}
@@ -165,6 +166,162 @@ void TalkativeNPC::interaction(irr::f32 delta)
 		{
 			world.GetGameHUD()->GetConversation("");
 			timeElapsed = 0;
+
+
+			if (_type == 2) //Sword
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == WEAPONITEM1 && 
+						theBox[i].first->getItemName() == "Sword")
+					)
+					{
+						theBox[i].second += 1;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+			else if (_type == 3) //Fire
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == MDISCITEM && 
+						theBox[i].first->getItemName() == "Fire")
+					)
+					{
+						theBox[i].second += 3;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+			else if (_type == 4) //Ice
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == MDISCITEM && 
+						theBox[i].first->getItemName() == "Ice")
+					)
+					{
+						theBox[i].second += 3;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+			else if (_type == 5) //Lightning
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == MDISCITEM && 
+						theBox[i].first->getItemName() == "Lightning")
+					)
+					{
+						theBox[i].second += 3;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+			else if (_type == 6) //Cyclone
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == MDISCITEM && 
+						theBox[i].first->getItemName() == "Cyclone")
+					)
+					{
+						theBox[i].second += 3;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+			else if (_type == 7) //Knife
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == MDISCITEM && 
+						theBox[i].first->getItemName() == "Knife")
+					)
+					{
+						theBox[i].second += 3;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+			else if (_type == 8) //Long Sword
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == WEAPONITEM1 && 
+						theBox[i].first->getItemName() == "Long Sword")
+					)
+					{
+						theBox[i].second += 3;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+			else if (_type == 9) //HP Medicine 
+			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if(
+						(theBox[i].first->getItemType() == HPITEM && 
+						theBox[i].first->getItemName() == "HP Medicine")
+					)
+					{
+						theBox[i].second += 5;
+		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+									world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+					}
+				}
+			}
+	
+
 			finishAction();
 			talking = 0;
 		}
