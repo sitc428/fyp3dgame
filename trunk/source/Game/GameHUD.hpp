@@ -44,7 +44,7 @@ public:
 	//drawing pause menu, for gameworld to call during pause state
 	void DrawPauseMenu(Player& player);
 	
-	void DrawBuyingMenu(SellingMachine* sellingmachine);
+	void DrawBuyingMenu(SellingMachine* sellingmachine, Player& player);
 	
 	//drawing the starting story script
 	void gameStart(irr::f32 delta);

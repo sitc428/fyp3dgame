@@ -993,7 +993,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 /***********
  DRAW BUYING MENU
  ***********/
-void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
+void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine, Player& player){
 
 	irr::core::dimension2d<irr::s32> scrSize = GEngine->GetScreenSize();
 	InputEventReceiver& receiver = GEngine->GetReceiver();
@@ -1001,6 +1001,11 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 	driver.draw2DImage(PauseMenuTexture,irr::core::position2d<irr::s32>(0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),  0, irr::video::SColor(255,255,255,255), true);
 	
 	MainCharacter::ItemCollection& ItemBox = sellingmachine->GetAvailableItem();
+	irr::core::stringw outputString = L"";
+	outputString = L"Money: ";
+	outputString+= ((MainCharacter&)player).GetMoney();
+	MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*7, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	
 	
 	if( SubMenuIndex == -1 )
 	{	
@@ -1074,8 +1079,6 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 	}
 	else
 		GetConversation("");
-	
-	irr::core::stringw outputString = L"";
 	
 	for (int i = 0; i < ItemBox.size() ; i++){
 		//output item name
