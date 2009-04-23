@@ -78,10 +78,13 @@ void SellingMachine::BuyItem(irr::u32 index)
 			&& theBox[i].first->getItemName() == theName
 		)
 		{
-			++theBox[i].second;
-			((MainCharacter&)world.GetCurrentPlayer()).SetMoney(
-				((MainCharacter&)world.GetCurrentPlayer()).GetMoney() - _items[index].second
-			);
+			if( ((MainCharacter&)world.GetCurrentPlayer()).GetMoney() - _items[index].second > 0 )
+			{
+				++theBox[i].second;
+				((MainCharacter&)world.GetCurrentPlayer()).SetMoney(
+					((MainCharacter&)world.GetCurrentPlayer()).GetMoney() - _items[index].second
+				);
+			}
 			break;
 		}
 	}
