@@ -183,12 +183,15 @@ static irr::f32 floating( irr::f32 delta, irr::s32 range )
 }
 void Monster::update(Player& _player, irr::f32 delta)
 {
+	pos = _monster->getAbsolutePosition();
 	irr::core::vector3df magicPos = pos;
 	magicPos = pos;
+	magicPos.Y = 10.0;
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	MagicNode->setPosition(magicPos);
 
 	irr::core::vector3df targetPos = _player.GetNodePosition();
+	targetPos.Y = 10.0;
 	irr::u32 magicFlyTime = (targetPos - magicPos).getLength() / 0.1;
 	if(Type == "Boss" && health/maxhealth<2){
 		if(attack_timer->elapsed() >= 0.4 )
@@ -335,7 +338,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 		if( Type=="Boss")
 			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/50.0f);
 		else 
-			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/100.0f);
+			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/70.0f);
 		targetPos.Y = -10.0;
 		CheckActorPosition(targetPos, _player);
 		
