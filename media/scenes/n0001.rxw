@@ -1,11 +1,11 @@
 BEGINNPC
-MODEL:media/model/slime08.x
-DIALOG:Pedro,youaresosmart!
-DIALOG:Please,savetheworld!
+MODEL:media/model/hill.obj
+DIALOG:I need to find something to destroy this obstacle...
+DIALOG:Let's find some items in the viaalge.
 HEADER:media/image/head1.png
-ACCEPTABLE:20
-POS:-75.007370,3.966064,-395.894043
-ROT:0,60,0
-SCALE:1,1,1
+ACCEPTABLE:300
+POS:-96.992966,-0.926392,-408.416046
+ROT:0.000000,180.000000,0.000000
+SCALE:8.852482,16.164818,1.000000
 ADDNPC
 ENDNPC
