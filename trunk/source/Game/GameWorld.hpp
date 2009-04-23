@@ -88,7 +88,7 @@ public:
 	void requestGameVictory();
 
 	// tell the world and actors is the world in interactive mode
-	bool isInteracting() const { return gameState == state_INTERACTING; };
+	bool isInteracting() const { return gameState & state_INTERACTING; };
 
 	// config files loader
 	void LoadSceneConfig(irr::u32);
