@@ -331,6 +331,7 @@ void MainCharacter::setAttacking( bool attacking )
 
 	if( attacking )
 	{
+		GEngine.PlaySE("media/se/swords-clashing.wav", false, node->getPosition());
 		action = EMCAS_ATTACK;
 
 		irr::s32 startAttackFrame = -1;
@@ -805,7 +806,7 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 		switch( rand() % 3 )
 		{
 			case 0:
-				GEngine.PlaySE("media/se/playerhurt.mp3", GetNodePosition());
+				GEngine.PlaySE("media/se/playerhurt.mp3", false, GetNodePosition());
 				break;
 			case 1:
 			case 2:
@@ -1085,5 +1086,8 @@ void MainCharacter::SetEXP(irr::u32 exp)
 		_magicdefence = 30 + 270 * _level / 99;
 		SetMaxHealth( 1000 + _level * 90 );
 		SetHealth( 1000 + _level * 90 );
+
+		GEngine.PlaySE("media/se/uplv1.wav", false, node->getPosition());
+		GEngine.PlaySE("media/se/uplv2.wav", false, node->getPosition());
 	}
 }

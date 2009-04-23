@@ -540,15 +540,22 @@ void GameEngine::ChangeBGM( const irr::c8* name )
 	{
 		// load and play music
 		gameMusic = soundEngine->play2D(name, true, false, true);
-		gameMusic->setVolume( 0.65f );
+		gameMusic->setVolume( 0.35f );
 	}
 
 }
 
-void GameEngine::PlaySE(const irr::c8* SEFilePath, irr::core::vector3df pos)
+void GameEngine::PlaySE(const irr::c8* SEFilePath, bool is2D, irr::core::vector3df pos)
 {
 	if( SEFilePath )
 	{
-		soundEngine->play3D(SEFilePath, pos);
+		if(is2D)
+		{
+			soundEngine->play2D(SEFilePath, false, false, false);
+		}
+		else
+		{
+			soundEngine->play3D(SEFilePath, pos);
+		}
 	}
 }
