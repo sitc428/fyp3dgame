@@ -845,7 +845,7 @@ void GameWorld::Tick( irr::f32 delta )
 	{
 		case state_GAMEPLAY:
 		case (state_INTERACTING | state_TALKING):
-			case (state_INTERACTING | state_BUYING):
+		case (state_INTERACTING | state_BUYING):
 		case state_PAUSED:
 			DoGameplay( delta );
 			break;
@@ -917,16 +917,16 @@ void GameWorld::DoGameplay( irr::f32 delta )
 
 	if(gameState != state_PAUSED)
 	{
-		if(gameState != state_INTERACTING)
+		if( gameState & state_INTERACTING )
+		{
+			interactingActor->Tick( delta );
+		}
+		else
 		{
 			// tick all actors
 			for( irr::u32 i=0; i < actors.size(); ++i )
 				actors[i]->Tick( delta );
 		}
-		else
-		{
-			interactingActor->Tick( delta );
-		}		
 	}
 
 	// update 3d audio information
@@ -1027,7 +1027,7 @@ void GameWorld::DoInput()
 		mainCharacter->getWeaponNode()->setPosition(wp);
 	}
 
-	if( gameState == state_PAUSED || gameState == state_INTERACTING)
+	if( gameState == state_PAUSED || gameState & state_INTERACTING)
 		return;
 }
 
