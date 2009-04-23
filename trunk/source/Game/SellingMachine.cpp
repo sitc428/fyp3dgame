@@ -78,7 +78,7 @@ void SellingMachine::BuyItem(irr::u32 index)
 			&& theBox[i].first->getItemName() == theName
 		)
 		{
-			if( ((MainCharacter&)world.GetCurrentPlayer()).GetMoney() - _items[index].second > 0 )
+			if( ((MainCharacter&)world.GetCurrentPlayer()).GetMoney() >= _items[index].second )
 			{
 				++theBox[i].second;
 				((MainCharacter&)world.GetCurrentPlayer()).SetMoney(
