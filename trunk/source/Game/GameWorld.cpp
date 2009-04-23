@@ -33,7 +33,7 @@ static const irr::core::vector3df DIRECTIONAL_LIGHT_ROTATION = irr::core::vector
 static const irr::f32 PLAYER_DEATH_STATE_TIMER = 3.0f;
 static const irr::f32 START_LEVEL_STATE_TIMER = 25.0f;
 static const irr::f32 GAME_OVER_STATE_TIMER = 8.0f;
-static const irr::f32 GAME_WIN_STATE_TIMER = 60.0f;
+static const irr::f32 GAME_WIN_STATE_TIMER = 30.0f;
 
 GameWorld::GameWorld( GameEngine& gameEngine )
 	: GamePart( gameEngine ),
