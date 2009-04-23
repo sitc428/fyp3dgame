@@ -90,6 +90,8 @@ public:
 	// tell the world and actors is the world in interactive mode
 	bool isInteracting() const { return gameState & state_INTERACTING; };
 
+	InteractiveActor* GetInteractingActor() { return interactingActor; }
+
 	// config files loader
 	void LoadSceneConfig(irr::u32);
 	void LoadNPCConfig(irr::u32);

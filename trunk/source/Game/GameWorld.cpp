@@ -997,43 +997,6 @@ void GameWorld::DoInput()
 		}
 	}
 
-	//if(cheatWeapon)
-	//{
-	//	/**
-	//	weapon position and rotation tuning
-	//	**/
-	//	irr::core::vector3df wp = mainCharacter->getWeaponNode()->getPosition();
-	//	irr::core::vector3df wr = mainCharacter->getWeaponNode()->getRotation();
-	//	if( receiver.keyReleased(irr::KEY_F1) )
-	//		wp.X -= 0.1;
-	//	if( receiver.keyReleased(irr::KEY_F2) )
-	//		wp.X += 0.1;
-	//	if( receiver.keyReleased(irr::KEY_F3) )
-	//		wp.Y -= 0.1;
-	//	if( receiver.keyReleased(irr::KEY_F4) )
-	//		wp.Y += 0.1;
-	//	if( receiver.keyReleased(irr::KEY_F5) )
-	//		wp.Z -= 0.1;
-	//	if( receiver.keyReleased(irr::KEY_F6) )
-	//		wp.Z += 0.1;
-	//	if( receiver.keyDown(irr::KEY_F7) )
-	//		wr.X -= 0.1;
-	//	if( receiver.keyDown(irr::KEY_F8) )
-	//		wr.X += 0.1;
-	//	if( receiver.keyDown(irr::KEY_F9) )
-	//		wr.Y -= 0.1;
-	//	if( receiver.keyDown(irr::KEY_F10) )
-	//		wr.Y += 0.1;
-	//	if( receiver.keyDown(irr::KEY_F11) )
-	//		wr.Z -= 0.1;
-	//	if( receiver.keyDown(irr::KEY_F12) )
-	//		wr.Z += 0.1;
-	//	std::cout<<"P:"<<wp.X<<","<<wp.Y<<","<<wp.Z<<std::endl;
-	//	std::cout<<"R:"<<wr.X<<","<<wr.Y<<","<<wr.Z<<std::endl;
-	//	mainCharacter->getWeaponNode()->setRotation(wr);
-	//	mainCharacter->getWeaponNode()->setPosition(wp);
-	//}
-
 	if( gameState == state_PAUSED || gameState & state_INTERACTING)
 		return;
 }

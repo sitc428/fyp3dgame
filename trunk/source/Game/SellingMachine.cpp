@@ -1,15 +1,16 @@
-#include "SellingMachine.hpp"
 #include "Check.hpp"
 #include "GameEngine.hpp"
 #include "GameWorld.hpp"
 #include "Item.hpp"
+#include "SellingMachine.hpp"
 #include <iostream>
 
 static const irr::f32		acceptable_Distance = 50.0;
 static const irr::c8*		SELLING_MACHINE_MODEL  = "media/model/sellingmachine08.x";
 
-SellingMachine::SellingMachine( GameEngine& gameEngine, GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale )
-	:InteractiveActor(gameEngine, gameWorld)
+SellingMachine::SellingMachine( GameEngine& gameEngine, GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale, MainCharacter::ItemCollection& items)
+	:InteractiveActor(gameEngine, gameWorld),
+	state(0)
 {
 	irr::scene::ISceneManager& smgr = world.GetSceneManager();
 	node = smgr.addAnimatedMeshSceneNode(smgr.getMesh(SELLING_MACHINE_MODEL), smgr.getRootSceneNode());
@@ -23,6 +24,9 @@ SellingMachine::SellingMachine( GameEngine& gameEngine, GameWorld& gameWorld, co
 	world.GetLevelTriangleSelector().addTriangleSelector( meshTriangleSelector );
 	meshTriangleSelector->drop();
 	meshTriangleSelector = NULL;
+
+	for( irr::u32 i = 0; i < items.size(); ++i)
+		_items.push_back(items[i]);
 }
 
 SellingMachine::~SellingMachine()
@@ -31,18 +35,17 @@ SellingMachine::~SellingMachine()
 
 void SellingMachine::interaction(irr::f32 delta)
 {
-	static int state = 0;
-	
 	if(state == 0)
 	{
 		std::cout << "Activated" << std::endl;
 		world.requestBuying();
 		++state;
 	}
-	else if(state >= 1 && state <= 100)
+	else if(state == 1)
 	{
 		std::cout << "Processing" << std::endl;
-		++state;
+		BuyItem(0);
+		finishBuying();
 	}
 	else
 	{
@@ -55,4 +58,30 @@ void SellingMachine::interaction(irr::f32 delta)
 irr::f32 SellingMachine::acceptableDistance()
 {
 	return acceptable_Distance;
+}
+
+void SellingMachine::finishBuying()
+{
+	state = 2;
+}
+
+void SellingMachine::BuyItem(irr::u32 index)
+{
+	MainCharacter::ItemCollection& theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+	irr::u32 boxSize = theBox.size();
+
+	EItemType theType = _items[index].first->getItemType();
+
+	for(irr::u32 i = 0; i < boxSize; ++i)
+	{
+		if( theBox[i].first->getItemType() == theType )
+		{
+			++theBox[i].second;
+			--_items[index].second;
+			((MainCharacter&)world.GetCurrentPlayer()).SetMoney(
+				((MainCharacter&)world.GetCurrentPlayer()).GetMoney() - _items[index].first->getItemValue()
+			);
+			break;
+		}
+	}
 }
