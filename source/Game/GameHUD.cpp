@@ -1004,7 +1004,38 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 	MainCharacter::ItemCollection& ItemBox = sellingmachine->GetAvailableItem();
 	
 	if( SubMenuIndex == -1 )
-		SubMenuIndex = 0;
+	{	
+		if( receiver.keyReleased( irr::KEY_UP) ){
+			if( MenuSelected == STATUS )
+				MenuSelected++;
+		}
+		else if( receiver.keyReleased( irr::KEY_DOWN) ){
+			if( MenuSelected == ITEM )
+				MenuSelected--;
+		}
+		
+		//BUY IN BUYING MENU
+		
+		if( MenuSelected == STATUS ){
+			if( receiver.keyReleased( irr::KEY_RIGHT) ){
+				SubMenuIndex = 0;
+			}
+		}
+		
+		//EXIT in BUYING MENU
+		
+		if( MenuSelected == ITEM ){
+			if( receiver.keyReleased( irr::KEY_RETURN) ){
+				MenuSelected = STATUS;
+				sellingmachine->finishBuying();
+			}
+		}
+
+	}
+	
+	
+	else
+	
 	/******GET USER INPUT*******/
 	
 	if( receiver.keyReleased( irr::KEY_UP) ){
@@ -1023,32 +1054,44 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine){
 
 		sellingmachine->BuyItem(SubMenuIndex);
 	}	
-	
-	else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
+
+	else if ( receiver.keyReleased( irr::KEY_LEFT ) ){
 		
-		sellingmachine->BuyItem(SubMenuIndex);
-	}	
+		SubMenuIndex = -1;
 	
+	}
 	
 	/******DRAWING THE GRAPHICS********/
 	
-	irr::core::stringw outputString = L"";
-
-	for (int i = 0; i < ItemBox.size() ; i++){
-		if(ItemBox[i].first->getItemType() == WEAPONITEM1){
-			//output item name
-			outputString = ItemBox[i].first->getItemName();
-			MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
-			
-					
-			//output cost
-			outputString = ItemBox[i].second;
-			MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1-30, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
-			
-			//get the description of the item
-			GetConversation(ItemBox[i].first->getItemDescription(), ItemBox[i].first->getItemTexture());
-
-		}
+	driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_ITEM_X1-50, MENU_ITEM_Y1+MENU_ITEM_YOFFSET*int(MenuSelected)), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
+	MenuFont->draw(L"Buy", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	MenuFont->draw(L"Exit", irr::core::rect<irr::s32>(MENU_ITEM_X1, MENU_ITEM_Y1+MENU_ITEM_YOFFSET, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+	
+	
+	
+	if (SubMenuIndex != -1){
+		driver.draw2DImage(SelectIconTexture, irr::core::position2d<irr::s32>(MENU_WINDOW_X1-50, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*SubMenuIndex), irr::core::rect<irr::s32>(0, 0, CD_WIDTH, CD_HEIGTH), 0, irr::video::SColor(255,255,255,255), true);
+		GetConversation(ItemBox[SubMenuIndex].first->getItemDescription(), ItemBox[SubMenuIndex].first->getItemTexture());
 	}
 	
+	
+	irr::core::stringw outputString = L"";
+	
+	for (int i = 0; i < ItemBox.size() ; i++){
+		//output item name
+		outputString = ItemBox[i].first->getItemName();
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(MENU_WINDOW_X1, MENU_WINDOW_Y1+MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+		
+		
+		//output cost
+		outputString = ItemBox[i].second;
+		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1-30, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
+		
+	}
+		
+		
+	
+	
+	else
+		GetConversation("");
 }
