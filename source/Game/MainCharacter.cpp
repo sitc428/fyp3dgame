@@ -503,6 +503,8 @@ void MainCharacter::Tick( irr::f32 delta )
 
 void MainCharacter::DoInput(irr::f32 delta)
 {
+	if (combo_timer->elapsed() > 1.0)
+		SetCombo(false);
 	irr::f32 comboValue;
 	switch ( ((MainCharacter&)world.GetCurrentPlayer()).GetComboNum() )
 	{
