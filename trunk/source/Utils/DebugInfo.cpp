@@ -76,6 +76,7 @@ void DebugInfo::enableDebugCamera( GameWorld& world, Camera* norCam)
 		debugCamera->setTarget( world.GetCurrentPlayer().GetNodePosition() );
 	}
 	world.GetSceneManager().setActiveCamera( debugCamera );
+	debugCamera->setPosition( world.GetCurrentPlayer().GetNodePosition() + irr::core::vector3df(0, 500, 0) );
 	debugCamera->setTarget( world.GetCurrentPlayer().GetNodePosition() );
 }
 
