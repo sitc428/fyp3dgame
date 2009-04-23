@@ -1049,3 +1049,18 @@ void MainCharacter::DeathAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnima
 	world.requestGameOver();
 	//world.requestGameVictory();
 }
+
+void MainCharacter::SetEXP(irr::s32 exp)
+{
+	_exp = exp;
+	if ( _exp >= _level*_level*100 )
+	{
+		++_level;
+		_attack = 80 + _level * 9.2;
+		_defence = 50 + 450 * _level / 99;
+		_magicattack = 100 + _level * 9;
+		_magicdefence = 30 + 270 * _level / 99;
+		SetMaxHealth( 1000 + _level * 90 );
+		SetHealth( 1000 + _level * 90 );
+	}
+}

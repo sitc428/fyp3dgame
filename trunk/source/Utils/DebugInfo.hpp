@@ -21,6 +21,7 @@ public:
 	static void disableDebugCamera( GameWorld& );
 	static void killMainCharacter( MainCharacter& );
 	static void teleportPlayer( MainCharacter& );
+	static void addExp( MainCharacter& );
 
 private:
 	static bool enabledDebugBBox;

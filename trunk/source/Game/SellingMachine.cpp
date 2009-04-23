@@ -71,15 +71,18 @@ void SellingMachine::BuyItem(irr::u32 index)
 	irr::u32 boxSize = theBox.size();
 
 	EItemType theType = _items[index].first->getItemType();
+	irr::core::stringw theName = _items[index].first->getItemName();
 
 	for(irr::u32 i = 0; i < boxSize; ++i)
 	{
-		if( theBox[i].first->getItemType() == theType )
+		if(
+			theBox[i].first->getItemType() == theType
+			&& theBox[i].first->getItemName() == theName
+		)
 		{
 			++theBox[i].second;
-			--_items[index].second;
 			((MainCharacter&)world.GetCurrentPlayer()).SetMoney(
-				((MainCharacter&)world.GetCurrentPlayer()).GetMoney() - _items[index].first->getItemValue()
+				((MainCharacter&)world.GetCurrentPlayer()).GetMoney() - _items[index].second
 			);
 			break;
 		}

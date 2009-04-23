@@ -100,3 +100,8 @@ void DebugInfo::teleportPlayer( MainCharacter& mainCharacter )
 	std::cin >> x >> y >> z;
 	mainCharacter.SetNodePosition(irr::core::vector3df( x, y, z ));
 }
+
+void DebugInfo::addExp( MainCharacter& mainCharacter )
+{
+	mainCharacter.SetEXP( (mainCharacter.GetEXP() + 1 ) * 2 );
+}
