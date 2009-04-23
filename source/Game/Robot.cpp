@@ -12,7 +12,7 @@ static const irr::core::vector3df	defaultRotation = irr::core::vector3df(0, 90, 
 static const irr::core::vector3df	defaultScale = irr::core::vector3df(0.1, 0.1, 0.1);
 
 static const irr::c8*		ROBOT_MODEL  = "media/model/robot22.x";
-static const irr::c8*		defaultTexture0 = "media/model/robot_UV.png";
+static const irr::c8*		defaultTexture0 = "media/model/robot_UV.tga";
 static const irr::c8*		defaultTexture1 = "media/model/shade_line.png";
 
 Robot::Robot( GameEngine& gameEngine, GameWorld& gameWorld )
