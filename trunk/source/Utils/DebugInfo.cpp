@@ -1,5 +1,8 @@
 #include "DebugInfo.hpp"
 
+#include <algorithm>
+#include <iostream>
+
 bool DebugInfo::enabledDebugBBox = false;
 irr::scene::E_CULLING_TYPE DebugInfo::cameraCullingMode = irr::scene::EAC_OFF;
 irr::scene::ICameraSceneNode* DebugInfo::debugCamera = NULL;
@@ -89,4 +92,11 @@ void DebugInfo::disableDebugCamera(GameWorld & world)
 void DebugInfo::killMainCharacter( MainCharacter& mainCharacter )
 {
 	mainCharacter.ReceiveDamage( mainCharacter.GetHealth() + 1 );
+}
+
+void DebugInfo::teleportPlayer( MainCharacter& mainCharacter )
+{
+	int x, y, z;
+	std::cin >> x >> y >> z;
+	mainCharacter.SetNodePosition(irr::core::vector3df( x, y, z ));
 }
