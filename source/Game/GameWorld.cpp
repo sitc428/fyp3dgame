@@ -344,7 +344,7 @@ void GameWorld::LoadParticleConfig(irr::u32 sceneNum)
 	}
 	else
 	{
-		std::cout << "Error loading NPC config file: " << ParticleConfigFileName << ", aborting!" << std::endl;
+		std::cout << "Error loading particle config file: " << ParticleConfigFileName << ", aborting!" << std::endl;
 		exit( -1 );
 	}
 }
