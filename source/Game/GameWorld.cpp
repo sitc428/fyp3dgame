@@ -87,28 +87,28 @@ void GameWorld::InitShader()
 	fire->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
 						   50,80,800,1000, GEngine.GetDriver().getTexture("media/shader/smoke.bmp"));
 */	
-	ParticleManager* fire1 = new ParticleManager(&smgr, irr::core::vector3df(40, 20.000000, 120.928589),
-		irr::core::vector3df(5,5,2),
+	ParticleManager* fire1 = new ParticleManager(&smgr, irr::core::vector3df(40, 0.000000, 120.928589),
+		irr::core::vector3df(5,4,4),
 													   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire1->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
-							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+							500,530,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 	
-	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(-130, 20.000000, -8.928589),
+	ParticleManager* fire2 = new ParticleManager(&smgr, irr::core::vector3df(-110, 0.000000, -80.928589),
 												 irr::core::vector3df(6,6,6),
 												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire2->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
-							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+							500,530,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 
-	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(140, 20.000000, 0.928589),
-												 irr::core::vector3df(8,8,8),
+	ParticleManager* fire3 = new ParticleManager(&smgr, irr::core::vector3df(145, 0.000000, 15.928589),
+												 irr::core::vector3df(6,8,6),
 												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire3->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
-							80,100,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
-	ParticleManager* fire4 = new ParticleManager(&smgr, irr::core::vector3df(70, 20.000000, -210.928589),
+							400,420,800,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+	ParticleManager* fire4 = new ParticleManager(&smgr, irr::core::vector3df(70, 0.000000, -210.928589),
 												 irr::core::vector3df(9,8,9),
 												 irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 	fire4->CreateBoxEmitter(irr::core::vector3df(0.0f,0.06f,0.0f),
-							520,550,1600,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
+							420,450,1600,2000, GEngine.GetDriver().getTexture("media/shader/fire.bmp"));
 
 	ParticleManager* Snow = new  ParticleManager(&smgr, irr::core::vector3df(0,100,0), irr::core::vector3df(2,2,2),
 														   irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
@@ -596,7 +596,7 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 				meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, true);	
 			}
 			
-			 if(meshNode->getID() == NODE_ID_SCENE1_HOUSE){
+			 if(meshNode->getID() == NODE_ID_SCENE1_HOUSE2){
 				 irr::video::IVideoDriver& driver = GEngine.GetDriver();
 				 Shader*	test1 = GEngine.GetShaderFactory().createShader( "media/shader/house.vert", "media/shader/house.frag", 2, irr::video::EMT_SOLID );
 				 meshNode->setMaterialType((irr::video::E_MATERIAL_TYPE)test1->GetShaderMaterial());
