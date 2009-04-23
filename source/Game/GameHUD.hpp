@@ -116,6 +116,9 @@ private:
 
 	// WinText
 	irr::gui::CGUITTFont* WinFont;
+	
+	
+	irr::core::rect<irr::s32>	ComboRec;
 };
 
 #endif // __GAME_HUD_HPP__
