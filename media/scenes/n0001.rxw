@@ -1,20 +1,11 @@
 BEGINNPC
 MODEL:media/model/slime08.x
-DIALOG:Pedro, you are so smart!
-DIALOG:Please, save the world!
+DIALOG:Pedro,youaresosmart!
+DIALOG:Please,savetheworld!
 HEADER:media/image/head1.png
 ACCEPTABLE:20
-POS:0,10,0
+POS:-75.007370,3.966064,-395.894043
 ROT:0,60,0
-SCALE:1,1,1
-ADDNPC
-MODEL:media/model/slime08.x
-DIALOG:Here!
-DIALOG:There are so many monster!
-HEADER:media/image/head1.png
-ACCEPTABLE:20
-POS:20,10,30
-ROT:0,0,0
 SCALE:1,1,1
 ADDNPC
 ENDNPC
