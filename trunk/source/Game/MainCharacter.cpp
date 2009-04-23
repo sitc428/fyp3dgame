@@ -393,6 +393,7 @@ void MainCharacter::setCasting( bool casting )
 			MagicNode->addAnimator(anim);
 			anim->drop();
 		}else{
+			
 			MagicNode->setPosition(targetPos);
 		}
 
@@ -924,8 +925,9 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 		MagicNode->setMaterialTexture(0, driver.getTexture("media/model/base.tga"));
 	}else if( _currentMagic->getItemName() == "Cyclone" ){
 		std::cout<<"Cyclone\n";
-		irr::scene::IMesh* Magicmesh = smgr.addSphereMesh("", 10 );
+		irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/cyclone.x" ));
 		MagicNode = smgr.addMeshSceneNode( Magicmesh );
+		MagicNode->setScale(irr::core::vector3df(5,5,5));
 		MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
 		MagicNode->setVisible( false );	
 		if(GEngine.GetShaderFactory().ShaderAvailable())
