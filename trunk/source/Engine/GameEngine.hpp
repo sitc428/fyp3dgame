@@ -104,7 +104,7 @@ public:
 	// changes the music playing
 	void ChangeBGM( const irr::c8* = NULL );
 
-	void PlaySE( const irr::c8*, irr::core::vector3df = irr::core::vector3df(0, 0, 0) );
+	void PlaySE( const irr::c8*, bool = true, irr::core::vector3df = irr::core::vector3df(0, 0, 0) );
 
 private:
 	// preload texture and model files

@@ -895,7 +895,7 @@ void GameHUD::gameVictory(irr::f32 delta)
 
 		WinFont->draw(
 			L"Credit",
-			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height - 48 * 1.5),
+			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height / 2),
 			irr::video::SColor(255, 255, 255, 255),
 			true,
 			true
@@ -1045,24 +1045,25 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine, Player& player){
 	if( receiver.keyReleased( irr::KEY_UP) ){
 		if(SubMenuIndex != 0){
 			SubMenuIndex -- ;
-		}				
+		}
+		GEngine->PlaySE("media/se/click.wav");
 	}
 	else if ( receiver.keyReleased( irr::KEY_DOWN) ){
 
 		if ( SubMenuIndex < ItemBox.size()-1 ){
 			SubMenuIndex ++;
 		}
+		GEngine->PlaySE("media/se/click.wav");
 	}
 		
 	else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
-
 		sellingmachine->BuyItem(SubMenuIndex);
+		GEngine->PlaySE("media/se/click.wav");
 	}	
 
 	else if ( receiver.keyReleased( irr::KEY_LEFT ) ){
-		
 		SubMenuIndex = -1;
-	
+		GEngine->PlaySE("media/se/click.wav");
 	}
 	
 	/******DRAWING THE GRAPHICS********/
@@ -1090,10 +1091,5 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine, Player& player){
 		outputString = ItemBox[i].second;
 		MenuFont->draw(outputString.c_str(), irr::core::rect<irr::s32>(ITEM_QUANTITY_X1-30, ITEM_QUANTITY_Y1+MENU_ITEM_YOFFSET*i, 0, 0), irr::video::SColor(255,255,255,255), false, false, 0);
 		
-	}
-		
-		
-	
-	
-	
+	}	
 }
