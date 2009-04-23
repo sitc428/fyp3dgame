@@ -800,7 +800,7 @@ void GameWorld::UpdateHUD( irr::f32 delta ){
 			}break;
 		case (state_INTERACTING | state_BUYING):
 			{
-				gameHUD->DrawBuyingMenu((SellingMachine*)interactingActor);
+				gameHUD->DrawBuyingMenu((SellingMachine*)interactingActor, GetCurrentPlayer());
 				gameHUD->DrawConversation();
 			}break;
 		case state_PAUSED:
