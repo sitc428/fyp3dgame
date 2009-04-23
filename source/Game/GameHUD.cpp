@@ -561,7 +561,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 				//get the description of the item
 				if(SubMenuIndex == j)
 				{
-					GetConversation(ItemBox[i].first->getItemDescription());
+					GetConversation(ItemBox[i].first->getItemDescription(), ItemBox[i].first->getItemTexture());
 				}
 				
 				j++;
@@ -598,7 +598,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 				//get the description of the item
 				if(SubMenuIndex == j)
 				{
-					GetConversation(ItemBox[i].first->getItemDescription());
+					GetConversation(ItemBox[i].first->getItemDescription(), ItemBox[i].first->getItemTexture());
 				}
 				
 				j++;
@@ -635,7 +635,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 				//get the description of the item
 				if(SubMenuIndex == j)
 				{
-					GetConversation(ItemBox[i].first->getItemDescription());
+					GetConversation(ItemBox[i].first->getItemDescription(), ItemBox[i].first->getItemTexture());
 				}
 					
 					

@@ -87,12 +87,19 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	//temp use only
 	irr::video::ITexture* text = NULL;
 
+	text = driver.getTexture("media/image/de3d76ac771c29b4f04beacb70ebabbd.png");
 	Item* hp = new HPItem(world, HPITEM, "HP Medicine", 50, "Recover 50 Health Point", text);
+	text = driver.getTexture("media/image/723e676cab1675f3d47d71960cca50bc.png");
 	Item* md1 = new MDiscItem(world, MDISCITEM, "Fire", 10, "Fire Magic of 10 Magical Attack point", text);	
+	text = driver.getTexture("media/image/3f784fc5d3d60b6d1ac56e000061f11c.png");
 	Item* md2 = new MDiscItem(world, MDISCITEM, "Ice", 10, "Ice Magic of 10 Magical Attack point", text);
+	text = driver.getTexture("media/image/afc257a5363d544d8daba8904fa9efb0.png");
 	Item* md3 = new MDiscItem(world, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
+	text = driver.getTexture("media/image/b5388b5a747ce72ede81145817e118eb.png");
 	Item* md4 = new MDiscItem(world, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
+	text = driver.getTexture("media/image/96c91407c63a4c21ce305dfef464954a.png");
 	Item* xItem = new XItem(world, XITEM, "X Item", 1, "Special Item", text);
+	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
 	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.x");
 	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
 	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
