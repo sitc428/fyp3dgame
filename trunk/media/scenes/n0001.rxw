@@ -1,5 +1,5 @@
-﻿BEGINNPC
-MODEL:media/model/treasearbox.obj
+BEGINNPC
+MODEL:media/model/hill.obj
 DIALOG:I need to find something to destroy this obstacle...
 DIALOG:Let's find some items in the village.
 HEADER:media/image/head1.png
