@@ -4,6 +4,7 @@
 #include <irrlicht/irrlicht.h>
 
 class Player;
+class SellingMachine;
 
 namespace irr{
 	namespace gui{
@@ -42,7 +43,9 @@ public:
 	void GetConversation(irr::core::stringw string, irr::video::ITexture* actorTexture = NULL);
 	
 	//drawing pause menu, for gameworld to call during pause state
-	void DrawPauseMenu(Player& player);	
+	void DrawPauseMenu(Player& player);
+	
+	void DrawBuyingMenu(SellingMachine* sellingmachine);
 	
 	//drawing the starting story script
 	void gameStart(irr::f32 delta);
