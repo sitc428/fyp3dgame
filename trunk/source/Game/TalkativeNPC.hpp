@@ -39,6 +39,7 @@ private:
 	irr::video::ITexture* _header;
 	irr::f32 acceptable_Distance;
 	irr::u32 _type;
+	bool itemTrigger;
 };
 
 #endif // __TALKATIVE_NPC_HPP__
