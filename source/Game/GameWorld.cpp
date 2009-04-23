@@ -182,7 +182,7 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 		irr::core::vector3df pos;
 		irr::s32 fallID = -1;
 		irr::s32 triID = -1;
-		irr::s32 houseID = -1;
+		irr::s32 houseID1 = -1, houseID2 = -1;
 		while( !sceneConfigFile.eof() )
 		{
 			std::getline( sceneConfigFile, lines );
@@ -218,14 +218,18 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 				{
 					triID = Utils::toInt( lines.substr(4, lines.length()) );
 				}
-				else if( lines.substr(0, 5) == "HOUSE" )
+				else if( lines.substr(0, 6) == "HOUSE1" )
 				{
-					houseID = Utils::toInt( lines.substr(6, lines.length()) );
+					houseID1 = Utils::toInt( lines.substr(7, lines.length()) );
+				}
+				else if( lines.substr(0, 6) == "HOUSE2" )
+				{
+					houseID2 = Utils::toInt( lines.substr(7, lines.length()) );
 				}
 			}
 		}
 
-		LoadScene(sceneIRRFilePath.c_str(), pos, fallID, triID, houseID);
+		LoadScene(sceneIRRFilePath.c_str(), pos, fallID, triID, houseID1, houseID2);
 	}
 	else
 	{
@@ -550,7 +554,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 	}
 }
 
-void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset, irr::s32 fallID, irr::s32 triID, irr::s32 houseID)
+void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset, irr::s32 fallID, irr::s32 triID, irr::s32 houseID1, irr::s32 houseID2)
 {
 	smgr.loadScene(sceneFile);
 
@@ -568,7 +572,8 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 		{
 			if( meshNode->getID() != fallID )
 			{
-				if (meshNode->getID() == triID || meshNode->getID() == houseID)
+				if (
+					meshNode->getID() == triID || meshNode->getID() == houseID1 || meshNode->getID() == houseID2 )
 				{
 					std::cout << "!!!!" << std::endl;
 					meshNode->setPosition(meshNode->getPosition() + offset);

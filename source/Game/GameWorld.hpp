@@ -96,7 +96,7 @@ public:
 	void LoadMonsterConfig(irr::u32);
 	void LoadParticleConfig(irr::u32);
 
-	void LoadScene(const irr::c8*, irr::core::vector3df, irr::s32, irr::s32, irr::s32);
+	void LoadScene(const irr::c8*, irr::core::vector3df, irr::s32, irr::s32, irr::s32, irr::s32);
 
 	Robot* GetRobot() {return robot;};
 

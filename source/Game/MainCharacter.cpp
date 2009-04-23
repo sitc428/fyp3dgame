@@ -999,6 +999,6 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 
 void MainCharacter::DeathAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnimatedMeshSceneNode* theNode)
 {
-	//world.requestGameOver();
-	world.requestGameVictory();
+	world.requestGameOver();
+	//world.requestGameVictory();
 }
