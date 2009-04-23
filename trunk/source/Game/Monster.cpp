@@ -297,7 +297,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			_monster->setLoopMode(true);
 		}
 		
-		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/200.0f);
+		irr::core::vector3df targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/100.0f);
 		targetPos.Y = -10.0;
 		CheckActorPosition(targetPos, _player);
 		
@@ -479,8 +479,8 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 		irr::scene::IMeshSceneNode* meshNode = blocks[i];
 		if(min  > pos.getDistanceFrom(meshNode->getPosition() ))
 			min = pos.getDistanceFrom(meshNode->getPosition() );
-		if(meshNode->getID() == NODE_ID_SCENE1_HOUSE){
-			meshSize = 140.0;
+		if(meshNode->getID() == NODE_ID_SCENE1_HOUSE || meshNode->getID() == NODE_ID_SCENE1_HOUSE2){
+			meshSize = 120.0;
 			angleX = 20.0;
 		}else{
 			meshSize = 40.0;
@@ -501,13 +501,13 @@ void Monster::CheckActorPosition(irr::core::vector3df& target, Player& _player){
 				bool found = false;
 				float mov_x, mov_z;
 				if(_player.GetNodePosition().X > _monster->getPosition().X)
-					mov_x = 3.0;
+					mov_x = 2.0;
 				else
-					mov_x = -3.0;
+					mov_x = -2.0;
 				if(_player.GetNodePosition().Z > _monster->getPosition().Z)
-					mov_z = 3.0;
+					mov_z = 2.0;
 				else
-					mov_z = -3.0;
+					mov_z = -2.0;
 				next_pos = target;
 				if(last_move != 0){
 					switch (last_move){
