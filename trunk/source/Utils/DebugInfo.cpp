@@ -73,19 +73,20 @@ void DebugInfo::enableDebugCamera( GameWorld& world, Camera* norCam)
 	{
 		debugCamera = world.GetSceneManager().addCameraSceneNodeFPS(0, 100, 1000, -1);
 		debugCamera->setPosition(irr::core::vector3df(0, 500, 0));
-		debugCamera->setTarget(irr::core::vector3df(0, 0, 0));
+		debugCamera->setTarget( world.GetCurrentPlayer().GetNodePosition() );
 	}
 	world.GetSceneManager().setActiveCamera( debugCamera );
+	debugCamera->setTarget( world.GetCurrentPlayer().GetNodePosition() );
 }
 
-void DebugInfo::disableDebugCamera(GameWorld & world)
+void DebugInfo::disableDebugCamera( GameWorld & world )
 {
 	world.GetSceneManager().setActiveCamera( normalCamera );
 	if( debugCamera == NULL)
 	{
 		debugCamera = world.GetSceneManager().addCameraSceneNodeFPS(0, 100, 1000, -1);
 		debugCamera->setPosition(irr::core::vector3df(0, 500, 0));
-		debugCamera->setTarget(irr::core::vector3df(0, 0, 0));
+		debugCamera->setTarget( world.GetCurrentPlayer().GetNodePosition() );
 	}
 }
 
