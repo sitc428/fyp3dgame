@@ -2,7 +2,6 @@
 #define __DEBUG_INFO_HPP__
 
 #include <irrlicht/irrlicht.h>
-#include <algorithm>
 #include "Actor.hpp"
 #include "Camera.hpp"
 #include "GameWorld.hpp"
@@ -21,6 +20,7 @@ public:
 	static void enableDebugCamera( GameWorld&, Camera* );
 	static void disableDebugCamera( GameWorld& );
 	static void killMainCharacter( MainCharacter& );
+	static void teleportPlayer( MainCharacter& );
 
 private:
 	static bool enabledDebugBBox;
