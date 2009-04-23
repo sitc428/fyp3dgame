@@ -578,14 +578,23 @@ void MainCharacter::DoInput(irr::f32 delta)
 		if (_magiclevel < 3)
 		{
 			timeElapsed += delta;
-			if (timeElapsed > 0.0001 / (1 + _magiclevel))
+			if (timeElapsed > 0.0001)
 			{
-				if( ++_magicChargeProgress % 100 == 0)
+				_magicChargeProgress += (irr::u32)(timeElapsed / 0.01);
+				if(_magicChargeProgress > 100)
+					_magicChargeProgress = 100;
+				if( _magicChargeProgress % 100 == 0){
 					++_magiclevel;
+					if(_magiclevel < 3)
+						_magicChargeProgress = 0;
+					
+				}
+					
 
 				timeElapsed = 0;
 			}
 		}
+		
 	}
 	else if( receiver.keyReleased(irr::KEY_KEY_C) )
 	{
