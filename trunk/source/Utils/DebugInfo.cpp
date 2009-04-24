@@ -105,6 +105,11 @@ void DebugInfo::teleportPlayer( MainCharacter& mainCharacter )
 	mainCharacter.SetNodePosition(irr::core::vector3df( x, y, z ));
 }
 
+void DebugInfo::pauseEngine( GameEngine& gameEngine )
+{
+	gameEngine.TogglePaused();
+}
+
 void DebugInfo::addExp( MainCharacter& mainCharacter )
 {
 	mainCharacter.SetEXP( (mainCharacter.GetEXP() + 1 ) * 2 );

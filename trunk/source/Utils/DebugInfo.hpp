@@ -4,6 +4,7 @@
 #include <irrlicht/irrlicht.h>
 #include "Actor.hpp"
 #include "Camera.hpp"
+#include "GameEngine.hpp"
 #include "GameWorld.hpp"
 #include "MainCharacter.hpp"
 
@@ -22,6 +23,7 @@ public:
 	static void killMainCharacter( MainCharacter& );
 	static void teleportPlayer( MainCharacter& );
 	static void addExp( MainCharacter& );
+	static void pauseEngine( GameEngine& );
 
 private:
 	static bool enabledDebugBBox;
