@@ -114,16 +114,18 @@ GameHUD::GameHUD( irr::IrrlichtDevice& device )
 	GameOverFont = GEngine->GetFontManager()->getFont("IMPACT", 60);
 	WinFont = GEngine->GetFontManager()->getFont("IMPACT", 48);
 	
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	startGameText.push_back(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	startGameText.push_back(L"Your father, a famous scientist had invented two");
+	startGameText.push_back(L"powerful robot, the Black Robot and the Purple  ");
+	startGameText.push_back(L"Robot.  However, the Black Robot suddenly went  ");
+	startGameText.push_back(L"out of control.  It killed your father and those");
+	startGameText.push_back(L"villagers living nearby and keep destroying     ");
+	startGameText.push_back(L"other villages.                                 ");
+	startGameText.push_back(L"                                                ");
+	startGameText.push_back(L"You and the Purple Robot, lucky survived in the ");
+	startGameText.push_back(L"accident.  Now, please fight against the monster");
+	startGameText.push_back(L"with the help of the Purple Robot.              ");
+	startGameText.push_back(L"                                                ");
+	startGameText.push_back(L"  Please SAVE the WORLD and STOP the DISASTER!  ");
 }
 
 // destructor
