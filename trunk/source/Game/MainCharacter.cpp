@@ -1089,7 +1089,7 @@ void MainCharacter::SetEXP(irr::u32 exp)
 		sparking= new ParticleManager(&smgr, GetNodePosition(), irr::core::vector3df(2,2,2),
 									  irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 		sparking->CreateMeshEmitter(smgr.getMesh("media/model/Pedro.x"),irr::core::vector3df(0.0f,0.06f,0.0f),
-									20,50,200,700, GEngine.GetDriver().getTexture("media/model/particlewhite.bmp"));
+									20,50,200,700, GEngine.GetDriver().getTexture("media/model/portal7.bmp"));
 		levelUP_timer->restart();
 		
 		GEngine.PlaySE("media/se/uplv1.wav", false, node->getPosition());
