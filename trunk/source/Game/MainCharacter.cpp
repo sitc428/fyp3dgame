@@ -475,7 +475,7 @@ bool MainCharacter::isDieing() const
 void MainCharacter::Tick( irr::f32 delta )
 {
 	if(levelUP_timer->elapsed() >1.0)
-			sparking->resetEmitter();
+		sparking->resetEmitter();
 	if (combo_timer->elapsed() > 1.0)
 	{
 		SetCombo(false);
@@ -500,6 +500,32 @@ void MainCharacter::Tick( irr::f32 delta )
 	{
 		DoInput(delta);
 	}
+	else
+	{
+		InputEventReceiver& receiver = GEngine.GetReceiver();
+		if( receiver.keyDown(irr::KEY_KEY_C) )
+		{
+			SetCharging( true );
+			if (_magiclevel < 3)
+			{
+				timeElapsed += delta;
+				if (timeElapsed > 0.0001)
+				{
+					_magicChargeProgress += (irr::u32)(timeElapsed / 0.01);
+					if(_magicChargeProgress > 100)
+						_magicChargeProgress = 100;
+					if( _magicChargeProgress % 100 == 0){
+						++_magiclevel;
+						if(_magiclevel < 3)
+							_magicChargeProgress = 0;
+					}
+					timeElapsed = 0;
+				}
+			}
+			
+		}
+	}
+
 	if(MagicNode != NULL && _currentMagic->getItemName() == "Ice"){
 		if(magic_timer->elapsed()<=5.0)
 			MagicNode->setScale(irr::core::vector3df(20,20,20)* magic_timer->elapsed()*5 );
@@ -532,6 +558,7 @@ void MainCharacter::DoInput(irr::f32 delta)
 		default:
 			comboValue = 1.0;
 	}
+
 	InputEventReceiver& receiver = GEngine.GetReceiver();
 
 	if (magicFlyTime != -1 && magic_timer->elapsed()*1000 > magicFlyTime)
