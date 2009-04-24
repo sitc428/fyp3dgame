@@ -931,7 +931,15 @@ void GameWorld::Tick( irr::f32 delta )
 			DoGameplay( delta );
 			break;
 		case state_CUT_SCENE:
-			DoEvent(  delta );
+			if(  GEngine.GetReceiver().keyReleased(irr::KEY_SPACE) )
+			{
+				GetSceneManager().setActiveCamera( (irr::scene::ICameraSceneNode*)(&(camera->GetNode())) );
+				stateTimer = 0;
+				gameState = state_GAMEPLAY;
+				//gameHUD->GetConversation(L"");
+			}
+			else
+				DoEvent(  delta );
 			break;
 		case state_PLAYER_DEAD:
 			stateTimer += delta;
