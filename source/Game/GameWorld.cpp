@@ -1068,19 +1068,19 @@ void GameWorld::DoEvent2( irr::f32 delta )
 		GetSceneManager().setActiveCamera( cutSceneCamera );
 	}
 
-	static Monster* boss;
+	static Monster* boss = NULL;
 
 	if( stateTimer == 0 )
 	{
-
-	for( irr::u32 i = 0; i < monsters.size(); ++i )
-	{
-		if( monsters[i]->GetType() == "Boss" )
+		GetSceneManager().setActiveCamera( cutSceneCamera );
+		for( irr::u32 i = 0; i < monsters.size(); ++i )
 		{
-			boss = monsters[i];
-			break;
+			if( monsters[i]->GetType() == "Boss" )
+			{
+				boss = monsters[i];
+				break;
+			}
 		}
-	}
 	}
 
 	stateTimer+=delta;
