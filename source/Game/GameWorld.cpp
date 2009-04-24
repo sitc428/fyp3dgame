@@ -930,6 +930,9 @@ void GameWorld::Tick( irr::f32 delta )
 			else
 				DoEvent(  delta );
 			break;
+		case state_CUT_SCENE2:
+				DoEvent2( delta );
+			break;
 		case state_PLAYER_DEAD:
 			stateTimer += delta;
 			if( stateTimer >= PLAYER_DEATH_STATE_TIMER )
@@ -1054,6 +1057,52 @@ void GameWorld::DoEvent( irr::f32 delta )
 		GetSceneManager().setActiveCamera( (irr::scene::ICameraSceneNode*)(&(camera->GetNode())) );
 		stateTimer = 0;
 		gameState = state_GAMEPLAY;
+	}
+}
+
+void GameWorld::DoEvent2( irr::f32 delta )
+{
+	std::cout<<"here"<<std::endl;
+	if(cutSceneCamera == NULL){
+		cutSceneCamera = GetSceneManager().addCameraSceneNode(0, irr::core::vector3df(200, 60, 0) , irr::core::vector3df(0, 60, 0));
+		GetSceneManager().setActiveCamera( cutSceneCamera );
+	}
+
+	static Monster* boss;
+
+	for( irr::u32 i = 0; i < monsters.size(); ++i )
+	{
+		if( monsters[i]->GetType() == "Boss" )
+		{
+			boss = monsters[i];
+			break;
+		}
+	}
+
+	if( stateTimer == 0 )
+
+	stateTimer+=delta;
+
+	if (stateTimer < 10 && boss)
+	{
+		std::cout<<"should be here"<<std::endl;
+		//cutSceneCamera->setTarget(irr::core::vector3df(179.161606,251.029663,-3315.725272));
+		cutSceneCamera->setTarget( boss->GetNode().getPosition() + irr::core::vector3df(0, 50, 0) );
+		cutSceneCamera->setPosition(irr::core::vector3df(boss->GetNode().getPosition().X+sin(stateTimer/5*PI)*70, boss->GetNode().getPosition().Y + 50, boss->GetNode().getPosition().Z - cos((stateTimer)/5*PI)*70));
+	}
+	else {
+		std::cout<<"finish cut scene 2 here"<<std::endl;
+		GetSceneManager().setActiveCamera( (irr::scene::ICameraSceneNode*)(&(camera->GetNode())) );
+		stateTimer = 0;
+		gameState = state_GAMEPLAY;
+	}
+
+	if(  GEngine.GetReceiver().keyReleased(irr::KEY_KEY_V) )
+	{
+		GetSceneManager().setActiveCamera( (irr::scene::ICameraSceneNode*)(&(camera->GetNode())) );
+		stateTimer = 0;
+		gameState = state_GAMEPLAY;
+		//gameHUD->GetConversation(L"");
 	}
 }
 
@@ -1187,4 +1236,12 @@ void GameWorld::DoCleanUp()
 			actors.erase( i );
 		}
 	}
+}
+
+void GameWorld::requestCutScene2()
+{
+	std::cout << "Requsting"<<std::endl;
+	interactingActor->finishAction();
+	gameState = state_CUT_SCENE2;
+	stateTimer = 0;
 }
