@@ -377,9 +377,10 @@ void MainCharacter::setCasting( bool casting )
 		MagicNode->setVisible(true);
 		
 		irr::scene::ISceneManager& smgr = world.GetSceneManager();
-		irr::core::vector3df targetPos = getTargetPos();
+		irr::core::vector3df targetPos = targetIndicator->getAbsolutePosition();
 		magicFlyTime = (targetPos - magicPos).getLength() / 0.1;
 		if(_currentMagic->getItemName() != "Ice"){
+			
 			irr::scene::ISceneNodeAnimator* anim = smgr.createFlyStraightAnimator(
 				magicPos,
 				targetPos,
@@ -388,7 +389,7 @@ void MainCharacter::setCasting( bool casting )
 			MagicNode->addAnimator(anim);
 			anim->drop();
 		}else{
-			
+			targetPos.Y-=10.0;
 			MagicNode->setPosition(targetPos);
 		}
 
@@ -772,7 +773,7 @@ void MainCharacter::ReceiveDamage( irr::f32 value )
 
 	irr::core::stringw theValue = L"-";
 	theValue = theValue + (int)value;
-
+	
 	irr::scene::ITextSceneNode* textNode = world.GetSceneManager().addTextSceneNode(
 		(irr::gui::IGUIFont*)GEngine.GetFontManager()->getFont("IMPACT", 16), theValue.c_str(),
 		irr::video::SColor(200, 255, rand() % 255, 0), node, irr::core::vector3df(0, 10, 0));
@@ -965,7 +966,7 @@ void MainCharacter::AttackAnimationEndCallBack::OnAnimationEnd(irr::scene::IAnim
 		if( CollisionHelper::CheckProximity2D(
 			theTarget->GetNode().getPosition(),
 			theMainCharacter.GetNodePosition(),
-			theTarget->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() - adjust
+			theTarget->GetRadius().getLength() + theMainCharacter.GetRadius().getLength() + adjust
 			)
 		)
 		{
