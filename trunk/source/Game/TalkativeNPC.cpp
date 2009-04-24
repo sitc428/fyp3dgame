@@ -101,6 +101,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			}
 			else
 			{
+				timeElapsed = 0;
 				++talking;
 				++state;
 				currentline = 1;
@@ -117,6 +118,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 
 		if(receiver.keyReleased(irr::KEY_KEY_V))
 		{
+			timeElapsed = 0;
 			state = 1;
 		}
 	}
@@ -162,7 +164,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
 				node->setVisible( false );
 				itemTrigger = true;
-				GEngine.PlaySE("media/model/rockremove.wav");
+				GEngine.PlaySE("media/se/rockremove.wav");
 			}
 		}
 		else if (_type == 2) //Sword
