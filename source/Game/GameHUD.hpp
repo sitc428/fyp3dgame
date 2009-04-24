@@ -105,7 +105,8 @@ private:
 
 	irr::f32					timeElapsed;
 	irr::u32					modTime;
-
+	irr::f32 local;
+	
 	// cached video driver
 	irr::video::IVideoDriver& driver;
 	
