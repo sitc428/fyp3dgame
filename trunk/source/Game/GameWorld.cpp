@@ -274,7 +274,8 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 		//create triggerEventItem in scene 3 to load the cut scene
 		if (sceneNum == 3)
 		{
-			TriggerEventItem* loadCutScene = new TriggerEventItem( GEngine, *this, irr::core::vector3df(-38.976692, -43.057495, -2495.10015), irr::core::vector3df(0, 0, 0), irr::core::vector3df(8.215017, 16.877583, 1.000000), CUTSCENE );
+			//TriggerEventItem* loadCutScene = new TriggerEventItem( GEngine, *this, irr::core::vector3df(-38.976692, -43.057495, -2495.10015), irr::core::vector3df(0, 0, 0), irr::core::vector3df(8.215017, 16.877583, 1.000000), CUTSCENE );
+			TriggerEventItem* loadCutScene = new TriggerEventItem( GEngine, *this, irr::core::vector3df(-321.887726, 128.102417, -2950.451652), irr::core::vector3df(0, 0, 0), irr::core::vector3df(80.000000, 80.000000, 80.000000), CUTSCENE );
 			actors.push_back( loadCutScene );
 		}
 		LoadScene(sceneIRRFilePath.c_str(), pos, fallID, triID, houseID1, houseID2);

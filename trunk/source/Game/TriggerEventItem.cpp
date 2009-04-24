@@ -7,7 +7,7 @@
 #include <boost/thread.hpp>
 
 static const irr::f32		acceptable_Distance = 30.0;
-static const irr::c8*		TRIGGER_EVENT_ITEM_MODEL  = "media/model/obstacle.obj";
+static const irr::c8*		TRIGGER_EVENT_ITEM_MODEL  = "media/model/box.obj";
 
 TriggerEventItem::TriggerEventItem( GameEngine& gameEngine, GameWorld& gameWorld, const irr::core::vector3df defaultPosition, const irr::core::vector3df defaultRotation, const irr::core::vector3df defaultScale, TriggerEventItemType type )
 	: InteractiveActor(gameEngine, gameWorld),
@@ -22,6 +22,7 @@ TriggerEventItem::TriggerEventItem( GameEngine& gameEngine, GameWorld& gameWorld
 	node->setScale(defaultScale);
 	node->setName("TriggerEventItem");
 	node->setID(NODE_ID_TRIGGER_EVENT_ITEM);
+	node->setVisible(false);
 }
 
 TriggerEventItem::~TriggerEventItem()
