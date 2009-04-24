@@ -12,6 +12,7 @@ class Camera;
 class GameEngine;
 class GameHUD;
 class InteractiveActor;
+class Item;
 class MainCharacter;
 class Monster;
 class Player;
