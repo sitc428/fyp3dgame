@@ -768,18 +768,6 @@ void GameWorld::InitEnemies()
 	monItemBox2.push_back(std::make_pair(md2, 1));
 	monItemBox2.push_back(std::make_pair(md3, 2));
 
-	Monster* m1 = new Monster( GEngine, *this, 50, 200, 100, 20, 1000, 20, monItemBox1,irr::core::vector3df(120,10,100), "Boss", 1000);
-	
-	//m1->ReSetPosition(irr::core::vector3df(120,10,100));
-	
-	Monster* m2 = new Monster( GEngine, *this, 50, 300, 100, 20, 100, 20, monItemBox2,irr::core::vector3df(100,500,180), "Type2", 2000);
-	
-	//m2->ReSetPosition(irr::core::vector3df(100,10,180));
-	actors.push_back(m1);
-	actors.push_back(m2);
-	monsters.push_back( m1 );
-	monsters.push_back( m2 );
-
 	ItemCollection itemsToSell;
 
 	itemsToSell.push_back( std::make_pair(hp, 100) );
