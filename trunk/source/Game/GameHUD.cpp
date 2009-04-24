@@ -673,7 +673,7 @@ void GameHUD::gameStart(irr::f32 delta){
 
 void GameHUD::gameOver(irr::f32 delta){
 	irr::core::dimension2di scrSize = GEngine->GetScreenSize();
-
+	
 	if( timeElapsed < GAME_OVER_SHOW_TIME / 2 )
 	{
 		GEngine->GetDriver().draw2DRectangle(
@@ -688,20 +688,23 @@ void GameHUD::gameOver(irr::f32 delta){
 			true,
 			true
 		);
+		local = 0;
 	}
-	else if( timeElapsed < GAME_OVER_SHOW_TIME )
-	{
+	else if( timeElapsed <= GAME_OVER_SHOW_TIME  )
+	{	
+		
+		local+= delta;
 		GEngine->GetDriver().draw2DRectangle(irr::video::SColor(255, 0, 0, 0), irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height));
-
+		//if(local>=GAME_OVER_SHOW_TIME/2) local = GAME_OVER_SHOW_TIME/2;
 		GameOverFont->draw(
 			L"Game Over",
 			irr::core::rect<irr::s32>(0, 0, scrSize.Width, scrSize.Height),
-			irr::video::SColor(255 * (1 - (GAME_OVER_SHOW_TIME - timeElapsed) / (GAME_OVER_SHOW_TIME / 2)), 255, 255, 255),
+			irr::video::SColor(255 * (1- ( (local) / (GAME_OVER_SHOW_TIME/2) ) ), 255, 255, 255),
 			true,
 			true
 		);
-	}
-	else
+		
+	}else
 	{
 		timeElapsed = 0;
 		return;
