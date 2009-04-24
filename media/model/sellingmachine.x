@@ -7,6 +7,13 @@ Material lambert1 {
 	 0.000000; 0.000000; 0.000000;;
 	TextureFileName {".\\sellingmachine.psd";}
 }
+Material lambert2 {
+	 0.800000; 0.800000; 0.800000; 1.000000;;
+	 0.000000;
+	 0.000000; 0.000000; 0.000000;;
+	 0.000000; 0.000000; 0.000000;;
+	TextureFileName {".\\sellingmachine.tga";}
+}
 Frame pCube1 {
 	FrameTransformMatrix {
 		2.205576,0.000000,-0.000000,0.000000,0.000000,1.435100,-0.000000,0.000000,-0.000000,-0.000000,1.000000,0.000000,0.000000,0.000000,-0.000000,1.000000;;
@@ -141,7 +148,7 @@ Frame pCube1 {
 			0,
 			0,
 			0;
-			{lambert1}
+			{lambert2}
 		}
 		VertexDuplicationIndices {
 			24;
