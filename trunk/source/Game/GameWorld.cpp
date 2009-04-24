@@ -169,6 +169,13 @@ void GameWorld::InitLevel()
 	LoadNPCConfig(1);
 	LoadSceneConfig(2);
 	LoadMonsterConfig(2);
+	LoadNPCConfig(2);
+	LoadSceneConfig(3);
+	LoadMonsterConfig(3);
+	LoadNPCConfig(3);
+	LoadSceneConfig(4);
+	LoadMonsterConfig(4);
+	LoadNPCConfig(4);
 	//LoadParticleConfig(1);
 	//AddScene(NODE_ID_SCENE1);
 	//AddScene(NODE_ID_SCENE2);
@@ -263,7 +270,13 @@ void GameWorld::LoadSceneConfig(irr::u32 sceneNum)
 				}
 			}
 		}
-
+		
+		//create triggerEventItem in scene 3 to load the cut scene
+		if (sceneNum == 3)
+		{
+			TriggerEventItem* loadCutScene = new TriggerEventItem( GEngine, *this, irr::core::vector3df(-38.976692, -43.057495, -2495.10015), irr::core::vector3df(0, 0, 0), irr::core::vector3df(8.215017, 16.877583, 1.000000), CUTSCENE );
+			actors.push_back( loadCutScene );
+		}
 		LoadScene(sceneIRRFilePath.c_str(), pos, fallID, triID, houseID1, houseID2);
 	}
 	else
