@@ -1028,72 +1028,44 @@ void GameWorld::DoGameplay( irr::f32 delta )
 	DoCleanUp();
 }
 
-
-void GameWorld::DoEvent( irr::f32 delta ){
-	
-	//irr::scene::ISceneNodeAnimator* sa = NULL;
+void GameWorld::DoEvent( irr::f32 delta )
+{
 	if(cutSceneCamera == NULL){
 		cutSceneCamera = GetSceneManager().addCameraSceneNode(0, irr::core::vector3df(200, 60, 0) , irr::core::vector3df(0, 60, 0));
-		//cutSceneCamera->setPosition(irr::core::vector3df(0, 300, 0));
-		//cutSceneCamera->setTarget(irr::core::vector3df(0, 0, 0));
 		GetSceneManager().setActiveCamera( cutSceneCamera );
-		//mainCharacter->Tick(delta);
-		//cutSceneCamera->addAnimator(GetSceneManager().createFlyStraightAnimator( irr::core::vector3df(0, 300, 0), irr::core::vector3df(1000, 300, 0), 10000, false  ));
-		//sa = GetSceneManager().createFlyCircleAnimator( irr::core::vector3df(40, 20, 10), 50, 1000	);
-		//irr::scene::ISceneNodeAnimator* sa = GetSceneManager().createFlyCircleAnimator(); 
-	
 	}
+
 	robot->Tick(delta);
 	
 	stateTimer+=delta;
+	
 	if( stateTimer <= 10){
 		cutSceneCamera->setPosition(irr::core::vector3df(200, 60, -50+stateTimer*10));
 		cutSceneCamera->setTarget(irr::core::vector3df(0, 60, -50+stateTimer*10));
-		
 	}
-	
-	else if( stateTimer > 10 && stateTimer <= 20 ){
-		//cutSceneCamera->setRotation(irr::core::vector3df(0, 90, 0));
+	else if( stateTimer > 10 && stateTimer <= 20 )
+	{
 		cutSceneCamera->setPosition(irr::core::vector3df(200 - (stateTimer-10)*40, 200, 50));
 		cutSceneCamera->setTarget(irr::core::vector3df(200 - (stateTimer-10)*40, 0, 50));
 	}
-	
-	
 	else if ( stateTimer > 20 && stateTimer <= 25 ){
 		cutSceneCamera->setPosition(irr::core::vector3df(40, (stateTimer-20)*5, 0));
 		cutSceneCamera->setTarget(irr::core::vector3df(40, (stateTimer-20)*5, 10));
-		
 	}
-	
 	else if ( stateTimer > 25 && stateTimer <= 30 ){
 		cutSceneCamera->setPosition(irr::core::vector3df(40, 25 + (stateTimer - 25)*9, 0 - (stateTimer - 25)*10));
 		cutSceneCamera->setTarget(irr::core::vector3df(40, 25, 10));
 	}
-	
-	else if (stateTimer < 33){
-		static int k = 0;
-		
-		if(k == 0)
-		{
-			//irr::scene::ISceneNodeAnimator* sa = GetSceneManager().createFlyCircleAnimator( irr::core::vector3df(40, 70, 10), 50);
-			//cutSceneCamera->addAnimator(sa);
-			cutSceneCamera->setTarget(irr::core::vector3df(40, 20, 10));
-		}
-		std::cout<<cos((stateTimer - 30)/3*PI)<<std::endl;
+	else if (stateTimer < 33)
+	{
+		cutSceneCamera->setTarget(irr::core::vector3df(40, 20, 10));
 		cutSceneCamera->setPosition(irr::core::vector3df(40+sin((stateTimer-30)/3*PI)*40, 70, 10 - cos((stateTimer - 30)/3*PI)*50));
-		
-		
 	}
-	
 	else {
 		GetSceneManager().setActiveCamera( (irr::scene::ICameraSceneNode*)(&(camera->GetNode())) );
 		stateTimer = 0;
 		gameState = state_GAMEPLAY;
-		
-		
 	}
-	
-	
 }
 
 // perform an tick of the input system
@@ -1201,5 +1173,4 @@ void GameWorld::DoCleanUp()
 			Actor::DestroyActor( actors[i] );
 			actors.erase( i );
 		}
-	}
-}
+	}}
