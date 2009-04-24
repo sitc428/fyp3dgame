@@ -700,7 +700,11 @@ void GameWorld::LoadScene(const irr::c8* sceneFile, irr::core::vector3df offset,
 			 
 			 
 			 }
-			 
+
+			 if( meshNode->getID() == 334 )
+			 {
+				 meshNode->setMaterialFlag( irr::video::EMF_LIGHTING, false );
+			 }
 		}
 	}
 
