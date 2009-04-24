@@ -239,7 +239,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			{
 				playerTmpBox.push_back(std::make_pair(_monItemBox[i].first, _monItemBox[i].second));
 			}
-			irr::core::stringw theValue = L"Got a ";
+			irr::core::stringw theValue = L"Get ";
 			theValue = theValue + _monItemBox[i].first->getItemName();
 
 			irr::scene::ITextSceneNode* textNode = world.GetSceneManager().addTextSceneNode(
