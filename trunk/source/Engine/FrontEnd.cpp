@@ -72,6 +72,8 @@ void FrontEnd::Init()
 	ExitGameText->setTextAlignment( irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER );
 
 	GetCurrentlySelectedItem()->setOverrideColor( SELECTED_ITEM_OVERRIDE_COLOR );
+
+	GEngine.GetSoundEngine().removeAllSoundSources();
 }
 
 // called every frame with the frame's elapsed time
@@ -143,6 +145,7 @@ void FrontEnd::DoInput()
 	// perform requested menu item action if the enter key is pressed
 	if(receiver.keyReleased(irr::KEY_RETURN))
 	{
+		GEngine.PlaySE("media/se/select.wav");
 		switch(currSelectedItem)
 		{
 			case FE_MENU_ITEM_STARTGAME:
@@ -162,7 +165,7 @@ void FrontEnd::DoInput()
 				}
 		}
 	}
-	else if( receiver.keyDown(irr::KEY_UP) )
+	else if( receiver.keyReleased(irr::KEY_UP) )
 	{
 		EMenuItem nextItem = currSelectedItem;
 		if( currSelectedItem == FE_MENU_ITEM_EXIT )
@@ -174,8 +177,9 @@ void FrontEnd::DoInput()
 		{
 			SetCurrentlyEnabledItem(nextItem);
 		}
+		GEngine.PlaySE("media/se/click.wav");
 	}
-	else if( receiver.keyDown(irr::KEY_DOWN) )
+	else if( receiver.keyReleased(irr::KEY_DOWN) )
 	{
 		EMenuItem nextItem = currSelectedItem;
 		if( currSelectedItem == FE_MENU_ITEM_STARTGAME )
@@ -187,5 +191,6 @@ void FrontEnd::DoInput()
 		{
 			SetCurrentlyEnabledItem(nextItem);
 		}
+		GEngine.PlaySE("media/se/click.wav");
 	}
 }

@@ -162,6 +162,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
 				node->setVisible( false );
 				itemTrigger = true;
+				GEngine.PlaySE("media/model/rockremove.wav");
 			}
 		}
 		else if (_type == 2) //Sword
