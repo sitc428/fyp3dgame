@@ -70,6 +70,8 @@ void TriggerEventItem::interaction(irr::f32 delta)
 		else if (_type == CUTSCENE)
 		{
 			std::cout << "----- CUTSCENE -----" << std::endl;
+			world.requestCutScene2();
+			return;
 		}
 
 		//runGameOne();

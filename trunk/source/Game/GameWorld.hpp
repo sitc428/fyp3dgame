@@ -32,7 +32,8 @@ enum EGameState
 	state_PAUSED = 256,
 	state_BUYING = 512,
 	state_TALKING = 1024,
-	state_CUT_SCENE = 2048
+	state_CUT_SCENE = 2048,
+	state_CUT_SCENE2 = 4096
 };
 
 class GameWorld : public GamePart
@@ -89,6 +90,8 @@ public:
 	// interface for the main character request the world change into game victory mode
 	void requestGameVictory();
 
+	void requestCutScene2();
+
 	// tell the world and actors is the world in interactive mode
 	bool isInteracting() const { return gameState & state_INTERACTING; };
 
@@ -131,8 +134,9 @@ private:
 	// clean out the dead actors
 	void DoCleanUp();
 
+	// cut scene events
 	void DoEvent( irr::f32 delta );
-	
+	void DoEvent2( irr::f32 delta );
 	
 	virtual void SetNumLives( irr::s32 lives ) { numLives = lives; }
 	virtual irr::s32 GetNumLives() { return numLives; }
