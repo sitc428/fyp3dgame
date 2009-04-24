@@ -19,7 +19,7 @@ POS:99.772163,16.296143,-1964.153625
 ROT:-90.000000,-119.000000,0.000000
 SCALE:4,4,4
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found a X ITEM! (XITEM +1)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -28,7 +28,7 @@ POS:317.771820,6.555664,-1661.012107
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found a X ITEM! (XITEM +1)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -37,7 +37,7 @@ POS:337.803497,6.555664,-2389.23867
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found a X ITEM! (XITEM +1)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -46,7 +46,7 @@ POS:-327.392456,6.555664,-2389.23867
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +5)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
