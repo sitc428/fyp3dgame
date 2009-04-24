@@ -106,6 +106,8 @@ public:
 
 	void PlaySE( const irr::c8*, bool = true, irr::core::vector3df = irr::core::vector3df(0, 0, 0) );
 
+	void TogglePaused() { paused = !paused; }
+
 private:
 	// preload texture and model files
 	void PreloadTexture();
@@ -155,6 +157,8 @@ private:
 	GameWorld* world;
 
 	irrklang::ISound* gameMusic;
+
+	bool paused;
 };
 
 #endif //__GAME_ENGINE_HPP__

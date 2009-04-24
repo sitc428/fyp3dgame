@@ -1106,6 +1106,10 @@ void GameWorld::DoInput()
 		{
 			DebugInfo::addExp( *mainCharacter );
 		}
+		if( receiver.keyReleased( irr::KEY_KEY_5) )
+		{
+			DebugInfo::pauseEngine( GEngine );
+		}
 		if( receiver.keyReleased(irr::KEY_KEY_9) )
 		{
 			DebugInfo::killMainCharacter( *mainCharacter );
