@@ -1,7 +1,7 @@
 BEGINNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found HP Medicine! (HP Medicine +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:9
 POS:-278.125610,5.168579,-1084.928611
@@ -10,7 +10,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Fire Magic Discs! (Fire +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:3
 POS:-380.769623,5.168579,-972.264548
@@ -19,7 +19,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Ice Magic Discs! (Ice +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:4
 POS:256.693268,5.168579,-972.264548
@@ -28,7 +28,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Lightning Discs! (Lightning +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:5
 POS:-295.068359,5.168579,-798.993339

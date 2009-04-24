@@ -1,7 +1,8 @@
 BEGINNPC
 MODEL:media/model/board.x
-DIALOG:This is Board One!  
-DIALOG:11111111111111111!  
+DIALOG:There are strange monsters on the snow hill,  
+DIALOG:they use special attack to kill people... 
+DIALOG:Be Careful!
 HEADER:media/image/board.png
 ACCEPTABLE:40
 TYPE:0
@@ -10,8 +11,9 @@ ROT:0.000000,82.000000,0.000000
 SCALE:4,4,4
 ADDNPC
 MODEL:media/model/board.x
-DIALOG:This is Board Two!  
-DIALOG:22222222222222222!  
+DIALOG:An obstacle has blocked the road to the hill...  
+DIALOG:It seems that there are 3 strange items could be 
+DIALOG:used to remove the obstacle.  
 HEADER:media/image/board.png
 ACCEPTABLE:40
 TYPE:0
@@ -56,7 +58,7 @@ ROT:0,0,0
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/hill.obj
-DIALOG:I need to find X Item break the rock...  
+DIALOG:I need to find X Item to remove this stone...  
 HEADER:media/image/pedro_head.png
 ACCEPTABLE:40
 TYPE:10
