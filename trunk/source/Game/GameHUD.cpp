@@ -476,7 +476,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
 				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
 				for (int i = 0, j = -1; i < ItemBox.size() ; i++){
-					if(ItemBox[i].first->getItemType() == MDISCITEM && ItemBox[i].second > 0){
+					if(ItemBox[i].first->getItemType() == MDISCITEM){
 						j++;
 						if (SubMenuIndex == j && j != -1){
 							((MDiscItem*)ItemBox[i].first)->equip();
