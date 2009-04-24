@@ -232,8 +232,7 @@ void GameEngine::Run()
 		driver->beginScene(true, true, irr::video::SColor(255,0,0,0));
 
 		// perform the main tick update for the current state
-		if( !paused )
-			TickCurrentState( frameDelta );
+		TickCurrentState( frameDelta );
 		
 		// draw the 3d scene
 		smgr->drawAll();
