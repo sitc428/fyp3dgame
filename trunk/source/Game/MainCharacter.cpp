@@ -19,6 +19,7 @@
 #include "XItem.hpp"
 #include "Robot.hpp"
 
+
 // Parameters specifying default parameters
 static const irr::core::vector3df		defaultPosition = irr::core::vector3df(40,20,10);
 static const irr::core::vector3df		defaultRotation = irr::core::vector3df(0, 0, 0);
@@ -195,6 +196,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	magic_timer = new boost::timer();
 
 	combo_timer = new boost::timer();
+	levelUP_timer = new boost::timer();
+	sparking= new ParticleManager(&smgr, GetNodePosition(), irr::core::vector3df(2,2,2),
+								  irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
 }
 
 // we need to recreated collisionresponse animator when switching players, otherwise the player teleporting doesn't work correctly
@@ -468,6 +472,8 @@ bool MainCharacter::isDieing() const
 // updates the player every fram with the elapsed time since last frame
 void MainCharacter::Tick( irr::f32 delta )
 {
+	if(levelUP_timer->elapsed() >1.0)
+			sparking->resetEmitter();
 	if (combo_timer->elapsed() > 1.0)
 	{
 		SetCombo(false);
@@ -1077,7 +1083,13 @@ void MainCharacter::SetEXP(irr::u32 exp)
 		_magicdefence = 30 + 270 * _level / 99;
 		SetMaxHealth( 1000 + _level * 90 );
 		SetHealth( 1000 + _level * 90 );
-
+		irr::scene::ISceneManager& smgr = world.GetSceneManager();
+		sparking= new ParticleManager(&smgr, GetNodePosition(), irr::core::vector3df(2,2,2),
+									  irr::core::aabbox3d<irr::f32>(-7,0,-7,7,1,7) );
+		sparking->CreateMeshEmitter(smgr.getMesh("media/model/Pedro.x"),irr::core::vector3df(0.0f,0.06f,0.0f),
+									20,50,200,700, GEngine.GetDriver().getTexture("media/model/particlewhite.bmp"));
+		levelUP_timer->restart();
+		
 		GEngine.PlaySE("media/se/uplv1.wav", false, node->getPosition());
 		GEngine.PlaySE("media/se/uplv2.wav", false, node->getPosition());
 	}
