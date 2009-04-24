@@ -290,7 +290,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 		}	
 		
 	}else if(	(Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 30.0f||
-				Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 50.0f
+				Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 80.0f
 			 )
 	{
 		
@@ -305,6 +305,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 					magicPos = pos;
 					irr::scene::ISceneManager& smgr = world.GetSceneManager();
 					MagicNode->setPosition(magicPos);
+					MagicNode->setScale(irr::core::vector3df(10.0,10.0,10.0) );
 					MagicNode->setVisible(true);
 					irr::core::vector3df targetPos = _player.GetNodePosition();
 					
@@ -339,7 +340,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 	}
 	else if( (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(original)< 160.0f
 			|| (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&&_player.GetNodePosition().getDistanceFrom(pos)< 100.0f ||
-			( Type == "Boss" && _player.GetNodePosition().getDistanceFrom(original)< 200.0f || Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 140.0f )
+			( Type == "Boss" && _player.GetNodePosition().getDistanceFrom(original)< 300.0f || Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 200.0f )
 		)
 	{
 		mon_timer->restart();
@@ -352,13 +353,15 @@ void Monster::update(Player& _player, irr::f32 delta)
 		irr::core::vector3df targetPos;
 		if( Type=="Boss")
 			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/50.0f);
+		else  if ( Type == "Type4")
+			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/3.0f);
 		else 
 			targetPos =_monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/70.0f);
 		targetPos.Y = -10.0;
 		CheckActorPosition(targetPos, _player);
 		
 		if( (Type=="Type1"||Type=="Type2"||Type=="Type3"||Type=="Type4")&& targetPos.getDistanceFrom(pos) < 100.0f ||
-			Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 140.0f
+			Type == "Boss" && _player.GetNodePosition().getDistanceFrom(pos)< 200.0f
 			)
 		{
 			
@@ -370,6 +373,7 @@ void Monster::update(Player& _player, irr::f32 delta)
 			//irr::core::vector3df targetPos = _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f);
 			//if(targetPos !=  _monster->getPosition()+((_player.GetNodePosition() - _monster->getPosition())/42.5f) )
 			target = targetPos;
+			if(Type == "Type4") target.Y = pos.Y+=100.0;
 			target.Y=-10.0;
 			FSM->reaction(_monster, _player,target,this);
 			pos = _monster->getPosition();
@@ -468,9 +472,9 @@ void Monster::RecreateCollisionResponseAnimator()
 	irr::core::vector3df radius = box.MaxEdge - box.getCenter();
 
 	collisionAnimator = world.GetSceneManager().createCollisionResponseAnimator(
-			&world.GetLevelTriangleSelector(), _monster, radius, irr::core::vector3df(0,-.08f,0), // gravity
+			&world.GetLevelTriangleSelector(), _monster, radius, irr::core::vector3df(0,-0.08f,0), // gravity
 			irr::core::vector3df(0, 0, 0), // ellipsoid translation
-			0.0001f); // sliding value
+			0.01f); // sliding value
 
 	_monster->addAnimator(collisionAnimator);
 }
