@@ -76,6 +76,9 @@ bool GameEngine::Init()
 	if( !soundEngine )
 		return 0; // error starting up the sound engine
 
+	soundEngine->setSoundVolume( 1.0f );
+	soundEngine->setDefault3DSoundMaxDistance( 500.0 );
+
 	// randomize randomize :)
 	srand( GetRealTime() );
 
@@ -540,7 +543,7 @@ void GameEngine::ChangeBGM( const irr::c8* name )
 	{
 		// load and play music
 		gameMusic = soundEngine->play2D(name, true, false, true);
-		gameMusic->setVolume( 0.35f );
+		gameMusic->setVolume( 0.05f );
 	}
 
 }
@@ -551,11 +554,11 @@ void GameEngine::PlaySE(const irr::c8* SEFilePath, bool is2D, irr::core::vector3
 	{
 		if(is2D)
 		{
-			soundEngine->play2D(SEFilePath, false, false, false);
+			irrklang::ISound* temp = soundEngine->play2D(SEFilePath, false, false, false);
 		}
 		else
 		{
-			soundEngine->play3D(SEFilePath, pos);
+			irrklang::ISound* temp = soundEngine->play3D(SEFilePath, pos);
 		}
 	}
 }

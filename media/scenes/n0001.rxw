@@ -11,7 +11,7 @@ SCALE:8.852482,16.164818,5.000000
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found a Sword! (Sword +1)  
-HEADER:media/image/7a5fcebbc89e005a7794084c9d3583c1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:2
 POS:-118.736954, 6.771484, 125.553551
@@ -20,7 +20,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Fire Magic Discs! (Fire +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:3
 POS:154.995575, 6.771484, 125.553551
@@ -29,7 +29,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Ice Magic Discs! (Ice +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:4
 POS:154.995575, 6.771484, -107.423943
@@ -38,7 +38,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Lightning Discs! (Lightning +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:5
 POS:183.853287, 6.771484, -360.756317
@@ -47,7 +47,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
-HEADER:media/image/3982df59e14187b5400d37c05513f850.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:6
 POS:-14.489673, 6.771484, -198.455048

@@ -34,7 +34,7 @@ TalkativeNPC::TalkativeNPC( GameEngine& gameEngine, GameWorld& gameWorld, const 
 		_dialogs.push_back(dialogs[i]);
 	}
 
-	this->RecreateCollisionResponseAnimator();
+	//this->RecreateCollisionResponseAnimator();
 }
 
 TalkativeNPC::~TalkativeNPC()

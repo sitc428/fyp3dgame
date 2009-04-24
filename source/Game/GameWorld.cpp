@@ -176,13 +176,6 @@ void GameWorld::InitLevel()
 	LoadSceneConfig(4);
 	LoadMonsterConfig(4);
 	LoadNPCConfig(4);
-	//LoadParticleConfig(1);
-	//AddScene(NODE_ID_SCENE1);
-	//AddScene(NODE_ID_SCENE2);
-#ifndef _IRR_WINDOWS_
-	//AddScene(NODE_ID_SCENE3);
-	//AddScene(NODE_ID_SCENE4);
-#endif
 
 	// set game state
 	stateTimer = 0;
@@ -1126,8 +1119,32 @@ void GameWorld::DoInput()
 // updates and plays 3d audio effects
 void GameWorld::DoAudio()
 {
+	static int playing_brid = 0;
 	// update 3d position of player
 	GEngine.GetSoundEngine().setListenerPosition(GetCurrentPlayer().GetNodePosition(), GetCurrentPlayer().GetFaceVector());
+
+	switch( rand() % 10 )
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		break;
+	case 6:
+		--playing_brid;
+		break;
+	case 7:
+	case 8:
+	case 9:
+		if( playing_brid < 10 )
+		{
+			GEngine.PlaySE("media/se/bird.wav", false, irr::core::vector3df(-1000 + rand() % 2000, 90 + rand() % 30, -1800 + rand() % 500)); 
+			++playing_brid;
+		}
+		break;
+	}
 }
 
 // returns the player actor which is currently used
@@ -1169,4 +1186,5 @@ void GameWorld::DoCleanUp()
 			Actor::DestroyActor( actors[i] );
 			actors.erase( i );
 		}
-	}}
+	}
+}

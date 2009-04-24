@@ -103,7 +103,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	Item* xItem = new XItem(world, XITEM, "X Item", 1, "Special Item", text);
 	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
 	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Sword", 10, "Sword with 10 Physical Attack point", text, "media/model/sword.x");
+	text = driver.getTexture("media/image/sword_image.png");
 	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Power Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword1.x");
+	text = driver.getTexture("media/image/katana_image.png");
 	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Katana", 30, "Katana with 30 Physical Attack point", text, "media/model/katana.x");
 	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
