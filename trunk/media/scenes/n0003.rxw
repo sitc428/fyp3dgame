@@ -2,26 +2,26 @@ BEGINNPC
 MODEL:media/model/board.x
 DIALOG:This is Board One!  
 DIALOG:11111111111111111!  
-HEADER:media/image/head1.png
+HEADER:media/image/board.png
 ACCEPTABLE:40
 TYPE:0
-POS:-91.148987,16.296143,-1965.194109
-ROT:-90.000000,-236.000000,0.000000
+POS:95.857880,43.65,-1979.36
+ROT:0.000000,82.000000,0.000000
 SCALE:4,4,4
 ADDNPC
 MODEL:media/model/board.x
 DIALOG:This is Board Two!  
 DIALOG:22222222222222222!  
-HEADER:media/image/head1.png
+HEADER:media/image/board.png
 ACCEPTABLE:40
 TYPE:0
-POS:99.772163,16.296143,-1964.153625
-ROT:-90.000000,-119.000000,0.000000
+POS:-71.00,43.65,-1953.0
+ROT:0.000000,-61.00,0.000000
 SCALE:4,4,4
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found a X ITEM! (XITEM +1)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:11
 POS:317.771820,6.555664,-1661.012107
@@ -30,7 +30,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found a X ITEM! (XITEM +1)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:11
 POS:337.803497,6.555664,-2389.23867
@@ -39,7 +39,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found a X ITEM! (XITEM +1)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:11
 POS:-327.392456,6.555664,-2389.23867
@@ -48,7 +48,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +5)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:6
 POS:-327.392456,6.555664,-1662.415458

@@ -1031,8 +1031,8 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine, Player& player){
 		if( MenuSelected == STATUS ){
 			if( receiver.keyReleased( irr::KEY_RIGHT) ){
 				SubMenuIndex = 0;
+				GEngine->PlaySE("media/se/click.wav");
 			}
-			GEngine->PlaySE("media/se/click.wav");
 		}
 		
 		//EXIT in BUYING MENU
@@ -1041,8 +1041,8 @@ void GameHUD::DrawBuyingMenu(SellingMachine* sellingmachine, Player& player){
 			if( receiver.keyReleased( irr::KEY_RETURN) ){
 				MenuSelected = STATUS;
 				sellingmachine->finishBuying();
+				GEngine->PlaySE("media/se/click.wav");
 			}
-			GEngine->PlaySE("media/se/click.wav");
 		}
 	}
 	else if( receiver.keyReleased( irr::KEY_UP) ){

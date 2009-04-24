@@ -37,7 +37,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:6
 POS:-374.973969,5.168579,-593.374442
@@ -46,7 +46,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:6
 POS:392.183899,5.168579,-1400.587546
@@ -55,7 +55,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:6
 POS:173.186890,5.168579,-844.618003
@@ -64,7 +64,7 @@ SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
-HEADER:media/image/head1.png
+HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
 TYPE:6
 POS:-380.769623,5.168579,-1178.475394
