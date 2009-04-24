@@ -239,6 +239,21 @@ void Monster::update(Player& _player, irr::f32 delta)
 			{
 				playerTmpBox.push_back(std::make_pair(_monItemBox[i].first, _monItemBox[i].second));
 			}
+			irr::core::stringw theValue = L"Got a ";
+			theValue = theValue + _monItemBox[i].first->getItemName();
+
+			irr::scene::ITextSceneNode* textNode = world.GetSceneManager().addTextSceneNode(
+				(irr::gui::IGUIFont*)GEngine.GetFontManager()->getFont("IMPACT", 16), theValue.c_str(),
+				irr::video::SColor(200, 255, 0, 0), _monster, irr::core::vector3df(0, 50, 0));
+
+			irr::scene::ISceneNodeAnimator* anim = world.GetSceneManager().createFlyStraightAnimator(
+				textNode->getPosition(),
+				textNode->getPosition()+irr::core::vector3df(0, 50 + 20 * i, 0), 3000);
+			textNode->addAnimator(anim);
+			anim->drop();
+			anim = world.GetSceneManager().createDeleteAnimator(3000);
+			textNode->addAnimator(anim);
+			anim->drop();
 		}
 		((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(playerTmpBox);
 
