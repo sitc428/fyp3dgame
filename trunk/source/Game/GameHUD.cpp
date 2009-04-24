@@ -393,10 +393,10 @@ void GameHUD::DrawPauseMenu(Player& player)
 					if(ItemBox[i].first->getItemType() == HPITEM || ItemBox[i].first->getItemType() == XITEM){
 						j++;
 						if (SubMenuIndex == j && j != -1){
-							if(ItemBox[i].first->getItemType() == HPITEM){
+							if(ItemBox[i].first->getItemType() == HPITEM && ItemBox[i].second > 0){
 								((HPItem*)ItemBox[i].first)->use();
 							}
-							else if(ItemBox[i].first->getItemType() == XITEM){
+							else if(ItemBox[i].first->getItemType() == XITEM && ItemBox[i].second > 0){
 								((XItem*)ItemBox[i].first)->use();
 							}
 							break;
@@ -434,7 +434,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
 				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
 				for (int i = 0, j = -1; i < ItemBox.size() ; i++){
-					if(ItemBox[i].first->getItemType() == WEAPONITEM1){
+					if(ItemBox[i].first->getItemType() == WEAPONITEM1 && ItemBox[i].second > 0){
 						j++;
 						if (SubMenuIndex == j && j != -1){
 							((WeaponItem*)ItemBox[i].first)->equip();
@@ -476,7 +476,7 @@ void GameHUD::DrawPauseMenu(Player& player)
 			else if ( receiver.keyReleased( irr::KEY_RETURN ) ){
 				MainCharacter::ItemCollection& ItemBox = ((MainCharacter&)player).GetItemBox();
 				for (int i = 0, j = -1; i < ItemBox.size() ; i++){
-					if(ItemBox[i].first->getItemType() == MDISCITEM){
+					if(ItemBox[i].first->getItemType() == MDISCITEM && ItemBox[i].second > 0){
 						j++;
 						if (SubMenuIndex == j && j != -1){
 							((MDiscItem*)ItemBox[i].first)->equip();
