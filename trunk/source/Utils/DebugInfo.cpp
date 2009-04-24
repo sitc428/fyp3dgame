@@ -72,6 +72,8 @@ void DebugInfo::enableDebugCamera( GameWorld& world, Camera* norCam)
 	if( debugCamera == NULL)
 	{
 		debugCamera = world.GetSceneManager().addCameraSceneNodeFPS(0, 100, 1000, -1);
+		debugCamera->setFarValue( 1000 );
+		debugCamera->setAutomaticCulling( irr::scene::EAC_OFF  );
 		debugCamera->setPosition(irr::core::vector3df(0, 500, 0));
 		debugCamera->setTarget( world.GetCurrentPlayer().GetNodePosition() );
 	}
