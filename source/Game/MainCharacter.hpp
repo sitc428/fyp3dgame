@@ -12,6 +12,7 @@
 #include "Player.hpp"
 #include "shader.hpp"
 #include "WeaponItem.hpp"
+#include "ParticleManager.hpp"
 
 class Monster;
 
@@ -195,6 +196,11 @@ private:
 	Shader* Lightning;
 	Shader* Cyclone;
 
+	
+	ParticleManager* sparking;
+	boost::timer* levelUP_timer;
+	
+	
 	class AttackAnimationEndCallBack : public irr::scene::IAnimationEndCallBack
 	{
 	public:
