@@ -53,6 +53,31 @@ GameWorld::GameWorld( GameEngine& gameEngine )
 
 void GameWorld::Init()
 {
+	irr::video::IVideoDriver& driver = GEngine.GetDriver();
+
+	//temp use only
+	irr::video::ITexture* text = NULL;
+
+	text = driver.getTexture("media/image/de3d76ac771c29b4f04beacb70ebabbd.png");
+	hp = new HPItem(*this, HPITEM, "HP Medicine", 50, "Recover 50 Health Point", text);
+	text = driver.getTexture("media/image/723e676cab1675f3d47d71960cca50bc.png");
+	md1 = new MDiscItem(*this, MDISCITEM, "Fire", 10, "Fire Magic of 10 Magical Attack point", text);	
+	text = driver.getTexture("media/image/3f784fc5d3d60b6d1ac56e000061f11c.png");
+	md2 = new MDiscItem(*this, MDISCITEM, "Ice", 10, "Ice Magic of 10 Magical Attack point", text);
+	text = driver.getTexture("media/image/afc257a5363d544d8daba8904fa9efb0.png");
+	md3 = new MDiscItem(*this, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
+	text = driver.getTexture("media/image/b5388b5a747ce72ede81145817e118eb.png");
+	md4 = new MDiscItem(*this, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
+	text = driver.getTexture("media/image/96c91407c63a4c21ce305dfef464954a.png");
+	xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
+	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
+	weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
+	weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
+	weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
+	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
+
 	InitLevel();
 	InitLight();
 	InitPlayer();
@@ -460,7 +485,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 		irr::core::vector3df rot;
 		irr::core::vector3df scale;
 		irr::core::stringw type;
-		irr::u32 exp, hp, attk, def, mattk, mdef, money;
+		irr::u32 exp, health, attk, def, mattk, mdef, money;
 
 		exp = attk = def = mattk = mdef = money = 0;
 		pos = rot = scale = irr::core::vector3df(0, 0, 0);
@@ -515,7 +540,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				}
 				else if( lines.substr(0, 2) == "HP" )
 				{
-					hp = Utils::toInt( lines.substr(3, lines.length()) );
+					health = Utils::toInt( lines.substr(3, lines.length()) );
 				}
 				else if( lines.substr(0, 4) == "ATTK" )
 				{
@@ -537,20 +562,63 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				{
 					type = lines.substr(5, lines.length()).c_str();
 				}
-				
 				else if( lines.substr(0, 5) == "MONEY" )
 				{
 					money = Utils::toInt( lines.substr(6, lines.length()) );
 				}
+				else if( lines.substr(0, 4) == "ITEM" )
+				{
+					Tokenizer tokenizer( lines.substr(5, lines.length()), "," );
+					std::string itemType = tokenizer.getNextToken();
+					int itemAmount = Utils::toInt( tokenizer.getNextToken() );
+
+					if( itemType == "HP" )
+					{
+						monItemBox.push_back( std::make_pair(hp, itemAmount) );
+					}
+					else if( itemType == "MD1" )
+					{
+						monItemBox.push_back( std::make_pair(md1, itemAmount) );
+					}
+					else if( itemType == "MD2" )
+					{
+						monItemBox.push_back( std::make_pair(md2, itemAmount) );
+					}
+					else if( itemType == "MD3" )
+					{
+						monItemBox.push_back( std::make_pair(md3, itemAmount) );
+					}
+					else if( itemType == "MD4" )
+					{
+						monItemBox.push_back( std::make_pair(md4, itemAmount) );
+					}
+					else if( itemType == "XITEM" )
+					{
+						monItemBox.push_back( std::make_pair(xItem, itemAmount) );
+					}
+					else if( itemType == "WEAPON1" )
+					{
+						monItemBox.push_back( std::make_pair(weapon1, itemAmount) );
+					}
+					else if( itemType == "WEAPON2" )
+					{
+						monItemBox.push_back( std::make_pair(weapon2, itemAmount) );
+					}
+					else if( itemType == "WEAPON3" )
+					{
+						monItemBox.push_back( std::make_pair(weapon3, itemAmount) );
+					}
+				}
 				else if( lines == "ADDMONSTER" )
 				{
-					Monster* m = new Monster( GEngine, *this, exp, hp, attk, def, mattk, mdef, monItemBox,pos, type, money);
+					Monster* m = new Monster( GEngine, *this, exp, health, attk, def, mattk, mdef, monItemBox,pos, type, money);
 					actors.push_back(m);
 					monsters.push_back(m);
 					m->ReSetPosition(pos);
 
+					monItemBox.clear();
 					modelFilePath = "";
-					exp = attk = def = mattk = mdef = money = 0;
+					health = exp = attk = def = mattk = mdef = money = 0;
 					pos = rot = scale = irr::core::vector3df(0, 0, 0);
 				}
 			}
@@ -675,31 +743,6 @@ void GameWorld::InitEnemies()
 	ItemCollection monItemBox1;
 	ItemCollection monItemBox2;
 
-	irr::video::IVideoDriver& driver = GEngine.GetDriver();
-
-	//temp use only
-	irr::video::ITexture* text = NULL;
-
-	text = driver.getTexture("media/image/de3d76ac771c29b4f04beacb70ebabbd.png");
-	Item* hp = new HPItem(*this, HPITEM, "HP Medicine", 50, "Recover 50 Health Point", text);
-	text = driver.getTexture("media/image/723e676cab1675f3d47d71960cca50bc.png");
-	Item* md1 = new MDiscItem(*this, MDISCITEM, "Fire", 10, "Fire Magic of 10 Magical Attack point", text);	
-	text = driver.getTexture("media/image/3f784fc5d3d60b6d1ac56e000061f11c.png");
-	Item* md2 = new MDiscItem(*this, MDISCITEM, "Ice", 10, "Ice Magic of 10 Magical Attack point", text);
-	text = driver.getTexture("media/image/afc257a5363d544d8daba8904fa9efb0.png");
-	Item* md3 = new MDiscItem(*this, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
-	text = driver.getTexture("media/image/b5388b5a747ce72ede81145817e118eb.png");
-	Item* md4 = new MDiscItem(*this, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
-	text = driver.getTexture("media/image/96c91407c63a4c21ce305dfef464954a.png");
-	Item* xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
-	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
-	Item* weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
-	Item* weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
-	Item* weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
-	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
-	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
-	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
-	
 	monItemBox1.push_back(std::make_pair(hp, 1));
 	monItemBox1.push_back(std::make_pair(md1, 2));
 
