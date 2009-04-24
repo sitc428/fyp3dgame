@@ -900,7 +900,7 @@ void MainCharacter::SetCurrentMagic(MDiscItem* currentMagic) {
 	}else if( _currentMagic->getItemName() == "Ice" ){
 		std::cout<<"Ice\n";
 		
-		irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/ice.obj" ));
+		irr::scene::ISkinnedMesh* Magicmesh = (irr::scene::ISkinnedMesh*)(smgr.getMesh( "media/model/ice.x" ));
 		MagicNode = smgr.addMeshSceneNode( Magicmesh );
 		MagicNode->setScale(irr::core::vector3df(10.0,10.0,10.0) );
 		MagicNode->setMaterialFlag( irr::video::EMF_LIGHTING, true );
