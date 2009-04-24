@@ -1,26 +1,26 @@
 BEGINNPC
 MODEL:media/model/board.obj
-DIALOG:This is Board One!
-DIALOG:11111111111111111!
+DIALOG:This is Board One!  
+DIALOG:11111111111111111!  
 HEADER:media/image/head1.png
-ACCEPTABLE:30
+ACCEPTABLE:40
 TYPE:0
 POS:-91.148987,16.296143,-1965.194109
 ROT:-90.000000,-236.000000,0.000000
 SCALE:4,4,4
 ADDNPC
 MODEL:media/model/board.obj
-DIALOG:This is Board Two!
-DIALOG:22222222222222222!
+DIALOG:This is Board Two!  
+DIALOG:22222222222222222!  
 HEADER:media/image/head1.png
-ACCEPTABLE:30
+ACCEPTABLE:40
 TYPE:0
 POS:99.77216316.296143,-1964.153625
 ROT:-90.000000,-119.000000,0.000000
 SCALE:4,4,4
 ADDNPC
 MODEL:media/model/treasearBox.obj
-DIALOG:You found a X ITEM! (XITEM +1)
+DIALOG:You found a X ITEM! (XITEM +1)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
 TYPE:11
@@ -29,7 +29,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.obj
-DIALOG:You found a X ITEM! (XITEM +1)
+DIALOG:You found a X ITEM! (XITEM +1)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
 TYPE:11
@@ -38,7 +38,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.obj
-DIALOG:You found a X ITEM! (XITEM +1)
+DIALOG:You found a X ITEM! (XITEM +1)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
 TYPE:11
@@ -47,7 +47,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.obj
-DIALOG:You found Cyclone Magic Discs! (Cyclone +5)
+DIALOG:You found Cyclone Magic Discs! (Cyclone +5)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
 TYPE:6
@@ -56,7 +56,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/hill.obj
-DIALOG:I need to find X Item break the rock...
+DIALOG:I need to find X Item break the rock...  
 HEADER:media/image/pedro_head.png
 ACCEPTABLE:40
 TYPE:10
