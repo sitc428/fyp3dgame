@@ -69,7 +69,7 @@ void Shader::OnSetConstants(irr::video::IMaterialRendererServices* services, irr
 		else if(i == 4)
 			services->setPixelShaderConstant("myTexture4", (irr::f32 *)(&(tex[i])), 1);
 	}
-	irr::core::vector3df pos = irr::core::vector3df(0.0f,9.0f,-7.0f);
+	irr::core::vector3df pos = irr::core::vector3df(0.0f,4.03f,-7.0f);
 	services->setVertexShaderConstant("Lightpos", reinterpret_cast<irr::f32*>(&pos), 3);
 	if(offset>1.0) factor=-0.01;
 	if(offset<=0.0) factor=0.01;
