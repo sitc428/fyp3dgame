@@ -10,7 +10,7 @@ ROT:0.000000,180.000000,0.000000
 SCALE:8.852482,16.164818,5.000000
 ADDNPC
 MODEL:media/model/treasearbox.obj
-DIALOG:You found a Sword! (Sword +1)
+DIALOG:You found a Sword! (Sword +1)  
 HEADER:media/image/7a5fcebbc89e005a7794084c9d3583c1.png
 ACCEPTABLE:40
 TYPE:2
@@ -19,7 +19,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
-DIALOG:You found Fire Magic Discs! (Fire +3)
+DIALOG:You found Fire Magic Discs! (Fire +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
 TYPE:3
@@ -28,7 +28,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
-DIALOG:You found Ice Magic Discs! (Ice +3)
+DIALOG:You found Ice Magic Discs! (Ice +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
 TYPE:4
@@ -37,7 +37,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
-DIALOG:You found Lightning Discs! (Lightning +3)
+DIALOG:You found Lightning Discs! (Lightning +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
 TYPE:5
@@ -46,7 +46,7 @@ ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearbox.obj
-DIALOG:You found Cyclone Magic Discs! (Cyclone +3)
+DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
 TYPE:6
