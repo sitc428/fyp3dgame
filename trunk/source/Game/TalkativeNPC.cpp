@@ -310,7 +310,25 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				}
 			}
 		}
-		else if(_type == 10)
+		else if (_type == 11) //XITEM
+		{
+			theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+			for(irr::u32 i = 0; i < theBox.size(); ++i)
+			{
+				if(
+					(theBox[i].first->getItemType() == XITEM)
+				)
+				{
+					theBox[i].second += 1;
+					((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
+					world.GetActors().erase( world.GetActors().linear_search( this ) );
+					world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
+					node->setVisible( false );
+					itemTrigger = true;
+				}
+			}
+		}
+		else if(_type == 10) //XITEM CHECKING
 		{
 			int needed = 0;
 			theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
@@ -324,6 +342,15 @@ void TalkativeNPC::interaction(irr::f32 delta)
 			}
 			if( needed >= 3 )
 			{
+				theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
+				for(irr::u32 i = 0; i < theBox.size(); ++i)
+				{
+					if( (theBox[i].first->getItemType() == XITEM) )
+					{
+						theBox[i].second = 0;
+						break;
+					}
+				}
 				world.GetActors().erase( world.GetActors().linear_search( this ) );
 				world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
 				node->setVisible( false );
