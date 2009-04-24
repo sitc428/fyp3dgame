@@ -102,10 +102,9 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	text = driver.getTexture("media/image/96c91407c63a4c21ce305dfef464954a.png");
 	Item* xItem = new XItem(world, XITEM, "X Item", 1, "Special Item", text);
 	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
-	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.x");
-	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
-	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
-
+	Item* weapon1 = new WeaponItem(world, WEAPONITEM1, "Sword", 10, "Sword with 10 Physical Attack point", text, "media/model/sword.x");
+	Item* weapon2 = new WeaponItem(world, WEAPONITEM1, "Power Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword1.x");
+	Item* weapon3 = new WeaponItem(world, WEAPONITEM1, "Katana", 30, "Katana with 30 Physical Attack point", text, "media/model/katana.x");
 	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
