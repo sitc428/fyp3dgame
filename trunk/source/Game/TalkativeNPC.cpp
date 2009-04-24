@@ -348,6 +348,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 					if( (theBox[i].first->getItemType() == XITEM) )
 					{
 						theBox[i].second = 0;
+						((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
 						break;
 					}
 				}
