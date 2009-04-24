@@ -1,5 +1,5 @@
 BEGINNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found HP Medicine! (HP Medicine +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
@@ -8,7 +8,7 @@ POS:-278.125610,5.168579,-1084.928611
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Fire Magic Discs! (Fire +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
@@ -17,7 +17,7 @@ POS:-380.769623,5.168579,-972.264548
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Ice Magic Discs! (Ice +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
@@ -26,7 +26,7 @@ POS:256.693268,5.168579,-972.264548
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Lightning Discs! (Lightning +3)  
 HEADER:media/image/3982df59e14187b5400d37c05513f850.png
 ACCEPTABLE:40
@@ -35,7 +35,7 @@ POS:-295.068359,5.168579,-798.993339
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -44,7 +44,7 @@ POS:-374.973969,5.168579,-593.374442
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -53,7 +53,7 @@ POS:392.183899,5.168579,-1400.587546
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -62,7 +62,7 @@ POS:173.186890,5.168579,-844.618003
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearbox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +3)  
 HEADER:media/image/head1.png
 ACCEPTABLE:40

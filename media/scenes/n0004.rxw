@@ -1,5 +1,5 @@
 BEGINNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found HP Medicine! (HP Medicine +5)
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -8,7 +8,7 @@ POS:271.412872, 164.390381, -3141.137084
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Fire Magic Discs! (Fire +15)
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -17,7 +17,7 @@ POS:199.521881, 164.390381, -3141.137084
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Ice Magic Discs! (Ice +5)
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -26,7 +26,7 @@ POS:-8.120028, 164.390381, -3131.951347
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +5)
 HEADER:media/image/head1.png
 ACCEPTABLE:40
@@ -35,7 +35,7 @@ POS:-141.597672, 164.390391, -3123.947471
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
-MODEL:media/model/treasearBox.obj
+MODEL:media/model/treasearBox.x
 DIALOG:You found Cyclone Magic Discs! (Cyclone +5)
 HEADER:media/image/head1.png
 ACCEPTABLE:40
