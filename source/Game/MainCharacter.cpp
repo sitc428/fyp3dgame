@@ -150,18 +150,7 @@ MainCharacter::MainCharacter( GameEngine& gameEngine, GameWorld& gameWorld )
 	node->setMaterialTexture(1, driver.getTexture( "media/model/PedroTextureShade.tga" ));
 	//node->setDebugDataVisible( irr::scene::EDS_BBOX);
 
-	weaponNode = smgr.addMeshSceneNode(
-		smgr.getMesh("media/model/swordyy.obj"),//Mastersword_v003.obj or sword.obj
-		//node->getJointNode("RightFingerBase"),
-		node->getJointNode("RightHandThumb3"),
-		0,
-		irr::core::vector3df(0,0,0),
-		irr::core::vector3df(0,0,0),
-		irr::core::vector3df(0.05, 0.05, 0.05)
-	);
-
-	irr::scene::ISceneNode* sss = smgr.addSphereSceneNode(0.5);
-	sss->setParent(node->getJointNode("RightHandThumb3"));
+	weaponNode = NULL;
 
 	Shader* Field = GEngine.GetShaderFactory().createShader( "media/shader/field.vert", "media/shader/field.frag", 1, irr::video::EMT_TRANSPARENT_ADD_COLOR);
 	FireBall = GEngine.GetShaderFactory().createShader( "media/shader/fireball_2.vert", "media/shader/fireball_2.frag", 1, irr::video::EMT_SOLID);
