@@ -320,7 +320,9 @@ void MainCharacter::setAttacking( bool attacking )
 
 	if( attacking )
 	{
-		GEngine.PlaySE("media/se/swords-clashing.wav", false, node->getPosition());
+		if( weaponNode)
+			GEngine.PlaySE("media/se/swords-clashing.wav", false, node->getPosition());
+
 		action = EMCAS_ATTACK;
 
 		irr::s32 startAttackFrame = -1;
