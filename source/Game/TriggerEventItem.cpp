@@ -66,6 +66,10 @@ void TriggerEventItem::interaction(irr::f32 delta)
 		{
 			std::cout << "----- Mini Game 3 Start -----" << std::endl;
 		}
+		else if (_type == CUTSCENE)
+		{
+			std::cout << "----- CUTSCENE -----" << std::endl;
+		}
 
 		//runGameOne();
 		std::cout << "===== Finsihed TriggerEventItem =====" << std::endl;

@@ -11,7 +11,8 @@ enum TriggerEventItemType
 	SCENE4,
 	MINIGAME1,
 	MINIGAME2,
-	MINIGAME3
+	MINIGAME3,
+	CUTSCENE
 };
 
 class TriggerEventItem: public InteractiveActor
