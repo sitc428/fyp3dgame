@@ -12,6 +12,7 @@ class Camera;
 class GameEngine;
 class GameHUD;
 class InteractiveActor;
+class Item;
 class MainCharacter;
 class Monster;
 class Player;
@@ -160,6 +161,8 @@ private:
 	irr::s32 numLives; // since there is more than one class/object representing the player, it makes sense to put it here instead
 
 	irr::s32 curLevel;
+
+	Item *hp, *md1, *md2, *md3, *md4, *xItem, *weapon1, *weapon2, *weapon3;
 };
 
 #endif //__GAME_WORLD_HPP__
