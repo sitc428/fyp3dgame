@@ -20,28 +20,28 @@ ROT:-90.000000,-119.000000,0.000000
 SCALE:4,4,4
 ADDNPC
 MODEL:media/model/treasearBox.obj
-DIALOG:You found HP Medicine! (HP Medicine +5)
+DIALOG:You found a X ITEM! (XITEM +1)
 HEADER:media/image/head1.png
 ACCEPTABLE:20
-TYPE:9
+TYPE:11
 POS:317.771820,6.555664,-1661.012107
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.obj
-DIALOG:You found Fire Magic Discs! (Fire +15)
+DIALOG:You found a X ITEM! (XITEM +1)
 HEADER:media/image/head1.png
 ACCEPTABLE:20
-TYPE:3
+TYPE:11
 POS:337.803497,6.555664,-2389.23867
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.obj
-DIALOG:You found Ice Magic Discs! (Ice +5)
+DIALOG:You found a X ITEM! (XITEM +1)
 HEADER:media/image/head1.png
 ACCEPTABLE:20
-TYPE:4
+TYPE:11
 POS:-327.392456,6.555664,-2389.23867
 ROT:-90.000000,0.000000,0.000000
 SCALE:2,2,2
