@@ -1070,6 +1070,9 @@ void GameWorld::DoEvent2( irr::f32 delta )
 
 	static Monster* boss;
 
+	if( stateTimer == 0 )
+	{
+
 	for( irr::u32 i = 0; i < monsters.size(); ++i )
 	{
 		if( monsters[i]->GetType() == "Boss" )
@@ -1078,8 +1081,7 @@ void GameWorld::DoEvent2( irr::f32 delta )
 			break;
 		}
 	}
-
-	if( stateTimer == 0 )
+	}
 
 	stateTimer+=delta;
 
