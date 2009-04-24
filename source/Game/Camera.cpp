@@ -26,8 +26,8 @@ Camera::Camera( GameEngine& gameEngine, GameWorld& gameWorld,
 	zoom(cameraDefaultZoom)
 {
 	node = world.GetSceneManager().addCameraSceneNode(world.GetSceneManager().getRootSceneNode());
-	//node->setAutomaticCulling( irr::scene::EAC_OFF );
-	node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX );
+	node->setAutomaticCulling( irr::scene::EAC_OFF );
+	//node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX );
 	node->setFarValue( 500 );
 }
 
