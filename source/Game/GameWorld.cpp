@@ -41,6 +41,7 @@ GameWorld::GameWorld( GameEngine& gameEngine )
 	mainCharacter(NULL),
 	robot(NULL),
 	camera(NULL),
+	cutSceneCamera(NULL),
 	levelTriangleSelector(NULL),
 	light(NULL),
 	gameHUD(NULL),
@@ -53,31 +54,6 @@ GameWorld::GameWorld( GameEngine& gameEngine )
 
 void GameWorld::Init()
 {
-	irr::video::IVideoDriver& driver = GEngine.GetDriver();
-
-	//temp use only
-	irr::video::ITexture* text = NULL;
-
-	text = driver.getTexture("media/image/de3d76ac771c29b4f04beacb70ebabbd.png");
-	hp = new HPItem(*this, HPITEM, "HP Medicine", 50, "Recover 50 Health Point", text);
-	text = driver.getTexture("media/image/723e676cab1675f3d47d71960cca50bc.png");
-	md1 = new MDiscItem(*this, MDISCITEM, "Fire", 10, "Fire Magic of 10 Magical Attack point", text);	
-	text = driver.getTexture("media/image/3f784fc5d3d60b6d1ac56e000061f11c.png");
-	md2 = new MDiscItem(*this, MDISCITEM, "Ice", 10, "Ice Magic of 10 Magical Attack point", text);
-	text = driver.getTexture("media/image/afc257a5363d544d8daba8904fa9efb0.png");
-	md3 = new MDiscItem(*this, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
-	text = driver.getTexture("media/image/b5388b5a747ce72ede81145817e118eb.png");
-	md4 = new MDiscItem(*this, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
-	text = driver.getTexture("media/image/96c91407c63a4c21ce305dfef464954a.png");
-	xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
-	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
-	weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
-	weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
-	weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
-	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
-	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
-	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
-
 	InitLevel();
 	InitLight();
 	InitPlayer();
@@ -369,7 +345,7 @@ void GameWorld::LoadParticleConfig(irr::u32 sceneNum)
 	}
 	else
 	{
-		std::cout << "Error loading particle config file: " << ParticleConfigFileName << ", aborting!" << std::endl;
+		std::cout << "Error loading NPC config file: " << ParticleConfigFileName << ", aborting!" << std::endl;
 		exit( -1 );
 	}
 }
@@ -485,7 +461,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 		irr::core::vector3df rot;
 		irr::core::vector3df scale;
 		irr::core::stringw type;
-		irr::u32 exp, health, attk, def, mattk, mdef, money;
+		irr::u32 exp, hp, attk, def, mattk, mdef, money;
 
 		exp = attk = def = mattk = mdef = money = 0;
 		pos = rot = scale = irr::core::vector3df(0, 0, 0);
@@ -540,7 +516,7 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				}
 				else if( lines.substr(0, 2) == "HP" )
 				{
-					health = Utils::toInt( lines.substr(3, lines.length()) );
+					hp = Utils::toInt( lines.substr(3, lines.length()) );
 				}
 				else if( lines.substr(0, 4) == "ATTK" )
 				{
@@ -562,63 +538,20 @@ void GameWorld::LoadMonsterConfig(irr::u32 sceneNum)
 				{
 					type = lines.substr(5, lines.length()).c_str();
 				}
+				
 				else if( lines.substr(0, 5) == "MONEY" )
 				{
 					money = Utils::toInt( lines.substr(6, lines.length()) );
 				}
-				else if( lines.substr(0, 4) == "ITEM" )
-				{
-					Tokenizer tokenizer( lines.substr(5, lines.length()), "," );
-					std::string itemType = tokenizer.getNextToken();
-					int itemAmount = Utils::toInt( tokenizer.getNextToken() );
-
-					if( itemType == "HP" )
-					{
-						monItemBox.push_back( std::make_pair(hp, itemAmount) );
-					}
-					else if( itemType == "MD1" )
-					{
-						monItemBox.push_back( std::make_pair(md1, itemAmount) );
-					}
-					else if( itemType == "MD2" )
-					{
-						monItemBox.push_back( std::make_pair(md2, itemAmount) );
-					}
-					else if( itemType == "MD3" )
-					{
-						monItemBox.push_back( std::make_pair(md3, itemAmount) );
-					}
-					else if( itemType == "MD4" )
-					{
-						monItemBox.push_back( std::make_pair(md4, itemAmount) );
-					}
-					else if( itemType == "XITEM" )
-					{
-						monItemBox.push_back( std::make_pair(xItem, itemAmount) );
-					}
-					else if( itemType == "WEAPON1" )
-					{
-						monItemBox.push_back( std::make_pair(weapon1, itemAmount) );
-					}
-					else if( itemType == "WEAPON2" )
-					{
-						monItemBox.push_back( std::make_pair(weapon2, itemAmount) );
-					}
-					else if( itemType == "WEAPON3" )
-					{
-						monItemBox.push_back( std::make_pair(weapon3, itemAmount) );
-					}
-				}
 				else if( lines == "ADDMONSTER" )
 				{
-					Monster* m = new Monster( GEngine, *this, exp, health, attk, def, mattk, mdef, monItemBox,pos, type, money);
+					Monster* m = new Monster( GEngine, *this, exp, hp, attk, def, mattk, mdef, monItemBox,pos, type, money);
 					actors.push_back(m);
 					monsters.push_back(m);
 					m->ReSetPosition(pos);
 
-					monItemBox.clear();
 					modelFilePath = "";
-					health = exp = attk = def = mattk = mdef = money = 0;
+					exp = attk = def = mattk = mdef = money = 0;
 					pos = rot = scale = irr::core::vector3df(0, 0, 0);
 				}
 			}
@@ -743,6 +676,31 @@ void GameWorld::InitEnemies()
 	ItemCollection monItemBox1;
 	ItemCollection monItemBox2;
 
+	irr::video::IVideoDriver& driver = GEngine.GetDriver();
+
+	//temp use only
+	irr::video::ITexture* text = NULL;
+
+	text = driver.getTexture("media/image/de3d76ac771c29b4f04beacb70ebabbd.png");
+	Item* hp = new HPItem(*this, HPITEM, "HP Medicine", 50, "Recover 50 Health Point", text);
+	text = driver.getTexture("media/image/723e676cab1675f3d47d71960cca50bc.png");
+	Item* md1 = new MDiscItem(*this, MDISCITEM, "Fire", 10, "Fire Magic of 10 Magical Attack point", text);	
+	text = driver.getTexture("media/image/3f784fc5d3d60b6d1ac56e000061f11c.png");
+	Item* md2 = new MDiscItem(*this, MDISCITEM, "Ice", 10, "Ice Magic of 10 Magical Attack point", text);
+	text = driver.getTexture("media/image/afc257a5363d544d8daba8904fa9efb0.png");
+	Item* md3 = new MDiscItem(*this, MDISCITEM, "Lightning", 30, "Lightning Magic of 30 Magical Attack point", text);
+	text = driver.getTexture("media/image/b5388b5a747ce72ede81145817e118eb.png");
+	Item* md4 = new MDiscItem(*this, MDISCITEM, "Cyclone", 40, "Cyclone Magic of 40 Magical Attack point", text);
+	text = driver.getTexture("media/image/96c91407c63a4c21ce305dfef464954a.png");
+	Item* xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
+	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
+	Item* weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
+	Item* weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
+	Item* weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
+	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
+	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
+	
 	monItemBox1.push_back(std::make_pair(hp, 1));
 	monItemBox1.push_back(std::make_pair(md1, 2));
 
@@ -913,6 +871,9 @@ void GameWorld::Tick( irr::f32 delta )
 		case state_PAUSED:
 			DoGameplay( delta );
 			break;
+		case state_CUT_SCENE:
+			DoEvent(  delta );
+			break;
 		case state_PLAYER_DEAD:
 			stateTimer += delta;
 			if( stateTimer >= PLAYER_DEATH_STATE_TIMER )
@@ -938,7 +899,7 @@ void GameWorld::Tick( irr::f32 delta )
 				if(  GEngine.GetReceiver().keyReleased(irr::KEY_SPACE) )
 				{
 					stateTimer = 0;
-					gameState = state_GAMEPLAY;
+					gameState = state_CUT_SCENE;
 					gameHUD->GetConversation(L"");
 				}
 				
@@ -949,7 +910,7 @@ void GameWorld::Tick( irr::f32 delta )
 				else
 				{
 					stateTimer = 0;
-					gameState = state_GAMEPLAY;
+					gameState = state_CUT_SCENE;
 					gameHUD->GetConversation(L"");				
 				}
 			}break;
@@ -998,6 +959,74 @@ void GameWorld::DoGameplay( irr::f32 delta )
 
 	// clean up
 	DoCleanUp();
+}
+
+
+void GameWorld::DoEvent( irr::f32 delta ){
+	
+	//irr::scene::ISceneNodeAnimator* sa = NULL;
+	if(cutSceneCamera == NULL){
+		cutSceneCamera = GetSceneManager().addCameraSceneNode(0, irr::core::vector3df(200, 60, 0) , irr::core::vector3df(0, 60, 0));
+		//cutSceneCamera->setPosition(irr::core::vector3df(0, 300, 0));
+		//cutSceneCamera->setTarget(irr::core::vector3df(0, 0, 0));
+		GetSceneManager().setActiveCamera( cutSceneCamera );
+		//mainCharacter->Tick(delta);
+		//cutSceneCamera->addAnimator(GetSceneManager().createFlyStraightAnimator( irr::core::vector3df(0, 300, 0), irr::core::vector3df(1000, 300, 0), 10000, false  ));
+		//sa = GetSceneManager().createFlyCircleAnimator( irr::core::vector3df(40, 20, 10), 50, 1000	);
+		//irr::scene::ISceneNodeAnimator* sa = GetSceneManager().createFlyCircleAnimator(); 
+	
+	}
+	robot->Tick(delta);
+	
+	stateTimer+=delta;
+	if( stateTimer <= 10){
+		cutSceneCamera->setPosition(irr::core::vector3df(200, 60, -50+stateTimer*10));
+		cutSceneCamera->setTarget(irr::core::vector3df(0, 60, -50+stateTimer*10));
+		
+	}
+	
+	else if( stateTimer > 10 && stateTimer <= 20 ){
+		//cutSceneCamera->setRotation(irr::core::vector3df(0, 90, 0));
+		cutSceneCamera->setPosition(irr::core::vector3df(200 - (stateTimer-10)*40, 200, 50));
+		cutSceneCamera->setTarget(irr::core::vector3df(200 - (stateTimer-10)*40, 0, 50));
+	}
+	
+	
+	else if ( stateTimer > 20 && stateTimer <= 25 ){
+		cutSceneCamera->setPosition(irr::core::vector3df(40, (stateTimer-20)*5, 0));
+		cutSceneCamera->setTarget(irr::core::vector3df(40, (stateTimer-20)*5, 10));
+		
+	}
+	
+	else if ( stateTimer > 25 && stateTimer <= 30 ){
+		cutSceneCamera->setPosition(irr::core::vector3df(40, 25 + (stateTimer - 25)*9, 0 - (stateTimer - 25)*10));
+		cutSceneCamera->setTarget(irr::core::vector3df(40, 25, 10));
+	}
+	
+	else if (stateTimer < 33){
+		static int k = 0;
+		
+		if(k == 0)
+		{
+			//irr::scene::ISceneNodeAnimator* sa = GetSceneManager().createFlyCircleAnimator( irr::core::vector3df(40, 70, 10), 50);
+			//cutSceneCamera->addAnimator(sa);
+			cutSceneCamera->setTarget(irr::core::vector3df(40, 20, 10));
+		}
+		std::cout<<cos((stateTimer - 30)/3*PI)<<std::endl;
+		cutSceneCamera->setPosition(irr::core::vector3df(40+sin((stateTimer-30)/3*PI)*40, 70, 10 - cos((stateTimer - 30)/3*PI)*50));
+		
+		
+	}
+	
+	else {
+		GetSceneManager().setActiveCamera( (irr::scene::ICameraSceneNode*)(&(camera->GetNode())) );
+		stateTimer = 0;
+		gameState = state_GAMEPLAY;
+		
+		
+	}
+	
+	
 }
 
 // perform an tick of the input system
