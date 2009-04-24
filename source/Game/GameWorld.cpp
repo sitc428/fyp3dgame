@@ -770,8 +770,8 @@ void GameWorld::InitEnemies()
 	itemsToSell.push_back( std::make_pair(md4, 4000) );
 
 	SellingMachine* sellingMachine1 = new SellingMachine( GEngine, *this,
-		irr::core::vector3df(73.453423, 52.957031, -2081.661796),
-		irr::core::vector3df(0, -69, 0),
+		irr::core::vector3df(73.453423, 16.687378, -2081.661796),
+		irr::core::vector3df(-90, -69, 0),
 		irr::core::vector3df(8, 8, 8), itemsToSell );
 	actors.push_back( sellingMachine1 );
 }
