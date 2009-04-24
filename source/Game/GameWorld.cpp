@@ -846,7 +846,9 @@ void GameWorld::Exit()
 
 void GameWorld::UpdateHUD( irr::f32 delta ){
 	switch( gameState ){
+		case state_INTERACTING:
 		case state_GAMEPLAY:
+		case state_CUT_SCENE:
 			{
 				gameHUD->Update(delta, GetCurrentPlayer());;
 			}break;
@@ -924,6 +926,7 @@ void GameWorld::Tick( irr::f32 delta )
 		case state_GAMEPLAY:
 		case (state_INTERACTING | state_TALKING):
 		case (state_INTERACTING | state_BUYING):
+		case state_INTERACTING:
 		case state_PAUSED:
 			DoGameplay( delta );
 			break;
