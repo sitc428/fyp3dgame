@@ -262,16 +262,16 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				}
 			}
 		}
-		else if (_type == 7) //Knife
+		else if (_type == 7) //Katana
 		{
 			theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
 			for(irr::u32 i = 0; i < theBox.size(); ++i)
 			{
 				if(
-					(theBox[i].first->getItemType() == MDISCITEM && 
-					theBox[i].first->getItemName() == "Knife")
+					(theBox[i].first->getItemType() == WEAPONITEM1 && 
+					theBox[i].first->getItemName() == "Katana")
 				)
-				{
+				{ 
 					theBox[i].second += 3;
 					((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
 								world.GetActors().erase( world.GetActors().linear_search( this ) );
@@ -281,17 +281,17 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				}
 			}
 		}
-		else if (_type == 8) //Long Sword
+		else if (_type == 8) //Power Sword
 		{
 			theBox = ((MainCharacter&)world.GetCurrentPlayer()).GetItemBox();
 			for(irr::u32 i = 0; i < theBox.size(); ++i)
 			{
 				if(
 					(theBox[i].first->getItemType() == WEAPONITEM1 && 
-					theBox[i].first->getItemName() == "Long Sword")
+					theBox[i].first->getItemName() == "Power Sword")
 				)
 				{
-					theBox[i].second += 3;
+					theBox[i].second += 1;
 					((MainCharacter&)world.GetCurrentPlayer()).SetItemBox(theBox);
 								world.GetActors().erase( world.GetActors().linear_search( this ) );
 				world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );

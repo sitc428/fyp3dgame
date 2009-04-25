@@ -49,10 +49,10 @@ ROT:0,0,0
 SCALE:2,2,2
 ADDNPC
 MODEL:media/model/treasearBox.x
-DIALOG:You found Cyclone Magic Discs! (Cyclone +5)  
+DIALOG:You found a Weapon! (Weapon +1)  
 HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
-TYPE:6
+TYPE:7
 POS:-327.392456,6.555664,-1662.415458
 ROT:0,0,0
 SCALE:2,2,2

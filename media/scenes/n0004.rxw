@@ -1,9 +1,9 @@
 BEGINNPC
 MODEL:media/model/treasearBox.x
-DIALOG:You found HP Medicine! (HP Medicine +5)
+DIALOG:You found a Weapon! (Weapon +1)
 HEADER:media/image/treasureBoxIcon.png
 ACCEPTABLE:40
-TYPE:9
+TYPE:8
 POS:271.412872, 164.390381, -3141.137084
 ROT:0,0,0
 SCALE:2,2,2
