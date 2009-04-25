@@ -72,9 +72,9 @@ void GameWorld::Init()
 	text = driver.getTexture("media/image/96c91407c63a4c21ce305dfef464954a.png");
 	xItem = new XItem(*this, XITEM, "X Item", 1, "Special Item", text);
 	text = driver.getTexture("media/image/7a5fcebbc89e005a7794084c9d3583c1.png");
-	weapon1 = new WeaponItem(*this, WEAPONITEM1, "Knife", 10, "Knife with 10 Physical Attack point", text, "media/model/sword.obj");
-	weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 20, "Sword with 20 Physical Attack point", text, "media/model/sword.obj");
-	weapon3 = new WeaponItem(*this, WEAPONITEM1, "Long Sword", 30, "Long Sword with 30 Physical Attack point", text, "media/model/sword.obj");
+	weapon1 = new WeaponItem(*this, WEAPONITEM1, "Katana", 100, "Katana with 100 Physical Attack point", text, "media/model/sword.obj");
+	weapon2 = new WeaponItem(*this, WEAPONITEM1, "Sword", 30, "Sword with 30 Physical Attack point", text, "media/model/sword.obj");
+	weapon3 = new WeaponItem(*this, WEAPONITEM1, "Power Sword", 50, "Power Sword with 50 Physical Attack point", text, "media/model/sword.obj");
 	((WeaponItem*)weapon1)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon2)->GetNode()->setVisible( false );
 	((WeaponItem*)weapon3)->GetNode()->setVisible( false );
@@ -1091,7 +1091,13 @@ void GameWorld::DoEvent2( irr::f32 delta )
 		std::cout<<"should be here"<<std::endl;
 		//cutSceneCamera->setTarget(irr::core::vector3df(179.161606,251.029663,-3315.725272));
 		cutSceneCamera->setTarget( boss->GetNode().getPosition() + irr::core::vector3df(0, 50, 0) );
-		cutSceneCamera->setPosition(irr::core::vector3df(boss->GetNode().getPosition().X+sin(stateTimer/5*PI)*70, boss->GetNode().getPosition().Y + 50, boss->GetNode().getPosition().Z - cos((stateTimer)/5*PI)*70));
+		cutSceneCamera->setPosition(
+			irr::core::vector3df(
+				boss->GetNode().getPosition().X - (stateTimer-10) * 30 + 100,
+				boss->GetNode().getPosition().Y + 20*cos(stateTimer/10*PI/2),
+				boss->GetNode().getPosition().Z
+			)
+		);
 	}
 	else {
 		std::cout<<"finish cut scene 2 here"<<std::endl;
