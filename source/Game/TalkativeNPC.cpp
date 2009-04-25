@@ -365,6 +365,7 @@ void TalkativeNPC::interaction(irr::f32 delta)
 				world.GetLevelTriangleSelector().removeTriangleSelector( node->getTriangleSelector() );
 				node->setVisible( false );
 				itemTrigger = true;
+				GEngine.PlaySE("media/se/rockremove.wav");
 
 				finishAction();
 				return;
