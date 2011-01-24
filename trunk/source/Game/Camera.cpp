@@ -49,7 +49,7 @@ irr::core::vector3df Camera::GetTarget()
 	return target->GetNodePosition();
 }
 
-// updates the camera every fram with the elapsed time since last frame
+// updates the camera every frame with the elapsed time since last frame
 void Camera::Tick( irr::f32 delta )
 {
 	DoInput( delta );
